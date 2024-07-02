@@ -1,174 +1,69 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/login/login_redux.dart';
-
-import '../base/base.dart';
+import 'package:inspflutterfrontend/home/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    dispatch(context, navigateToHomeIfLoggedIn(context));
     return Scaffold(
-        body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: StoreConnector<LoginAppState, LoginAppState>(
-            converter: (store) => store.state,
-            builder: (context, LoginAppState state) => Container(
-              padding: const EdgeInsets.all(32.0),
-              color: const Color(0xFFF7FBFD),
-              child: SingleChildScrollView(
-                child: Column(
-                  // Column is also a layout widget. It takes a list of children and
-                  // arranges them vertically. By default, it sizes itself to fit its
-                  // children horizontally, and tries to be as tall as its parent.
-                  //
-                  // Invoke "debug painting" (press "p" in the console, choose the
-                  // "Toggle Debug Paint" action from the Flutter Inspector in Android
-                  // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-                  // to see the wireframe for each widget.
-                  //
-                  // Column has various properties to control how it sizes itself and
-                  // how it positions its children. Here we use mainAxisAlignment to
-                  // center the children vertically; the main axis here is the vertical
-                  // axis because Columns are vertical (the cross axis would be
-                  // horizontal).
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Center(child: Image.asset('assets/images/insplogo.png'),),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    const Center(child: Text('Welcome to INSP! 👋🏻',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color:Colors.black),)),
-                    const SizedBox(
-                      height: 64,
-                    ),
-                    const Text('Email Id',textAlign: TextAlign.left,style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold,color: Color.fromRGBO(58, 53, 65, 0.85)),),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    TextField(
-                      onChanged: (text) {
-                        dispatch(context, UpdateEmailId(emailId: text));
-                      },
-                      decoration: const InputDecoration(
-                          hintStyle: TextStyle(color: Color(0x3A354161)),
-                          hintText: "Email",
-                          contentPadding: EdgeInsets.all(14.0),
-                          border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(6.0),
-                          ),
-                          borderSide: BorderSide(
-                            color: Color(0x3A35413B),
-                            width: 1.0,
-                          ),
-                        ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(6.0),
-                        ),
-                        borderSide: BorderSide(
-                          color: Color(0x3A35413B),
-                          width: 1.0,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(6.0),
-                        ),
-                        borderSide: BorderSide(
-                          color: Color(0x3A35413B),
-                          width: 1.0,
-                        ),
-                      ))
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    const Text('Password',textAlign: TextAlign.left,style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold,color: Color.fromRGBO(58, 53, 65, 0.85)),),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    TextField(
-                        onChanged: (text) {
-                          dispatch(context, UpdatePassword(password: text));
-                        },
-                      obscureText: !state.isPasswordVisible,
-                        decoration: InputDecoration(
-                            hintStyle: const TextStyle(color: Color(0x3A354161)),
-                            hintText: "Password",
-                            contentPadding: const EdgeInsets.all(14.0),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(6.0),
-                              ),
-                              borderSide: BorderSide(
-                                color: Color(0x3A35413B),
-                                width: 1.0,
-                              ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(6.0),
-                              ),
-                              borderSide: BorderSide(
-                                color: Color(0x3A35413B),
-                                width: 1.0,
-                              ),
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(6.0),
-                              ),
-                              borderSide: BorderSide(
-                                color: Color(0x3A35413B),
-                                width: 1.0,
-                              ),
-                            ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              // Based on passwordVisible state choose the icon
-                              state.isPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off
-                            ),
-                            onPressed: () {
-                              // Update the state i.e. toogle the state of passwordVisible variable
-                              dispatch(context, UpdatePasswordVisibleStatus(isPasswordVisible: !state.isPasswordVisible));
-                            },
-                          ),),
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        dispatch(context, handleLogin(context));
-                      },
-                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3C8DBC)),shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0)
-                          )),padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(14))),
-                      child: !state.isLoading ? const Text('Login',style: TextStyle(color: Colors.white,fontSize: 18)) : const SizedBox(width: 18,height:18,child: Center(child: CircularProgressIndicator(color: Colors.white,strokeWidth: 2,))),
-                    ),
-                  ],
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Image.asset(
+              'assets/images/insplogo.png',
+              height: 100,
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Welcome to INSP',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-        ));
-  }
-
-  static getScreen() {
-    return getBaseScreen<LoginAppState, LoginScreen>(
-        loginStateReducer, const LoginAppState(), const LoginScreen());
-  }
-
-  static dispatch(BuildContext context, dynamic action) {
-    baseDispatch<LoginAppState>(context, action);
+            const SizedBox(height: 20),
+            const Text(
+              'User ID',
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter your user ID',
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Password',
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              obscureText: true,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter your password',
+              ),
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                );
+              },
+              child: const Text('Login'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

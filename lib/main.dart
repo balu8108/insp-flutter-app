@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'login/login_screen.dart';
+import 'package:inspflutterfrontend/onboarding/onboarding_screen.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,14 +9,37 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'INSP',
       theme: ThemeData(fontFamily: 'Inter-Regular'),
-      home: LoginScreen.getScreen(),
+      home: AnimatedSplashScreen(
+        duration: 3000,
+        splash: _buildSplashWidget(),
+        splashTransition: SplashTransition.sizeTransition,
+        nextScreen: const OnboardingScreen(),
+        backgroundColor: Colors.white,
+      ),
+    );
+  }
+
+  Widget _buildSplashWidget() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TweenAnimationBuilder<double>(
+          tween: Tween<double>(begin: 0, end: 1),
+          duration: const Duration(milliseconds: 1500),
+          builder: (_, double sizeFactor, __) {
+            return Transform.scale(
+              scale: sizeFactor,
+              child: Image.asset('assets/images/insplogo.png'),
+            );
+          },
+        ),
+      ],
     );
   }
 }
