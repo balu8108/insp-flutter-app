@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/common/extensions.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/common/model/lecture_card_model.dart';
+import 'package:intl/intl.dart';
 
 Widget INSPLectureCard(
     {required LectureCardModel lectureCardModel,
     required BuildContext context,
     required Function(INSPCardModel) onPressedViewDetails}) {
+
+  DateTime dateTime = DateTime.parse(lectureCardModel.scheduledDate);
+  DateFormat formatter = DateFormat('MM/dd/yyyy');
+  String formattedDate = formatter.format(dateTime);
   return Card(
     elevation: 0,
     color: Colors.white,
@@ -36,7 +41,7 @@ Widget INSPLectureCard(
                 flex: 1,
               ),
               Text(
-                lectureCardModel.scheduledDate,
+                formattedDate,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(

@@ -12,35 +12,41 @@ class MyCoursesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dispatch(context, getMyCourses(context));
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
       dispatch(context, showTopicsForCourse(context, inspCardModel));
     }
 
-    void onSearchQueryEntered(String text){
-      dispatch(context,
-          filterWithQueryText(context, text));
+    void onSearchQueryEntered(String text) {
+      dispatch(context, filterWithQueryText(context, text));
     }
 
     dispatch(context, initialFetchTopics(context));
+
+    void callCourseApi() {
+      dispatch(context, getMyCourses(context));
+    }
+
     return Scaffold(
         body: StoreConnector<MyCoursesAppState, MyCoursesAppState>(
       converter: (store) => store.state,
       builder: (context, MyCoursesAppState state) => Container(
-        padding: const EdgeInsets.all(32.0),
-        //color: const Color.fromRGBO(232, 242, 249, 1),
+        padding: const EdgeInsets.all(10.0),
         color: Colors.white,
         child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
                 MyCoursesWidget(
-                  onViewDetailsClicked: onPressedMyCourse,
-                ),
+                    onViewDetailsClicked: onPressedMyCourse,
+                    callCourseApi: callCourseApi),
                 const SizedBox(
                   height: 16,
                 ),
-                TopicOrLectureWidget(key: UniqueKey(),inspCards: state.allTopicsForSelectedCourse, onViewDetailsClicked: (BuildContext,INSPCardModel){}, heading: state.selectedItem.name),
+                TopicOrLectureWidget(
+                    key: UniqueKey(),
+                    onViewDetailsClicked: (BuildContext, INSPCardModel) {},
+                    heading: state.selectedItem.name,
+                    data: ""),
               ],
             )),
       ),
@@ -48,8 +54,10 @@ class MyCoursesScreen extends StatelessWidget {
   }
 
   static getScreen(INSPCardModel selectedItem) {
-    return getBaseScreen<MyCoursesAppState, MyCoursesScreen>(myCoursesStateReducer,
-        MyCoursesAppState(selectedItem: selectedItem), const MyCoursesScreen());
+    return getBaseScreen<MyCoursesAppState, MyCoursesScreen>(
+        myCoursesStateReducer,
+        MyCoursesAppState(selectedItem: selectedItem),
+        const MyCoursesScreen());
   }
 
   static dispatch(BuildContext context, dynamic action) {

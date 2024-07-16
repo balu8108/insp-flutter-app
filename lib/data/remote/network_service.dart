@@ -11,13 +11,13 @@ import 'package:retrofit/http.dart';
 import 'models/login/login_request_model.dart';
 import 'models/login/login_response_model.dart';
 import 'models/mycourses/all_lectures_for_course_response_model.dart';
+import 'models/upcomingclasses/all_lectures_for_upcoming_response_model.dart';
 
 part 'network_service.g.dart';
 
-  @RestApi(baseUrl: 'https://api.inspedu.in')
+@RestApi(baseUrl: 'https://dev.insp.1labventures.in')
 abstract class NetworkService {
-  factory NetworkService(Dio dio, {String baseUrl}) =
-      _NetworkService;
+  factory NetworkService(Dio dio, {String baseUrl}) = _NetworkService;
 
   @POST('https://inspedu.in/webservices/apis/login_app')
   Future<HttpResponse<LoginResponseModel>> deviceLogin(
@@ -39,6 +39,10 @@ abstract class NetworkService {
       getAllTopicsForMyCourse(
     @Body() PhysicsCourseTopicsRequestModel allTopicsForMyCourseRequestModel,
   );
+
+  @GET('/schedule-live-class/get-all')
+  Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
+      getAllUpcomingClasses(@Header('Authorization') String secretTokenHeader);
 
   @GET('/lecture/get-all-lecture/{classType}/{classLevel}')
   Future<HttpResponse<AllLecturesForCourseResponseModel>>

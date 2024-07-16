@@ -13,7 +13,7 @@ class _NetworkService implements NetworkService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://api.inspedu.in';
+    baseUrl ??= 'https://dev.insp.1labventures.in';
   }
 
   final Dio _dio;
@@ -138,6 +138,37 @@ class _NetworkService implements NetworkService {
               baseUrl,
             ))));
     final value = PhysicsCourseTopicsResponseModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
+      getAllUpcomingClasses(String secretTokenHeader) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<AllLecturesForUpcomingResponseModel>>(
+            Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+                .compose(
+                  _dio.options,
+                  '/schedule-live-class/get-all',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(
+                    baseUrl: _combineBaseUrls(
+                  _dio.options.baseUrl,
+                  baseUrl,
+                ))));
+    final value = AllLecturesForUpcomingResponseModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

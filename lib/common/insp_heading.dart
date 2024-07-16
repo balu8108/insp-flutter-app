@@ -16,7 +16,7 @@ Widget INSPHeading(String heading){
       ),
       Text(
         heading,
-          style: const TextStyle(fontSize: 20, overflow: TextOverflow.ellipsis))
+          style: const TextStyle(fontSize: 16, overflow: TextOverflow.ellipsis))
     ],
   );
 }

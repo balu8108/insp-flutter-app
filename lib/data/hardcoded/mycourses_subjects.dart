@@ -1,3 +1,5 @@
+import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
+
 import '../remote/models/mycourses/all_subjects_response_model.dart';
 
 const myCoursesDescriptions = [
@@ -36,4 +38,35 @@ const myAdditionalCourses = [
   AllSubjectsResponseModelResult('5', 'Class 11th'),
   AllSubjectsResponseModelResult('6', 'Class 12th'),
   AllSubjectsResponseModelResult('8', 'INPHO / Olympiads')
+];
+
+const myCoursesData = [
+  INSPCardModel(
+    '4',
+    'Insp champ crash course',
+    'In Progress',
+    "Embark on a transformative learning journey with our Insp_Champ_Crash Course. Designed for those seeking an accelerated and focused learning experience, this crash course is your gateway to mastering key concepts in a short span of time.",
+  ),
+  INSPCardModel('5', 'Insp foundation olympiad', 'In Progress',
+      "Prepare for the Olympiad journey with our Foundation Course, meticulously designed to ignite curiosity and foster problem-solving skills. Dive into advanced topics and lay a strong foundation for competitive examinations."),
+  INSPCardModel('6', 'Inpho / olympiads', 'In Progress',
+      "Unlock your Olympiad potential with our curated solo video series, tailored for INPHO and other prestigious competitions. Dive deep into physics concepts, problem-solving, and exam strategies to propel your journey towards excellence. Embark on a path of mastery and prepare to shine on the international stage."),
+  INSPCardModel(
+    '7',
+    'Class 11th',
+    'In Progress',
+    "Dive into the core concepts of Class 11th curriculum, designed to provide a solid foundation in physics, chemistry, and mathematics. Explore fundamental principles, solve intriguing problems, and embark on a journey of discovery.",
+  ),
+  INSPCardModel(
+    '8',
+    'Class 12th',
+    'In Progress',
+    "Explore the advanced topics of Class 12th curriculum, delving deeper into the realms of physics, chemistry, and mathematics. Engage with complex concepts, tackle challenging problems, and prepare yourself for academic excellence.",
+  ),
+  INSPCardModel('1', 'Physics', 'In Progress',
+      'Explore the fascinating world of Physics with a collection of resources covering classical mechanics, electromagnetism, thermodynamics, and quantum mechanics. Dive into the fundamental principles that govern the physical universe.'),
+  INSPCardModel('2', 'Mathematics', 'Upcoming',
+      'Discover the power of Mathematics with a variety of topics that range from algebra to calculus. Explore the world of numbers, equations, and mathematical concepts that underlie a wide range of scientific and practical applications.'),
+  INSPCardModel('3', 'Chemistry', 'Upcoming',
+      'Delve into the realm of Chemistry, where you can learn about chemical reactions, the periodic table, bonding, and the intriguing properties of matter. Discover the secrets of the elements and compounds that make up our world'),
 ];

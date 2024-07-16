@@ -10,6 +10,7 @@ import 'models/login/login_request_model.dart';
 import 'models/login/login_response_model.dart';
 import 'models/mycourses/physics_course_topics_request_model.dart';
 import 'models/mycourses/physics_course_topics_response_model.dart';
+import 'models/upcomingclasses/all_lectures_for_upcoming_response_model.dart';
 import 'network_service.dart';
 
 abstract class RemoteDataSource {
@@ -27,6 +28,9 @@ abstract class RemoteDataSource {
   Future<HttpResponse<PhysicsCourseTopicsResponseModel>>
       getAllTopicsForMyCourse(
           PhysicsCourseTopicsRequestModel allTopicsForMyCourseRequestModel);
+
+  Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
+      getAllUpcomingClasses(String secretTokenHeader);
 
   Future<HttpResponse<AllLecturesForCourseResponseModel>>
       getAllLecturesForCourse(
@@ -61,6 +65,12 @@ class RemoteDataSourceImpl implements RemoteDataSource {
           PhysicsCourseTopicsRequestModel allTopicsForMyCourseRequestModel) {
     return deviceNetworkService
         .getAllTopicsForMyCourse(allTopicsForMyCourseRequestModel);
+  }
+
+  @override
+  Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
+      getAllUpcomingClasses(String secretTokenHeader) {
+    return deviceNetworkService.getAllUpcomingClasses(secretTokenHeader);
   }
 
   @override

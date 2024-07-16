@@ -4,8 +4,7 @@ part 'insp_card_model.g.dart';
 
 @JsonSerializable()
 class INSPCardModel {
-  const INSPCardModel(this.id, this.name, this.status,
-      this.description);
+  const INSPCardModel(this.id, this.name, this.status, this.description);
 
   final String id, name, status, description;
 

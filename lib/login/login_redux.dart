@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:inspflutterfrontend/home/home_screen.dart';
 import 'package:inspflutterfrontend/login/login_screen.dart';
@@ -27,7 +28,10 @@ part 'login_redux.freezed.dart';
 @freezed
 class LoginAppState with _$LoginAppState {
   const factory LoginAppState(
-      [@Default('') String emailId,@Default('') String password,@Default(false) bool isPasswordVisible,@Default(false) bool isLoading]) = _LoginAppState;
+      [@Default('') String emailId,
+      @Default('') String password,
+      @Default(false) bool isPasswordVisible,
+      @Default(false) bool isLoading]) = _LoginAppState;
 }
 
 sealed class LoginAction {}
@@ -74,7 +78,7 @@ LoginAppState _loginStateReducer(LoginAppState state, LoginAction action) {
 }
 
 LoginAppState loginStateReducer(LoginAppState state, dynamic action) {
-  var upState =  _loginStateReducer(state, action);
+  var upState = _loginStateReducer(state, action);
   if (kDebugMode) {
     print(upState);
   }
@@ -83,79 +87,107 @@ LoginAppState loginStateReducer(LoginAppState state, dynamic action) {
 
 ThunkAction<LoginAppState> handleLogin(BuildContext context) {
   return (Store<LoginAppState> store) async {
-    if(store.state.password.isNotEmpty && store.state.emailId.isNotEmpty) {
+    if (store.state.password.isNotEmpty && store.state.emailId.isNotEmpty) {
       LoginScreen.dispatch(context, UpdateIsLoading(isLoading: true));
-      final loginRemoteDataSource = RemoteDataSource();
-      final loginRequestModel = LoginRequestModel(
-        secret_key: secretKey,
-        email: store.state.emailId,
-        password: store.state.password,
-        device_os: 'windows',
-        device_width: '1366',
-        device_height: '768',
-        device_manufacturer: 'HP',
-        device_id: 'D123',
-        device_uuid: 'UUID123',);
-      final HttpResponse<
-          LoginResponseModel> result = await loginRemoteDataSource.deviceLogin(
-          loginRequestModel);
+      // final loginRemoteDataSource = RemoteDataSource();
+      // final loginRequestModel = LoginRequestModel(
+      //     secret_key: secretKey,
+      //     email: store.state.emailId,
+      //     password: store.state.password,
+      //     device_os: 'windows',
+      //     device_width: '1366',
+      //     device_height: '768',
+      //     device_manufacturer: 'HP',
+      //     device_id: 'D123d',
+      //     device_uuid: 'UUID123');
+      // final HttpResponse<LoginResponseModel> result =
+      //     await loginRemoteDataSource.deviceLogin(loginRequestModel);
+
+      final sharedPrefs = await SharedPreferences.getInstance();
+      await sharedPrefs.setString(
+          'insp_user_profile',
+          jsonEncode({
+            "status": true,
+            "response_message": "Login Successful...",
+            "result": {
+              "id": "3",
+              "name": "Teacher",
+              "mobile": "9976543210",
+              "email": "teacher@gmail.com",
+              "token": "4fabec5787c233b621e5cacc9f9e8bb5",
+              "status": "1",
+              "paid_status": 0,
+              "user_type": 1
+            }
+          }));
 
       if (kDebugMode) {
-        print(result.response.statusCode);
-        print(result.data);
+        print(sharedPrefs.getString('insp_user_profile') ?? '');
       }
 
-      if (result.response.statusCode == 201) {
-        if (result.data.status == true) {
-          final sharedPrefs = await SharedPreferences.getInstance();
-          await sharedPrefs.setString('insp_user_profile',
-              jsonEncode(result.data.loginResponseModelResult.toJson()));
+      INSPCardModel inspCardModel = const INSPCardModel("", "", "", "");
 
-          if (kDebugMode) {
-            print(sharedPrefs.getString('insp_user_profile') ?? '');
-          }
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomeScreen.getScreen(inspCardModel)));
 
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-        } else {
-          LoginScreen.dispatch(context, UpdateIsLoading(isLoading: false));
-          Fluttertoast.showToast(
-              msg: "Invalid credentials",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              fontSize: 16.0
-          );
-        }
-      } else {
-        LoginScreen.dispatch(context, UpdateIsLoading(isLoading: false));
-        Fluttertoast.showToast(
-            msg: "error logging in",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            fontSize: 16.0
-        );
-      }
+      // if (result.response.statusCode == 201) {
+      //   if (result.data.status == true) {
+      //     final sharedPrefs = await SharedPreferences.getInstance();
+      //     await sharedPrefs.setString('insp_user_profile',
+      //         jsonEncode(result.data.loginResponseModelResult.toJson()));
+
+      //     if (kDebugMode) {
+      //       print(sharedPrefs.getString('insp_user_profile') ?? '');
+      //     }
+
+      //     INSPCardModel inspCardModel = const INSPCardModel("", "", "", "");
+
+      //     Navigator.push(
+      //         context,
+      //         MaterialPageRoute(
+      //             builder: (context) => HomeScreen.getScreen(inspCardModel)));
+      //   } else {
+      //     LoginScreen.dispatch(context, UpdateIsLoading(isLoading: false));
+      //     Fluttertoast.showToast(
+      //         msg: "Invalid credentials",
+      //         toastLength: Toast.LENGTH_SHORT,
+      //         gravity: ToastGravity.CENTER,
+      //         timeInSecForIosWeb: 1,
+      //         fontSize: 16.0);
+      //   }
+      // } else {
+      //   LoginScreen.dispatch(context, UpdateIsLoading(isLoading: false));
+      //   Fluttertoast.showToast(
+      //       msg: "error logging in",
+      //       toastLength: Toast.LENGTH_SHORT,
+      //       gravity: ToastGravity.CENTER,
+      //       timeInSecForIosWeb: 1,
+      //       fontSize: 16.0);
+      // }
     } else {
       Fluttertoast.showToast(
           msg: "Please add credentials",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
-          fontSize: 16.0
-      );
+          fontSize: 16.0);
     }
   };
 }
-
 
 ThunkAction<LoginAppState> navigateToHomeIfLoggedIn(BuildContext context) {
   return (Store<LoginAppState> store) async {
     final sharedPrefs = await SharedPreferences.getInstance();
 
-    if((sharedPrefs.getString('insp_user_profile') ?? '').isNotEmpty) {
+    INSPCardModel inspCardModel = const INSPCardModel("", "", "", "");
+
+    if ((sharedPrefs.getString('insp_user_profile') ?? '').isNotEmpty) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomeScreen.getScreen(inspCardModel)));
     }
   };
 }

@@ -16,10 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LecturesWidgetAppState {
-  List<INSPCardModel> get allTopicsForSelectedCourse =>
+  List<LectureCardModel> get allLectureForSelectedCourse =>
       throw _privateConstructorUsedError;
   String get query => throw _privateConstructorUsedError;
-  List<INSPCardModel> get filteredTopicsForSelectedCourse =>
+  List<LectureCardModel> get filteredLectureForSelectedCourse =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -34,9 +34,9 @@ abstract class $LecturesWidgetAppStateCopyWith<$Res> {
       _$LecturesWidgetAppStateCopyWithImpl<$Res, LecturesWidgetAppState>;
   @useResult
   $Res call(
-      {List<INSPCardModel> allTopicsForSelectedCourse,
+      {List<LectureCardModel> allLectureForSelectedCourse,
       String query,
-      List<INSPCardModel> filteredTopicsForSelectedCourse});
+      List<LectureCardModel> filteredLectureForSelectedCourse});
 }
 
 /// @nodoc
@@ -53,23 +53,23 @@ class _$LecturesWidgetAppStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? allTopicsForSelectedCourse = null,
+    Object? allLectureForSelectedCourse = null,
     Object? query = null,
-    Object? filteredTopicsForSelectedCourse = null,
+    Object? filteredLectureForSelectedCourse = null,
   }) {
     return _then(_value.copyWith(
-      allTopicsForSelectedCourse: null == allTopicsForSelectedCourse
-          ? _value.allTopicsForSelectedCourse
-          : allTopicsForSelectedCourse // ignore: cast_nullable_to_non_nullable
-              as List<INSPCardModel>,
+      allLectureForSelectedCourse: null == allLectureForSelectedCourse
+          ? _value.allLectureForSelectedCourse
+          : allLectureForSelectedCourse // ignore: cast_nullable_to_non_nullable
+              as List<LectureCardModel>,
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
               as String,
-      filteredTopicsForSelectedCourse: null == filteredTopicsForSelectedCourse
-          ? _value.filteredTopicsForSelectedCourse
-          : filteredTopicsForSelectedCourse // ignore: cast_nullable_to_non_nullable
-              as List<INSPCardModel>,
+      filteredLectureForSelectedCourse: null == filteredLectureForSelectedCourse
+          ? _value.filteredLectureForSelectedCourse
+          : filteredLectureForSelectedCourse // ignore: cast_nullable_to_non_nullable
+              as List<LectureCardModel>,
     ) as $Val);
   }
 }
@@ -84,9 +84,9 @@ abstract class _$$LecturesWidgetAppStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<INSPCardModel> allTopicsForSelectedCourse,
+      {List<LectureCardModel> allLectureForSelectedCourse,
       String query,
-      List<INSPCardModel> filteredTopicsForSelectedCourse});
+      List<LectureCardModel> filteredLectureForSelectedCourse});
 }
 
 /// @nodoc
@@ -102,23 +102,23 @@ class __$$LecturesWidgetAppStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? allTopicsForSelectedCourse = null,
+    Object? allLectureForSelectedCourse = null,
     Object? query = null,
-    Object? filteredTopicsForSelectedCourse = null,
+    Object? filteredLectureForSelectedCourse = null,
   }) {
     return _then(_$LecturesWidgetAppStateImpl(
-      allTopicsForSelectedCourse: null == allTopicsForSelectedCourse
-          ? _value._allTopicsForSelectedCourse
-          : allTopicsForSelectedCourse // ignore: cast_nullable_to_non_nullable
-              as List<INSPCardModel>,
+      allLectureForSelectedCourse: null == allLectureForSelectedCourse
+          ? _value._allLectureForSelectedCourse
+          : allLectureForSelectedCourse // ignore: cast_nullable_to_non_nullable
+              as List<LectureCardModel>,
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
               as String,
-      filteredTopicsForSelectedCourse: null == filteredTopicsForSelectedCourse
-          ? _value._filteredTopicsForSelectedCourse
-          : filteredTopicsForSelectedCourse // ignore: cast_nullable_to_non_nullable
-              as List<INSPCardModel>,
+      filteredLectureForSelectedCourse: null == filteredLectureForSelectedCourse
+          ? _value._filteredLectureForSelectedCourse
+          : filteredLectureForSelectedCourse // ignore: cast_nullable_to_non_nullable
+              as List<LectureCardModel>,
     ));
   }
 }
@@ -127,38 +127,38 @@ class __$$LecturesWidgetAppStateImplCopyWithImpl<$Res>
 
 class _$LecturesWidgetAppStateImpl implements _LecturesWidgetAppState {
   const _$LecturesWidgetAppStateImpl(
-      {final List<INSPCardModel> allTopicsForSelectedCourse = const [],
+      {final List<LectureCardModel> allLectureForSelectedCourse = const [],
       this.query = '',
-      final List<INSPCardModel> filteredTopicsForSelectedCourse = const []})
-      : _allTopicsForSelectedCourse = allTopicsForSelectedCourse,
-        _filteredTopicsForSelectedCourse = filteredTopicsForSelectedCourse;
+      final List<LectureCardModel> filteredLectureForSelectedCourse = const []})
+      : _allLectureForSelectedCourse = allLectureForSelectedCourse,
+        _filteredLectureForSelectedCourse = filteredLectureForSelectedCourse;
 
-  final List<INSPCardModel> _allTopicsForSelectedCourse;
+  final List<LectureCardModel> _allLectureForSelectedCourse;
   @override
   @JsonKey()
-  List<INSPCardModel> get allTopicsForSelectedCourse {
-    if (_allTopicsForSelectedCourse is EqualUnmodifiableListView)
-      return _allTopicsForSelectedCourse;
+  List<LectureCardModel> get allLectureForSelectedCourse {
+    if (_allLectureForSelectedCourse is EqualUnmodifiableListView)
+      return _allLectureForSelectedCourse;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_allTopicsForSelectedCourse);
+    return EqualUnmodifiableListView(_allLectureForSelectedCourse);
   }
 
   @override
   @JsonKey()
   final String query;
-  final List<INSPCardModel> _filteredTopicsForSelectedCourse;
+  final List<LectureCardModel> _filteredLectureForSelectedCourse;
   @override
   @JsonKey()
-  List<INSPCardModel> get filteredTopicsForSelectedCourse {
-    if (_filteredTopicsForSelectedCourse is EqualUnmodifiableListView)
-      return _filteredTopicsForSelectedCourse;
+  List<LectureCardModel> get filteredLectureForSelectedCourse {
+    if (_filteredLectureForSelectedCourse is EqualUnmodifiableListView)
+      return _filteredLectureForSelectedCourse;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_filteredTopicsForSelectedCourse);
+    return EqualUnmodifiableListView(_filteredLectureForSelectedCourse);
   }
 
   @override
   String toString() {
-    return 'LecturesWidgetAppState(allTopicsForSelectedCourse: $allTopicsForSelectedCourse, query: $query, filteredTopicsForSelectedCourse: $filteredTopicsForSelectedCourse)';
+    return 'LecturesWidgetAppState(allLectureForSelectedCourse: $allLectureForSelectedCourse, query: $query, filteredLectureForSelectedCourse: $filteredLectureForSelectedCourse)';
   }
 
   @override
@@ -167,20 +167,20 @@ class _$LecturesWidgetAppStateImpl implements _LecturesWidgetAppState {
         (other.runtimeType == runtimeType &&
             other is _$LecturesWidgetAppStateImpl &&
             const DeepCollectionEquality().equals(
-                other._allTopicsForSelectedCourse,
-                _allTopicsForSelectedCourse) &&
+                other._allLectureForSelectedCourse,
+                _allLectureForSelectedCourse) &&
             (identical(other.query, query) || other.query == query) &&
             const DeepCollectionEquality().equals(
-                other._filteredTopicsForSelectedCourse,
-                _filteredTopicsForSelectedCourse));
+                other._filteredLectureForSelectedCourse,
+                _filteredLectureForSelectedCourse));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_allTopicsForSelectedCourse),
+      const DeepCollectionEquality().hash(_allLectureForSelectedCourse),
       query,
-      const DeepCollectionEquality().hash(_filteredTopicsForSelectedCourse));
+      const DeepCollectionEquality().hash(_filteredLectureForSelectedCourse));
 
   @JsonKey(ignore: true)
   @override
@@ -192,17 +192,17 @@ class _$LecturesWidgetAppStateImpl implements _LecturesWidgetAppState {
 
 abstract class _LecturesWidgetAppState implements LecturesWidgetAppState {
   const factory _LecturesWidgetAppState(
-          {final List<INSPCardModel> allTopicsForSelectedCourse,
+          {final List<LectureCardModel> allLectureForSelectedCourse,
           final String query,
-          final List<INSPCardModel> filteredTopicsForSelectedCourse}) =
+          final List<LectureCardModel> filteredLectureForSelectedCourse}) =
       _$LecturesWidgetAppStateImpl;
 
   @override
-  List<INSPCardModel> get allTopicsForSelectedCourse;
+  List<LectureCardModel> get allLectureForSelectedCourse;
   @override
   String get query;
   @override
-  List<INSPCardModel> get filteredTopicsForSelectedCourse;
+  List<LectureCardModel> get filteredLectureForSelectedCourse;
   @override
   @JsonKey(ignore: true)
   _$$LecturesWidgetAppStateImplCopyWith<_$LecturesWidgetAppStateImpl>

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
+import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
 import 'package:inspflutterfrontend/lectureswidget/topic_or_lecture_widget_screen.dart';
 import 'package:inspflutterfrontend/library/library_redux.dart';
 import 'package:inspflutterfrontend/librarywidget/library_widget_screen.dart';
 
 import '../base/base.dart';
-import '../data/hardcoded/library_subjects.dart';
 
 class LibraryScreen extends StatelessWidget {
   const LibraryScreen({super.key});
@@ -18,9 +18,9 @@ class LibraryScreen extends StatelessWidget {
         BuildContext context, INSPCardModel inspCardModel) {
       dispatch(context, showTopicsForSubject(context, inspCardModel));
     }
-    void onSearchQueryEntered(String text){
-      dispatch(context,
-          filterWithQueryText(context, text));
+
+    void onSearchQueryEntered(String text) {
+      dispatch(context, filterWithQueryText(context, text));
     }
 
     dispatch(context, initialFetchTopics(context));
@@ -29,7 +29,6 @@ class LibraryScreen extends StatelessWidget {
       converter: (store) => store.state,
       builder: (context, LibraryAppState state) => Container(
         padding: const EdgeInsets.all(32.0),
-        //color: const Color.fromRGBO(232, 242, 249, 1),
         color: Colors.white,
         child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -39,7 +38,11 @@ class LibraryScreen extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                TopicOrLectureWidget(key: UniqueKey(),inspCards: state.allTopicsForSelectedSubject, onViewDetailsClicked: (BuildContext,INSPCardModel){}, heading: state.selectedItem.name),
+                TopicOrLectureWidget(
+                    key: UniqueKey(),
+                    onViewDetailsClicked: (BuildContext, INSPCardModel) {},
+                    heading: state.selectedItem.name,
+                    data: state.selectedItem.name),
               ],
             )),
       ),

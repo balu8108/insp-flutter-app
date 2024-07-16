@@ -85,7 +85,8 @@ MyCoursesAppState _myCoursesStateReducer(
   }
 }
 
-MyCoursesAppState myCoursesStateReducer(MyCoursesAppState state, dynamic action) {
+MyCoursesAppState myCoursesStateReducer(
+    MyCoursesAppState state, dynamic action) {
   var upState = _myCoursesStateReducer(state, action);
   if (kDebugMode) {
     print(upState.allTopicsForSelectedCourse);
@@ -149,8 +150,6 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
     } else if (selectedCardName.contains('physics')) {
       final allTopics = await remoteDataSource.getAllTopicsForMyCourse(
           const PhysicsCourseTopicsRequestModel(secret_key: secretKey));
-      print(allTopics.response.statusCode);
-      print(allTopics.data);
       if (allTopics.response.statusCode == 201 &&
           allTopics.data.status == true) {
         final allTopicsForSubject = allTopics
@@ -163,7 +162,6 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
                 .toList() ??
             [];
 
-        print(allTopicsForSubject);
         MyCoursesScreen.dispatch(
             context,
             UpdateAllTopicsForSelectedCourse(
@@ -193,25 +191,22 @@ void updateEmptyTopicsForSelectedCourse(BuildContext context) {
 ThunkAction<MyCoursesAppState> getMyCourses(BuildContext context) {
   return (Store<MyCoursesAppState> store) async {
     final remoteDataSource = RemoteDataSource();
-    final allSubjects = await remoteDataSource.getAllSubjects(
-        const AllSubjectsRequestModel(
-            secret_key: secretKey));
+    final allSubjects = await remoteDataSource
+        .getAllSubjects(const AllSubjectsRequestModel(secret_key: secretKey));
     if (allSubjects.data.status == true) {
       var allSubjectsResults = allSubjects.data.allSubjectsResponseModelResults;
-      allSubjectsResults = [
-        ...allSubjectsResults, ...myAdditionalCourses];
+      allSubjectsResults = [...myAdditionalCourses, ...allSubjectsResults];
 
       final inspCardModels = allSubjectsResults.reversed
           .map((allSubjectResult) => INSPCardModel(
-          allSubjectResult.id ?? '',
-          (allSubjectResult.name ?? '').capitalizeFirstLetter(),
+              allSubjectResult.id ?? '',
+              (allSubjectResult.name ?? '').capitalizeFirstLetter(),
               subjectStatus[8 - int.parse(allSubjectResult.id ?? '1')],
-              myCoursesDescriptions[
-                  8 - int.parse(allSubjectResult.id ?? '1')]))
+              myCoursesDescriptions[8 - int.parse(allSubjectResult.id ?? '1')]))
           .toList();
       MyCoursesScreen.dispatch(
           context, UpdateMyCoursesSubjects(inspCardModels: inspCardModels));
-        }
+    }
   };
 }
 

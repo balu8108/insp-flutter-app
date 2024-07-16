@@ -40,7 +40,8 @@ class AllLecturesForCourseResponseModelData {
       this.classLevel = '',
       this.createdAt = '',
       this.updatedAt = '',
-      this.liveClassRoomDetail = const LiveClassRoomDetail()]);
+      this.liveClassRoomDetail = const LiveClassRoomDetail(),
+      this.liveClassRoomFiles = const []]);
 
   final int id;
   final String roomId,
@@ -59,6 +60,8 @@ class AllLecturesForCourseResponseModelData {
       classLevel,
       createdAt,
       updatedAt;
+  @JsonKey(name: 'LiveClassRoomFiles')
+  final List<LiveClassRoomFile> liveClassRoomFiles;
   @JsonKey(name: 'LiveClassRoomDetail')
   final LiveClassRoomDetail liveClassRoomDetail;
 
@@ -96,4 +99,28 @@ class LiveClassRoomDetail {
 
   @override
   Map<String, dynamic> toJson() => _$LiveClassRoomDetailToJson(this);
+}
+
+@JsonSerializable()
+class LiveClassRoomFile {
+  const LiveClassRoomFile(
+      [this.id = 0,
+      this.key = '',
+      this.isDownloadable = false,
+      this.isShareable = false,
+      this.classRoomId = 0,
+      this.createdAt = '',
+      this.updatedAt = '']);
+
+  final int id;
+  final String key;
+  final bool isDownloadable, isShareable;
+  final int classRoomId;
+  final String createdAt, updatedAt;
+
+  factory LiveClassRoomFile.fromJson(Map<String, Object?> json) =>
+      _$LiveClassRoomFileFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$LiveClassRoomFileToJson(this);
 }

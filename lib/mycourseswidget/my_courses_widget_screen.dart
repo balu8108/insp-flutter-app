@@ -11,13 +11,17 @@ import '../data/remote/models/mycourses/all_subjects_request_model.dart';
 import '../data/remote/remote_data_source.dart';
 
 class MyCoursesWidget extends StatefulWidget {
-  const MyCoursesWidget({super.key, required this.onViewDetailsClicked});
+  const MyCoursesWidget(
+      {super.key,
+      required this.onViewDetailsClicked,
+      required this.callCourseApi});
 
   final void Function(BuildContext, INSPCardModel) onViewDetailsClicked;
+  final void Function() callCourseApi;
 
   @override
   State<StatefulWidget> createState() {
-    return MyCoursesWidgetState(onViewDetailsClicked);
+    return MyCoursesWidgetState(onViewDetailsClicked, callCourseApi);
   }
 }
 
@@ -25,9 +29,10 @@ class MyCoursesWidgetState extends State<MyCoursesWidget> {
   MyCoursesWidgetAppState myCoursesWidgetAppState =
       const MyCoursesWidgetAppState();
 
-  MyCoursesWidgetState(this.onViewDetailsClicked);
+  MyCoursesWidgetState(this.onViewDetailsClicked, this.callCourseApi);
 
   final void Function(BuildContext, INSPCardModel) onViewDetailsClicked;
+  final void Function() callCourseApi;
 
   void updateState(MyCoursesWidgetAppState myCoursesWidgetAppState) {
     setState(() {
@@ -35,45 +40,13 @@ class MyCoursesWidgetState extends State<MyCoursesWidget> {
     });
   }
 
-  void getAllSubjects() async {
-    final remoteDataSource = RemoteDataSource();
-    final allSubjects = await remoteDataSource
-        .getAllSubjects(const AllSubjectsRequestModel(secret_key: secretKey));
-    if (allSubjects.data.status == true) {
-      var allSubjectsResults = allSubjects.data.allSubjectsResponseModelResults;
-      allSubjectsResults = [...allSubjectsResults, ...myAdditionalCourses];
-
-      debugPrint(allSubjectsResults.toString());
-      final inspCardModels = allSubjectsResults.reversed
-          .map((allSubjectResult) => INSPCardModel(
-              allSubjectResult.id ?? '',
-              (allSubjectResult.name ?? '').capitalizeFirstLetter(),
-              subjectStatus[8 - int.parse(allSubjectResult.id ?? '1')],
-              myCoursesDescriptions[
-                  8 - int.parse(allSubjectResult.id ?? '1')]))
-          .toList();
-
-      updateState(myCoursesWidgetAppState.copyWith(
-          myCoursesInspCardModels: inspCardModels));
-        }
-  }
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getAllSubjects();
+    // callCourseApi();
+    updateState(myCoursesWidgetAppState.copyWith(
+        myCoursesInspCardModels: myCoursesData));
   }
-
-  /*void navigateToMyCourses(
-      BuildContext context, INSPCardModel inspCardModel) {
-
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => MyCoursesScreen.getScreen(inspCardModel)));
-
-  }*/
 
   @override
   Widget build(BuildContext context) {
