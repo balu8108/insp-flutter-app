@@ -5,6 +5,7 @@ import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_re
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/physics_course_topics_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/physics_course_topics_response_model.dart';
+import 'package:inspflutterfrontend/data/remote/models/soloclasses/latest_solo_classes_response_model.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
 
@@ -39,6 +40,10 @@ abstract class NetworkService {
       getAllTopicsForMyCourse(
     @Body() PhysicsCourseTopicsRequestModel allTopicsForMyCourseRequestModel,
   );
+
+  @GET('/solo-lecture/latest-room')
+  Future<HttpResponse<LatestSoloClassesResponseModel>> getLatestSoloClasses(
+      @Header('Authorization') String secretTokenHeader);
 
   @GET('/schedule-live-class/get-all')
   Future<HttpResponse<AllLecturesForUpcomingResponseModel>>

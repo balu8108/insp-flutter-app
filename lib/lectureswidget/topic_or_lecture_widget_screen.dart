@@ -140,10 +140,6 @@ class TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
                           context: context,
                           onPressedViewDetails: (LectureCardModel) {});
                     }
-                    // return INSPCard(
-                    //     inspCardModel: cardModel,
-                    //     context: context,
-                    //     onPressedViewDetails: (BuildContext, INSPCardModel) {});
                   },
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: context.isWebOrLandScape() ? 3 : 1,

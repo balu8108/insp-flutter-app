@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/common/extensions.dart';
-import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
+import 'package:inspflutterfrontend/common/model/latest_solo_class_card_model.dart';
 
-Widget INSPCard(
-    {required INSPCardModel inspCardModel,
-    required BuildContext context,
-    required Function(BuildContext, INSPCardModel) onPressedViewDetails}) {
+Widget LatestSoloClassCard(
+    {required LatestSoloClassCardModel soloCardModel,
+    required BuildContext context}) {
   return Card(
     elevation: 0,
     color: Colors.white,
@@ -20,7 +19,7 @@ Widget INSPCard(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            inspCardModel.name,
+            soloCardModel.topic,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
@@ -29,12 +28,8 @@ Widget INSPCard(
                 color: Color(0xFF2C3329)),
           ),
           Text(
-            inspCardModel.status,
-            style: TextStyle(
-                color: inspCardModel.status == 'In Progress'
-                    ? const Color(0xFF3DE302)
-                    : const Color(0x782C3329),
-                fontSize: 12),
+            soloCardModel.mentorName,
+            style: const TextStyle(color: Color(0x782C3329), fontSize: 12),
           ),
           const SizedBox(
             height: 16,
@@ -47,7 +42,7 @@ Widget INSPCard(
                 fontWeight: FontWeight.w400),
           ),
           Text(
-            inspCardModel.description,
+            soloCardModel.description,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
@@ -60,9 +55,8 @@ Widget INSPCard(
           ),
           Center(
               child: TextButton(
-
                   onPressed: () {
-                    onPressedViewDetails(context, inspCardModel);
+                    // onPressedViewDetails(context, inspCardModel);
                   },
                   child: const Text(
                     'View Details',

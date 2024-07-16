@@ -37,7 +37,7 @@ class MyCoursesWidgetState extends State {
   // call an API of get all subjects
   void getAllLecture() async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token eda273533eb416ca0316d537a60e9a23';
+    const token = 'Token 5974570aeed03bea4665fc2fd91829f2';
     final allLecture = await remoteDataSource.getAllUpcomingClasses(token);
     if (allLecture.data.data is Object) {
       var allSubjectsResults = allLecture.data.data;
@@ -57,8 +57,6 @@ class MyCoursesWidgetState extends State {
     getAllLecture();
   }
 
-
-
   List<AllLecturesForCourseResponseModelData> getUpcomingData(label) {
     if (label == 'Ongoing') {
       return upcomingWidgetAppState.ongoing;
@@ -71,41 +69,42 @@ class MyCoursesWidgetState extends State {
     }
   }
 
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: const Color.fromRGBO(232, 242, 249, 1),
-      ),
-      child: SizedBox(
-        height: 700,
-        child: classCategories.isNotEmpty
-            ? Scrollbar(
-                child: ListView.separated(
-                  scrollDirection: Axis.vertical,
-                  itemCount: classCategories.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        INSPHeading(classCategories[index].label),
-                        ScheduleClassBox(
-                            type: classCategories[index].label,
-                            upcomingData:
-                                getUpcomingData(classCategories[index].category)),
-                      ],
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      width: 17,
-                    );
-                  },
-                ),
-              )
-            : const Center(child: Text('No items')),
-      ),
-    );
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: const Color.fromRGBO(232, 242, 249, 1),
+        ),
+        child: SizedBox(
+          height: 700,
+          child: Container(
+            child: classCategories.isNotEmpty
+                ? ListView.separated(
+                    controller:
+                        _scrollController, // Assign the ScrollController
+                    scrollDirection: Axis.vertical,
+                    itemCount: classCategories.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Column(
+                        children: [
+                          INSPHeading(classCategories[index].label),
+                          ScheduleClassBox(
+                              type: classCategories[index].label,
+                              upcomingData: getUpcomingData(classCategories[index].category)),
+                        ],
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        width: 17,
+                      );
+                    })
+                : const Center(child: Text('No items')),
+          ),
+        ));
   }
 }

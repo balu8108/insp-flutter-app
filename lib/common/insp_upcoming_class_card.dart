@@ -4,7 +4,6 @@ import 'package:inspflutterfrontend/common/file_box_component.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/utils/capitalize.dart';
 import 'package:inspflutterfrontend/utils/timeconvert.dart';
-import 'package:intl/intl.dart';
 
 import 'button/join_class.dart';
 
@@ -55,154 +54,164 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                       Card(
                           key: UniqueKey(),
                           color: Colors.white,
-                          child: Container(
-                            width: context.isWebOrLandScape()
-                                ? MediaQuery.of(context).size.width / 3
-                                : MediaQuery.of(context).size.width * 0.6,
-                            padding: const EdgeInsets.all(16),
-                            child: Stack(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Stack(children: [
+                            Container(
+                                width: context.isWebOrLandScape()
+                                    ? MediaQuery.of(context).size.width / 3
+                                    : MediaQuery.of(context).size.width * 0.6,
+                                padding: const EdgeInsets.all(16),
+                                child: Stack(
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Tooltip(
-                                          message: upcomingData[index]
-                                .liveClassRoomDetail
-                                .topicName == ""? "General": capitalizeFirstLetter(
-                                              upcomingData[index]
-                                                  .liveClassRoomDetail
-                                                  .topicName),
-                                          child: Text(
-                                            upcomingData[index]
-                                                .liveClassRoomDetail
-                                                .topicName == ""? "General": capitalizeFirstLetter(
-                                                upcomingData[index]
-                                                    .liveClassRoomDetail
-                                                    .topicName),
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 14,
-                                              color: Color(0xFF2C3329),
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        Text(
-                                          '$scheduledStartTime - $scheduledEndTime',
-                                          style: const TextStyle(
-                                            fontSize: 10,
-                                            color: Color.fromRGBO(
-                                                44, 51, 41, 0.47),
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 6,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          upcomingData[index].mentorName,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 10,
-                                            color: Color.fromRGBO(
-                                                44, 51, 41, 0.47),
-                                          ),
-                                        ),
-                                        Text(
-                                          scheduledDate,
-                                          style: const TextStyle(
-                                            fontSize: 10,
-                                            color: Color.fromRGBO(
-                                                44, 51, 41, 0.47),
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 6,
-                                    ),
-                                    Text(
-                                      upcomingData[index].classLevel,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 10,
-                                        color: Color.fromRGBO(44, 51, 41, 0.47),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 16),
-                                      child: upcomingData[index]
-                                              .liveClassRoomFiles
-                                              .isNotEmpty
-                                          ? FileBoxComponent(
-                                              data: upcomingData[index]
-                                                  .liveClassRoomFiles,
-                                              type: "live",
-                                            )
-                                          : const Text(
-                                              'No Files',
-                                              style: TextStyle(fontSize: 12),
-                                            ),
-                                    ),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          descriptionText,
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Tooltip(
+                                              message: upcomingData[index]
+                                                          .liveClassRoomDetail
+                                                          .topicName ==
+                                                      ""
+                                                  ? "General"
+                                                  : capitalizeFirstLetter(
+                                                      upcomingData[index]
+                                                          .liveClassRoomDetail
+                                                          .topicName),
+                                              child: Text(
+                                                upcomingData[index]
+                                                            .liveClassRoomDetail
+                                                            .topicName ==
+                                                        ""
+                                                    ? "General"
+                                                    : capitalizeFirstLetter(
+                                                        upcomingData[index]
+                                                            .liveClassRoomDetail
+                                                            .topicName),
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 14,
+                                                  color: Color(0xFF2C3329),
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            Text(
+                                              '$scheduledStartTime - $scheduledEndTime',
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                                color: Color.fromRGBO(
+                                                    44, 51, 41, 0.47),
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 6,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              upcomingData[index].mentorName,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 10,
+                                                color: Color.fromRGBO(
+                                                    44, 51, 41, 0.47),
+                                              ),
+                                            ),
+                                            Text(
+                                              scheduledDate,
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                                color: Color.fromRGBO(
+                                                    44, 51, 41, 0.47),
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 6,
                                         ),
                                         Text(
-                                          upcomingData[index]
-                                              .liveClassRoomDetail
-                                              .description,
+                                          upcomingData[index].classLevel,
                                           style: const TextStyle(
-                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 10,
                                             color: Color.fromRGBO(
                                                 44, 51, 41, 0.47),
                                           ),
                                         ),
+                                        Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 16),
+                                          child: upcomingData[index]
+                                                  .liveClassRoomFiles
+                                                  .isNotEmpty
+                                              ? FileBoxComponent(
+                                                  data: upcomingData[index]
+                                                      .liveClassRoomFiles,
+                                                  type: "live",
+                                                )
+                                              : const Text(
+                                                  'No Files',
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                ),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              descriptionText,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            Text(
+                                              upcomingData[index]
+                                                  .liveClassRoomDetail
+                                                  .description,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Color.fromRGBO(
+                                                    44, 51, 41, 0.47),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        JoinClassBtn(
+                                          status:
+                                              upcomingData[index].classStatus,
+                                        ),
                                       ],
                                     ),
-                                    const SizedBox(
-                                      height: 16,
-                                    ),
-                                    JoinClassBtn(
-                                      status: upcomingData[index].classStatus,
-                                    ),
                                   ],
-                                ),
-                                // if (checkUserType(userProfile) == UserType.teacher && label != 1 && label != 4)
-                                // Positioned(
-                                //   top: 4,
-                                //   right: 4,
-                                //   child: IconButton(
-                                //     icon: Icon(Icons.edit),
-                                //     // onPressed: () {
-                                //     //   onSchedulePopupOpen();
-                                //     // },
-                                //     tooltip: 'Edit',
-                                //   ),
-                                // ),
-                              ],
+                                )),
+                            Positioned(
+                              top: 1,
+                              right: 1,
+                              child: IconButton(
+                                icon: Icon(Icons.edit, size: 16.0),
+                                onPressed: () {
+                                  // onSchedulePopupOpen();
+                                },
+                                tooltip: 'Edit',
+                              ),
                             ),
-                          ))
+                          ]))
                     ],
                   );
                 },

@@ -1,2 +1,2 @@
-const secretKeyToken = 'da4d4533509c046096c45ac0daba6e41';
+const secretKeyToken = '5974570aeed03bea4665fc2fd91829f2';
 const secretKey = 'U5Ga0Z1aaNlYHp0MjdEdXJ1aKVVVB1TP';

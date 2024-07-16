@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/common/extensions.dart';
-import 'package:inspflutterfrontend/common/insp_card.dart';
 import 'package:inspflutterfrontend/common/insp_heading.dart';
-import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/mycourseswidget/my_courses_widget_redux.dart';
 
 import '../data/hardcoded/mycourses_subjects.dart';
-import '../data/hardcoded/secret_key.dart';
-import '../data/remote/models/mycourses/all_subjects_request_model.dart';
-import '../data/remote/remote_data_source.dart';
 
-class AttendanceScreen extends StatefulWidget {
-  const AttendanceScreen({super.key});
+class RatingFeedbackScreen extends StatefulWidget {
+  const RatingFeedbackScreen({super.key});
   @override
   State<StatefulWidget> createState() {
     return MyCoursesWidgetState();
@@ -50,7 +44,7 @@ class MyCoursesWidgetState extends State {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            INSPHeading('Attendance'),
+            INSPHeading('Rating & Feedback'),
             const Text("See All",
                 style:
                     TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis)),
