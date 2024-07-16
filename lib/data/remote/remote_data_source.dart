@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:inspflutterfrontend/data/remote/models/assignment/latest_upload_assignment_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_response_model.dart';
@@ -36,6 +37,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<LatestCompletedClassesResponseModel>>
       getLatestCompletedClasses(String secretTokenHeader);
+
+  Future<HttpResponse<LatestUploadedAssignmentResponseModel>>
+      getLatestAssignment(String secretTokenHeader);
 
   Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
       getAllUpcomingClasses(String secretTokenHeader);
@@ -85,6 +89,12 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<HttpResponse<LatestCompletedClassesResponseModel>>
       getLatestCompletedClasses(String secretTokenHeader) {
     return deviceNetworkService.getLatestCompletedClasses(secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<LatestUploadedAssignmentResponseModel>>
+      getLatestAssignment(String secretTokenHeader) {
+    return deviceNetworkService.getLatestAssignment(secretTokenHeader);
   }
 
   @override

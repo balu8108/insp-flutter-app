@@ -1,35 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/common/insp_heading.dart';
-import 'package:inspflutterfrontend/mycourseswidget/my_courses_widget_redux.dart';
-
-import '../data/hardcoded/mycourses_subjects.dart';
+import 'package:inspflutterfrontend/common/latest_assignment_card.dart';
+import 'package:inspflutterfrontend/common/model/latest_assignment_card_model.dart';
+import 'package:inspflutterfrontend/data/remote/remote_data_source.dart';
+import 'package:inspflutterfrontend/myuploads/myupload_widget_redux.dart';
 
 class MyUploadScreen extends StatefulWidget {
   const MyUploadScreen({super.key});
   @override
   State<StatefulWidget> createState() {
-    return MyCoursesWidgetState();
+    return MyUploadWidgetState();
   }
 }
 
-class MyCoursesWidgetState extends State {
-  MyCoursesWidgetAppState myCoursesWidgetAppState =
-      const MyCoursesWidgetAppState();
+class MyUploadWidgetState extends State {
+  MyUploadWidgetAppState myUploadWidgetAppState =
+      const MyUploadWidgetAppState(myUploadData: []);
 
-  MyCoursesWidgetState();
+  MyUploadWidgetState();
 
-  void updateState(MyCoursesWidgetAppState myCoursesWidgetAppState) {
+  ScrollController _scrollController = ScrollController();
+
+  void updateState(MyUploadWidgetAppState myUploadWidgetAppState) {
     setState(() {
-      this.myCoursesWidgetAppState = myCoursesWidgetAppState;
+      this.myUploadWidgetAppState = myUploadWidgetAppState;
     });
+  }
+
+  // call an API of get all subjects
+  void getAllLatestAssignmentClasses() async {
+    final remoteDataSource = RemoteDataSource();
+    const token = 'Token 5974570aeed03bea4665fc2fd91829f2';
+    final latestAssignment = await remoteDataSource.getLatestAssignment(token);
+    if (latestAssignment.data.data.isNotEmpty) {
+      var allAssignmentResults = latestAssignment.data.data;
+
+      final latestSoloCardModels = allAssignmentResults
+          .map((latestAssignmentResult) => LatestAssignmentCardModel(
+              latestAssignmentResult.id.toString(),
+              latestAssignmentResult.topicName,
+              latestAssignmentResult.topicId,
+              latestAssignmentResult.instructorName,
+              latestAssignmentResult.description))
+          .toList();
+
+      updateState(
+          myUploadWidgetAppState.copyWith(myUploadData: latestSoloCardModels));
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    // callCourseApi();
-    updateState(myCoursesWidgetAppState.copyWith(
-        myCoursesInspCardModels: myCoursesData));
+    getAllLatestAssignmentClasses();
   }
 
   @override
@@ -53,7 +76,31 @@ class MyCoursesWidgetState extends State {
         const SizedBox(
           height: 17,
         ),
-        const Center(child: Text('No items')),
+        const SizedBox(
+          height: 17,
+        ),
+        SizedBox(
+            height: 200.0,
+            child: myUploadWidgetAppState.myUploadData.isNotEmpty
+                ? Scrollbar(
+                    controller: _scrollController,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: myUploadWidgetAppState.myUploadData.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return LatestAssignmentCard(
+                            assignmentCardModel:
+                                myUploadWidgetAppState.myUploadData[index],
+                            context: context);
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(
+                          width: 16,
+                        );
+                      },
+                    ),
+                  )
+                : const Center(child: Text('No item')))
       ]),
     );
   }

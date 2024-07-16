@@ -9,10 +9,11 @@ part of 'latest_completed_class_response_model.dart';
 LatestCompletedClassesResponseModel
     _$LatestCompletedClassesResponseModelFromJson(Map<String, dynamic> json) =>
         LatestCompletedClassesResponseModel(
-          data: (json['data'] as List<dynamic>)
-              .map((e) => LatestCompletedClassesModelData.fromJson(
-                  e as Map<String, dynamic>))
-              .toList(),
+          data: (json['data'] as List<dynamic>?)
+                  ?.map((e) => LatestCompletedClassesModelData.fromJson(
+                      e as Map<String, dynamic>))
+                  .toList() ??
+              const [],
         );
 
 Map<String, dynamic> _$LatestCompletedClassesResponseModelToJson(

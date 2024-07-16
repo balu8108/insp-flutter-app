@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:inspflutterfrontend/data/remote/models/assignment/latest_upload_assignment_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/library/all_topics_for_subject_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/library/all_topics_for_subject_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_request_model.dart';
@@ -50,6 +51,10 @@ abstract class NetworkService {
   Future<HttpResponse<LatestCompletedClassesResponseModel>>
       getLatestCompletedClasses(
           @Header('Authorization') String secretTokenHeader);
+
+  @GET('/assignment/latest-assignment')
+  Future<HttpResponse<LatestUploadedAssignmentResponseModel>>
+      getLatestAssignment(@Header('Authorization') String secretTokenHeader);
 
   @GET('/schedule-live-class/get-all')
   Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
