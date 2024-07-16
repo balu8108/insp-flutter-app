@@ -41,7 +41,15 @@ class MyCoursesWidgetState extends State {
         color: const Color.fromRGBO(232, 242, 249, 1),
       ),
       child: Column(children: [
-        INSPHeading('My Uploads'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            INSPHeading('My Uploads'),
+            const Text("+ Add Assignment",
+                style:
+                    TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis)),
+          ],
+        ),
         const SizedBox(
           height: 17,
         ),

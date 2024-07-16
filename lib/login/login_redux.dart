@@ -79,9 +79,7 @@ LoginAppState _loginStateReducer(LoginAppState state, LoginAction action) {
 
 LoginAppState loginStateReducer(LoginAppState state, dynamic action) {
   var upState = _loginStateReducer(state, action);
-  if (kDebugMode) {
-    print(upState);
-  }
+  if (kDebugMode) {}
   return upState;
 }
 
@@ -89,19 +87,19 @@ ThunkAction<LoginAppState> handleLogin(BuildContext context) {
   return (Store<LoginAppState> store) async {
     if (store.state.password.isNotEmpty && store.state.emailId.isNotEmpty) {
       LoginScreen.dispatch(context, UpdateIsLoading(isLoading: true));
-      // final loginRemoteDataSource = RemoteDataSource();
-      // final loginRequestModel = LoginRequestModel(
-      //     secret_key: secretKey,
-      //     email: store.state.emailId,
-      //     password: store.state.password,
-      //     device_os: 'windows',
-      //     device_width: '1366',
-      //     device_height: '768',
-      //     device_manufacturer: 'HP',
-      //     device_id: 'D123d',
-      //     device_uuid: 'UUID123');
-      // final HttpResponse<LoginResponseModel> result =
-      //     await loginRemoteDataSource.deviceLogin(loginRequestModel);
+      final loginRemoteDataSource = RemoteDataSource();
+      final loginRequestModel = LoginRequestModel(
+          secret_key: secretKey,
+          email: store.state.emailId,
+          password: store.state.password,
+          device_os: 'windows',
+          device_width: '1366',
+          device_height: '768',
+          device_manufacturer: 'HP',
+          device_id: 'D123d',
+          device_uuid: 'UUID123');
+      final HttpResponse<LoginResponseModel> result =
+          await loginRemoteDataSource.deviceLogin(loginRequestModel);
 
       final sharedPrefs = await SharedPreferences.getInstance();
       await sharedPrefs.setString(
@@ -122,7 +120,7 @@ ThunkAction<LoginAppState> handleLogin(BuildContext context) {
           }));
 
       if (kDebugMode) {
-        print(sharedPrefs.getString('insp_user_profile') ?? '');
+        print('');
       }
 
       INSPCardModel inspCardModel = const INSPCardModel("", "", "", "");

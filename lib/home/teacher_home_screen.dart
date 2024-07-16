@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/assignmentwidget/assignment_widget_screen.dart';
-import 'package:inspflutterfrontend/attendancewidget/attendance_screen.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/library/library_screen.dart';
 import 'package:inspflutterfrontend/librarywidget/library_widget_screen.dart';
 import 'package:inspflutterfrontend/mycourses/my_courses_screen.dart';
 import 'package:inspflutterfrontend/mycourseswidget/my_courses_widget_screen.dart';
-import 'package:inspflutterfrontend/rating_and_feedback/rating_and_feedback_widget_screen.dart';
+import 'package:inspflutterfrontend/myuploads/myupload_widget_screen.dart';
+import 'package:inspflutterfrontend/rating_and_feedback/rating_and_feedback_screen.dart';
 import 'package:inspflutterfrontend/soloclasses/soloclasses_widget_screen.dart';
 import 'package:inspflutterfrontend/upcomingclasseswidget/upcoming_class_screen.dart';
 
@@ -46,22 +45,24 @@ class TeacherHomeScreen extends StatelessWidget {
                     callCourseApi: callCourseApi,
                   ),
                   const SizedBox(height: 16),
-                  const Row(
+                  Row(
                     children: [
                       Expanded(
                         flex: 6, // 60%
-                        child: SoloclassesScreen(),
+                        child: Column(
+                          children: const [
+                            SoloclassesScreen(),
+                            SizedBox(height: 16),
+                            MyUploadScreen(),
+                          ],
+                        ),
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Expanded(
                         flex: 4, // 40%
-                        child: RatingFeedbackScreen(),
+                        child: const RatingFeedbackScreen(),
                       ),
                     ],
-                  ),
-                  const SizedBox(height: 16),
-                  LibraryWidget(
-                    onViewDetailsClicked: onPressedLibrary,
                   ),
                 ],
               ),
