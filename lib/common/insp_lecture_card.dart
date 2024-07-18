@@ -9,9 +9,6 @@ Widget INSPLectureCard(
     required BuildContext context,
     required Function(INSPCardModel) onPressedViewDetails}) {
 
-  DateTime dateTime = DateTime.parse(lectureCardModel.scheduledDate);
-  DateFormat formatter = DateFormat('MM/dd/yyyy');
-  String formattedDate = formatter.format(dateTime);
   return Card(
     elevation: 0,
     color: Colors.white,
@@ -41,7 +38,7 @@ Widget INSPLectureCard(
                 flex: 1,
               ),
               Text(
-                formattedDate,
+                lectureCardModel.scheduledDate,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(

@@ -60,7 +60,6 @@ Widget INSPCard(
           ),
           Center(
               child: TextButton(
-
                   onPressed: () {
                     onPressedViewDetails(context, inspCardModel);
                   },

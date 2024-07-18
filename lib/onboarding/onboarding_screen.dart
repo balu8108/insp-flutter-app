@@ -39,7 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void skipButton() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LoginScreen()),
+      MaterialPageRoute(builder: (context) => LoginScreen.getScreen()),
     );
   }
 
@@ -55,7 +55,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void nextButton() {
     if (_currentPage == onBoardingData.length - 1) {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
+          MaterialPageRoute(builder: (context) => LoginScreen.getScreen()),
           (Route<dynamic> route) => false);
     } else {
       _pageController.nextPage(

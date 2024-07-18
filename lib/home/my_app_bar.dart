@@ -8,7 +8,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: const Color.fromRGBO(232, 242, 249, 1),
-      title: Text('My Web App'),
+      title: Image.asset(
+          'assets/images/insplogo.png'),
       actions: [
         _buildTextButton('Home', () {
           // Handle Home button press

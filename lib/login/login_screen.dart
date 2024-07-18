@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/home/home_screen.dart';
+import 'package:inspflutterfrontend/base/base.dart';
+// import 'package:inspflutterfrontend/home/home_screen.dart';
 import 'package:inspflutterfrontend/login/login_redux.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    dispatch(context, navigateToHomeIfLoggedIn(context));
     return Scaffold(
         body: Center(
       // Center is a layout widget. It takes a single child and positions it

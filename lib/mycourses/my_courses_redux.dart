@@ -32,6 +32,7 @@ class MyCoursesAppState with _$MyCoursesAppState {
           required INSPCardModel selectedItem,
           @Default([]) List<INSPCardModel> allTopicsForSelectedCourse,
           @Default('') String query,
+          @Default([]) List<LectureCardModel> allLectures,
           @Default([]) List<INSPCardModel> filteredTopicsForSelectedCourse}) =
       _MyCoursesAppState;
 }
@@ -42,6 +43,12 @@ class UpdateAllTopicsForSelectedCourse extends MyCoursesAction {
   List<INSPCardModel> inspCardModels;
 
   UpdateAllTopicsForSelectedCourse({required this.inspCardModels});
+}
+
+class UpdateAllLectureForSelectedCourse extends MyCoursesAction {
+  List<LectureCardModel> allLectures;
+
+  UpdateAllLectureForSelectedCourse({required this.allLectures});
 }
 
 class UpdateFilteredTopicsForSelectedCourse extends MyCoursesAction {
@@ -82,6 +89,8 @@ MyCoursesAppState _myCoursesStateReducer(
     case UpdateFilteredTopicsForSelectedCourse():
       return state.copyWith(
           filteredTopicsForSelectedCourse: action.inspCardModels);
+    case UpdateAllLectureForSelectedCourse():
+      return state.copyWith(allLectures: action.allLectures);
   }
 }
 
@@ -104,6 +113,8 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
     final selectedCardName = inspCardModel.name.toLowerCase();
     String? classType;
     String? classLevel;
+    print("RR");
+    print(selectedCardName);
     if (selectedCardName.contains('crash course')) {
       classType = ClassType.CRASH_CLASS.value;
       classLevel = ClassLevel.ALL.name;
@@ -122,6 +133,8 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
       final response = await remoteDataSource.getAllLecturesForCourse(
           classType, classLevel, 'Token $secretKeyToken');
 
+      print(response.response.statusCode);
+
       if (response.response.statusCode == 200) {
         final List<LectureCardModel> lecturesForCourse = (response.data.data
             .map((it) => LectureCardModel(
@@ -135,15 +148,8 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
                 ClassLevel.getValueFromName(it.classLevel ?? '')))
             .toList());
 
-        MyCoursesScreen.dispatch(
-            context,
-            UpdateAllTopicsForSelectedCourse(
-                inspCardModels: lecturesForCourse));
-
-        MyCoursesScreen.dispatch(
-            context,
-            UpdateFilteredTopicsForSelectedCourse(
-                inspCardModels: lecturesForCourse));
+        MyCoursesScreen.dispatch(context,
+            UpdateAllLectureForSelectedCourse(allLectures: lecturesForCourse));
       } else {
         updateEmptyTopicsForSelectedCourse(context);
       }
@@ -174,7 +180,6 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
       } else {
         updateEmptyTopicsForSelectedCourse(context);
       }
-      //print(allTopics.data.allTopicsForSubjectResponseModelResult);
     } else {
       updateEmptyTopicsForSelectedCourse(context);
     }

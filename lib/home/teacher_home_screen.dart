@@ -45,22 +45,22 @@ class TeacherHomeScreen extends StatelessWidget {
                     callCourseApi: callCourseApi,
                   ),
                   const SizedBox(height: 16),
-                  Row(
+                  const Row(
                     children: [
                       Expanded(
                         flex: 6, // 60%
                         child: Column(
-                          children: const [
+                          children: [
                             SoloclassesScreen(),
                             SizedBox(height: 16),
                             MyUploadScreen(),
                           ],
                         ),
                       ),
-                      const SizedBox(width: 16),
+                      SizedBox(width: 16),
                       Expanded(
                         flex: 4, // 40%
-                        child: const RatingFeedbackScreen(),
+                        child: RatingFeedbackScreen(),
                       ),
                     ],
                   ),

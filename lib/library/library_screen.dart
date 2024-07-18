@@ -38,11 +38,11 @@ class LibraryScreen extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                TopicOrLectureWidget(
-                    key: UniqueKey(),
-                    onViewDetailsClicked: (BuildContext, INSPCardModel) {},
-                    heading: state.selectedItem.name,
-                    data: state.selectedItem.name),
+                // TopicOrLectureWidget(
+                //     key: UniqueKey(),
+                //     onViewDetailsClicked: (BuildContext, INSPCardModel) {},
+                //     heading: state.selectedItem.name
+                //     data: date),
               ],
             )),
       ),

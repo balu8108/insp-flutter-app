@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/common/extensions.dart';
-import 'package:inspflutterfrontend/common/insp_card.dart';
 import 'package:inspflutterfrontend/common/insp_heading.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/common/model/lecture_card_model.dart';
 
 import '../common/insp_lecture_card.dart';
 import '../common/search_box.dart';
-import '../data/hardcoded/secret_key.dart';
-import '../data/remote/remote_data_source.dart';
 import 'topic_or_lecture_widget_state.dart';
 
 class TopicOrLectureWidget extends StatefulWidget {
@@ -19,10 +16,8 @@ class TopicOrLectureWidget extends StatefulWidget {
       required this.data});
 
   final void Function(BuildContext, INSPCardModel) onViewDetailsClicked;
-
   final String heading;
-
-  final data;
+  final List<LectureCardModel> data;
 
   @override
   State<StatefulWidget> createState() {
@@ -34,13 +29,8 @@ class TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
   TopicOrLectureWidgetState(this.onViewDetailsClicked, this.heading, this.data);
 
   final void Function(BuildContext, INSPCardModel) onViewDetailsClicked;
-
-  // final List<LectureCardModel> lectureCards;
-
   final String heading;
-
-  final data;
-
+  final List<LectureCardModel> data;
   LecturesWidgetAppState lecturesWidgetAppState = LecturesWidgetAppState();
 
   void updateState(LecturesWidgetAppState lecturesWidgetAppState) {
@@ -49,37 +39,23 @@ class TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
     });
   }
 
-  // call an API of get all subjects
-  void getAllLecture() async {
-    final remoteDataSource = RemoteDataSource();
-    const token = 'Token 01b7fdd87854f0fedb5af2b559318f2e';
-    final allLecture = await remoteDataSource.getAllLecturesForCourse(
-        "CRASHCOURSE", "ALL", token);
-    if (allLecture.data.message == "All lecture data") {
-      //AllLecturesForCourseResponseModelData
-      var allSubjectsResults = allLecture.data.data;
-
-      final inspLectureCardModels = allSubjectsResults
-          .map((allSubjectResult) => LectureCardModel(
-              allSubjectResult.id.toString() ?? '',
-              'Lecture ${allSubjectResult.liveClassRoomDetail.lectureNo.toString()}' ??
-                  '',
-              allSubjectResult.classStatus ?? '',
-              allSubjectResult.liveClassRoomDetail.description ?? '',
-              allSubjectResult.liveClassRoomDetail.topicName ?? '',
-              allSubjectResult.scheduledDate ?? '',
-              allSubjectResult.classLevel))
-          .toList();
-      updateState(lecturesWidgetAppState.copyWith(
-          filteredLectureForSelectedCourse: inspLectureCardModels));
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    getAllLecture();
+    final allLectureData = data
+        .map((lecture) => LectureCardModel(
+            lecture.id.toString(),
+            lecture.name,
+            lecture.status,
+            lecture.description,
+            lecture.topicName,
+            lecture.scheduledDate,
+            lecture.classLevel))
+        .toList();
+    updateState(lecturesWidgetAppState.copyWith(
+        filteredLectureForSelectedCourse: allLectureData));
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,11 +63,7 @@ class TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
       updateState(lecturesWidgetAppState.copyWith(query: query));
       final filteredTopics =
           lecturesWidgetAppState.allLectureForSelectedCourse.where((it) {
-        if (it is LectureCardModel) {
-          return it.topicName.toLowerCase().contains(query.toLowerCase());
-        } else {
-          return it.name.toLowerCase().contains(query.toLowerCase());
-        }
+        return it.topicName.toLowerCase().contains(query.toLowerCase());
       }).toList();
       updateState(lecturesWidgetAppState.copyWith(
           filteredLectureForSelectedCourse: filteredTopics));
@@ -108,7 +80,24 @@ class TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
           context.isWebOrLandScape()
               ? Row(
                   children: [
-                    INSPHeading(heading),
+                    Row(
+                      children: [
+                        Container(
+                          width: 12,
+                          height: 25,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color(0xFF3C8DBC),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text('My Courses ( $heading )',
+                            style: const TextStyle(
+                                fontSize: 16, overflow: TextOverflow.ellipsis))
+                      ],
+                    ),
                     const Spacer(),
                     searchBox(context, filterWithQueryText),
                   ],
@@ -125,29 +114,39 @@ class TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
           const SizedBox(
             height: 16,
           ),
-          lecturesWidgetAppState.filteredLectureForSelectedCourse.isNotEmpty
-              ? GridView.builder(
-                  itemCount: lecturesWidgetAppState
-                      .filteredLectureForSelectedCourse.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    final cardModel = lecturesWidgetAppState
-                        .filteredLectureForSelectedCourse[index];
-                    if (cardModel is LectureCardModel) {
-                      return INSPLectureCard(
-                          lectureCardModel: cardModel,
-                          context: context,
-                          onPressedViewDetails: (LectureCardModel) {});
-                    }
-                  },
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: context.isWebOrLandScape() ? 3 : 1,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
-                      mainAxisExtent: 230),
-                )
-              : const Center(child: Text('No items')),
+          heading == "Mathematics" || heading == "Chemistry"
+              ? Column(children: [
+                  heading == "Mathematics"
+                      ? Image.asset('assets/images/mathematics.png')
+                      : Image.asset('assets/images/science.png'),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  const Text("Coming Soon",
+                      style: const TextStyle(fontSize: 20))
+                ])
+              : lecturesWidgetAppState
+                      .filteredLectureForSelectedCourse.isNotEmpty
+                  ? GridView.builder(
+                      itemCount: lecturesWidgetAppState
+                          .filteredLectureForSelectedCourse.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        final cardModel = lecturesWidgetAppState
+                            .filteredLectureForSelectedCourse[index];
+                        return INSPLectureCard(
+                            lectureCardModel: cardModel,
+                            context: context,
+                            onPressedViewDetails: (LectureCardModel) {});
+                      },
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: context.isWebOrLandScape() ? 3 : 1,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                          mainAxisExtent: 230),
+                    )
+                  : const Center(child: Text('No items')),
         ],
       ),
     );

@@ -5,6 +5,8 @@ import 'package:inspflutterfrontend/common/model/latest_completed_class_card_mod
 import 'package:inspflutterfrontend/data/remote/remote_data_source.dart';
 import 'package:inspflutterfrontend/rating_and_feedback/rating_and_feedback_widget_redux.dart';
 
+import '../utils/capitalize.dart';
+
 class RatingFeedbackScreen extends StatefulWidget {
   const RatingFeedbackScreen({super.key});
   @override
@@ -39,7 +41,7 @@ class RatingFeedbackWidgetState extends State {
       final latestCompletedCardModels = allSubjectsResults
           .map((latestSoloClassResult) => LatestCompletedClassCardModel(
               latestSoloClassResult.id.toString(),
-              latestSoloClassResult.liveClassRoomDetail.topicName,
+              latestSoloClassResult.liveClassRoomDetail.topicName == ""?"General":capitalizeFirstLetter(latestSoloClassResult.liveClassRoomDetail.topicName),
               latestSoloClassResult.liveClassRoomDetail.topicId,
               latestSoloClassResult.mentorName,
               latestSoloClassResult.liveClassRoomDetail.description))

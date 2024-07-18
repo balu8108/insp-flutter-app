@@ -22,6 +22,7 @@ mixin _$MyCoursesAppState {
   List<INSPCardModel> get allTopicsForSelectedCourse =>
       throw _privateConstructorUsedError;
   String get query => throw _privateConstructorUsedError;
+  List<LectureCardModel> get allLectures => throw _privateConstructorUsedError;
   List<INSPCardModel> get filteredTopicsForSelectedCourse =>
       throw _privateConstructorUsedError;
 
@@ -41,6 +42,7 @@ abstract class $MyCoursesAppStateCopyWith<$Res> {
       INSPCardModel selectedItem,
       List<INSPCardModel> allTopicsForSelectedCourse,
       String query,
+      List<LectureCardModel> allLectures,
       List<INSPCardModel> filteredTopicsForSelectedCourse});
 }
 
@@ -61,6 +63,7 @@ class _$MyCoursesAppStateCopyWithImpl<$Res, $Val extends MyCoursesAppState>
     Object? selectedItem = null,
     Object? allTopicsForSelectedCourse = null,
     Object? query = null,
+    Object? allLectures = null,
     Object? filteredTopicsForSelectedCourse = null,
   }) {
     return _then(_value.copyWith(
@@ -80,6 +83,10 @@ class _$MyCoursesAppStateCopyWithImpl<$Res, $Val extends MyCoursesAppState>
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
               as String,
+      allLectures: null == allLectures
+          ? _value.allLectures
+          : allLectures // ignore: cast_nullable_to_non_nullable
+              as List<LectureCardModel>,
       filteredTopicsForSelectedCourse: null == filteredTopicsForSelectedCourse
           ? _value.filteredTopicsForSelectedCourse
           : filteredTopicsForSelectedCourse // ignore: cast_nullable_to_non_nullable
@@ -101,6 +108,7 @@ abstract class _$$MyCoursesAppStateImplCopyWith<$Res>
       INSPCardModel selectedItem,
       List<INSPCardModel> allTopicsForSelectedCourse,
       String query,
+      List<LectureCardModel> allLectures,
       List<INSPCardModel> filteredTopicsForSelectedCourse});
 }
 
@@ -119,6 +127,7 @@ class __$$MyCoursesAppStateImplCopyWithImpl<$Res>
     Object? selectedItem = null,
     Object? allTopicsForSelectedCourse = null,
     Object? query = null,
+    Object? allLectures = null,
     Object? filteredTopicsForSelectedCourse = null,
   }) {
     return _then(_$MyCoursesAppStateImpl(
@@ -138,6 +147,10 @@ class __$$MyCoursesAppStateImplCopyWithImpl<$Res>
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
               as String,
+      allLectures: null == allLectures
+          ? _value._allLectures
+          : allLectures // ignore: cast_nullable_to_non_nullable
+              as List<LectureCardModel>,
       filteredTopicsForSelectedCourse: null == filteredTopicsForSelectedCourse
           ? _value._filteredTopicsForSelectedCourse
           : filteredTopicsForSelectedCourse // ignore: cast_nullable_to_non_nullable
@@ -156,9 +169,11 @@ class _$MyCoursesAppStateImpl
       required this.selectedItem,
       final List<INSPCardModel> allTopicsForSelectedCourse = const [],
       this.query = '',
+      final List<LectureCardModel> allLectures = const [],
       final List<INSPCardModel> filteredTopicsForSelectedCourse = const []})
       : _myCoursesInspCardModels = myCoursesInspCardModels,
         _allTopicsForSelectedCourse = allTopicsForSelectedCourse,
+        _allLectures = allLectures,
         _filteredTopicsForSelectedCourse = filteredTopicsForSelectedCourse;
 
   final List<INSPCardModel> _myCoursesInspCardModels;
@@ -186,6 +201,15 @@ class _$MyCoursesAppStateImpl
   @override
   @JsonKey()
   final String query;
+  final List<LectureCardModel> _allLectures;
+  @override
+  @JsonKey()
+  List<LectureCardModel> get allLectures {
+    if (_allLectures is EqualUnmodifiableListView) return _allLectures;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_allLectures);
+  }
+
   final List<INSPCardModel> _filteredTopicsForSelectedCourse;
   @override
   @JsonKey()
@@ -198,7 +222,7 @@ class _$MyCoursesAppStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MyCoursesAppState(myCoursesInspCardModels: $myCoursesInspCardModels, selectedItem: $selectedItem, allTopicsForSelectedCourse: $allTopicsForSelectedCourse, query: $query, filteredTopicsForSelectedCourse: $filteredTopicsForSelectedCourse)';
+    return 'MyCoursesAppState(myCoursesInspCardModels: $myCoursesInspCardModels, selectedItem: $selectedItem, allTopicsForSelectedCourse: $allTopicsForSelectedCourse, query: $query, allLectures: $allLectures, filteredTopicsForSelectedCourse: $filteredTopicsForSelectedCourse)';
   }
 
   @override
@@ -212,6 +236,7 @@ class _$MyCoursesAppStateImpl
       ..add(DiagnosticsProperty(
           'allTopicsForSelectedCourse', allTopicsForSelectedCourse))
       ..add(DiagnosticsProperty('query', query))
+      ..add(DiagnosticsProperty('allLectures', allLectures))
       ..add(DiagnosticsProperty(
           'filteredTopicsForSelectedCourse', filteredTopicsForSelectedCourse));
   }
@@ -229,6 +254,8 @@ class _$MyCoursesAppStateImpl
                 other._allTopicsForSelectedCourse,
                 _allTopicsForSelectedCourse) &&
             (identical(other.query, query) || other.query == query) &&
+            const DeepCollectionEquality()
+                .equals(other._allLectures, _allLectures) &&
             const DeepCollectionEquality().equals(
                 other._filteredTopicsForSelectedCourse,
                 _filteredTopicsForSelectedCourse));
@@ -241,6 +268,7 @@ class _$MyCoursesAppStateImpl
       selectedItem,
       const DeepCollectionEquality().hash(_allTopicsForSelectedCourse),
       query,
+      const DeepCollectionEquality().hash(_allLectures),
       const DeepCollectionEquality().hash(_filteredTopicsForSelectedCourse));
 
   @JsonKey(ignore: true)
@@ -257,6 +285,7 @@ abstract class _MyCoursesAppState implements MyCoursesAppState {
           required final INSPCardModel selectedItem,
           final List<INSPCardModel> allTopicsForSelectedCourse,
           final String query,
+          final List<LectureCardModel> allLectures,
           final List<INSPCardModel> filteredTopicsForSelectedCourse}) =
       _$MyCoursesAppStateImpl;
 
@@ -268,6 +297,8 @@ abstract class _MyCoursesAppState implements MyCoursesAppState {
   List<INSPCardModel> get allTopicsForSelectedCourse;
   @override
   String get query;
+  @override
+  List<LectureCardModel> get allLectures;
   @override
   List<INSPCardModel> get filteredTopicsForSelectedCourse;
   @override

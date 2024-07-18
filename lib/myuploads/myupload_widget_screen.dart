@@ -5,6 +5,8 @@ import 'package:inspflutterfrontend/common/model/latest_assignment_card_model.da
 import 'package:inspflutterfrontend/data/remote/remote_data_source.dart';
 import 'package:inspflutterfrontend/myuploads/myupload_widget_redux.dart';
 
+import '../utils/capitalize.dart';
+
 class MyUploadScreen extends StatefulWidget {
   const MyUploadScreen({super.key});
   @override
@@ -38,7 +40,7 @@ class MyUploadWidgetState extends State {
       final latestSoloCardModels = allAssignmentResults
           .map((latestAssignmentResult) => LatestAssignmentCardModel(
               latestAssignmentResult.id.toString(),
-              latestAssignmentResult.topicName,
+              latestAssignmentResult.topicName == ""? "General":capitalizeFirstLetter(latestAssignmentResult.topicName),
               latestAssignmentResult.topicId,
               latestAssignmentResult.instructorName,
               latestAssignmentResult.description))

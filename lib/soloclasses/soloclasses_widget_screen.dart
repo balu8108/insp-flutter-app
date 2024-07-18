@@ -5,6 +5,8 @@ import 'package:inspflutterfrontend/common/model/latest_solo_class_card_model.da
 import 'package:inspflutterfrontend/data/remote/remote_data_source.dart';
 import 'package:inspflutterfrontend/soloclasses/soloclasses_widget_redux.dart';
 
+import '../utils/capitalize.dart';
+
 class SoloclassesScreen extends StatefulWidget {
   const SoloclassesScreen({super.key});
   @override
@@ -38,7 +40,7 @@ class SoloClassesWidget extends State {
       final latestSoloCardModels = allSubjectsResults
           .map((latestSoloClassResult) => LatestSoloClassCardModel(
               latestSoloClassResult.id.toString(),
-              latestSoloClassResult.topic,
+              latestSoloClassResult.topic == ""? "General":capitalizeFirstLetter(latestSoloClassResult.topic),
               latestSoloClassResult.mentorName,
               latestSoloClassResult.description))
           .toList();
