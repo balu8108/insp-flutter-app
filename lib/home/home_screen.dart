@@ -11,17 +11,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void callCourseApi() {
-      dispatch(context, getMyCourses(context));
-    }
-
     return Scaffold(
         appBar: MyAppBar(),
         body: StoreConnector<MyCoursesAppState, MyCoursesAppState>(
             converter: (store) => store.state,
             builder: (context, MyCoursesAppState state) => Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: TeacherHomeScreen(callCourseApi: callCourseApi))));
+                child: TeacherHomeScreen())));
   }
 
   static getScreen(INSPCardModel selectedItem) {

@@ -113,8 +113,7 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
     final selectedCardName = inspCardModel.name.toLowerCase();
     String? classType;
     String? classLevel;
-    print("RR");
-    print(selectedCardName);
+
     if (selectedCardName.contains('crash course')) {
       classType = ClassType.CRASH_CLASS.value;
       classLevel = ClassLevel.ALL.name;
@@ -133,19 +132,18 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
       final response = await remoteDataSource.getAllLecturesForCourse(
           classType, classLevel, 'Token $secretKeyToken');
 
-      print(response.response.statusCode);
-
       if (response.response.statusCode == 200) {
         final List<LectureCardModel> lecturesForCourse = (response.data.data
             .map((it) => LectureCardModel(
-                it.roomId ?? '',
-                'Lecture ${it.liveClassRoomDetail.lectureNo ?? ''}',
+                it.roomId,
+                it.roomId,
+                'Lecture ${it.liveClassRoomDetail.lectureNo}',
                 '',
-                it.liveClassRoomDetail.description ?? '',
-                it.liveClassRoomDetail.topicName ?? '',
+                it.liveClassRoomDetail.description,
+                it.liveClassRoomDetail.topicName,
                 DateFormat('dd/MM/yyyy')
                     .format(DateTime.parse(it.scheduledDate)),
-                ClassLevel.getValueFromName(it.classLevel ?? '')))
+                ClassLevel.getValueFromName(it.classLevel)))
             .toList());
 
         MyCoursesScreen.dispatch(context,
@@ -153,20 +151,39 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
       } else {
         updateEmptyTopicsForSelectedCourse(context);
       }
+    } else if (selectedCardName.contains('inpho')) {
+      final allSoloClass =
+          await remoteDataSource.getAllSoloClasses('Token $secretKeyToken');
+      if (allSoloClass.response.statusCode == 200) {
+        final List<LectureCardModel> lecturesForSoloClass =
+            (allSoloClass.data.data.map((it) => LectureCardModel(
+                it.id.toString(),
+                '',
+                'Lecture ${it.lectureNo}',
+                '',
+                it.description,
+                it.topic,
+                '',
+                ''))).toList();
+
+        MyCoursesScreen.dispatch(
+            context,
+            UpdateAllLectureForSelectedCourse(
+                allLectures: lecturesForSoloClass));
+      }
     } else if (selectedCardName.contains('physics')) {
       final allTopics = await remoteDataSource.getAllTopicsForMyCourse(
           const PhysicsCourseTopicsRequestModel(secret_key: secretKey));
       if (allTopics.response.statusCode == 201 &&
           allTopics.data.status == true) {
         final allTopicsForSubject = allTopics
-                .data.physicsCourseTopicsResponseModelResult
-                .mapIndexed((index, it) => INSPCardModel(
-                    it.id ?? '',
-                    (it.name ?? '').capitalizeFirstLetter(),
-                    'Nitin Sachan',
-                    myCoursePhysicsDescriptions[index] ?? ''))
-                .toList() ??
-            [];
+            .data.physicsCourseTopicsResponseModelResult
+            .mapIndexed((index, it) => INSPCardModel(
+                it.id,
+                (it.name).capitalizeFirstLetter(),
+                'Nitin Sachan',
+                myCoursePhysicsDescriptions[index]))
+            .toList();
 
         MyCoursesScreen.dispatch(
             context,
@@ -188,6 +205,8 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
 
 void updateEmptyTopicsForSelectedCourse(BuildContext context) {
   MyCoursesScreen.dispatch(
+      context, UpdateAllLectureForSelectedCourse(allLectures: []));
+  MyCoursesScreen.dispatch(
       context, UpdateAllTopicsForSelectedCourse(inspCardModels: []));
   MyCoursesScreen.dispatch(
       context, UpdateFilteredTopicsForSelectedCourse(inspCardModels: []));
@@ -204,8 +223,8 @@ ThunkAction<MyCoursesAppState> getMyCourses(BuildContext context) {
 
       final inspCardModels = allSubjectsResults.reversed
           .map((allSubjectResult) => INSPCardModel(
-              allSubjectResult.id ?? '',
-              (allSubjectResult.name ?? '').capitalizeFirstLetter(),
+              allSubjectResult.id,
+              (allSubjectResult.name).capitalizeFirstLetter(),
               subjectStatus[8 - int.parse(allSubjectResult.id ?? '1')],
               myCoursesDescriptions[8 - int.parse(allSubjectResult.id ?? '1')]))
           .toList();

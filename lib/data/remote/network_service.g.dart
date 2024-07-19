@@ -235,6 +235,36 @@ class _NetworkService implements NetworkService {
   }
 
   @override
+  Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClasses(
+      String secretTokenHeader) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<AllSoloClassesResponseModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/solo-lecture/get-all-soloclassrooms',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = AllSoloClassesResponseModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
   Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
       getAllUpcomingClasses(String secretTokenHeader) async {
     const _extra = <String, dynamic>{};
@@ -261,6 +291,40 @@ class _NetworkService implements NetworkService {
                   baseUrl,
                 ))));
     final value = AllLecturesForUpcomingResponseModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<LectureDetailByRoomIdResponseModel>>
+      getLecturesDetailByRoomId(
+    String roomId,
+    String secretTokenHeader,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<LectureDetailByRoomIdResponseModel>>(
+            Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+                .compose(
+                  _dio.options,
+                  '/lecture/get-lecture-by-id/${roomId}',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(
+                    baseUrl: _combineBaseUrls(
+                  _dio.options.baseUrl,
+                  baseUrl,
+                ))));
+    final value = LectureDetailByRoomIdResponseModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

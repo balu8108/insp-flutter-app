@@ -9,9 +9,7 @@ import 'package:inspflutterfrontend/mycourseswidget/my_courses_widget_screen.dar
 import 'package:inspflutterfrontend/upcomingclasseswidget/upcoming_class_screen.dart';
 
 class StudentHomeScreen extends StatelessWidget {
-  StudentHomeScreen({super.key, required this.callCourseApi});
-
-  final void Function() callCourseApi;
+  StudentHomeScreen({super.key});
 
   void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
     Navigator.push(
@@ -41,7 +39,6 @@ class StudentHomeScreen extends StatelessWidget {
                 children: [
                   MyCoursesWidget(
                     onViewDetailsClicked: onPressedMyCourse,
-                    callCourseApi: callCourseApi,
                   ),
                   const SizedBox(height: 16),
                   const Row(

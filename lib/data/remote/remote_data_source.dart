@@ -4,7 +4,9 @@ import 'package:inspflutterfrontend/data/remote/models/mycourses/all_lectures_fo
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/ratingfeedback/latest_completed_class_response_model.dart';
+import 'package:inspflutterfrontend/data/remote/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/soloclasses/latest_solo_classes_response_model.dart';
+import 'package:inspflutterfrontend/data/remote/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:retrofit/dio.dart';
 
 import 'models/library/all_topics_for_subject_request_model.dart';
@@ -43,6 +45,12 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
       getAllUpcomingClasses(String secretTokenHeader);
+
+  Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClasses(
+      String secretTokenHeader);
+
+  Future<HttpResponse<LectureDetailByRoomIdResponseModel>>
+      getLecturesDetailByRoomId(String roomId, String secretTokenHeader);
 
   Future<HttpResponse<AllLecturesForCourseResponseModel>>
       getAllLecturesForCourse(
@@ -101,6 +109,19 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
       getAllUpcomingClasses(String secretTokenHeader) {
     return deviceNetworkService.getAllUpcomingClasses(secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClasses(
+      String secretTokenHeader) {
+    return deviceNetworkService.getAllSoloClasses(secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<LectureDetailByRoomIdResponseModel>>
+      getLecturesDetailByRoomId(String roomId, String secretTokenHeader) {
+    return deviceNetworkService.getLecturesDetailByRoomId(
+        roomId, secretTokenHeader);
   }
 
   @override

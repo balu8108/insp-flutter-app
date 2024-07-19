@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/common/extensions.dart';
-import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/common/model/lecture_card_model.dart';
-import 'package:intl/intl.dart';
 
 Widget INSPLectureCard(
     {required LectureCardModel lectureCardModel,
     required BuildContext context,
-    required Function(INSPCardModel) onPressedViewDetails}) {
-
+    required Function(BuildContext, LectureCardModel) onPressedViewDetails}) {
   return Card(
     elevation: 0,
     color: Colors.white,
@@ -81,7 +78,7 @@ Widget INSPLectureCard(
           Center(
               child: TextButton(
                   onPressed: () {
-                    onPressedViewDetails(lectureCardModel);
+                    onPressedViewDetails(context, lectureCardModel);
                   },
                   child: const Text(
                     'View Details',

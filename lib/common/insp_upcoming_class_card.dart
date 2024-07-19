@@ -159,7 +159,8 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                                                   data: upcomingData[index]
                                                       .liveClassRoomFiles,
                                                   type: "live",
-                                                )
+                                                  scrollDirection: "vertical",
+                                                  maxHeight: 140)
                                               : const Text(
                                                   'No Files',
                                                   style:

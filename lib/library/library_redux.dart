@@ -99,19 +99,17 @@ ThunkAction<LibraryAppState> showTopicsForSubject(
     final allTopics = await remoteDataSource.getAllTopicsForSubject(
         AllTopicsForSubjectRequestModel(
             secret_key: secretKey, subject_id: subjectId));
-    print(allTopics.response.statusCode);
     if (allTopics.response.statusCode == 201 && allTopics.data.status == true) {
       final allTopicsForSubject = allTopics
               .data.allTopicsForSubjectResponseModelResult
               .map((it) => INSPCardModel(
-          it.id ?? '',
+                  it.id ?? '',
                   (it.name ?? '').capitalizeFirstLetter(),
                   'Nitin Sachan',
                   topicDescriptionConstants[int.parse(it.id ?? '1')] ?? ''))
               .toList() ??
           [];
 
-      print(allTopicsForSubject);
       LibraryScreen.dispatch(
           context,
           UpdateAllTopicsForSelectedSubject(

@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/common/extensions.dart';
 import 'package:inspflutterfrontend/common/insp_card.dart';
 import 'package:inspflutterfrontend/common/insp_heading.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/mycourseswidget/my_courses_widget_redux.dart';
 
 import '../data/hardcoded/mycourses_subjects.dart';
-import '../data/hardcoded/secret_key.dart';
-import '../data/remote/models/mycourses/all_subjects_request_model.dart';
-import '../data/remote/remote_data_source.dart';
 
 class MyCoursesWidget extends StatefulWidget {
-  const MyCoursesWidget(
-      {super.key,
-      required this.onViewDetailsClicked,
-      required this.callCourseApi});
+  const MyCoursesWidget({super.key, required this.onViewDetailsClicked});
 
   final void Function(BuildContext, INSPCardModel) onViewDetailsClicked;
-  final void Function() callCourseApi;
 
   @override
   State<StatefulWidget> createState() {
-    return MyCoursesWidgetState(onViewDetailsClicked, callCourseApi);
+    return MyCoursesWidgetState(onViewDetailsClicked);
   }
 }
 
@@ -29,10 +21,9 @@ class MyCoursesWidgetState extends State<MyCoursesWidget> {
   MyCoursesWidgetAppState myCoursesWidgetAppState =
       const MyCoursesWidgetAppState();
 
-  MyCoursesWidgetState(this.onViewDetailsClicked, this.callCourseApi);
+  MyCoursesWidgetState(this.onViewDetailsClicked);
 
   final void Function(BuildContext, INSPCardModel) onViewDetailsClicked;
-  final void Function() callCourseApi;
 
   void updateState(MyCoursesWidgetAppState myCoursesWidgetAppState) {
     setState(() {
@@ -43,7 +34,6 @@ class MyCoursesWidgetState extends State<MyCoursesWidget> {
   @override
   void initState() {
     super.initState();
-    // callCourseApi();
     updateState(myCoursesWidgetAppState.copyWith(
         myCoursesInspCardModels: myCoursesData));
   }

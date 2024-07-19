@@ -1,7 +1,6 @@
 // This file is "main.dart"
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 
 import '../data/remote/models/mycourses/all_lectures_for_course_response_model.dart';
 

@@ -32,7 +32,7 @@ class RatingFeedbackWidgetState extends State {
   // call an API of get all subjects
   void getAllLatestCompletedClasses() async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token 5974570aeed03bea4665fc2fd91829f2';
+    const token = 'Token 7e7caea58181517cdef5992796eafecb';
     final latestCompletedClass =
         await remoteDataSource.getLatestCompletedClasses(token);
     if (latestCompletedClass.data.data.isNotEmpty) {
@@ -41,7 +41,10 @@ class RatingFeedbackWidgetState extends State {
       final latestCompletedCardModels = allSubjectsResults
           .map((latestSoloClassResult) => LatestCompletedClassCardModel(
               latestSoloClassResult.id.toString(),
-              latestSoloClassResult.liveClassRoomDetail.topicName == ""?"General":capitalizeFirstLetter(latestSoloClassResult.liveClassRoomDetail.topicName),
+              latestSoloClassResult.liveClassRoomDetail.topicName == ""
+                  ? "General"
+                  : capitalizeFirstLetter(
+                      latestSoloClassResult.liveClassRoomDetail.topicName),
               latestSoloClassResult.liveClassRoomDetail.topicId,
               latestSoloClassResult.mentorName,
               latestSoloClassResult.liveClassRoomDetail.description))

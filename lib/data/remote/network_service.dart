@@ -7,7 +7,9 @@ import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_re
 import 'package:inspflutterfrontend/data/remote/models/mycourses/physics_course_topics_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/physics_course_topics_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/ratingfeedback/latest_completed_class_response_model.dart';
+import 'package:inspflutterfrontend/data/remote/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/soloclasses/latest_solo_classes_response_model.dart';
+import 'package:inspflutterfrontend/data/remote/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
 
@@ -56,9 +58,18 @@ abstract class NetworkService {
   Future<HttpResponse<LatestUploadedAssignmentResponseModel>>
       getLatestAssignment(@Header('Authorization') String secretTokenHeader);
 
+  @GET('/solo-lecture/get-all-soloclassrooms')
+  Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClasses(
+      @Header('Authorization') String secretTokenHeader);
+
   @GET('/schedule-live-class/get-all')
   Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
       getAllUpcomingClasses(@Header('Authorization') String secretTokenHeader);
+
+  @GET('/lecture/get-lecture-by-id/{roomId}')
+  Future<HttpResponse<LectureDetailByRoomIdResponseModel>>
+      getLecturesDetailByRoomId(@Path() String roomId,
+          @Header('Authorization') String secretTokenHeader);
 
   @GET('/lecture/get-all-lecture/{classType}/{classLevel}')
   Future<HttpResponse<AllLecturesForCourseResponseModel>>

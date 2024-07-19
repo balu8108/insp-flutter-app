@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/common/extensions.dart';
-import 'package:inspflutterfrontend/common/insp_card.dart';
 import 'package:inspflutterfrontend/common/insp_heading.dart';
 import 'package:inspflutterfrontend/common/insp_upcoming_class_card.dart';
-import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/upcoming_classes.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_lectures_for_course_response_model.dart';
-import 'package:inspflutterfrontend/mycourseswidget/my_courses_widget_redux.dart';
 import 'package:inspflutterfrontend/upcomingclasseswidget/upcoming_class_widget_redux.dart';
 
-import '../data/hardcoded/mycourses_subjects.dart';
-import '../data/hardcoded/secret_key.dart';
-import '../data/remote/models/mycourses/all_subjects_request_model.dart';
 import '../data/remote/remote_data_source.dart';
 
 class UpcomingClassesScreen extends StatefulWidget {
@@ -37,18 +30,16 @@ class MyCoursesWidgetState extends State {
   // call an API of get all subjects
   void getAllLecture() async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token 5974570aeed03bea4665fc2fd91829f2';
+    const token = 'Token 7e7caea58181517cdef5992796eafecb';
     final allLecture = await remoteDataSource.getAllUpcomingClasses(token);
-    if (allLecture.data.data is Object) {
-      var allSubjectsResults = allLecture.data.data;
+    var allSubjectsResults = allLecture.data.data;
 
-      final inspLectureCardModels = allSubjectsResults;
-      updateState(upcomingWidgetAppState.copyWith(
-          ongoing: inspLectureCardModels.ongoing,
-          today: inspLectureCardModels.today,
-          week: inspLectureCardModels.week,
-          completed: inspLectureCardModels.completed));
-    }
+    final inspLectureCardModels = allSubjectsResults;
+    updateState(upcomingWidgetAppState.copyWith(
+        ongoing: inspLectureCardModels.ongoing,
+        today: inspLectureCardModels.today,
+        week: inspLectureCardModels.week,
+        completed: inspLectureCardModels.completed));
   }
 
   @override
@@ -94,7 +85,8 @@ class MyCoursesWidgetState extends State {
                           INSPHeading(classCategories[index].label),
                           ScheduleClassBox(
                               type: classCategories[index].label,
-                              upcomingData: getUpcomingData(classCategories[index].category)),
+                              upcomingData: getUpcomingData(
+                                  classCategories[index].category)),
                         ],
                       );
                     },

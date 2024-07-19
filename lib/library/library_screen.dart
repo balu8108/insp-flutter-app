@@ -40,7 +40,6 @@ class LibraryScreen extends StatelessWidget {
                 ),
                 // TopicOrLectureWidget(
                 //     key: UniqueKey(),
-                //     onViewDetailsClicked: (BuildContext, INSPCardModel) {},
                 //     heading: state.selectedItem.name
                 //     data: date),
               ],

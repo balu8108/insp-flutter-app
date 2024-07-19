@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/common/extensions.dart';
 import 'package:inspflutterfrontend/common/insp_heading.dart';
-import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/common/model/lecture_card_model.dart';
+import 'package:inspflutterfrontend/lecturedetail/lecture_detail_screen.dart';
 
 import '../common/insp_lecture_card.dart';
 import '../common/search_box.dart';
@@ -10,28 +10,32 @@ import 'topic_or_lecture_widget_state.dart';
 
 class TopicOrLectureWidget extends StatefulWidget {
   const TopicOrLectureWidget(
-      {super.key,
-      required this.onViewDetailsClicked,
-      required this.heading,
-      required this.data});
+      {super.key, required this.heading, required this.data});
 
-  final void Function(BuildContext, INSPCardModel) onViewDetailsClicked;
   final String heading;
   final List<LectureCardModel> data;
 
   @override
   State<StatefulWidget> createState() {
-    return TopicOrLectureWidgetState(onViewDetailsClicked, heading, data);
+    return TopicOrLectureWidgetState(heading, data);
   }
 }
 
 class TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
-  TopicOrLectureWidgetState(this.onViewDetailsClicked, this.heading, this.data);
+  TopicOrLectureWidgetState(this.heading, this.data);
 
-  final void Function(BuildContext, INSPCardModel) onViewDetailsClicked;
   final String heading;
   final List<LectureCardModel> data;
   LecturesWidgetAppState lecturesWidgetAppState = LecturesWidgetAppState();
+
+  void onPressedMyCourse(
+      BuildContext context, LectureCardModel lectureCardModel) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                LectureDetailScreen.getScreen(lectureCardModel)));
+  }
 
   void updateState(LecturesWidgetAppState lecturesWidgetAppState) {
     setState(() {
@@ -45,6 +49,7 @@ class TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
     final allLectureData = data
         .map((lecture) => LectureCardModel(
             lecture.id.toString(),
+            lecture.roomId,
             lecture.name,
             lecture.status,
             lecture.description,
@@ -55,7 +60,6 @@ class TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
     updateState(lecturesWidgetAppState.copyWith(
         filteredLectureForSelectedCourse: allLectureData));
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +142,7 @@ class TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
                         return INSPLectureCard(
                             lectureCardModel: cardModel,
                             context: context,
-                            onPressedViewDetails: (LectureCardModel) {});
+                            onPressedViewDetails: onPressedMyCourse);
                       },
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: context.isWebOrLandScape() ? 3 : 1,

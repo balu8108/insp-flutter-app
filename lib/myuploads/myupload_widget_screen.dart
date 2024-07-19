@@ -32,7 +32,7 @@ class MyUploadWidgetState extends State {
   // call an API of get all subjects
   void getAllLatestAssignmentClasses() async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token 5974570aeed03bea4665fc2fd91829f2';
+    const token = 'Token 7e7caea58181517cdef5992796eafecb';
     final latestAssignment = await remoteDataSource.getLatestAssignment(token);
     if (latestAssignment.data.data.isNotEmpty) {
       var allAssignmentResults = latestAssignment.data.data;
@@ -40,7 +40,9 @@ class MyUploadWidgetState extends State {
       final latestSoloCardModels = allAssignmentResults
           .map((latestAssignmentResult) => LatestAssignmentCardModel(
               latestAssignmentResult.id.toString(),
-              latestAssignmentResult.topicName == ""? "General":capitalizeFirstLetter(latestAssignmentResult.topicName),
+              latestAssignmentResult.topicName == ""
+                  ? "General"
+                  : capitalizeFirstLetter(latestAssignmentResult.topicName),
               latestAssignmentResult.topicId,
               latestAssignmentResult.instructorName,
               latestAssignmentResult.description))
