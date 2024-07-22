@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:inspflutterfrontend/common/model/lecture_assignment_card_model.dart';
 import 'package:inspflutterfrontend/common/model/lecture_card_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/remote_data_source.dart';
@@ -25,6 +26,7 @@ class LectureDetailAppState with _$LectureDetailAppState {
           questionLogCount: 0,
           liveClassRoom: LecturesDetailResponseModelData()))
       AllLecturesData lectureData,
+      @Default([]) List<LectureAssignmentCardModel> assignments,
       @Default('') String query}) = _LectureDetailAppState;
 }
 
@@ -49,6 +51,12 @@ class UpdateLectureData extends LectureDetailAction {
   UpdateLectureData({required this.lectureDataRes});
 }
 
+class UpdateAssignmentData extends LectureDetailAction {
+  List<LectureAssignmentCardModel> assignments;
+
+  UpdateAssignmentData({required this.assignments});
+}
+
 LectureDetailAppState _lectureDetailReducer(
     LectureDetailAppState state, LectureDetailAction action) {
   switch (action) {
@@ -56,7 +64,30 @@ LectureDetailAppState _lectureDetailReducer(
       return state.copyWith(query: action.query);
     case UpdateLectureData():
       return state.copyWith(lectureData: action.lectureDataRes);
+    case UpdateAssignmentData():
+      return state.copyWith(assignments: action.assignments);
   }
+}
+
+ThunkAction<LectureDetailAppState> getAllAssignment(
+    BuildContext context, String topicId) {
+  return (Store<LectureDetailAppState> store) async {
+    final remoteDataSource = RemoteDataSource();
+    const token = 'Token 7e7caea58181517cdef5992796eafecb';
+    final allAssignment =
+        await remoteDataSource.getAssigmentByTopicId(topicId, token);
+    if (allAssignment.response.statusCode == 200) {
+      final List<LectureAssignmentCardModel> lecturesDetailResponse =
+          (allAssignment
+              .data.data
+              .map((it) => LectureAssignmentCardModel(
+                  it.id.toString(), it.description, it.assignmentFiles))
+              .toList());
+
+      LectureDetailScreen.dispatch(
+          context, UpdateAssignmentData(assignments: lecturesDetailResponse));
+    } else {}
+  };
 }
 
 ThunkAction<LectureDetailAppState> showLectureDetail(
@@ -68,6 +99,13 @@ ThunkAction<LectureDetailAppState> showLectureDetail(
         await remoteDataSource.getLecturesDetailByRoomId(lecture.roomId, token);
     if (lectureDetail.response.statusCode == 200) {
       final lecturesDetailResponse = lectureDetail.data.data;
+
+      LectureDetailScreen.dispatch(
+          context,
+          getAllAssignment(
+              context,
+              lecturesDetailResponse
+                  .liveClassRoom.liveClassRoomDetail.topicId));
 
       LectureDetailScreen.dispatch(
           context, UpdateLectureData(lectureDataRes: lecturesDetailResponse));

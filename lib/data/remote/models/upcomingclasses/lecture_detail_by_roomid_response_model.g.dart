@@ -132,28 +132,6 @@ Map<String, dynamic> _$LiveClassRoomDetailToJson(
       'updatedAt': instance.updatedAt,
     };
 
-LiveClassRoomFile _$LiveClassRoomFileFromJson(Map<String, dynamic> json) =>
-    LiveClassRoomFile(
-      (json['id'] as num?)?.toInt() ?? 0,
-      json['key'] as String? ?? '',
-      json['isDownloadable'] as bool? ?? false,
-      json['isShareable'] as bool? ?? false,
-      (json['classRoomId'] as num?)?.toInt() ?? 0,
-      json['createdAt'] as String? ?? '',
-      json['updatedAt'] as String? ?? '',
-    );
-
-Map<String, dynamic> _$LiveClassRoomFileToJson(LiveClassRoomFile instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'key': instance.key,
-      'isDownloadable': instance.isDownloadable,
-      'isShareable': instance.isShareable,
-      'classRoomId': instance.classRoomId,
-      'createdAt': instance.createdAt,
-      'updatedAt': instance.updatedAt,
-    };
-
 LiveClassRoomRecordings _$LiveClassRoomRecordingsFromJson(
         Map<String, dynamic> json) =>
     LiveClassRoomRecordings(

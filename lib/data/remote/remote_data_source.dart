@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:inspflutterfrontend/data/remote/models/assignment/all_assignment_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/assignment/latest_upload_assignment_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_request_model.dart';
@@ -51,6 +52,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<LectureDetailByRoomIdResponseModel>>
       getLecturesDetailByRoomId(String roomId, String secretTokenHeader);
+
+  Future<HttpResponse<AllAssignmentResponseModel>> getAssigmentByTopicId(
+      String topicId, String secretTokenHeader);
 
   Future<HttpResponse<AllLecturesForCourseResponseModel>>
       getAllLecturesForCourse(
@@ -122,6 +126,13 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       getLecturesDetailByRoomId(String roomId, String secretTokenHeader) {
     return deviceNetworkService.getLecturesDetailByRoomId(
         roomId, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<AllAssignmentResponseModel>> getAssigmentByTopicId(
+      String topicId, String secretTokenHeader) {
+    return deviceNetworkService.getAssigmentByTopicId(
+        topicId, secretTokenHeader);
   }
 
   @override

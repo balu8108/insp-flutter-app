@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:inspflutterfrontend/data/remote/models/assignment/all_assignment_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/assignment/latest_upload_assignment_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/library/all_topics_for_subject_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/library/all_topics_for_subject_response_model.dart';
@@ -70,6 +71,11 @@ abstract class NetworkService {
   Future<HttpResponse<LectureDetailByRoomIdResponseModel>>
       getLecturesDetailByRoomId(@Path() String roomId,
           @Header('Authorization') String secretTokenHeader);
+
+  @GET('/assignment/get-all-assignments-topic-id')
+  Future<HttpResponse<AllAssignmentResponseModel>> getAssigmentByTopicId(
+      @Query('topicId') String topicId,
+      @Header('Authorization') String secretTokenHeader);
 
   @GET('/lecture/get-all-lecture/{classType}/{classLevel}')
   Future<HttpResponse<AllLecturesForCourseResponseModel>>

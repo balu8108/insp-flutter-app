@@ -40,6 +40,7 @@ class TeacherHomeScreen extends StatelessWidget {
                   MyCoursesWidget(onViewDetailsClicked: onPressedMyCourse),
                   const SizedBox(height: 16),
                   const Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         flex: 6, // 60%

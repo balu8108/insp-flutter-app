@@ -36,6 +36,7 @@ class LectureDetailScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         flex: 7,
@@ -46,6 +47,7 @@ class LectureDetailScreen extends StatelessWidget {
                             const SizedBox(height: 16),
                             LectureDetailWidget(
                                 lectureData: state.lectureData,
+                                assignments: state.assignments,
                                 question: state.question)
                           ],
                         ),

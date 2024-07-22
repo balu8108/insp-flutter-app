@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/common/class_constants.dart';
 import 'package:inspflutterfrontend/common/file_box_component.dart';
 import 'package:inspflutterfrontend/common/insp_heading.dart';
+import 'package:inspflutterfrontend/common/lecture_assignment_card.dart';
+import 'package:inspflutterfrontend/common/lecture_leaderboard_card.dart';
 import 'package:inspflutterfrontend/common/lecture_recording_card.dart';
+import 'package:inspflutterfrontend/common/model/lecture_assignment_card_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:inspflutterfrontend/lecturedetail/lecture_detail_widget_state.dart';
 
 class LectureDetailWidget extends StatefulWidget {
   const LectureDetailWidget(
-      {super.key, required this.lectureData, required this.question});
+      {super.key,
+      required this.lectureData,
+      required this.assignments,
+      required this.question});
 
   final AllLecturesData lectureData;
   final int question;
+  final List<LectureAssignmentCardModel> assignments;
 
   @override
   State<LectureDetailWidget> createState() {
@@ -31,10 +39,7 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
   @override
   void didUpdateWidget(LectureDetailWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Handle any updates when the widget configuration changes
-    if (oldWidget.lectureData != widget.lectureData) {
-      print("Lecture Datggd: ${widget.lectureData.questionLogCount}");
-    }
+    print("fsfasdashT");
   }
 
   @override
@@ -55,11 +60,12 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
       child: Column(
         children: [
           INSPHeading(
-              'Details : ( ${lec.liveClassRoomDetail.topicName} ) :(${lec.classLevel})'),
+              'Details : ( ${lec.liveClassRoomDetail.topicName} ) :(${ClassLevel.getValueFromName(lec.classLevel)})'),
           const SizedBox(
             height: 40,
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Column(
@@ -89,7 +95,7 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
                       lec.liveClassRoomDetail.description,
                       style: const TextStyle(
                         fontSize: 12,
-                        color: Color(0xFF2C3329),
+                        color: Color.fromRGBO(44, 51, 41, 0.47),
                         height: 1.75,
                       ),
                     ),
@@ -128,7 +134,8 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
                                           agenda,
                                           style: const TextStyle(
                                             fontSize: 12,
-                                            color: Color(0xFF2C3329),
+                                            color: Color.fromRGBO(
+                                                44, 51, 41, 0.47),
                                             height: 1.75,
                                           ),
                                         ),
@@ -141,69 +148,19 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
                         : const Text(
                             'No Data',
                             style: TextStyle(
-                              color: Color(0xFF2C332978),
+                              color: Color.fromRGBO(44, 51, 41, 0.47),
                               fontSize: 12,
                             ),
                           ),
-                    const SizedBox(height: 40),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Recordings',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: Color(0xFF2C3329),
-                            height: 1.25,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        LectureRecordingCardWidget(
-                            liveClassRoomRecordings:
-                                lec.liveClassRoomRecordings)
-                      ],
-                    ),
-                    const SizedBox(height: 40),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Files/Notes',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Color(0xFF2C3329),
-                            height: 1.25,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        FileBoxComponent(
-                          data: lec.liveClassRoomFiles,
-                          type: "live",
-                          scrollDirection: "horizantal",
-                          maxHeight: 60,
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 40),
-                    const Text(
-                      'Assignments',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF2C3329),
-                        height: 1.25,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
                   ],
                 ),
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Leader Board',
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -212,15 +169,85 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
                         height: 1.25,
                       ),
                     ),
-                    // LectureLeaderBoard(
-                    //   lectureDetails: lectureDetails,
-                    //   questionLog: questionLog,
-                    // ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 4, // 60%
+                          child: Image.asset('assets/images/leaderboard.png'),
+                        ),
+                        Expanded(
+                            flex: 6, // 60%
+                            child: LectureLeaderboardCard(
+                                leaderboardDetails: lec.leaderBoards,
+                                questionNo:
+                                    widget.lectureData.questionLogCount))
+                      ],
+                    )
                   ],
                 ),
               ),
             ],
           ),
+          const SizedBox(
+            height: 40,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Recordings',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                  color: Color(0xFF2C3329),
+                  height: 1.25,
+                ),
+              ),
+              const SizedBox(height: 10),
+              LectureRecordingCardWidget(
+                  liveClassRoomRecordings: lec.liveClassRoomRecordings)
+            ],
+          ),
+          const SizedBox(height: 40),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Files/Notes',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color(0xFF2C3329),
+                  height: 1.25,
+                ),
+              ),
+              const SizedBox(height: 10),
+              FileBoxComponent(
+                data: lec.liveClassRoomFiles,
+                type: "live",
+                scrollDirection: "horizontal",
+                maxHeight: 60,
+              )
+            ],
+          ),
+          const SizedBox(height: 40),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Assignments',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color(0xFF2C3329),
+                  height: 1.25,
+                ),
+              ),
+              const SizedBox(height: 10),
+              LectureAssignmentCard(
+                assignmentDetails: widget.assignments,
+              )
+            ],
+          )
         ],
       ),
     );
