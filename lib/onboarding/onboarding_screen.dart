@@ -11,48 +11,40 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
-
   List onBoardingData = [
     {
-      "image": "assets/images/image1.png",
+      "image": "assets/images/Onboarding1.png",
       "title": "Get access to the test notes",
       "description":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, libero"
+          " Welcome to INSP! Gain access to a wealth of knowledge through our curated test notes. Explore and enhance your learning experience with comprehensive study materials",
     },
     {
-      "image": "assets/images/image2.png",
-      "title": "Get access to the test notes",
+      "image": "assets/images/Onboarding2.png",
+      "title": "Join from anywhere",
       "description":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, libero"
+          "Join from anywhere, anytime! Our platform offers the flexibility to access study materials and connect with fellow learners from  the comfort of your own space. Your education, your rules",
     },
     {
-      "image": "assets/images/image3.png",
-      "title": "Get access to the test notes",
+      "image": "assets/images/Onboarding3.png",
+      "title": "Clear your doubts in no time",
       "description":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, libero"
+          " Have questions? Clear your doubts in no time! Connect with educators and peers effortlessly, ensuring a smooth learning journey. Say goodbye to uncertainties, embrace clarity!"
     },
   ];
-
-  Color whiteColor = Colors.white;
-  Color textColor = const Color.fromRGBO(0, 0, 0, 0.81);
-
-  void skipButton() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => LoginScreen.getScreen()),
-    );
+  void _onSkipButton() {
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => LoginScreen.getScreen()));
   }
 
-  void backButton() {
+  void _onBackwardButton() {
     if (_currentPage == 0) {
-      // Do nothing or show a snackbar indicating first screen
     } else {
       _pageController.previousPage(
           duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
     }
   }
 
-  void nextButton() {
+  void _onNextButton() {
     if (_currentPage == onBoardingData.length - 1) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => LoginScreen.getScreen()),
@@ -66,93 +58,106 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: backButton,
-          icon: const Icon(Icons.chevron_left_outlined),
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: _onBackwardButton,
+            icon: const Icon(Icons.chevron_left_outlined),
+          ),
+          actions: [
+            TextButton(
+              onPressed: _onSkipButton,
+              child: const Text(
+                "Skip",
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    color: Color.fromRGBO(0, 0, 0, 0.81)),
+              ),
+            )
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: skipButton,
-            child: Text(
-              'Skip',
-              style: TextStyle(color: textColor),
+        body: Column(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              child: Image.asset('assets/images/insplogo.png'),
             ),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          // INSP Logo Container
-          Container(
-            height: 100, // Adjust height as needed
-            alignment: Alignment.center,
-            child: Image.asset(
-                'assets/images/insplogo.png'), // Path to your INSP logo
-          ),
-          Expanded(
-            child: Stack(
-              children: [
-                PageView.builder(
-                  scrollDirection: Axis.horizontal,
-                  controller: _pageController,
-                  itemCount: onBoardingData.length,
-                  onPageChanged: (int index) {
-                    setState(() {
-                      _currentPage = index;
-                    });
-                  },
-                  itemBuilder: (context, index) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(onBoardingData[index]['image']),
-                        Text(
-                          onBoardingData[index]['title'],
-                          style: TextStyle(fontSize: 24, color: textColor),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
+            Expanded(
+                child: Stack(children: [
+              PageView.builder(
+                scrollDirection: Axis.horizontal,
+                controller: _pageController,
+                itemCount: onBoardingData.length,
+                onPageChanged: (int index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                itemBuilder: (context, index) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        onBoardingData[index]['image'],
+                        height: 300,
+                      ),
+                      Text(
+                        onBoardingData[index]['title'],
+                        style: const TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(height: 12),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Text(
                           onBoardingData[index]['description'],
-                          style: TextStyle(fontSize: 16, color: textColor),
+                          style: const TextStyle(
+                              fontSize: 14,
+                              color: Color.fromRGBO(0, 0, 0, 0.81)),
+                          textAlign: TextAlign.center,
                         ),
-                      ],
-                    );
-                  },
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        onBoardingData.length,
-                        (index) => buildDot(index, context),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: ElevatedButton(
-                        onPressed: nextButton,
-                        child: const Text('Next'),
+                      const SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          onBoardingData.length,
+                          (index) => buildDot(index, context),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  );
+                },
+              )
+            ])),
+            Container(
+              height: 56,
+              width: double.infinity,
+              margin: const EdgeInsets.all(30),
+              decoration: BoxDecoration(
+                color: const Color(0xFF3C8DBC),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: TextButton(
+                onPressed: _onNextButton,
+                child: const Text(
+                  "Next",
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
                 ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+              ),
+            )
+          ],
+        ));
   }
 
   Widget buildDot(int index, BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 8),
+      margin: const EdgeInsets.only(right: 5.9),
       height: 10,
-      width: _currentPage == index ? 12 : 8,
+      width: _currentPage == index ? 18 : 10,
       decoration: BoxDecoration(
         color: _currentPage == index ? Colors.blue : Colors.grey,
         borderRadius: BorderRadius.circular(12),
