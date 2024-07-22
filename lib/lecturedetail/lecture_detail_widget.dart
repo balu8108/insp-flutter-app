@@ -6,6 +6,7 @@ import 'package:inspflutterfrontend/common/lecture_assignment_card.dart';
 import 'package:inspflutterfrontend/common/lecture_leaderboard_card.dart';
 import 'package:inspflutterfrontend/common/lecture_recording_card.dart';
 import 'package:inspflutterfrontend/common/model/lecture_assignment_card_model.dart';
+import 'package:inspflutterfrontend/common/model/recording_player_card_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:inspflutterfrontend/lecturedetail/lecture_detail_widget_state.dart';
 
@@ -39,7 +40,7 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
   @override
   void didUpdateWidget(LectureDetailWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print("fsfasdashT");
+    print("fsfashjhhT");
   }
 
   @override
@@ -206,7 +207,12 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
               ),
               const SizedBox(height: 10),
               LectureRecordingCardWidget(
-                  liveClassRoomRecordings: lec.liveClassRoomRecordings)
+                  liveClassRoomRecordings: lec.liveClassRoomRecordings,
+                  topicName: lec.liveClassRoomDetail.topicName,
+                  mentorName: lec.mentorName,
+                  description: lec.liveClassRoomDetail.description,
+                  files: lec.liveClassRoomFiles,
+                  agenda: lec.liveClassRoomDetail.agenda)
             ],
           ),
           const SizedBox(height: 40),
