@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/assignments/widgets/assignmentScreen.dart';
-import 'package:inspflutterfrontend/calendar/liveclass_calendar.dart';
+import 'package:inspflutterfrontend/calendar/widgets/liveclass_calendar.dart';
+import 'package:inspflutterfrontend/calendar/widgets/liveclass_calendar_screen.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -20,7 +21,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           // Handle Calendar button press
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LiveclassCalendar()),
+            MaterialPageRoute(builder: (context) => LiveclassCalendarScreen()),
           );
         }),
         _buildTextButton('Assignments', () {
