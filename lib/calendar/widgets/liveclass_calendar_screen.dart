@@ -59,22 +59,20 @@ class LiveclassCalendarScreen extends StatefulWidget {
 class _LiveclassCalendarScreenState extends State<LiveclassCalendarScreen> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Container(
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: UpcomingClassesScreen(),
-            ),
-            SizedBox(width: 24), // Adds spacing between the components
-            Expanded(
-              flex: 7,
-              child: LiveclassCalendar(),
-            ),
-          ],
-        ),
+    return const Padding(
+      padding: EdgeInsets.all(16.0),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: UpcomingClassesScreen(),
+          ),
+          SizedBox(width: 24), // Adds spacing between the components
+          Expanded(
+            flex: 7,
+            child: LiveclassCalendar(),
+          ),
+        ],
       ),
     );
   }
