@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$RecordingPlayerAppState {
   RecordingPlayerCard get selectedItem => throw _privateConstructorUsedError;
-  String get query => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RecordingPlayerAppStateCopyWith<RecordingPlayerAppState> get copyWith =>
@@ -30,7 +29,7 @@ abstract class $RecordingPlayerAppStateCopyWith<$Res> {
           $Res Function(RecordingPlayerAppState) then) =
       _$RecordingPlayerAppStateCopyWithImpl<$Res, RecordingPlayerAppState>;
   @useResult
-  $Res call({RecordingPlayerCard selectedItem, String query});
+  $Res call({RecordingPlayerCard selectedItem});
 }
 
 /// @nodoc
@@ -48,17 +47,12 @@ class _$RecordingPlayerAppStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? selectedItem = null,
-    Object? query = null,
   }) {
     return _then(_value.copyWith(
       selectedItem: null == selectedItem
           ? _value.selectedItem
           : selectedItem // ignore: cast_nullable_to_non_nullable
               as RecordingPlayerCard,
-      query: null == query
-          ? _value.query
-          : query // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -72,7 +66,7 @@ abstract class _$$RecordingPlayerAppStateImplCopyWith<$Res>
       __$$RecordingPlayerAppStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({RecordingPlayerCard selectedItem, String query});
+  $Res call({RecordingPlayerCard selectedItem});
 }
 
 /// @nodoc
@@ -89,17 +83,12 @@ class __$$RecordingPlayerAppStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? selectedItem = null,
-    Object? query = null,
   }) {
     return _then(_$RecordingPlayerAppStateImpl(
       selectedItem: null == selectedItem
           ? _value.selectedItem
           : selectedItem // ignore: cast_nullable_to_non_nullable
               as RecordingPlayerCard,
-      query: null == query
-          ? _value.query
-          : query // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -109,18 +98,14 @@ class __$$RecordingPlayerAppStateImplCopyWithImpl<$Res>
 class _$RecordingPlayerAppStateImpl
     with DiagnosticableTreeMixin
     implements _RecordingPlayerAppState {
-  const _$RecordingPlayerAppStateImpl(
-      {required this.selectedItem, this.query = ''});
+  const _$RecordingPlayerAppStateImpl({required this.selectedItem});
 
   @override
   final RecordingPlayerCard selectedItem;
-  @override
-  @JsonKey()
-  final String query;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecordingPlayerAppState(selectedItem: $selectedItem, query: $query)';
+    return 'RecordingPlayerAppState(selectedItem: $selectedItem)';
   }
 
   @override
@@ -128,8 +113,7 @@ class _$RecordingPlayerAppStateImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'RecordingPlayerAppState'))
-      ..add(DiagnosticsProperty('selectedItem', selectedItem))
-      ..add(DiagnosticsProperty('query', query));
+      ..add(DiagnosticsProperty('selectedItem', selectedItem));
   }
 
   @override
@@ -138,12 +122,11 @@ class _$RecordingPlayerAppStateImpl
         (other.runtimeType == runtimeType &&
             other is _$RecordingPlayerAppStateImpl &&
             (identical(other.selectedItem, selectedItem) ||
-                other.selectedItem == selectedItem) &&
-            (identical(other.query, query) || other.query == query));
+                other.selectedItem == selectedItem));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, selectedItem, query);
+  int get hashCode => Object.hash(runtimeType, selectedItem);
 
   @JsonKey(ignore: true)
   @override
@@ -155,13 +138,11 @@ class _$RecordingPlayerAppStateImpl
 
 abstract class _RecordingPlayerAppState implements RecordingPlayerAppState {
   const factory _RecordingPlayerAppState(
-      {required final RecordingPlayerCard selectedItem,
-      final String query}) = _$RecordingPlayerAppStateImpl;
+          {required final RecordingPlayerCard selectedItem}) =
+      _$RecordingPlayerAppStateImpl;
 
   @override
   RecordingPlayerCard get selectedItem;
-  @override
-  String get query;
   @override
   @JsonKey(ignore: true)
   _$$RecordingPlayerAppStateImplCopyWith<_$RecordingPlayerAppStateImpl>

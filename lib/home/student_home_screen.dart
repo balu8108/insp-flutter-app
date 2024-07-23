@@ -62,9 +62,9 @@ class StudentHomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 17),
-            const Expanded(
+            Expanded(
               flex: 3,
-              child: UpcomingClassesScreen(),
+              child: UpcomingClassesScreen.getScreen(),
             ),
           ],
         ),

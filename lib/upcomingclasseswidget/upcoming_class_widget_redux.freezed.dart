@@ -24,6 +24,7 @@ mixin _$UpcomingWidgetAppState {
       throw _privateConstructorUsedError;
   List<AllLecturesForCourseResponseModelData> get completed =>
       throw _privateConstructorUsedError;
+  UpcomingLectureCardModel get weeklyData => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UpcomingWidgetAppStateCopyWith<UpcomingWidgetAppState> get copyWith =>
@@ -40,7 +41,8 @@ abstract class $UpcomingWidgetAppStateCopyWith<$Res> {
       {List<AllLecturesForCourseResponseModelData> ongoing,
       List<AllLecturesForCourseResponseModelData> today,
       List<AllLecturesForCourseResponseModelData> week,
-      List<AllLecturesForCourseResponseModelData> completed});
+      List<AllLecturesForCourseResponseModelData> completed,
+      UpcomingLectureCardModel weeklyData});
 }
 
 /// @nodoc
@@ -61,6 +63,7 @@ class _$UpcomingWidgetAppStateCopyWithImpl<$Res,
     Object? today = null,
     Object? week = null,
     Object? completed = null,
+    Object? weeklyData = null,
   }) {
     return _then(_value.copyWith(
       ongoing: null == ongoing
@@ -79,6 +82,10 @@ class _$UpcomingWidgetAppStateCopyWithImpl<$Res,
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
               as List<AllLecturesForCourseResponseModelData>,
+      weeklyData: null == weeklyData
+          ? _value.weeklyData
+          : weeklyData // ignore: cast_nullable_to_non_nullable
+              as UpcomingLectureCardModel,
     ) as $Val);
   }
 }
@@ -96,7 +103,8 @@ abstract class _$$UpcomingWidgetAppStateImplCopyWith<$Res>
       {List<AllLecturesForCourseResponseModelData> ongoing,
       List<AllLecturesForCourseResponseModelData> today,
       List<AllLecturesForCourseResponseModelData> week,
-      List<AllLecturesForCourseResponseModelData> completed});
+      List<AllLecturesForCourseResponseModelData> completed,
+      UpcomingLectureCardModel weeklyData});
 }
 
 /// @nodoc
@@ -116,6 +124,7 @@ class __$$UpcomingWidgetAppStateImplCopyWithImpl<$Res>
     Object? today = null,
     Object? week = null,
     Object? completed = null,
+    Object? weeklyData = null,
   }) {
     return _then(_$UpcomingWidgetAppStateImpl(
       ongoing: null == ongoing
@@ -134,6 +143,10 @@ class __$$UpcomingWidgetAppStateImplCopyWithImpl<$Res>
           ? _value._completed
           : completed // ignore: cast_nullable_to_non_nullable
               as List<AllLecturesForCourseResponseModelData>,
+      weeklyData: null == weeklyData
+          ? _value.weeklyData
+          : weeklyData // ignore: cast_nullable_to_non_nullable
+              as UpcomingLectureCardModel,
     ));
   }
 }
@@ -144,10 +157,11 @@ class _$UpcomingWidgetAppStateImpl
     with DiagnosticableTreeMixin
     implements _UpcomingWidgetAppState {
   const _$UpcomingWidgetAppStateImpl(
-      {required final List<AllLecturesForCourseResponseModelData> ongoing,
-      required final List<AllLecturesForCourseResponseModelData> today,
-      required final List<AllLecturesForCourseResponseModelData> week,
-      required final List<AllLecturesForCourseResponseModelData> completed})
+      {final List<AllLecturesForCourseResponseModelData> ongoing = const [],
+      final List<AllLecturesForCourseResponseModelData> today = const [],
+      final List<AllLecturesForCourseResponseModelData> week = const [],
+      final List<AllLecturesForCourseResponseModelData> completed = const [],
+      this.weeklyData = const UpcomingLectureCardModel([], [], [], [])})
       : _ongoing = ongoing,
         _today = today,
         _week = week,
@@ -155,6 +169,7 @@ class _$UpcomingWidgetAppStateImpl
 
   final List<AllLecturesForCourseResponseModelData> _ongoing;
   @override
+  @JsonKey()
   List<AllLecturesForCourseResponseModelData> get ongoing {
     if (_ongoing is EqualUnmodifiableListView) return _ongoing;
     // ignore: implicit_dynamic_type
@@ -163,6 +178,7 @@ class _$UpcomingWidgetAppStateImpl
 
   final List<AllLecturesForCourseResponseModelData> _today;
   @override
+  @JsonKey()
   List<AllLecturesForCourseResponseModelData> get today {
     if (_today is EqualUnmodifiableListView) return _today;
     // ignore: implicit_dynamic_type
@@ -171,6 +187,7 @@ class _$UpcomingWidgetAppStateImpl
 
   final List<AllLecturesForCourseResponseModelData> _week;
   @override
+  @JsonKey()
   List<AllLecturesForCourseResponseModelData> get week {
     if (_week is EqualUnmodifiableListView) return _week;
     // ignore: implicit_dynamic_type
@@ -179,6 +196,7 @@ class _$UpcomingWidgetAppStateImpl
 
   final List<AllLecturesForCourseResponseModelData> _completed;
   @override
+  @JsonKey()
   List<AllLecturesForCourseResponseModelData> get completed {
     if (_completed is EqualUnmodifiableListView) return _completed;
     // ignore: implicit_dynamic_type
@@ -186,8 +204,12 @@ class _$UpcomingWidgetAppStateImpl
   }
 
   @override
+  @JsonKey()
+  final UpcomingLectureCardModel weeklyData;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UpcomingWidgetAppState(ongoing: $ongoing, today: $today, week: $week, completed: $completed)';
+    return 'UpcomingWidgetAppState(ongoing: $ongoing, today: $today, week: $week, completed: $completed, weeklyData: $weeklyData)';
   }
 
   @override
@@ -198,7 +220,8 @@ class _$UpcomingWidgetAppStateImpl
       ..add(DiagnosticsProperty('ongoing', ongoing))
       ..add(DiagnosticsProperty('today', today))
       ..add(DiagnosticsProperty('week', week))
-      ..add(DiagnosticsProperty('completed', completed));
+      ..add(DiagnosticsProperty('completed', completed))
+      ..add(DiagnosticsProperty('weeklyData', weeklyData));
   }
 
   @override
@@ -210,7 +233,9 @@ class _$UpcomingWidgetAppStateImpl
             const DeepCollectionEquality().equals(other._today, _today) &&
             const DeepCollectionEquality().equals(other._week, _week) &&
             const DeepCollectionEquality()
-                .equals(other._completed, _completed));
+                .equals(other._completed, _completed) &&
+            (identical(other.weeklyData, weeklyData) ||
+                other.weeklyData == weeklyData));
   }
 
   @override
@@ -219,7 +244,8 @@ class _$UpcomingWidgetAppStateImpl
       const DeepCollectionEquality().hash(_ongoing),
       const DeepCollectionEquality().hash(_today),
       const DeepCollectionEquality().hash(_week),
-      const DeepCollectionEquality().hash(_completed));
+      const DeepCollectionEquality().hash(_completed),
+      weeklyData);
 
   @JsonKey(ignore: true)
   @override
@@ -231,11 +257,12 @@ class _$UpcomingWidgetAppStateImpl
 
 abstract class _UpcomingWidgetAppState implements UpcomingWidgetAppState {
   const factory _UpcomingWidgetAppState(
-      {required final List<AllLecturesForCourseResponseModelData> ongoing,
-      required final List<AllLecturesForCourseResponseModelData> today,
-      required final List<AllLecturesForCourseResponseModelData> week,
-      required final List<AllLecturesForCourseResponseModelData>
-          completed}) = _$UpcomingWidgetAppStateImpl;
+          {final List<AllLecturesForCourseResponseModelData> ongoing,
+          final List<AllLecturesForCourseResponseModelData> today,
+          final List<AllLecturesForCourseResponseModelData> week,
+          final List<AllLecturesForCourseResponseModelData> completed,
+          final UpcomingLectureCardModel weeklyData}) =
+      _$UpcomingWidgetAppStateImpl;
 
   @override
   List<AllLecturesForCourseResponseModelData> get ongoing;
@@ -245,6 +272,8 @@ abstract class _UpcomingWidgetAppState implements UpcomingWidgetAppState {
   List<AllLecturesForCourseResponseModelData> get week;
   @override
   List<AllLecturesForCourseResponseModelData> get completed;
+  @override
+  UpcomingLectureCardModel get weeklyData;
   @override
   @JsonKey(ignore: true)
   _$$UpcomingWidgetAppStateImplCopyWith<_$UpcomingWidgetAppStateImpl>

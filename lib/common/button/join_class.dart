@@ -56,9 +56,9 @@ class JoinClassBtn extends StatelessWidget {
       backColor = const Color.fromARGB(255, 193, 227, 182);
       textColor = const Color.fromARGB(255, 107, 104, 112);
     } else if (status == classStatus['NOT_STARTED']) {
-      if (0 == 0) {
-        backColor = const Color.fromARGB(255, 255, 89, 89);
-      }
+      // if (0 == 0) {
+      //   backColor = const Color.fromARGB(255, 255, 89, 89);
+      // }
     } else if (status == classStatus['FINISHED']) {
       backColor = const Color.fromARGB(255, 232, 232, 232);
       textColor = const Color.fromARGB(255, 107, 104, 112);
@@ -72,23 +72,26 @@ class JoinClassBtn extends StatelessWidget {
     return SizedBox(
         width: double.infinity, // Set width to 100% of the parent container
         child: ElevatedButton(
-      onPressed: btnDisabled ? null : null,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(backColor),
-        foregroundColor: MaterialStateProperty.all(textColor),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0), // Adjust border radius as needed
+          onPressed: btnDisabled ? null : null,
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(backColor),
+            foregroundColor: MaterialStateProperty.all(textColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                    8.0), // Adjust border radius as needed
+              ),
+            ),
+            minimumSize:
+                MaterialStateProperty.all(const Size(double.infinity, 48.0)),
           ),
-        ),
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 14.0,
-        ),
-      ),
-    ));
+          child: Text(
+            text,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 14.0,
+            ),
+          ),
+        ));
   }
 }
