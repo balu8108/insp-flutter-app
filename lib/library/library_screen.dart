@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
+import 'package:inspflutterfrontend/home/my_app_bar.dart';
 import 'package:inspflutterfrontend/lectureswidget/topic_or_lecture_widget_screen.dart';
 import 'package:inspflutterfrontend/library/library_redux.dart';
 import 'package:inspflutterfrontend/librarywidget/library_widget_screen.dart';
+import 'package:inspflutterfrontend/main.dart';
+import 'package:inspflutterfrontend/upcomingclasseswidget/upcoming_class_screen.dart';
 
 import '../base/base.dart';
 
@@ -25,28 +28,30 @@ class LibraryScreen extends StatelessWidget {
 
     dispatch(context, initialFetchTopics(context));
     return Scaffold(
+        appBar: MyAppBar(),
         body: StoreConnector<LibraryAppState, LibraryAppState>(
-      converter: (store) => store.state,
-      builder: (context, LibraryAppState state) => Container(
-        padding: const EdgeInsets.all(32.0),
-        color: Colors.white,
-        child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                LibraryWidget(onViewDetailsClicked: onPressedLibrarySubject),
-                const SizedBox(
-                  height: 16,
-                ),
-                // TopicOrLectureWidget(
-                //     key: UniqueKey(),
-                //     onViewDetailsClicked: (BuildContext, INSPCardModel) {},
-                //     heading: state.selectedItem.name
-                //     data: date),
-              ],
-            )),
-      ),
-    ));
+          converter: (store) => store.state,
+          builder: (context, LibraryAppState state) => Container(
+            padding: const EdgeInsets.all(32.0),
+            color: Colors.white,
+            child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 9,
+                      child: LibraryWidget(
+                          onViewDetailsClicked: onPressedLibrarySubject),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Expanded(flex: 3, child: UpcomingClassesScreen())
+                  ],
+                )),
+          ),
+        ));
   }
 
   static getScreen(INSPCardModel selectedItem) {

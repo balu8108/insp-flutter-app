@@ -11,13 +11,28 @@ Widget searchBox(BuildContext context, Function onChanged) {
         onChanged(text);
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide.none,
+        ),
         hintText: 'Search...',
-        prefixIcon: const Icon(Icons.search),
-        contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(12.0), // Padding for the icon
+          child: Icon(
+            Icons.search,
+            color: Colors.grey[600], // Icon color
+          ),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+            vertical: 0, horizontal: 16), // Adjust padding
       ),
       style: const TextStyle(
-          fontSize: 16, fontWeight: FontWeight.w400, color: Color(0xFF2C3329)),
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: Color(0xFF2C3329), // Text color
+      ),
     ),
   );
 }

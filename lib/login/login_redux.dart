@@ -107,14 +107,25 @@ ThunkAction<LoginAppState> handleLogin(BuildContext context) {
             "status": true,
             "response_message": "Login Successful...",
             "result": {
-              "id": "3",
-              "name": "Teacher",
-              "mobile": "9976543210",
-              "email": "teacher@gmail.com",
-              "token": "5974570aeed03bea4665fc2fd91829f2",
+              // "id": "3",
+              // "name": "Teacher",
+              // "mobile": "9976543210",
+              // "email": "teacher@gmail.com",
+              // "token": "7e7caea58181517cdef5992796eafecb",
+              // "status": "1",
+              // "paid_status": 0,
+              // "user_type": 0
+
+              "id": "22051",
+              "name": "  test 100",
+              "mobile": "9999990099",
+              "email": "test100@gmail.com",
+              "opting_classes": "",
+              "present_class": "",
+              "token": "54a19b3a2bc27da0e12a56e04aee3bc8",
               "status": "1",
-              "paid_status": 0,
-              "user_type": 1
+              "paid_status": 1,
+              "user_type": 0
             }
           }));
 

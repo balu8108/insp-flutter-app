@@ -3,6 +3,7 @@ import 'package:inspflutterfrontend/assignments/widgets/assignmentScreen.dart';
 import 'package:inspflutterfrontend/calendar/widgets/liveclass_calendar.dart';
 import 'package:inspflutterfrontend/calendar/widgets/liveclass_calendar_screen.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
+import 'package:inspflutterfrontend/library/library_screen.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -12,7 +13,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: const Color.fromRGBO(232, 242, 249, 1),
-      title: Image.asset('assets/images/insplogo.png'),
+      title: Image.asset('assets/images/insplogo.png', height: 54.0),
       actions: [
         _buildTextButton('Home', () {
           // Handle Home button press
@@ -39,6 +40,17 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           );
         }),
         _buildTextButton('Library', () {
+          INSPCardModel inspCardModel = const INSPCardModel(
+              '1',
+              'Physics',
+              'In Progress',
+              'Explore the fascinating world of Physics with a collection of resources covering classical mechanics, electromagnetism, thermodynamics, and quantum mechanics. Dive into the fundamental principles that govern the physical universe.');
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => LibraryScreen.getScreen(inspCardModel)),
+          );
           // Handle Library button press
         }),
         _buildTextButton('Suggestion', () {

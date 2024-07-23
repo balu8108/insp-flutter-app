@@ -37,7 +37,7 @@ class MyCoursesWidgetState extends State {
   // call an API of get all subjects
   void getAllLecture() async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token 5974570aeed03bea4665fc2fd91829f2';
+    const token = 'Token 7e7caea58181517cdef5992796eafecb ';
     final allLecture = await remoteDataSource.getAllUpcomingClasses(token);
     if (allLecture.data.data is Object) {
       var allSubjectsResults = allLecture.data.data;
@@ -94,7 +94,8 @@ class MyCoursesWidgetState extends State {
                           INSPHeading(classCategories[index].label),
                           ScheduleClassBox(
                               type: classCategories[index].label,
-                              upcomingData: getUpcomingData(classCategories[index].category)),
+                              upcomingData: getUpcomingData(
+                                  classCategories[index].category)),
                         ],
                       );
                     },

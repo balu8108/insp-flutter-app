@@ -32,7 +32,7 @@ class SoloClassesWidget extends State {
   // call an API of get all subjects
   void getAllLatestSoloClasses() async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token 5974570aeed03bea4665fc2fd91829f2';
+    const token = 'Token 7e7caea58181517cdef5992796eafecb';
     final latestSoloClass = await remoteDataSource.getLatestSoloClasses(token);
     if (latestSoloClass.data.data.isNotEmpty) {
       var allSubjectsResults = latestSoloClass.data.data;
@@ -40,7 +40,9 @@ class SoloClassesWidget extends State {
       final latestSoloCardModels = allSubjectsResults
           .map((latestSoloClassResult) => LatestSoloClassCardModel(
               latestSoloClassResult.id.toString(),
-              latestSoloClassResult.topic == ""? "General":capitalizeFirstLetter(latestSoloClassResult.topic),
+              latestSoloClassResult.topic == ""
+                  ? "General"
+                  : capitalizeFirstLetter(latestSoloClassResult.topic),
               latestSoloClassResult.mentorName,
               latestSoloClassResult.description))
           .toList();
