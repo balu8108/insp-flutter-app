@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AssignmentScreenAppState {
   INSPCardModel get selectedItem => throw _privateConstructorUsedError;
+  List<INSPCardModel> get allSubjectTopics =>
+      throw _privateConstructorUsedError;
   String get query => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +32,10 @@ abstract class $AssignmentScreenAppStateCopyWith<$Res> {
           $Res Function(AssignmentScreenAppState) then) =
       _$AssignmentScreenAppStateCopyWithImpl<$Res, AssignmentScreenAppState>;
   @useResult
-  $Res call({INSPCardModel selectedItem, String query});
+  $Res call(
+      {INSPCardModel selectedItem,
+      List<INSPCardModel> allSubjectTopics,
+      String query});
 }
 
 /// @nodoc
@@ -48,6 +53,7 @@ class _$AssignmentScreenAppStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? selectedItem = null,
+    Object? allSubjectTopics = null,
     Object? query = null,
   }) {
     return _then(_value.copyWith(
@@ -55,6 +61,10 @@ class _$AssignmentScreenAppStateCopyWithImpl<$Res,
           ? _value.selectedItem
           : selectedItem // ignore: cast_nullable_to_non_nullable
               as INSPCardModel,
+      allSubjectTopics: null == allSubjectTopics
+          ? _value.allSubjectTopics
+          : allSubjectTopics // ignore: cast_nullable_to_non_nullable
+              as List<INSPCardModel>,
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
@@ -72,7 +82,10 @@ abstract class _$$AssignmentScreenAppStateImplCopyWith<$Res>
       __$$AssignmentScreenAppStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({INSPCardModel selectedItem, String query});
+  $Res call(
+      {INSPCardModel selectedItem,
+      List<INSPCardModel> allSubjectTopics,
+      String query});
 }
 
 /// @nodoc
@@ -89,6 +102,7 @@ class __$$AssignmentScreenAppStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? selectedItem = null,
+    Object? allSubjectTopics = null,
     Object? query = null,
   }) {
     return _then(_$AssignmentScreenAppStateImpl(
@@ -96,6 +110,10 @@ class __$$AssignmentScreenAppStateImplCopyWithImpl<$Res>
           ? _value.selectedItem
           : selectedItem // ignore: cast_nullable_to_non_nullable
               as INSPCardModel,
+      allSubjectTopics: null == allSubjectTopics
+          ? _value._allSubjectTopics
+          : allSubjectTopics // ignore: cast_nullable_to_non_nullable
+              as List<INSPCardModel>,
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
@@ -110,17 +128,30 @@ class _$AssignmentScreenAppStateImpl
     with DiagnosticableTreeMixin
     implements _AssignmentScreenAppState {
   const _$AssignmentScreenAppStateImpl(
-      {required this.selectedItem, this.query = ''});
+      {required this.selectedItem,
+      final List<INSPCardModel> allSubjectTopics = const [],
+      this.query = ''})
+      : _allSubjectTopics = allSubjectTopics;
 
   @override
   final INSPCardModel selectedItem;
+  final List<INSPCardModel> _allSubjectTopics;
+  @override
+  @JsonKey()
+  List<INSPCardModel> get allSubjectTopics {
+    if (_allSubjectTopics is EqualUnmodifiableListView)
+      return _allSubjectTopics;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_allSubjectTopics);
+  }
+
   @override
   @JsonKey()
   final String query;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AssignmentScreenAppState(selectedItem: $selectedItem, query: $query)';
+    return 'AssignmentScreenAppState(selectedItem: $selectedItem, allSubjectTopics: $allSubjectTopics, query: $query)';
   }
 
   @override
@@ -129,6 +160,7 @@ class _$AssignmentScreenAppStateImpl
     properties
       ..add(DiagnosticsProperty('type', 'AssignmentScreenAppState'))
       ..add(DiagnosticsProperty('selectedItem', selectedItem))
+      ..add(DiagnosticsProperty('allSubjectTopics', allSubjectTopics))
       ..add(DiagnosticsProperty('query', query));
   }
 
@@ -139,11 +171,14 @@ class _$AssignmentScreenAppStateImpl
             other is _$AssignmentScreenAppStateImpl &&
             (identical(other.selectedItem, selectedItem) ||
                 other.selectedItem == selectedItem) &&
+            const DeepCollectionEquality()
+                .equals(other._allSubjectTopics, _allSubjectTopics) &&
             (identical(other.query, query) || other.query == query));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, selectedItem, query);
+  int get hashCode => Object.hash(runtimeType, selectedItem,
+      const DeepCollectionEquality().hash(_allSubjectTopics), query);
 
   @JsonKey(ignore: true)
   @override
@@ -156,10 +191,13 @@ class _$AssignmentScreenAppStateImpl
 abstract class _AssignmentScreenAppState implements AssignmentScreenAppState {
   const factory _AssignmentScreenAppState(
       {required final INSPCardModel selectedItem,
+      final List<INSPCardModel> allSubjectTopics,
       final String query}) = _$AssignmentScreenAppStateImpl;
 
   @override
   INSPCardModel get selectedItem;
+  @override
+  List<INSPCardModel> get allSubjectTopics;
   @override
   String get query;
   @override

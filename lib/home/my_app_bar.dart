@@ -12,8 +12,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: const Color.fromRGBO(232, 242, 249, 1),
-      title: Image.asset('assets/images/insplogo.png', height: 54.0),
+      title: Image.asset('assets/images/insplogo.png', height: 34.0),
       actions: [
         _buildTextButton('Home', () {
           INSPCardModel inspCardModel = const INSPCardModel(

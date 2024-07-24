@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/assignmentCoursesWidgets/assignment_course_widgets.dart';
 import 'package:inspflutterfrontend/assignments/widgets/assignment_screen_redux.dart';
+import 'package:inspflutterfrontend/assignments/widgets/assignment_subject_topic.dart';
 import 'package:inspflutterfrontend/common/insp_heading.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/common/search_box.dart';
@@ -14,6 +15,7 @@ class AssignmentScreen extends StatelessWidget {
   const AssignmentScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    dispatch(context, initialFetchSubjectTopic(context));
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
       dispatch(context, showSelectedItem(context, inspCardModel));
     }
@@ -21,6 +23,8 @@ class AssignmentScreen extends StatelessWidget {
     void callCourseApi() {
       dispatch(context, getMyCourses(context));
     }
+
+    void onPressedTopic(BuildContext context, INSPCardModel inspCardModel) {}
 
     return Scaffold(
         appBar: MyAppBar(),
@@ -92,7 +96,12 @@ class AssignmentScreen extends StatelessWidget {
                                                     ),
                                                   ],
                                                 )
-                                              : const Text("Physics Page"),
+                                              : AssignmentSubjectTopic(
+                                                  key: UniqueKey(),
+                                                  allSubjectTopics:
+                                                      state.allSubjectTopics,
+                                                  onViewDetailsClicked:
+                                                      onPressedTopic),
                                         ],
                                       ),
                                     ),
