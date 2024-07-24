@@ -9,12 +9,12 @@ import 'package:inspflutterfrontend/library/library_screen.dart';
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: const Color.fromRGBO(232, 242, 249, 1),
-      title: Image.asset('assets/images/insplogo.png', height: 54.0),
+      title: Image.asset('assets/images/insplogo.png', height: 34.0),
       actions: [
         _buildTextButton('Home', () {
           INSPCardModel inspCardModel = const INSPCardModel(
@@ -56,7 +56,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               'Physics',
               'In Progress',
               'Explore the fascinating world of Physics with a collection of resources covering classical mechanics, electromagnetism, thermodynamics, and quantum mechanics. Dive into the fundamental principles that govern the physical universe.');
-
           Navigator.push(
             context,
             MaterialPageRoute(

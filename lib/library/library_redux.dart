@@ -125,7 +125,7 @@ ThunkAction<LibraryAppState> showTopicsForSubject(
       LibraryScreen.dispatch(
           context, UpdateFilteredTopicsForSelectedSubject(inspCardModels: []));
     }
-    //print(allTopics.data.allTopicsForSubjectResponseModelResult);
+    print(allTopics.data.allTopicsForSubjectResponseModelResult);
   };
 }
 

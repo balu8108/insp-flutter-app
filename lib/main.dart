@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/login/login_screen.dart';
 import 'package:inspflutterfrontend/onboarding/onboarding_screen.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
@@ -13,14 +15,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'INSP',
-      theme: ThemeData(fontFamily: 'Inter-Regular'),
-      home: AnimatedSplashScreen(
-        duration: 3000,
-        splash: _buildSplashWidget(),
-        splashTransition: SplashTransition.sizeTransition,
-        nextScreen: const OnboardingScreen(),
-        backgroundColor: Colors.white,
+      home: Builder(
+        builder: (context) {
+          if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
+            return LoginScreen.getScreen();
+          } else {
+            return AnimatedSplashScreen(
+              duration: 3000,
+              splash: _buildSplashWidget(),
+              splashTransition: SplashTransition.sizeTransition,
+              nextScreen: const OnboardingScreen(),
+              backgroundColor: Colors.white,
+            );
+          }
+        },
       ),
     );
   }

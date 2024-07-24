@@ -3,7 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/assignments/widgets/assignmentScreen.dart';
+import 'package:inspflutterfrontend/common/extensions.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
+import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
+import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
+import 'package:inspflutterfrontend/data/remote/models/library/all_topics_for_subject_request_model.dart';
+import 'package:inspflutterfrontend/data/remote/remote_data_source.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 
@@ -18,6 +23,7 @@ part 'assignment_screen_redux.freezed.dart';
 class AssignmentScreenAppState with _$AssignmentScreenAppState {
   const factory AssignmentScreenAppState(
       {required INSPCardModel selectedItem,
+      @Default([]) List<INSPCardModel> allSubjectTopics,
       @Default('') String query}) = _AssignmentScreenAppState;
 }
 
@@ -32,6 +38,11 @@ class UpdateSelectedItem extends AssignmentScreenAction {
   UpdateSelectedItem({required this.selectedItem});
 }
 
+class UpdateSubjectTopicItem extends AssignmentScreenAction {
+  List<INSPCardModel> selectedItem;
+  UpdateSubjectTopicItem({required this.selectedItem});
+}
+
 sealed class AssignmentScreenAction {}
 
 AssignmentScreenAppState _assignmentCoursesStateReducer(
@@ -41,6 +52,8 @@ AssignmentScreenAppState _assignmentCoursesStateReducer(
       return state.copyWith(query: action.query);
     case UpdateSelectedItem():
       return state.copyWith(selectedItem: action.selectedItem);
+    case UpdateSubjectTopicItem():
+      return state.copyWith(allSubjectTopics: action.selectedItem);
   }
 }
 
@@ -53,26 +66,42 @@ AssignmentScreenAppState assignmentCoursesStateReducer(
   return upState;
 }
 
-ThunkAction<AssignmentScreenAppState> initialFetchAssignmentCourse(
+ThunkAction<AssignmentScreenAppState> initialFetchSubjectTopic(
     BuildContext context) {
   return (Store<AssignmentScreenAppState> store) async {
     AssignmentScreen.dispatch(
-        context, showLectureDetail(context, store.state.selectedItem));
+        context, showTopicsForSubject(context, store.state.selectedItem));
   };
 }
 
-ThunkAction<AssignmentScreenAppState> showLectureDetail(
-    BuildContext context, INSPCardModel lecture) {
+ThunkAction<AssignmentScreenAppState> showTopicsForSubject(
+    BuildContext context, INSPCardModel inspCardModel) {
   return (Store<AssignmentScreenAppState> store) async {
-    // final remoteDataSource = RemoteDataSource();
-    // const token = 'Token 7e7caea58181517cdef5992796eafecb';
-    // final lectureDetail =
-    //     await remoteDataSource.getLecturesDetailByRoomId(lecture.roomId, token);
-    // if (lectureDetail.response.statusCode == 200) {
-    //   final lecturesDetailResponse = lectureDetail.data.data;
-    //   LectureDetailScreen.dispatch(
-    //       context, UpdateLectureData(lectureDataRes: lecturesDetailResponse));
-    // } else {}
+    AssignmentScreen.dispatch(
+        context, UpdateSelectedItem(selectedItem: inspCardModel));
+    final remoteDataSource = RemoteDataSource();
+    final subjectId =
+        inspCardModel.id == '1' || inspCardModel.id == '4' ? '1' : '2';
+    final allTopics = await remoteDataSource.getAllTopicsForSubject(
+        AllTopicsForSubjectRequestModel(
+            secret_key: secretKey, subject_id: subjectId));
+    if (allTopics.response.statusCode == 201 && allTopics.data.status == true) {
+      final allTopicsForSubject = allTopics
+              .data.allTopicsForSubjectResponseModelResult
+              .map((it) => INSPCardModel(
+                  it.id ?? '',
+                  (it.name ?? '').capitalizeFirstLetter(),
+                  'Nitin Sachan',
+                  topicDescriptionConstants[int.parse(it.id ?? '1')] ?? ''))
+              .toList() ??
+          [];
+
+      AssignmentScreen.dispatch(
+          context, UpdateSubjectTopicItem(selectedItem: allTopicsForSubject));
+    } else {
+      AssignmentScreen.dispatch(
+          context, UpdateSubjectTopicItem(selectedItem: []));
+    }
   };
 }
 
