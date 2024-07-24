@@ -34,7 +34,7 @@ class StudentHomeScreen extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              flex: 7,
+              flex: 9,
               child: Column(
                 children: [
                   MyCoursesWidget(

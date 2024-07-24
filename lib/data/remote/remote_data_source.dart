@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:inspflutterfrontend/data/remote/models/assignment/all_assignment_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/assignment/latest_upload_assignment_response_model.dart';
+import 'package:inspflutterfrontend/data/remote/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_response_model.dart';
@@ -34,6 +35,9 @@ abstract class RemoteDataSource {
   Future<HttpResponse<PhysicsCourseTopicsResponseModel>>
       getAllTopicsForMyCourse(
           PhysicsCourseTopicsRequestModel allTopicsForMyCourseRequestModel);
+
+  Future<HttpResponse<PhysicsCourseTopicsResponseModel>> getAllTopicsByChapter(
+      AllTopicsForChapterRequestModel allTopicsForChapterRequestModel);
 
   Future<HttpResponse<LatestSoloClassesResponseModel>> getLatestSoloClasses(
       String secretTokenHeader);
@@ -81,6 +85,13 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       AllTopicsForSubjectRequestModel allTopicsForSubjectRequestModel) {
     return deviceNetworkService
         .getAllTopicsForSubject(allTopicsForSubjectRequestModel);
+  }
+
+  @override
+  Future<HttpResponse<PhysicsCourseTopicsResponseModel>> getAllTopicsByChapter(
+      AllTopicsForChapterRequestModel allTopicsForChapterRequestModel) {
+    return deviceNetworkService
+        .getAllTopicsByChapter(allTopicsForChapterRequestModel);
   }
 
   @override

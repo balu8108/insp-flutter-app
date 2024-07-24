@@ -16,6 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LecturesWidgetAppState {
+  List<INSPCardModel> get allTopicsForSelectedCourse =>
+      throw _privateConstructorUsedError;
   List<LectureCardModel> get allLectureForSelectedCourse =>
       throw _privateConstructorUsedError;
   String get query => throw _privateConstructorUsedError;
@@ -34,7 +36,8 @@ abstract class $LecturesWidgetAppStateCopyWith<$Res> {
       _$LecturesWidgetAppStateCopyWithImpl<$Res, LecturesWidgetAppState>;
   @useResult
   $Res call(
-      {List<LectureCardModel> allLectureForSelectedCourse,
+      {List<INSPCardModel> allTopicsForSelectedCourse,
+      List<LectureCardModel> allLectureForSelectedCourse,
       String query,
       List<LectureCardModel> filteredLectureForSelectedCourse});
 }
@@ -53,11 +56,16 @@ class _$LecturesWidgetAppStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? allTopicsForSelectedCourse = null,
     Object? allLectureForSelectedCourse = null,
     Object? query = null,
     Object? filteredLectureForSelectedCourse = null,
   }) {
     return _then(_value.copyWith(
+      allTopicsForSelectedCourse: null == allTopicsForSelectedCourse
+          ? _value.allTopicsForSelectedCourse
+          : allTopicsForSelectedCourse // ignore: cast_nullable_to_non_nullable
+              as List<INSPCardModel>,
       allLectureForSelectedCourse: null == allLectureForSelectedCourse
           ? _value.allLectureForSelectedCourse
           : allLectureForSelectedCourse // ignore: cast_nullable_to_non_nullable
@@ -84,7 +92,8 @@ abstract class _$$LecturesWidgetAppStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<LectureCardModel> allLectureForSelectedCourse,
+      {List<INSPCardModel> allTopicsForSelectedCourse,
+      List<LectureCardModel> allLectureForSelectedCourse,
       String query,
       List<LectureCardModel> filteredLectureForSelectedCourse});
 }
@@ -102,11 +111,16 @@ class __$$LecturesWidgetAppStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? allTopicsForSelectedCourse = null,
     Object? allLectureForSelectedCourse = null,
     Object? query = null,
     Object? filteredLectureForSelectedCourse = null,
   }) {
     return _then(_$LecturesWidgetAppStateImpl(
+      allTopicsForSelectedCourse: null == allTopicsForSelectedCourse
+          ? _value._allTopicsForSelectedCourse
+          : allTopicsForSelectedCourse // ignore: cast_nullable_to_non_nullable
+              as List<INSPCardModel>,
       allLectureForSelectedCourse: null == allLectureForSelectedCourse
           ? _value._allLectureForSelectedCourse
           : allLectureForSelectedCourse // ignore: cast_nullable_to_non_nullable
@@ -127,11 +141,23 @@ class __$$LecturesWidgetAppStateImplCopyWithImpl<$Res>
 
 class _$LecturesWidgetAppStateImpl implements _LecturesWidgetAppState {
   const _$LecturesWidgetAppStateImpl(
-      {final List<LectureCardModel> allLectureForSelectedCourse = const [],
+      {final List<INSPCardModel> allTopicsForSelectedCourse = const [],
+      final List<LectureCardModel> allLectureForSelectedCourse = const [],
       this.query = '',
       final List<LectureCardModel> filteredLectureForSelectedCourse = const []})
-      : _allLectureForSelectedCourse = allLectureForSelectedCourse,
+      : _allTopicsForSelectedCourse = allTopicsForSelectedCourse,
+        _allLectureForSelectedCourse = allLectureForSelectedCourse,
         _filteredLectureForSelectedCourse = filteredLectureForSelectedCourse;
+
+  final List<INSPCardModel> _allTopicsForSelectedCourse;
+  @override
+  @JsonKey()
+  List<INSPCardModel> get allTopicsForSelectedCourse {
+    if (_allTopicsForSelectedCourse is EqualUnmodifiableListView)
+      return _allTopicsForSelectedCourse;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_allTopicsForSelectedCourse);
+  }
 
   final List<LectureCardModel> _allLectureForSelectedCourse;
   @override
@@ -158,7 +184,7 @@ class _$LecturesWidgetAppStateImpl implements _LecturesWidgetAppState {
 
   @override
   String toString() {
-    return 'LecturesWidgetAppState(allLectureForSelectedCourse: $allLectureForSelectedCourse, query: $query, filteredLectureForSelectedCourse: $filteredLectureForSelectedCourse)';
+    return 'LecturesWidgetAppState(allTopicsForSelectedCourse: $allTopicsForSelectedCourse, allLectureForSelectedCourse: $allLectureForSelectedCourse, query: $query, filteredLectureForSelectedCourse: $filteredLectureForSelectedCourse)';
   }
 
   @override
@@ -166,6 +192,9 @@ class _$LecturesWidgetAppStateImpl implements _LecturesWidgetAppState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LecturesWidgetAppStateImpl &&
+            const DeepCollectionEquality().equals(
+                other._allTopicsForSelectedCourse,
+                _allTopicsForSelectedCourse) &&
             const DeepCollectionEquality().equals(
                 other._allLectureForSelectedCourse,
                 _allLectureForSelectedCourse) &&
@@ -178,6 +207,7 @@ class _$LecturesWidgetAppStateImpl implements _LecturesWidgetAppState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(_allTopicsForSelectedCourse),
       const DeepCollectionEquality().hash(_allLectureForSelectedCourse),
       query,
       const DeepCollectionEquality().hash(_filteredLectureForSelectedCourse));
@@ -192,11 +222,14 @@ class _$LecturesWidgetAppStateImpl implements _LecturesWidgetAppState {
 
 abstract class _LecturesWidgetAppState implements LecturesWidgetAppState {
   const factory _LecturesWidgetAppState(
-          {final List<LectureCardModel> allLectureForSelectedCourse,
+          {final List<INSPCardModel> allTopicsForSelectedCourse,
+          final List<LectureCardModel> allLectureForSelectedCourse,
           final String query,
           final List<LectureCardModel> filteredLectureForSelectedCourse}) =
       _$LecturesWidgetAppStateImpl;
 
+  @override
+  List<INSPCardModel> get allTopicsForSelectedCourse;
   @override
   List<LectureCardModel> get allLectureForSelectedCourse;
   @override

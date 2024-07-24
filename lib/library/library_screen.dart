@@ -3,10 +3,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
 import 'package:inspflutterfrontend/home/my_app_bar.dart';
-import 'package:inspflutterfrontend/lectureswidget/topic_or_lecture_widget_screen.dart';
 import 'package:inspflutterfrontend/library/library_redux.dart';
 import 'package:inspflutterfrontend/librarywidget/library_widget_screen.dart';
-import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/upcomingclasseswidget/upcoming_class_screen.dart';
 
 import '../base/base.dart';
@@ -45,9 +43,9 @@ class LibraryScreen extends StatelessWidget {
                           onViewDetailsClicked: onPressedLibrarySubject),
                     ),
                     const SizedBox(
-                      width: 16,
+                      width: 17,
                     ),
-                    Expanded(flex: 3, child: UpcomingClassesScreen())
+                    Expanded(flex: 3, child: UpcomingClassesScreen.getScreen())
                   ],
                 )),
           ),

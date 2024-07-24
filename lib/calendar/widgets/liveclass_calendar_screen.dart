@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/calendar/widgets/liveclass_calendar.dart';
 import 'package:inspflutterfrontend/home/my_app_bar.dart';
-import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/upcomingclasseswidget/upcoming_class_screen.dart';
 
 class LiveclassCalendarScreen extends StatefulWidget {
@@ -17,17 +16,17 @@ class _LiveclassCalendarScreenState extends State<LiveclassCalendarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
             Expanded(
-              flex: 2,
-              child: UpcomingClassesScreen(),
+              flex: 3,
+              child: UpcomingClassesScreen.getScreen(),
             ),
-            SizedBox(width: 24), // Adds spacing between the components
-            Expanded(
-              flex: 7,
+            const SizedBox(width: 17), // Adds spacing between the components
+            const Expanded(
+              flex: 9,
               child: LiveclassCalendar(),
             ),
           ],

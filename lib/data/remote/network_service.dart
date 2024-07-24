@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:inspflutterfrontend/data/remote/models/assignment/all_assignment_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/assignment/latest_upload_assignment_response_model.dart';
+import 'package:inspflutterfrontend/data/remote/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/library/all_topics_for_subject_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/library/all_topics_for_subject_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_request_model.dart';
@@ -44,6 +45,11 @@ abstract class NetworkService {
   Future<HttpResponse<PhysicsCourseTopicsResponseModel>>
       getAllTopicsForMyCourse(
     @Body() PhysicsCourseTopicsRequestModel allTopicsForMyCourseRequestModel,
+  );
+
+  @POST('https://inspedu.in/webservices/apis/topics/')
+  Future<HttpResponse<PhysicsCourseTopicsResponseModel>> getAllTopicsByChapter(
+    @Body() AllTopicsForChapterRequestModel allTopicsForChapterRequestModel,
   );
 
   @GET('/solo-lecture/latest-room')

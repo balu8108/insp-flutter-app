@@ -39,7 +39,7 @@ class LectureDetailScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        flex: 7,
+                        flex: 9,
                         child: Column(
                           children: [
                             MyCoursesWidget(
@@ -52,7 +52,7 @@ class LectureDetailScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(width: 16),
+                      const SizedBox(width: 17),
                       Expanded(
                         flex: 3,
                         child: UpcomingClassesScreen.getScreen(),
