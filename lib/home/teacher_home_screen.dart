@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/library/library_screen.dart';
-import 'package:inspflutterfrontend/librarywidget/library_widget_screen.dart';
 import 'package:inspflutterfrontend/mycourses/my_courses_screen.dart';
 import 'package:inspflutterfrontend/mycourseswidget/my_courses_widget_screen.dart';
 import 'package:inspflutterfrontend/myuploads/myupload_widget_screen.dart';
@@ -10,9 +9,7 @@ import 'package:inspflutterfrontend/soloclasses/soloclasses_widget_screen.dart';
 import 'package:inspflutterfrontend/upcomingclasseswidget/upcoming_class_screen.dart';
 
 class TeacherHomeScreen extends StatelessWidget {
-  TeacherHomeScreen({super.key, required this.callCourseApi});
-
-  final void Function() callCourseApi;
+  TeacherHomeScreen({super.key});
 
   void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
     Navigator.push(
@@ -35,17 +32,17 @@ class TeacherHomeScreen extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 7,
+              flex: 9,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  MyCoursesWidget(
-                    onViewDetailsClicked: onPressedMyCourse,
-                    callCourseApi: callCourseApi,
-                  ),
+                  MyCoursesWidget(onViewDetailsClicked: onPressedMyCourse),
                   const SizedBox(height: 16),
                   const Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         flex: 6, // 60%
@@ -68,9 +65,9 @@ class TeacherHomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 17),
-            const Expanded(
+            Expanded(
               flex: 3,
-              child: UpcomingClassesScreen(),
+              child: UpcomingClassesScreen.getScreen(),
             ),
           ],
         ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/common/extensions.dart';
 import 'package:inspflutterfrontend/common/model/latest_assignment_card_model.dart';
-import 'package:inspflutterfrontend/common/model/latest_completed_class_card_model.dart';
 
 Widget LatestAssignmentCard(
     {required LatestAssignmentCardModel assignmentCardModel,

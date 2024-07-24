@@ -9,6 +9,7 @@ part of 'lecture_card_model.dart';
 LectureCardModel _$LectureCardModelFromJson(Map<String, dynamic> json) =>
     LectureCardModel(
       json['id'] as String,
+      json['roomId'] as String,
       json['name'] as String,
       json['status'] as String,
       json['description'] as String,
@@ -20,6 +21,7 @@ LectureCardModel _$LectureCardModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$LectureCardModelToJson(LectureCardModel instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'roomId': instance.roomId,
       'name': instance.name,
       'status': instance.status,
       'description': instance.description,

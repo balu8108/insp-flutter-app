@@ -15,16 +15,11 @@ class MyCoursesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
-      print("inspCardModelwithtestin");
-      print("TERRR");
+      
       dispatch(context, showTopicsForCourse(context, inspCardModel));
     }
 
     dispatch(context, initialFetchTopics(context));
-
-    void callCourseApi() {
-      dispatch(context, getMyCourses(context));
-    }
 
     return Scaffold(
         appBar: MyAppBar(),
@@ -38,28 +33,29 @@ class MyCoursesScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        flex: 7,
+                        flex: 9,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             MyCoursesWidget(
-                                onViewDetailsClicked: onPressedMyCourse,
-                                callCourseApi: callCourseApi),
+                                onViewDetailsClicked: onPressedMyCourse),
                             const SizedBox(height: 16),
                             TopicOrLectureWidget(
                                 key: UniqueKey(),
-                                onViewDetailsClicked:
-                                    (BuildContext, INSPCardModel) {},
                                 heading: state.selectedItem.name,
-                                data: state.allLectures),
+                                data: state.allLectures,
+                                allTopicsForSelectedCourse:
+                                    state.allTopicsForSelectedCourse),
                           ],
                         ),
                       ),
                       const SizedBox(width: 17),
-                      const Expanded(
+                      Expanded(
                         flex: 3,
-                        child: UpcomingClassesScreen(),
+                        child: UpcomingClassesScreen.getScreen(),
                       ),
                     ],
                   ),

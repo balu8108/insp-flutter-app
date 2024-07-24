@@ -1,228 +1,184 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/common/extensions.dart';
 import 'package:inspflutterfrontend/common/file_box_component.dart';
+import 'package:inspflutterfrontend/common/model/upcoming_lecture_card_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/utils/capitalize.dart';
 import 'package:inspflutterfrontend/utils/timeconvert.dart';
-
 import 'button/join_class.dart';
 
 class ScheduleClassBox extends StatefulWidget {
-  const ScheduleClassBox(
-      {super.key, required this.type, required this.upcomingData});
+  const ScheduleClassBox({
+    Key? key,
+    required this.type,
+    required this.upcomingWidgetAppState,
+  }) : super(key: key);
 
-  final List<AllLecturesForCourseResponseModelData> upcomingData;
   final String type;
+  final UpcomingLectureCardModel upcomingWidgetAppState;
 
   @override
-  State<StatefulWidget> createState() {
-    return ScheduleClassBoxWidgetState(type, upcomingData);
-  }
+  State<StatefulWidget> createState() => ScheduleClassBoxWidgetState();
 }
 
 class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
-  ScheduleClassBoxWidgetState(this.type, this.upcomingData);
-
-  final List<AllLecturesForCourseResponseModelData> upcomingData;
-  final String type;
-
-  String descriptionText = 'Description';
+  late List<AllLecturesForCourseResponseModelData> upcomingData;
 
   @override
   void initState() {
     super.initState();
   }
 
+  List<AllLecturesForCourseResponseModelData> _getUpcomingData(String label) {
+    switch (label) {
+      case 'Ongoing':
+        return widget.upcomingWidgetAppState.ongoing;
+      case 'Today':
+        return widget.upcomingWidgetAppState.today;
+      case 'Week':
+        return widget.upcomingWidgetAppState.week;
+      default:
+        return widget.upcomingWidgetAppState.completed;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    upcomingData = _getUpcomingData(widget.type);
     return SizedBox(
-      height: 700,
+      height: upcomingData.isNotEmpty ? upcomingData.length * 350 : 100,
       child: upcomingData.isNotEmpty
-          ? Scrollbar(
-              child: ListView.separated(
-                scrollDirection: Axis.vertical,
-                itemCount: upcomingData.length,
-                itemBuilder: (BuildContext context, int index) {
-                  String scheduledStartTime =
-                      convertTime(upcomingData[index].scheduledStartTime);
-                  String scheduledEndTime =
-                      convertTime(upcomingData[index].scheduledEndTime);
-                  String scheduledDate =
-                      formatDate(upcomingData[index].scheduledDate);
-                  return Column(
-                    children: [
-                      Card(
-                          key: UniqueKey(),
-                          color: Colors.white,
-                          child: Stack(children: [
-                            Container(
-                                width: context.isWebOrLandScape()
-                                    ? MediaQuery.of(context).size.width / 3
-                                    : MediaQuery.of(context).size.width * 0.6,
-                                padding: const EdgeInsets.all(16),
-                                child: Stack(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Tooltip(
-                                              message: upcomingData[index]
-                                                          .liveClassRoomDetail
-                                                          .topicName ==
-                                                      ""
-                                                  ? "General"
-                                                  : capitalizeFirstLetter(
-                                                      upcomingData[index]
-                                                          .liveClassRoomDetail
-                                                          .topicName),
-                                              child: Text(
-                                                upcomingData[index]
-                                                            .liveClassRoomDetail
-                                                            .topicName ==
-                                                        ""
-                                                    ? "General"
-                                                    : capitalizeFirstLetter(
-                                                        upcomingData[index]
-                                                            .liveClassRoomDetail
-                                                            .topicName),
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 14,
-                                                  color: Color(0xFF2C3329),
-                                                ),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                            Text(
-                                              '$scheduledStartTime - $scheduledEndTime',
-                                              style: const TextStyle(
-                                                fontSize: 10,
-                                                color: Color.fromRGBO(
-                                                    44, 51, 41, 0.47),
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 6,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              upcomingData[index].mentorName,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 10,
-                                                color: Color.fromRGBO(
-                                                    44, 51, 41, 0.47),
-                                              ),
-                                            ),
-                                            Text(
-                                              scheduledDate,
-                                              style: const TextStyle(
-                                                fontSize: 10,
-                                                color: Color.fromRGBO(
-                                                    44, 51, 41, 0.47),
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 6,
-                                        ),
-                                        Text(
-                                          upcomingData[index].classLevel,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 10,
-                                            color: Color.fromRGBO(
-                                                44, 51, 41, 0.47),
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 16),
-                                          child: upcomingData[index]
-                                                  .liveClassRoomFiles
-                                                  .isNotEmpty
-                                              ? FileBoxComponent(
-                                                  data: upcomingData[index]
-                                                      .liveClassRoomFiles,
-                                                  type: "live",
-                                                )
-                                              : const Text(
-                                                  'No Files',
-                                                  style:
-                                                      TextStyle(fontSize: 12),
-                                                ),
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              descriptionText,
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                            Text(
-                                              upcomingData[index]
-                                                  .liveClassRoomDetail
-                                                  .description,
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                color: Color.fromRGBO(
-                                                    44, 51, 41, 0.47),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 16,
-                                        ),
-                                        JoinClassBtn(
-                                          status:
-                                              upcomingData[index].classStatus,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                            Positioned(
-                              top: 1,
-                              right: 1,
-                              child: IconButton(
-                                icon: Icon(Icons.edit, size: 16.0),
-                                onPressed: () {
-                                  // onSchedulePopupOpen();
-                                },
-                                tooltip: 'Edit',
+          ? ListView.separated(
+              itemCount: upcomingData.length,
+              itemBuilder: (BuildContext context, int index) {
+                final data = upcomingData[index];
+                final scheduledStartTime = convertTime(data.scheduledStartTime);
+                final scheduledEndTime = convertTime(data.scheduledEndTime);
+                final scheduledDate = formatDate(data.scheduledDate);
+                final topicName = data.liveClassRoomDetail.topicName.isEmpty
+                    ? "General"
+                    : capitalizeFirstLetter(data.liveClassRoomDetail.topicName);
+
+                return Column(
+                  children: [
+                    Card(
+                      key: UniqueKey(),
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildRow(
+                              context,
+                              topicName,
+                              '$scheduledStartTime - $scheduledEndTime',
+                            ),
+                            const SizedBox(height: 6),
+                            _buildRow(
+                              context,
+                              data.mentorName,
+                              scheduledDate,
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              data.classLevel,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10,
+                                color: Color.fromRGBO(44, 51, 41, 0.47),
                               ),
                             ),
-                          ]))
-                    ],
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(
-                    width: 17,
-                  );
-                },
-              ),
+                            const SizedBox(height: 16),
+                            _buildFileBox(data.liveClassRoomFiles),
+                            const SizedBox(height: 16),
+                            _buildDescription(
+                              'Description',
+                              data.liveClassRoomDetail.description,
+                            ),
+                            const SizedBox(height: 16),
+                            JoinClassBtn(status: data.classStatus),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) =>
+                  const SizedBox(width: 17),
             )
           : const Center(child: Text('No items')),
+    );
+  }
+
+  Row _buildRow(BuildContext context, String leftText, String rightText) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Tooltip(
+          message: leftText,
+          child: Text(
+            leftText,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+              color: Color(0xFF2C3329),
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        Text(
+          rightText,
+          style: const TextStyle(
+            fontSize: 10,
+            color: Color.fromRGBO(44, 51, 41, 0.47),
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFileBox(List<LiveClassRoomFile> files) {
+    return files.isNotEmpty
+        ? FileBoxComponent(
+            data: files,
+            type: "live",
+            scrollDirection: "vertical",
+            maxHeight: files.isNotEmpty
+                ? files.length * 50 > 100
+                    ? 100
+                    : files.length * 50
+                : 50,
+          )
+        : const Text(
+            'No Files',
+            style: TextStyle(fontSize: 12),
+          );
+  }
+
+  Widget _buildDescription(String title, String description) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        Text(
+          description,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            fontSize: 12,
+            color: Color.fromRGBO(44, 51, 41, 0.47),
+          ),
+        ),
+      ],
     );
   }
 }

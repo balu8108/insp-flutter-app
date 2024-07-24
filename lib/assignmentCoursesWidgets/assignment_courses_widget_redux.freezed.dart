@@ -99,7 +99,6 @@ class __$$AssignmentCoursesWidgetAppStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AssignmentCoursesWidgetAppStateImpl
-    with DiagnosticableTreeMixin
     implements _AssignmentCoursesWidgetAppState {
   const _$AssignmentCoursesWidgetAppStateImpl(
       [final List<INSPCardModel> assignmentCoursesInspCardModels = const []])
@@ -116,17 +115,8 @@ class _$AssignmentCoursesWidgetAppStateImpl
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AssignmentCoursesWidgetAppState(assignmentCoursesInspCardModels: $assignmentCoursesInspCardModels)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AssignmentCoursesWidgetAppState'))
-      ..add(DiagnosticsProperty(
-          'assignmentCoursesInspCardModels', assignmentCoursesInspCardModels));
   }
 
   @override

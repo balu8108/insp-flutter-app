@@ -58,10 +58,10 @@ class LibraryScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 17),
                   Expanded(
                     flex: 3,
-                    child: UpcomingClassesScreen(),
+                    child: UpcomingClassesScreen.getScreen(),
                   ),
                 ],
               ),

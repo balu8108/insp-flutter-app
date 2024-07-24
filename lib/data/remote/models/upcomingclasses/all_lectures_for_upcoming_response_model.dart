@@ -7,7 +7,7 @@ part 'all_lectures_for_upcoming_response_model.g.dart';
 class AllLecturesForUpcomingResponseModel {
   const AllLecturesForUpcomingResponseModel({required this.data});
 
-  final AllLecturesData data;
+  final AllWeeklyLecturesData data;
 
   factory AllLecturesForUpcomingResponseModel.fromJson(
           Map<String, Object?> json) =>
@@ -19,8 +19,8 @@ class AllLecturesForUpcomingResponseModel {
 }
 
 @JsonSerializable()
-class AllLecturesData {
-  const AllLecturesData({
+class AllWeeklyLecturesData {
+  const AllWeeklyLecturesData({
     required this.ongoing,
     required this.today,
     required this.week,
@@ -36,8 +36,8 @@ class AllLecturesData {
   @JsonKey(name: 'Completed')
   final List<AllLecturesForCourseResponseModelData> completed;
 
-  factory AllLecturesData.fromJson(Map<String, Object?> json) =>
-      _$AllLecturesDataFromJson(json);
+  factory AllWeeklyLecturesData.fromJson(Map<String, Object?> json) =>
+      _$AllWeeklyLecturesDataFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AllLecturesDataToJson(this);
+  Map<String, dynamic> toJson() => _$AllWeeklyLecturesDataToJson(this);
 }
