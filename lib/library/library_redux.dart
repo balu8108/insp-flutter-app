@@ -104,7 +104,7 @@ ThunkAction<LibraryAppState> showTopicsForSubject(
       final allTopicsForSubject = allTopics
               .data.allTopicsForSubjectResponseModelResult
               .map((it) => INSPCardModel(
-          it.id ?? '',
+                  it.id ?? '',
                   (it.name ?? '').capitalizeFirstLetter(),
                   'Nitin Sachan',
                   topicDescriptionConstants[int.parse(it.id ?? '1')] ?? ''))
@@ -127,7 +127,7 @@ ThunkAction<LibraryAppState> showTopicsForSubject(
       LibraryScreen.dispatch(
           context, UpdateFilteredTopicsForSelectedSubject(inspCardModels: []));
     }
-    //print(allTopics.data.allTopicsForSubjectResponseModelResult);
+    print(allTopics.data.allTopicsForSubjectResponseModelResult);
   };
 }
 
