@@ -92,7 +92,7 @@ class _TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'My Courses ( ${widget.heading} )',
+                    widget.heading,
                     style: const TextStyle(
                         fontSize: 16, overflow: TextOverflow.ellipsis),
                   ),
@@ -157,7 +157,7 @@ class _TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
           const SizedBox(height: 16),
           if (widget.heading == "Mathematics" || widget.heading == "Chemistry")
             _buildComingSoon()
-          else if (widget.heading == "Physics")
+          else if (widget.heading == 'My Courses (Physics)')
             _lecturesWidgetAppState.allTopicsForSelectedCourse.isNotEmpty
                 ? _buildGridView(
                     items: _lecturesWidgetAppState.allTopicsForSelectedCourse,

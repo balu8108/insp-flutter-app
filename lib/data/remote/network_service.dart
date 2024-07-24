@@ -4,6 +4,7 @@ import 'package:inspflutterfrontend/data/remote/models/assignment/latest_upload_
 import 'package:inspflutterfrontend/data/remote/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/library/all_topics_for_subject_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/library/all_topics_for_subject_response_model.dart';
+import 'package:inspflutterfrontend/data/remote/models/mycourses/all_lectures_for_topic_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/mycourses/physics_course_topics_request_model.dart';
@@ -51,6 +52,12 @@ abstract class NetworkService {
   Future<HttpResponse<PhysicsCourseTopicsResponseModel>> getAllTopicsByChapter(
     @Body() AllTopicsForChapterRequestModel allTopicsForChapterRequestModel,
   );
+
+  @GET('/lecture/get-lecture-by-topic-name/{topicId}/{topicType}')
+  Future<HttpResponse<AllLecturesForTopicResponseModel>> getAllLectureByTopic(
+      @Path() String topicId,
+      @Path() String topicType,
+      @Header('Authorization') String secretTokenHeader);
 
   @GET('/solo-lecture/latest-room')
   Future<HttpResponse<LatestSoloClassesResponseModel>> getLatestSoloClasses(

@@ -89,7 +89,6 @@ class ChapterDetailWidgetState extends State<ChapterDetailWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.allTopics.length);
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(

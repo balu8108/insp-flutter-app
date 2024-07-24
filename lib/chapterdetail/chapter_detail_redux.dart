@@ -8,6 +8,7 @@ import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
 import 'package:inspflutterfrontend/data/remote/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/data/remote/remote_data_source.dart';
+import 'package:inspflutterfrontend/topiclecture/topic_lecture_screen.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 
@@ -86,42 +87,21 @@ ThunkAction<ChapterDetailAppState> showTopicsForSubject(
   };
 }
 
-// ThunkAction<ChapterDetailAppState> showTopicsForSubject(
-//     BuildContext context, INSPCardModel inspCardModel) {
-//   return (Store<ChapterDetailAppState> store) async {
-//     ChapterDetailScreen.dispatch(
-//         context, UpdateSelectedChapter(selectedchapter: inspCardModel));
-//     final remoteDataSource = RemoteDataSource();
-//     const secretKey = "U5Ga0Z1aaNlYHp0MjdEdXJ1aKVVVB1TP";
-//     final chapterId = inspCardModel.id;
-//     final allTopics = await remoteDataSource.getAllTopicsByChapter(
-//         AllTopicsForChapterRequestModel(
-//             secret_key: secretKey, chapter_id: chapterId));
-//     if (allTopics.response.statusCode == 201 && allTopics.data.status == true) {
-//       final allTopicsForSubject = allTopics
-//               .data.physicsCourseTopicsResponseModelResult
-//               .map((it) => INSPCardModel(
-//                   it.id ?? '',
-//                   (it.name ?? '').capitalizeFirstLetter(),
-//                   'Nitin Sachan',
-//                   topicDescriptionConstants[int.parse(it.id ?? '1')] ?? ''))
-//               .toList() ??
-//           [];
-
-//       print("SSDS");
-//       print(allTopicsForSubject.length);
-
-//       ChapterDetailScreen.dispatch(
-//           context, UpdateAllTopic(allTopics: allTopicsForSubject));
-//     } else {
-//       ChapterDetailScreen.dispatch(context, UpdateAllTopic(allTopics: []));
-//     }
-//   };
-// }
-
 ThunkAction<ChapterDetailAppState> initialFetchTopics(BuildContext context) {
   return (Store<ChapterDetailAppState> store) async {
     ChapterDetailScreen.dispatch(
         context, showTopicsForSubject(context, store.state.selectedchapter));
+  };
+}
+
+ThunkAction<ChapterDetailAppState> sendToTopicLectureScreen(
+    BuildContext context, INSPCardModel inspCardModel) {
+  return (Store<ChapterDetailAppState> store) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => TopicLectureScreen.getScreen(
+              inspCardModel, store.state.allTopics)),
+    );
   };
 }
