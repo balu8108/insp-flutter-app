@@ -1,9 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/common/extensions.dart';
+import 'package:inspflutterfrontend/common/insp_card.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/common/search_box.dart';
 import 'package:inspflutterfrontend/library/library_redux.dart';
+import 'package:inspflutterfrontend/libraryLecture/library_lecture_screen.dart';
 
 class LibraryDetails extends StatefulWidget {
   final INSPCardModel selectedItem;
@@ -20,6 +23,32 @@ class LibraryDetails extends StatefulWidget {
 }
 
 class _LibraryDetailsState extends State<LibraryDetails> {
+  void _onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => LibraryLectureScreen.getScreen(inspCardModel)),
+    );
+  }
+
+  Widget _buildGridView({
+    required List<dynamic> items,
+    required Widget Function(BuildContext, int) itemBuilder,
+  }) {
+    return GridView.builder(
+      itemCount: items.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: itemBuilder,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: context.isWebOrLandScape() ? 3 : 1,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        mainAxisExtent: 230,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final selectedItem = widget.selectedItem;
@@ -72,83 +101,16 @@ class _LibraryDetailsState extends State<LibraryDetails> {
                     ],
                   ),
                 )
-              : Wrap(
-                  spacing: 24.0,
-                  runSpacing: 24.0,
-                  children: allTopicsForSelectedSubject.map((item) {
-                    return SizedBox(
-                      width: 268, // Set the fixed width of the card
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item.name,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Text(
-                                "Nitin Sachan",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color.fromRGBO(44, 51, 41, 0.47),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                "Description",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color.fromRGBO(44, 51, 41, 1),
-                                ),
-                              ),
-                              Text(
-                                item.description,
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color.fromRGBO(44, 51, 41, 0.47),
-                                    height: 1.8),
-                              ),
-                              const SizedBox(height: 12),
-                              Center(
-                                child: TextButton(
-                                  onPressed: () {
-                                    // Handle "View Details" button press
-                                  },
-                                  style: TextButton.styleFrom(
-                                    padding: EdgeInsets
-                                        .zero, // Remove padding if needed
-                                    overlayColor: WidgetStateColor.transparent,
-                                  ),
-                                  child: const Text(
-                                    'View Details',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color.fromRGBO(60, 141, 188, 1),
-                                        backgroundColor: Colors.transparent),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
+              : allTopicsForSelectedSubject.isNotEmpty
+                  ? _buildGridView(
+                      items: allTopicsForSelectedSubject,
+                      itemBuilder: (context, index) {
+                        return INSPCard(
+                            inspCardModel: allTopicsForSelectedSubject[index],
+                            context: context,
+                            onPressedViewDetails: _onPressedMyCourse);
+                      })
+                  : const Center(child: Text('No items')),
         ],
       ),
     );
