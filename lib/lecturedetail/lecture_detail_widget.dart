@@ -6,7 +6,6 @@ import 'package:inspflutterfrontend/common/lecture_assignment_card.dart';
 import 'package:inspflutterfrontend/common/lecture_leaderboard_card.dart';
 import 'package:inspflutterfrontend/common/lecture_recording_card.dart';
 import 'package:inspflutterfrontend/common/model/lecture_assignment_card_model.dart';
-import 'package:inspflutterfrontend/common/model/recording_player_card_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:inspflutterfrontend/lecturedetail/lecture_detail_widget_state.dart';
 
@@ -59,6 +58,7 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
         color: const Color.fromRGBO(232, 242, 249, 1),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           INSPHeading(
               'Details : ( ${lec.liveClassRoomDetail.topicName} ) :(${ClassLevel.getValueFromName(lec.classLevel)})'),

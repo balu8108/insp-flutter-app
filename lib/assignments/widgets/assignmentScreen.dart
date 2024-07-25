@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/assignmentCoursesWidgets/assignment_course_widgets.dart';
 import 'package:inspflutterfrontend/assignments/widgets/assignment_screen_redux.dart';
 import 'package:inspflutterfrontend/assignments/widgets/assignment_subject_topic.dart';
+import 'package:inspflutterfrontend/assignmenttopic/assignment_topic_screen.dart';
 import 'package:inspflutterfrontend/common/insp_heading.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/common/search_box.dart';
@@ -24,7 +25,14 @@ class AssignmentScreen extends StatelessWidget {
       dispatch(context, getMyCourses(context));
     }
 
-    void onPressedTopic(BuildContext context, INSPCardModel inspCardModel) {}
+    void onPressedTopic(BuildContext context, INSPCardModel selectedTopic) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                AssignmentTopicScreen.getScreen(selectedTopic)),
+      );
+    }
 
     return Scaffold(
         appBar: MyAppBar(),

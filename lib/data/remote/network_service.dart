@@ -96,4 +96,9 @@ abstract class NetworkService {
           @Path() String classType,
           @Path() String classLevel,
           @Header('Authorization') String secretTokenHeader);
+
+  @GET('/assignment/get-assignment-by-topic-id/{topicId}')
+  Future<HttpResponse<AllAssignmentResponseModel>> getAllAssignmentForTopic(
+      @Path() String topicId,
+      @Header('Authorization') String secretTokenHeader);
 }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/common/extensions.dart';
 import 'package:inspflutterfrontend/common/insp_card.dart';
-import 'package:inspflutterfrontend/common/insp_heading.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/common/search_box.dart';
 
 class AssignmentSubjectTopic extends StatefulWidget {
   const AssignmentSubjectTopic(

@@ -50,7 +50,7 @@ Widget LectureLeaderboardCard(
         : const Padding(
             padding: EdgeInsets.only(top: 16),
             child: Text(
-              'No assignments for this topic.',
+              'No Leaderboard for this topic.',
               style: TextStyle(fontSize: 12),
             ),
           ),

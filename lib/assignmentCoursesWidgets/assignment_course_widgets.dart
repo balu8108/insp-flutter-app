@@ -1,16 +1,11 @@
 // this is the header of the  assignments (Phyiscs , Chemistry , Mathemathics)
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/assignmentCoursesWidgets/assignment_courses_widget_redux.dart';
-import 'package:inspflutterfrontend/common/extensions.dart';
 import 'package:inspflutterfrontend/common/insp_card.dart';
 import 'package:inspflutterfrontend/common/insp_heading.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/mycourseswidget/my_courses_widget_redux.dart';
 
 import '../data/hardcoded/mycourses_subjects.dart';
-import '../data/hardcoded/secret_key.dart';
-import '../data/remote/models/mycourses/all_subjects_request_model.dart';
-import '../data/remote/remote_data_source.dart';
 
 class AssignmentCourseWidgets extends StatefulWidget {
   const AssignmentCourseWidgets(

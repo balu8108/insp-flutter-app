@@ -67,6 +67,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<AllLecturesForTopicResponseModel>> getAllLectureByTopic(
       String topicId, String topicType, String secretTokenHeader);
+
+  Future<HttpResponse<AllAssignmentResponseModel>> getAllAssignmentForTopic(
+      String topicId, String secretTokenHeader);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -163,5 +166,12 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       String topicId, String topicType, String secretTokenHeader) {
     return deviceNetworkService.getAllLectureByTopic(
         topicId, topicType, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<AllAssignmentResponseModel>> getAllAssignmentForTopic(
+      String topicId, String secretTokenHeader) {
+    return deviceNetworkService.getAllAssignmentForTopic(
+        topicId, secretTokenHeader);
   }
 }
