@@ -51,7 +51,7 @@ ThunkAction<UpcomingWidgetAppState> getAllUpcomingClass(BuildContext context) {
   return (Store<UpcomingWidgetAppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
-      const token = 'Token 7e7caea58181517cdef5992796eafecb';
+      const token = 'Token ccee6a1685a4687a385be0f6e733ff23';
       final allLecture = await remoteDataSource.getAllUpcomingClasses(token);
       final UpcomingLectureCardModel allSubjectsResults =
           UpcomingLectureCardModel(

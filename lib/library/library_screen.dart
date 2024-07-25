@@ -49,12 +49,11 @@ class LibraryScreen extends StatelessWidget {
                           onViewDetailsClicked: onPressedLibrarySubject,
                         ),
                         const SizedBox(height: 24),
-                        if (state.selectedItem.id.isNotEmpty)
-                          LibraryDetails(
-                            selectedItem: state.selectedItem,
-                            allTopicsForSelectedSubject:
-                                state.allTopicsForSelectedSubject,
-                          ),
+                        LibraryDetails(
+                          selectedItem: state.selectedItem,
+                          allTopicsForSelectedSubject:
+                              state.allTopicsForSelectedSubject,
+                        ),
                       ],
                     ),
                   ),
