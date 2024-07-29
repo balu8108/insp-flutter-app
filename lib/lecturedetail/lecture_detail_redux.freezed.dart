@@ -21,6 +21,8 @@ mixin _$LectureDetailAppState {
   AllLecturesData get lectureData => throw _privateConstructorUsedError;
   List<LectureAssignmentCardModel> get assignments =>
       throw _privateConstructorUsedError;
+  List<LectureCardModel> get allLectureDetailsCardModel =>
+      throw _privateConstructorUsedError;
   String get query => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -39,6 +41,7 @@ abstract class $LectureDetailAppStateCopyWith<$Res> {
       dynamic question,
       AllLecturesData lectureData,
       List<LectureAssignmentCardModel> assignments,
+      List<LectureCardModel> allLectureDetailsCardModel,
       String query});
 }
 
@@ -60,6 +63,7 @@ class _$LectureDetailAppStateCopyWithImpl<$Res,
     Object? question = freezed,
     Object? lectureData = null,
     Object? assignments = null,
+    Object? allLectureDetailsCardModel = null,
     Object? query = null,
   }) {
     return _then(_value.copyWith(
@@ -79,6 +83,10 @@ class _$LectureDetailAppStateCopyWithImpl<$Res,
           ? _value.assignments
           : assignments // ignore: cast_nullable_to_non_nullable
               as List<LectureAssignmentCardModel>,
+      allLectureDetailsCardModel: null == allLectureDetailsCardModel
+          ? _value.allLectureDetailsCardModel
+          : allLectureDetailsCardModel // ignore: cast_nullable_to_non_nullable
+              as List<LectureCardModel>,
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
@@ -101,6 +109,7 @@ abstract class _$$LectureDetailAppStateImplCopyWith<$Res>
       dynamic question,
       AllLecturesData lectureData,
       List<LectureAssignmentCardModel> assignments,
+      List<LectureCardModel> allLectureDetailsCardModel,
       String query});
 }
 
@@ -120,6 +129,7 @@ class __$$LectureDetailAppStateImplCopyWithImpl<$Res>
     Object? question = freezed,
     Object? lectureData = null,
     Object? assignments = null,
+    Object? allLectureDetailsCardModel = null,
     Object? query = null,
   }) {
     return _then(_$LectureDetailAppStateImpl(
@@ -136,6 +146,10 @@ class __$$LectureDetailAppStateImplCopyWithImpl<$Res>
           ? _value._assignments
           : assignments // ignore: cast_nullable_to_non_nullable
               as List<LectureAssignmentCardModel>,
+      allLectureDetailsCardModel: null == allLectureDetailsCardModel
+          ? _value._allLectureDetailsCardModel
+          : allLectureDetailsCardModel // ignore: cast_nullable_to_non_nullable
+              as List<LectureCardModel>,
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
@@ -156,8 +170,10 @@ class _$LectureDetailAppStateImpl
           questionLogCount: 0,
           liveClassRoom: LecturesDetailResponseModelData()),
       final List<LectureAssignmentCardModel> assignments = const [],
+      final List<LectureCardModel> allLectureDetailsCardModel = const [],
       this.query = ''})
-      : _assignments = assignments;
+      : _assignments = assignments,
+        _allLectureDetailsCardModel = allLectureDetailsCardModel;
 
   @override
   final LectureCardModel selectedItem;
@@ -176,13 +192,23 @@ class _$LectureDetailAppStateImpl
     return EqualUnmodifiableListView(_assignments);
   }
 
+  final List<LectureCardModel> _allLectureDetailsCardModel;
+  @override
+  @JsonKey()
+  List<LectureCardModel> get allLectureDetailsCardModel {
+    if (_allLectureDetailsCardModel is EqualUnmodifiableListView)
+      return _allLectureDetailsCardModel;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_allLectureDetailsCardModel);
+  }
+
   @override
   @JsonKey()
   final String query;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LectureDetailAppState(selectedItem: $selectedItem, question: $question, lectureData: $lectureData, assignments: $assignments, query: $query)';
+    return 'LectureDetailAppState(selectedItem: $selectedItem, question: $question, lectureData: $lectureData, assignments: $assignments, allLectureDetailsCardModel: $allLectureDetailsCardModel, query: $query)';
   }
 
   @override
@@ -194,6 +220,8 @@ class _$LectureDetailAppStateImpl
       ..add(DiagnosticsProperty('question', question))
       ..add(DiagnosticsProperty('lectureData', lectureData))
       ..add(DiagnosticsProperty('assignments', assignments))
+      ..add(DiagnosticsProperty(
+          'allLectureDetailsCardModel', allLectureDetailsCardModel))
       ..add(DiagnosticsProperty('query', query));
   }
 
@@ -209,6 +237,9 @@ class _$LectureDetailAppStateImpl
                 other.lectureData == lectureData) &&
             const DeepCollectionEquality()
                 .equals(other._assignments, _assignments) &&
+            const DeepCollectionEquality().equals(
+                other._allLectureDetailsCardModel,
+                _allLectureDetailsCardModel) &&
             (identical(other.query, query) || other.query == query));
   }
 
@@ -219,6 +250,7 @@ class _$LectureDetailAppStateImpl
       const DeepCollectionEquality().hash(question),
       lectureData,
       const DeepCollectionEquality().hash(_assignments),
+      const DeepCollectionEquality().hash(_allLectureDetailsCardModel),
       query);
 
   @JsonKey(ignore: true)
@@ -235,6 +267,7 @@ abstract class _LectureDetailAppState implements LectureDetailAppState {
       final dynamic question,
       final AllLecturesData lectureData,
       final List<LectureAssignmentCardModel> assignments,
+      final List<LectureCardModel> allLectureDetailsCardModel,
       final String query}) = _$LectureDetailAppStateImpl;
 
   @override
@@ -245,6 +278,8 @@ abstract class _LectureDetailAppState implements LectureDetailAppState {
   AllLecturesData get lectureData;
   @override
   List<LectureAssignmentCardModel> get assignments;
+  @override
+  List<LectureCardModel> get allLectureDetailsCardModel;
   @override
   String get query;
   @override

@@ -8,6 +8,7 @@ import 'package:inspflutterfrontend/common/insp_lecture_card.dart';
 import 'package:inspflutterfrontend/common/model/lecture_card_model.dart';
 import 'package:inspflutterfrontend/common/model/topic_assignment_card_model.dart';
 import 'package:inspflutterfrontend/lecturedetail/lecture_detail_screen.dart';
+import 'package:inspflutterfrontend/librarylecturedetails/library_lecture_details_screen.dart';
 
 class LibraryLectureWidget extends StatefulWidget {
   const LibraryLectureWidget({
@@ -72,7 +73,9 @@ class _LibraryLectureWidgetState extends State<LibraryLectureWidget> {
       context,
       MaterialPageRoute(
           builder: (context) =>
-              LectureDetailScreen.getScreen(lectureCardModel)),
+              // LectureDetailScreen.getScreen(lectureCardModel)),
+              LibraryLectureDetailsScreen.getScreen(
+                  lectureCardModel, widget.allLectureOfTopic)),
     );
   }
 

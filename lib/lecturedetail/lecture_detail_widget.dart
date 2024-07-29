@@ -39,7 +39,6 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
   @override
   void didUpdateWidget(LectureDetailWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print("df ddfsdbhghjhghhT");
   }
 
   @override

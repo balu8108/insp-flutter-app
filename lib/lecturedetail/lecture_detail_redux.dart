@@ -27,6 +27,7 @@ class LectureDetailAppState with _$LectureDetailAppState {
           liveClassRoom: LecturesDetailResponseModelData()))
       AllLecturesData lectureData,
       @Default([]) List<LectureAssignmentCardModel> assignments,
+      @Default([]) List<LectureCardModel> allLectureDetailsCardModel,
       @Default('') String query}) = _LectureDetailAppState;
 }
 
@@ -73,7 +74,7 @@ ThunkAction<LectureDetailAppState> getAllAssignment(
     BuildContext context, String topicId) {
   return (Store<LectureDetailAppState> store) async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token ccee6a1685a4687a385be0f6e733ff23';
+    const token = 'Token 39381ab4564ae4dd95c631fc4c1d5873';
     final allAssignment =
         await remoteDataSource.getAssigmentByTopicId(topicId, token);
     if (allAssignment.response.statusCode == 200) {
@@ -94,7 +95,7 @@ ThunkAction<LectureDetailAppState> showLectureDetail(
     BuildContext context, LectureCardModel lecture) {
   return (Store<LectureDetailAppState> store) async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token ccee6a1685a4687a385be0f6e733ff23';
+    const token = 'Token 39381ab4564ae4dd95c631fc4c1d5873';
     final lectureDetail =
         await remoteDataSource.getLecturesDetailByRoomId(lecture.roomId, token);
     if (lectureDetail.response.statusCode == 200) {

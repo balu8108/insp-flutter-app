@@ -13,7 +13,7 @@ class _NetworkService implements NetworkService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://dev.insp.1labventures.in';
+    baseUrl ??= 'https://api.inspedu.in';
   }
 
   final Dio _dio;
