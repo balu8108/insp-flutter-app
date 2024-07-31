@@ -5,7 +5,7 @@ import 'package:inspflutterfrontend/calendar/widgets/liveclass_calendar_screen.d
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/home/home_screen.dart';
 import 'package:inspflutterfrontend/library/library_screen.dart';
-import 'package:inspflutterfrontend/studentSuggestion/student_suggestion.dart';
+import 'package:inspflutterfrontend/popups/student_suggestion.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override

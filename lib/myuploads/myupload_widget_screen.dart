@@ -4,11 +4,13 @@ import 'package:inspflutterfrontend/common/latest_assignment_card.dart';
 import 'package:inspflutterfrontend/common/model/latest_assignment_card_model.dart';
 import 'package:inspflutterfrontend/data/remote/remote_data_source.dart';
 import 'package:inspflutterfrontend/myuploads/myupload_widget_redux.dart';
+import 'package:inspflutterfrontend/popups/add_assignment.dart';
 
 import '../utils/capitalize.dart';
 
 class MyUploadScreen extends StatefulWidget {
   const MyUploadScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return MyUploadWidgetState();
@@ -72,9 +74,16 @@ class MyUploadWidgetState extends State {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             INSPHeading('My Uploads'),
-            const Text("+ Add Assignment",
-                style:
-                    TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis)),
+            TextButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AddAssignment();
+                    });
+              },
+              child: Text("+ Add Assignment"),
+            ),
           ],
         ),
         const SizedBox(
