@@ -53,6 +53,11 @@ abstract class NetworkService {
     @Body() AllTopicsForChapterRequestModel allTopicsForChapterRequestModel,
   );
 
+  @POST('https://inspedu.in/webservices/apis/all_topics')
+  Future<HttpResponse<PhysicsCourseTopicsResponseModel>> getAllTopics(
+    @Body() PhysicsCourseTopicsRequestModel allTopicsForRequestModel,
+  );
+
   @GET('/lecture/get-lecture-by-topic-name/{topicId}/{topicType}')
   Future<HttpResponse<AllLecturesForTopicResponseModel>> getAllLectureByTopic(
       @Path() String topicId,

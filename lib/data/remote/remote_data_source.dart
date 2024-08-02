@@ -40,6 +40,9 @@ abstract class RemoteDataSource {
   Future<HttpResponse<PhysicsCourseTopicsResponseModel>> getAllTopicsByChapter(
       AllTopicsForChapterRequestModel allTopicsForChapterRequestModel);
 
+  Future<HttpResponse<PhysicsCourseTopicsResponseModel>> getAllTopics(
+      PhysicsCourseTopicsRequestModel allTopicsForRequestModel);
+
   Future<HttpResponse<LatestSoloClassesResponseModel>> getLatestSoloClasses(
       String secretTokenHeader);
 
@@ -99,6 +102,12 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       AllTopicsForChapterRequestModel allTopicsForChapterRequestModel) {
     return deviceNetworkService
         .getAllTopicsByChapter(allTopicsForChapterRequestModel);
+  }
+
+  @override
+  Future<HttpResponse<PhysicsCourseTopicsResponseModel>> getAllTopics(
+      PhysicsCourseTopicsRequestModel allTopicsForRequestModel) {
+    return deviceNetworkService.getAllTopics(allTopicsForRequestModel);
   }
 
   @override
