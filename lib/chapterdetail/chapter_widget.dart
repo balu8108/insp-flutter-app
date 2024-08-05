@@ -39,7 +39,7 @@ class ChapterWidgetState extends State<ChapterWidget> {
             height: 16,
           ),
           SizedBox(
-            height: 220.0,
+            height: 230.0,
             child: widget.allTopicsForSelectedCourse.isNotEmpty
                 ? Scrollbar(
                     child: ListView.separated(

@@ -3,9 +3,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/chapterdetail/chapter_detail_redux.dart';
 import 'package:inspflutterfrontend/chapterdetail/chapter_detail_widget.dart';
 import 'package:inspflutterfrontend/chapterdetail/chapter_widget.dart';
+import 'package:inspflutterfrontend/common/extensions.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/home/my_app_bar.dart';
-import 'package:inspflutterfrontend/topiclecture/topic_lecture_screen.dart';
 import 'package:inspflutterfrontend/upcomingclasseswidget/upcoming_class_screen.dart';
 
 import '../base/base.dart';
@@ -15,6 +15,7 @@ class ChapterDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     dispatch(context, initialFetchTopics(context));
 
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
@@ -26,22 +27,16 @@ class ChapterDetailScreen extends StatelessWidget {
     }
 
     return Scaffold(
-        appBar: MyAppBar(),
-        body: StoreConnector<ChapterDetailAppState, ChapterDetailAppState>(
+      appBar: MyAppBar(),
+      body: StoreConnector<ChapterDetailAppState, ChapterDetailAppState>(
           converter: (store) => store.state,
           builder: (context, ChapterDetailAppState state) => Container(
-              padding: const EdgeInsets.all(10.0),
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(10.0),
+                color: Colors.white,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 9,
-                        child: Column(
+                  child: !isWebOrLandScape
+                      ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ChapterWidget(
@@ -55,18 +50,40 @@ class ChapterDetailScreen extends StatelessWidget {
                                 selectedChapter: state.selectedchapter,
                                 onViewDetailsClicked: onPressedTopic)
                           ],
+                        )
+                      : Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 9,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ChapterWidget(
+                                      key: UniqueKey(),
+                                      allTopicsForSelectedCourse:
+                                          state.allChapter,
+                                      onViewDetailsClicked: onPressedMyCourse),
+                                  const SizedBox(height: 16),
+                                  ChapterDetailWidget(
+                                      key: UniqueKey(),
+                                      allTopics: state.allTopics,
+                                      selectedChapter: state.selectedchapter,
+                                      onViewDetailsClicked: onPressedTopic)
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 17),
+                            if (isWebOrLandScape)
+                              Expanded(
+                                flex: 3,
+                                child: UpcomingClassesScreen.getScreen(),
+                              ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(width: 17),
-                      Expanded(
-                        flex: 3,
-                        child: UpcomingClassesScreen.getScreen(),
-                      ),
-                    ],
-                  ),
                 ),
               )),
-        ));
+    );
   }
 
   static getScreen(INSPCardModel selectedchapter,

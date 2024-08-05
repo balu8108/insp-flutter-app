@@ -53,7 +53,7 @@ class MyCoursesWidgetState extends State<MyCoursesWidget> {
             height: 16,
           ),
           SizedBox(
-            height: 220.0,
+            height: 230.0,
             child: myCoursesWidgetAppState.myCoursesInspCardModels.isNotEmpty
                 ? Scrollbar(
                     child: ListView.separated(

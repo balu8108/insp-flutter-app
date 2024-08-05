@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:inspflutterfrontend/common/extensions.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/home/my_app_bar.dart';
 import 'package:inspflutterfrontend/lectureswidget/topic_or_lecture_widget_screen.dart';
@@ -14,30 +15,27 @@ class MyCoursesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
+
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
-      
       dispatch(context, showTopicsForCourse(context, inspCardModel));
     }
 
     dispatch(context, initialFetchTopics(context));
 
     return Scaffold(
-        appBar: MyAppBar(),
-        body: StoreConnector<MyCoursesAppState, MyCoursesAppState>(
+      appBar: MyAppBar(),
+      body: StoreConnector<MyCoursesAppState, MyCoursesAppState>(
           converter: (store) => store.state,
           builder: (context, MyCoursesAppState state) => Container(
-              padding: const EdgeInsets.all(10.0),
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: isWebOrLandScape
+                    ? const EdgeInsets.all(10.0)
+                    : const EdgeInsets.all(0.0),
+                color: Colors.white,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 9,
-                        child: Column(
+                  child: !isWebOrLandScape
+                      ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             MyCoursesWidget(
@@ -51,18 +49,39 @@ class MyCoursesScreen extends StatelessWidget {
                                 allTopicsForSelectedCourse:
                                     state.allTopicsForSelectedCourse),
                           ],
+                        )
+                      : Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 9,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  MyCoursesWidget(
+                                      onViewDetailsClicked: onPressedMyCourse),
+                                  const SizedBox(height: 16),
+                                  TopicOrLectureWidget(
+                                      key: UniqueKey(),
+                                      heading:
+                                          'My Courses (${state.selectedItem.name})',
+                                      data: state.allLectures,
+                                      allTopicsForSelectedCourse:
+                                          state.allTopicsForSelectedCourse),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 17),
+                            if (isWebOrLandScape)
+                              Expanded(
+                                flex: 3,
+                                child: UpcomingClassesScreen.getScreen(),
+                              ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(width: 17),
-                      Expanded(
-                        flex: 3,
-                        child: UpcomingClassesScreen.getScreen(),
-                      ),
-                    ],
-                  ),
                 ),
               )),
-        ));
+    );
   }
 
   static getScreen(INSPCardModel selectedItem) {
