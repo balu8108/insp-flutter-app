@@ -23,7 +23,7 @@ import 'models/upcomingclasses/all_lectures_for_upcoming_response_model.dart';
 
 part 'network_service.g.dart';
 
-@RestApi(baseUrl: 'https://dev.insp.1labventures.in')
+@RestApi(baseUrl: 'https://api.inspedu.in')
 abstract class NetworkService {
   factory NetworkService(Dio dio, {String baseUrl}) = _NetworkService;
 
@@ -51,6 +51,11 @@ abstract class NetworkService {
   @POST('https://inspedu.in/webservices/apis/topics/')
   Future<HttpResponse<PhysicsCourseTopicsResponseModel>> getAllTopicsByChapter(
     @Body() AllTopicsForChapterRequestModel allTopicsForChapterRequestModel,
+  );
+
+  @POST('https://inspedu.in/webservices/apis/all_topics')
+  Future<HttpResponse<PhysicsCourseTopicsResponseModel>> getAllTopics(
+    @Body() PhysicsCourseTopicsRequestModel allTopicsForRequestModel,
   );
 
   @GET('/lecture/get-lecture-by-topic-name/{topicId}/{topicType}')

@@ -58,6 +58,8 @@ class SoloClassesWidget extends State {
     getAllLatestSoloClasses();
   }
 
+  void _handleSeeAll() {}
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -71,9 +73,7 @@ class SoloClassesWidget extends State {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             INSPHeading('Solo Classes'),
-            const Text("See All",
-                style:
-                    TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis)),
+            TextButton(onPressed: _handleSeeAll, child: Text("See All"))
           ],
         ),
         const SizedBox(

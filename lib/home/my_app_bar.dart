@@ -5,6 +5,7 @@ import 'package:inspflutterfrontend/calendar/widgets/liveclass_calendar_screen.d
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/home/home_screen.dart';
 import 'package:inspflutterfrontend/library/library_screen.dart';
+import 'package:inspflutterfrontend/popups/student_suggestion.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -64,6 +65,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           // Handle Library button press
         }),
         _buildTextButton('Suggestion', () {
+          showDialog(
+              context: context, builder: (BuildContext) => StudentSuggestion());
           // Handle Suggestion button press
         }),
         _buildTextButton('INSP Portal', () {

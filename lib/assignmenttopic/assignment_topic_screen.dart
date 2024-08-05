@@ -34,7 +34,7 @@ class AssignmentTopicScreen extends StatelessWidget {
                                       children: [
                                         AssignmentTopicWidget(
                                           heading:
-                                              "Assignments (Basic mathematics & vectors)",
+                                              "Assignments (${state.selectedtopic.name})",
                                           allAssignemntofTopic:
                                               state.allAssignmentOfTopic,
                                         ),

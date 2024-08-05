@@ -27,6 +27,7 @@ class LectureDetailAppState with _$LectureDetailAppState {
           liveClassRoom: LecturesDetailResponseModelData()))
       AllLecturesData lectureData,
       @Default([]) List<LectureAssignmentCardModel> assignments,
+      @Default([]) List<LectureCardModel> allLectureDetailsCardModel,
       @Default('') String query}) = _LectureDetailAppState;
 }
 

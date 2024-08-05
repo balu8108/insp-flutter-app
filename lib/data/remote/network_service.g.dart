@@ -13,7 +13,7 @@ class _NetworkService implements NetworkService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://dev.insp.1labventures.in';
+    baseUrl ??= 'https://api.inspedu.in';
   }
 
   final Dio _dio;
@@ -159,6 +159,36 @@ class _NetworkService implements NetworkService {
             .compose(
               _dio.options,
               'https://inspedu.in/webservices/apis/topics/',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = PhysicsCourseTopicsResponseModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<PhysicsCourseTopicsResponseModel>> getAllTopics(
+      PhysicsCourseTopicsRequestModel allTopicsForRequestModel) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(allTopicsForRequestModel.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<PhysicsCourseTopicsResponseModel>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'https://inspedu.in/webservices/apis/all_topics',
               queryParameters: queryParameters,
               data: _data,
             )

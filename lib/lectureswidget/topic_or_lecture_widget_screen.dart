@@ -6,6 +6,7 @@ import 'package:inspflutterfrontend/common/insp_heading.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/common/model/lecture_card_model.dart';
 import 'package:inspflutterfrontend/lecturedetail/lecture_detail_screen.dart';
+import 'package:inspflutterfrontend/librarylecturedetails/library_lecture_details_screen.dart';
 
 import '../common/insp_lecture_card.dart';
 import '../common/search_box.dart';
@@ -62,8 +63,9 @@ class _TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) =>
-              LectureDetailScreen.getScreen(lectureCardModel)),
+          builder: (context) => LibraryLectureDetailsScreen.getScreen(
+              lectureCardModel,
+              _lecturesWidgetAppState.filteredLectureForSelectedCourse)),
     );
   }
 
