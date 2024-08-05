@@ -32,7 +32,7 @@ class RatingFeedbackWidgetState extends State {
   // call an API of get all subjects
   void getAllLatestCompletedClasses() async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token ccee6a1685a4687a385be0f6e733ff23';
+    const token = 'Token 3adf1ab5b437ebe26888186e6a6163d3';
     final latestCompletedClass =
         await remoteDataSource.getLatestCompletedClasses(token);
     if (latestCompletedClass.data.data.isNotEmpty) {
