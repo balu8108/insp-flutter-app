@@ -1,4 +1,4 @@
-import '../../common/model/insp_card_model.dart';
+import '../../widget/card/model/insp_card_model.dart';
 
 const librarySubjects = [
   INSPCardModel('1', 'Physics', 'In Progress',
@@ -9,6 +9,15 @@ const librarySubjects = [
       'Delve into the realm of Chemistry, where you can learn about chemical reactions, the periodic table, bonding, and the intriguing properties of matter. Discover the secrets of the elements and compounds that make up our world'),
   INSPCardModel('4', 'Topic Based Recording', 'In Progress',
       'Access a comprehensive collection of recordings organized by topics. Dive into specific subjects, explore key concepts, and enhance your understanding with topic-focused recordings tailored to your learning needs')
+];
+
+const assignemntSubjects = [
+  INSPCardModel('1', 'Physics', 'In Progress',
+      'Explore the fascinating world of Physics with a collection of resources covering classical mechanics, electromagnetism, thermodynamics, and quantum mechanics. Dive into the fundamental principles that govern the physical universe.'),
+  INSPCardModel('2', 'Mathematics', 'Upcoming',
+      'Discover the power of Mathematics with a variety of topics that range from algebra to calculus. Explore the world of numbers, equations, and mathematical concepts that underlie a wide range of scientific and practical applications.'),
+  INSPCardModel('3', 'Chemistry', 'Upcoming',
+      'Delve into the realm of Chemistry, where you can learn about chemical reactions, the periodic table, bonding, and the intriguing properties of matter. Discover the secrets of the elements and compounds that make up our world'),
 ];
 
 const topicDescriptionConstants = {

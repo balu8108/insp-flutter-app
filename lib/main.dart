@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/login/login_screen.dart';
-import 'package:inspflutterfrontend/onboarding/onboarding_screen.dart';
+import 'package:inspflutterfrontend/pages/login/login_screen.dart';
+import 'package:inspflutterfrontend/pages/onboarding/onboarding_screen.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 void main() {
