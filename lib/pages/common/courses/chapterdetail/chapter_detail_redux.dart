@@ -52,7 +52,7 @@ ChapterDetailAppState _chapterDetailReducer(
   }
 }
 
-ThunkAction<ChapterDetailAppState> showTopicsForSubject(
+ThunkAction<ChapterDetailAppState> showTopicsByChapter(
     BuildContext context, INSPCardModel inspCardModel) {
   return (Store<ChapterDetailAppState> store) async {
     try {
@@ -90,7 +90,7 @@ ThunkAction<ChapterDetailAppState> showTopicsForSubject(
 ThunkAction<ChapterDetailAppState> initialFetchTopics(BuildContext context) {
   return (Store<ChapterDetailAppState> store) async {
     ChapterDetailScreen.dispatch(
-        context, showTopicsForSubject(context, store.state.selectedchapter));
+        context, showTopicsByChapter(context, store.state.selectedchapter));
   };
 }
 

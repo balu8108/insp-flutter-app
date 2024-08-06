@@ -19,7 +19,7 @@ class ChapterDetailScreen extends StatelessWidget {
     dispatch(context, initialFetchTopics(context));
 
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
-      dispatch(context, showTopicsForSubject(context, inspCardModel));
+      dispatch(context, showTopicsByChapter(context, inspCardModel));
     }
 
     void onPressedTopic(BuildContext context, INSPCardModel inspCardModel) {

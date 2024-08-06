@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:inspflutterfrontend/pages/common/alltopicswidget/all_topics_widget.dart';
+import 'package:inspflutterfrontend/pages/student/library/librarylecturepage/library_lecture_screen.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
-import 'package:inspflutterfrontend/pages/student/library/widget/library_details.dart';
 import 'package:inspflutterfrontend/pages/student/library/mainpage/library_redux.dart';
 import 'package:inspflutterfrontend/pages/student/library/widget/library_subject.dart';
 import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
@@ -18,14 +19,17 @@ class LibraryScreen extends StatelessWidget {
 
     void onPressedLibrarySubject(
         BuildContext context, INSPCardModel inspCardModel) {
-      dispatch(context, showTopicsForSubject(context, inspCardModel));
+      dispatch(context, initialSelectedTopics(context, inspCardModel));
     }
 
-    void onSearchQueryEntered(String text) {
-      dispatch(context, filterWithQueryText(context, text));
+    void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                LibraryLectureScreen.getScreen(inspCardModel)),
+      );
     }
-
-    dispatch(context, initialFetchTopics(context));
 
     return Scaffold(
       appBar: Navbar(),
@@ -49,11 +53,9 @@ class LibraryScreen extends StatelessWidget {
                           onViewDetailsClicked: onPressedLibrarySubject,
                         ),
                         const SizedBox(height: 24),
-                        LibraryDetails(
-                          selectedItem: state.selectedItem,
-                          allTopicsForSelectedSubject:
-                              state.allTopicsForSelectedSubject,
-                        ),
+                        AllTopicWidget.getScreen(
+                            heading: 'Library (${state.selectedItem.name})',
+                            onPressedViewDetails: onPressedMyCourse)
                       ],
                     ),
                   ),
