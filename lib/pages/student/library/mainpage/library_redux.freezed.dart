@@ -19,11 +19,6 @@ mixin _$LibraryAppState {
   List<INSPCardModel> get libraryInspCardModels =>
       throw _privateConstructorUsedError;
   INSPCardModel get selectedItem => throw _privateConstructorUsedError;
-  List<INSPCardModel> get allTopicsForSelectedSubject =>
-      throw _privateConstructorUsedError;
-  String get query => throw _privateConstructorUsedError;
-  List<INSPCardModel> get filteredTopicsForSelectedSubject =>
-      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LibraryAppStateCopyWith<LibraryAppState> get copyWith =>
@@ -37,11 +32,7 @@ abstract class $LibraryAppStateCopyWith<$Res> {
       _$LibraryAppStateCopyWithImpl<$Res, LibraryAppState>;
   @useResult
   $Res call(
-      {List<INSPCardModel> libraryInspCardModels,
-      INSPCardModel selectedItem,
-      List<INSPCardModel> allTopicsForSelectedSubject,
-      String query,
-      List<INSPCardModel> filteredTopicsForSelectedSubject});
+      {List<INSPCardModel> libraryInspCardModels, INSPCardModel selectedItem});
 }
 
 /// @nodoc
@@ -59,9 +50,6 @@ class _$LibraryAppStateCopyWithImpl<$Res, $Val extends LibraryAppState>
   $Res call({
     Object? libraryInspCardModels = null,
     Object? selectedItem = null,
-    Object? allTopicsForSelectedSubject = null,
-    Object? query = null,
-    Object? filteredTopicsForSelectedSubject = null,
   }) {
     return _then(_value.copyWith(
       libraryInspCardModels: null == libraryInspCardModels
@@ -72,18 +60,6 @@ class _$LibraryAppStateCopyWithImpl<$Res, $Val extends LibraryAppState>
           ? _value.selectedItem
           : selectedItem // ignore: cast_nullable_to_non_nullable
               as INSPCardModel,
-      allTopicsForSelectedSubject: null == allTopicsForSelectedSubject
-          ? _value.allTopicsForSelectedSubject
-          : allTopicsForSelectedSubject // ignore: cast_nullable_to_non_nullable
-              as List<INSPCardModel>,
-      query: null == query
-          ? _value.query
-          : query // ignore: cast_nullable_to_non_nullable
-              as String,
-      filteredTopicsForSelectedSubject: null == filteredTopicsForSelectedSubject
-          ? _value.filteredTopicsForSelectedSubject
-          : filteredTopicsForSelectedSubject // ignore: cast_nullable_to_non_nullable
-              as List<INSPCardModel>,
     ) as $Val);
   }
 }
@@ -97,11 +73,7 @@ abstract class _$$LibraryAppStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<INSPCardModel> libraryInspCardModels,
-      INSPCardModel selectedItem,
-      List<INSPCardModel> allTopicsForSelectedSubject,
-      String query,
-      List<INSPCardModel> filteredTopicsForSelectedSubject});
+      {List<INSPCardModel> libraryInspCardModels, INSPCardModel selectedItem});
 }
 
 /// @nodoc
@@ -117,9 +89,6 @@ class __$$LibraryAppStateImplCopyWithImpl<$Res>
   $Res call({
     Object? libraryInspCardModels = null,
     Object? selectedItem = null,
-    Object? allTopicsForSelectedSubject = null,
-    Object? query = null,
-    Object? filteredTopicsForSelectedSubject = null,
   }) {
     return _then(_$LibraryAppStateImpl(
       libraryInspCardModels: null == libraryInspCardModels
@@ -130,18 +99,6 @@ class __$$LibraryAppStateImplCopyWithImpl<$Res>
           ? _value.selectedItem
           : selectedItem // ignore: cast_nullable_to_non_nullable
               as INSPCardModel,
-      allTopicsForSelectedSubject: null == allTopicsForSelectedSubject
-          ? _value._allTopicsForSelectedSubject
-          : allTopicsForSelectedSubject // ignore: cast_nullable_to_non_nullable
-              as List<INSPCardModel>,
-      query: null == query
-          ? _value.query
-          : query // ignore: cast_nullable_to_non_nullable
-              as String,
-      filteredTopicsForSelectedSubject: null == filteredTopicsForSelectedSubject
-          ? _value._filteredTopicsForSelectedSubject
-          : filteredTopicsForSelectedSubject // ignore: cast_nullable_to_non_nullable
-              as List<INSPCardModel>,
     ));
   }
 }
@@ -153,13 +110,8 @@ class _$LibraryAppStateImpl
     implements _LibraryAppState {
   const _$LibraryAppStateImpl(
       {final List<INSPCardModel> libraryInspCardModels = const [],
-      required this.selectedItem,
-      final List<INSPCardModel> allTopicsForSelectedSubject = const [],
-      this.query = '',
-      final List<INSPCardModel> filteredTopicsForSelectedSubject = const []})
-      : _libraryInspCardModels = libraryInspCardModels,
-        _allTopicsForSelectedSubject = allTopicsForSelectedSubject,
-        _filteredTopicsForSelectedSubject = filteredTopicsForSelectedSubject;
+      required this.selectedItem})
+      : _libraryInspCardModels = libraryInspCardModels;
 
   final List<INSPCardModel> _libraryInspCardModels;
   @override
@@ -173,32 +125,10 @@ class _$LibraryAppStateImpl
 
   @override
   final INSPCardModel selectedItem;
-  final List<INSPCardModel> _allTopicsForSelectedSubject;
-  @override
-  @JsonKey()
-  List<INSPCardModel> get allTopicsForSelectedSubject {
-    if (_allTopicsForSelectedSubject is EqualUnmodifiableListView)
-      return _allTopicsForSelectedSubject;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_allTopicsForSelectedSubject);
-  }
-
-  @override
-  @JsonKey()
-  final String query;
-  final List<INSPCardModel> _filteredTopicsForSelectedSubject;
-  @override
-  @JsonKey()
-  List<INSPCardModel> get filteredTopicsForSelectedSubject {
-    if (_filteredTopicsForSelectedSubject is EqualUnmodifiableListView)
-      return _filteredTopicsForSelectedSubject;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_filteredTopicsForSelectedSubject);
-  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LibraryAppState(libraryInspCardModels: $libraryInspCardModels, selectedItem: $selectedItem, allTopicsForSelectedSubject: $allTopicsForSelectedSubject, query: $query, filteredTopicsForSelectedSubject: $filteredTopicsForSelectedSubject)';
+    return 'LibraryAppState(libraryInspCardModels: $libraryInspCardModels, selectedItem: $selectedItem)';
   }
 
   @override
@@ -207,12 +137,7 @@ class _$LibraryAppStateImpl
     properties
       ..add(DiagnosticsProperty('type', 'LibraryAppState'))
       ..add(DiagnosticsProperty('libraryInspCardModels', libraryInspCardModels))
-      ..add(DiagnosticsProperty('selectedItem', selectedItem))
-      ..add(DiagnosticsProperty(
-          'allTopicsForSelectedSubject', allTopicsForSelectedSubject))
-      ..add(DiagnosticsProperty('query', query))
-      ..add(DiagnosticsProperty('filteredTopicsForSelectedSubject',
-          filteredTopicsForSelectedSubject));
+      ..add(DiagnosticsProperty('selectedItem', selectedItem));
   }
 
   @override
@@ -223,24 +148,14 @@ class _$LibraryAppStateImpl
             const DeepCollectionEquality()
                 .equals(other._libraryInspCardModels, _libraryInspCardModels) &&
             (identical(other.selectedItem, selectedItem) ||
-                other.selectedItem == selectedItem) &&
-            const DeepCollectionEquality().equals(
-                other._allTopicsForSelectedSubject,
-                _allTopicsForSelectedSubject) &&
-            (identical(other.query, query) || other.query == query) &&
-            const DeepCollectionEquality().equals(
-                other._filteredTopicsForSelectedSubject,
-                _filteredTopicsForSelectedSubject));
+                other.selectedItem == selectedItem));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_libraryInspCardModels),
-      selectedItem,
-      const DeepCollectionEquality().hash(_allTopicsForSelectedSubject),
-      query,
-      const DeepCollectionEquality().hash(_filteredTopicsForSelectedSubject));
+      selectedItem);
 
   @JsonKey(ignore: true)
   @override
@@ -252,23 +167,13 @@ class _$LibraryAppStateImpl
 
 abstract class _LibraryAppState implements LibraryAppState {
   const factory _LibraryAppState(
-          {final List<INSPCardModel> libraryInspCardModels,
-          required final INSPCardModel selectedItem,
-          final List<INSPCardModel> allTopicsForSelectedSubject,
-          final String query,
-          final List<INSPCardModel> filteredTopicsForSelectedSubject}) =
-      _$LibraryAppStateImpl;
+      {final List<INSPCardModel> libraryInspCardModels,
+      required final INSPCardModel selectedItem}) = _$LibraryAppStateImpl;
 
   @override
   List<INSPCardModel> get libraryInspCardModels;
   @override
   INSPCardModel get selectedItem;
-  @override
-  List<INSPCardModel> get allTopicsForSelectedSubject;
-  @override
-  String get query;
-  @override
-  List<INSPCardModel> get filteredTopicsForSelectedSubject;
   @override
   @JsonKey(ignore: true)
   _$$LibraryAppStateImplCopyWith<_$LibraryAppStateImpl> get copyWith =>

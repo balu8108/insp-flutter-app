@@ -51,7 +51,7 @@ ThunkAction<UpcomingWidgetAppState> getAllUpcomingClass(BuildContext context) {
   return (Store<UpcomingWidgetAppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
-      const token = 'Token 3adf1ab5b437ebe26888186e6a6163d3';
+      const token = 'Token 4fe844d94aac5559298d987f38083946';
       final allLecture = await remoteDataSource.getAllUpcomingClasses(token);
       final UpcomingLectureCardModel allSubjectsResults =
           UpcomingLectureCardModel(
@@ -60,12 +60,9 @@ ThunkAction<UpcomingWidgetAppState> getAllUpcomingClass(BuildContext context) {
               allLecture.data.data.week,
               allLecture.data.data.completed);
 
-      print(allSubjectsResults);
-
       store.dispatch(UpdateWeeklyData(weeklyData: allSubjectsResults));
     } catch (error) {
       // Handle errors appropriately here
-      print('Error fetching data: $error');
     }
   };
 }

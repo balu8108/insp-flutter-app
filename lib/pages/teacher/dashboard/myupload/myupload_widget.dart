@@ -34,7 +34,7 @@ class MyUploadWidgetState extends State {
   // call an API of get all subjects
   void getAllLatestAssignmentClasses() async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token 3adf1ab5b437ebe26888186e6a6163d3';
+    const token = 'Token 4fe844d94aac5559298d987f38083946';
     final latestAssignment = await remoteDataSource.getLatestAssignment(token);
     if (latestAssignment.data.data.isNotEmpty) {
       var allAssignmentResults = latestAssignment.data.data;

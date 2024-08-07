@@ -74,7 +74,7 @@ ThunkAction<LectureDetailAppState> getAllAssignment(
     BuildContext context, String topicId) {
   return (Store<LectureDetailAppState> store) async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token 3adf1ab5b437ebe26888186e6a6163d3';
+    const token = 'Token 4fe844d94aac5559298d987f38083946';
     final allAssignment =
         await remoteDataSource.getAssigmentByTopicId(topicId, token);
     if (allAssignment.response.statusCode == 200) {
@@ -95,7 +95,7 @@ ThunkAction<LectureDetailAppState> showLectureDetail(
     BuildContext context, LectureCardModel lecture) {
   return (Store<LectureDetailAppState> store) async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token 3adf1ab5b437ebe26888186e6a6163d3';
+    const token = 'Token 4fe844d94aac5559298d987f38083946';
     final lectureDetail =
         await remoteDataSource.getLecturesDetailByRoomId(lecture.roomId, token);
     if (lectureDetail.response.statusCode == 200) {

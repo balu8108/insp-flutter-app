@@ -7,6 +7,7 @@ import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_fo
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/latest_completed_class_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/rating_feedback_rating_detail_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
@@ -63,6 +64,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<AllAssignmentResponseModel>> getAssigmentByTopicId(
       String topicId, String secretTokenHeader);
+
+  Future<HttpResponse<RatingFeedbackRatingDetailResponseModel>>
+      getTopicFeedbackRatingDetail(String topicId, String secretTokenHeader);
 
   Future<HttpResponse<AllLecturesForCourseResponseModel>>
       getAllLecturesForCourse(
@@ -128,6 +132,13 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<HttpResponse<LatestCompletedClassesResponseModel>>
       getLatestCompletedClasses(String secretTokenHeader) {
     return deviceNetworkService.getLatestCompletedClasses(secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<RatingFeedbackRatingDetailResponseModel>>
+      getTopicFeedbackRatingDetail(String topicId, String secretTokenHeader) {
+    return deviceNetworkService.getTopicFeedbackRatingDetail(
+        topicId, secretTokenHeader);
   }
 
   @override

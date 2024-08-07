@@ -10,6 +10,7 @@ import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_re
 import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_topics_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_topics_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/latest_completed_class_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/rating_feedback_rating_detail_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
@@ -71,6 +72,11 @@ abstract class NetworkService {
   @GET('/generic/latest-completed-live-classroom')
   Future<HttpResponse<LatestCompletedClassesResponseModel>>
       getLatestCompletedClasses(
+          @Header('Authorization') String secretTokenHeader);
+
+  @GET('/generic/topic-feedback-rating-details/{topicId}')
+  Future<HttpResponse<RatingFeedbackRatingDetailResponseModel>>
+      getTopicFeedbackRatingDetail(@Path() String topicId,
           @Header('Authorization') String secretTokenHeader);
 
   @GET('/assignment/latest-assignment')

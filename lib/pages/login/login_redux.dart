@@ -111,7 +111,7 @@ ThunkAction<LoginAppState> handleLogin(BuildContext context) {
               // "name": "Teacher",
               // "mobile": "9976543210",
               // "email": "teacher@gmail.com",
-              // "token": "3adf1ab5b437ebe26888186e6a6163d3",
+              // "token": "4fe844d94aac5559298d987f38083946",
               // "status": "1",
               // "paid_status": 0,
               // "user_type": 0
@@ -129,9 +129,7 @@ ThunkAction<LoginAppState> handleLogin(BuildContext context) {
             }
           }));
 
-      if (kDebugMode) {
-        print('');
-      }
+      if (kDebugMode) {}
 
       INSPCardModel inspCardModel = const INSPCardModel("", "", "", "");
 
@@ -147,7 +145,6 @@ ThunkAction<LoginAppState> handleLogin(BuildContext context) {
       //         jsonEncode(result.data.loginResponseModelResult.toJson()));
 
       //     if (kDebugMode) {
-      //       print(sharedPrefs.getString('insp_user_profile') ?? '');
       //     }
 
       //     INSPCardModel inspCardModel = const INSPCardModel("", "", "", "");

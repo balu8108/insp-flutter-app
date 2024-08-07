@@ -93,9 +93,7 @@ MyCoursesAppState _myCoursesStateReducer(
 MyCoursesAppState myCoursesStateReducer(
     MyCoursesAppState state, dynamic action) {
   var upState = _myCoursesStateReducer(state, action);
-  if (kDebugMode) {
-    print(upState.allTopicsForSelectedCourse);
-  }
+  if (kDebugMode) {}
   return upState;
 }
 

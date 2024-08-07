@@ -2,7 +2,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/pages/student/assignment/assignmenttopic/assignment_topic_screen.dart';
 import 'package:inspflutterfrontend/utils/class_constants.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/card/model/lecture_card_model.dart';
@@ -54,7 +53,6 @@ LibraryLectureReduxAppState LibraryLectureTopicStateReducer(
 
 ThunkAction<LibraryLectureReduxAppState> initialFetchLibraryLecture(
     BuildContext context) {
-  print("Hellojcdkchke");
   return (Store<LibraryLectureReduxAppState> store) async {
     LibraryLectureScreen.dispatch(
         context, showLecturesForTopic(context, store.state.selectedtopic));

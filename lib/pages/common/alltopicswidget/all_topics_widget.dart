@@ -19,7 +19,6 @@ class AllTopicWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('heading is: ${heading.contains("Mathematics")}');
     dispatch(context, initialFetchSubjectTopic(context));
 
     void filterWithQuery(String text) {

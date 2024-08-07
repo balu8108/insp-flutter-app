@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/student/assignment/mainpage/assignment_screen_redux.dart';
 import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/utils/file_box_component.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';

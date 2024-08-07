@@ -81,7 +81,6 @@ ThunkAction<ChapterDetailAppState> showTopicsByChapter(
         store.dispatch(UpdateAllTopic(allTopics: []));
       }
     } catch (error) {
-      print('Error fetching topics: $error');
       store.dispatch(UpdateAllTopic(allTopics: []));
     }
   };
