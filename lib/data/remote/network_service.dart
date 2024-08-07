@@ -12,6 +12,7 @@ import 'package:inspflutterfrontend/data/remote/models/mycourses/physics_course_
 import 'package:inspflutterfrontend/data/remote/models/ratingfeedback/latest_completed_class_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/soloclasses/latest_solo_classes_response_model.dart';
+import 'package:inspflutterfrontend/data/remote/models/soloclasses/soloclass_topicwise_details_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
@@ -23,7 +24,7 @@ import 'models/upcomingclasses/all_lectures_for_upcoming_response_model.dart';
 
 part 'network_service.g.dart';
 
-@RestApi(baseUrl: 'https://api.inspedu.in')
+@RestApi(baseUrl: 'https://dev.insp.1labventures.in/')
 abstract class NetworkService {
   factory NetworkService(Dio dio, {String baseUrl}) = _NetworkService;
 
@@ -80,6 +81,11 @@ abstract class NetworkService {
   @GET('/solo-lecture/get-all-soloclassrooms')
   Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClasses(
       @Header('Authorization') String secretTokenHeader);
+
+  @GET('/solo-lecture/get-topic-details/{topicId}')
+  Future<HttpResponse<SoloclassTopicwiseDetailsResponseModel>>
+      getSoloClassTopicWiseDetails(@Path() String topicId,
+          @Header('Authorization') String secretTokenHeader);
 
   @GET('/schedule-live-class/get-all')
   Future<HttpResponse<AllLecturesForUpcomingResponseModel>>

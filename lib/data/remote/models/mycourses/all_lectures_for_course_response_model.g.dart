@@ -119,7 +119,6 @@ LiveClassRoomFile _$LiveClassRoomFileFromJson(Map<String, dynamic> json) =>
       json['key'] as String? ?? '',
       json['isDownloadable'] as bool? ?? false,
       json['isShareable'] as bool? ?? false,
-      (json['classRoomId'] as num?)?.toInt() ?? 0,
       json['createdAt'] as String? ?? '',
       json['updatedAt'] as String? ?? '',
     );
@@ -130,7 +129,6 @@ Map<String, dynamic> _$LiveClassRoomFileToJson(LiveClassRoomFile instance) =>
       'key': instance.key,
       'isDownloadable': instance.isDownloadable,
       'isShareable': instance.isShareable,
-      'classRoomId': instance.classRoomId,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };

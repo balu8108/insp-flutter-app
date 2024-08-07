@@ -64,3 +64,19 @@ const topicDescriptionConstants = {
   6: "Examination of the concepts of work, power, and energy in physics, fundamental for understanding mechanical systems. It explores the mathematical relationships involved in calculating work done, power exerted, and the energy stored or transferred. The examination of work, power, and energy involves understanding fundamental concepts in physics related to mechanical systems. This topic explores the mathematical relationships involved in calculating work done, power exerted, and energy transformations. It is fundamental for understanding the principles governing the motion and behavior of mechanical systems, providing essential tools for analyzing and designing machinery.",
   38: "Understanding the properties and applications of X-rays, crucial in medical imaging and materials analysis. Provides insights into non-invasive imaging techniques. The study of X-rays involves understanding their properties and applications in medical imaging and materials analysis. This topic explores the principles behind X-ray imaging techniques and their use in non-invasive diagnostics. Understanding the properties of X-rays is crucial for designing imaging systems, such as X-ray machines, and for applications in medical fields and materials science. It plays a key role in advancing non-invasive imaging techniques for various scientific and medical purposes.",
 };
+
+// const agenda = [
+//   "Fundamental Concepts: Brief overview of key principles and laws in physics.",
+//       "Recent Discoveries: Discussion on groundbreaking discoveries in the field.",
+//       "Applications in Daily Life: Exploring how physics concepts apply to everyday scenarios.",
+//       "Experimental Techniques: Overview of modern experimental methods and tools.",
+//       "Cutting-edge Research: Delving into ongoing research areas and innovative projects shaping the future of physics."
+// ];
+
+const agenda = [
+  "Fundamental Concepts: Brief overview of key principles and laws in physics.",
+  "Recent Discoveries: Discussion on groundbreaking discoveries in the field.",
+  "Applications in Daily Life: Exploring how physics concepts apply to everyday scenarios.",
+  "Experimental Techniques: Overview of modern experimental methods and tools.",
+  "Cutting-edge Research: Delving into ongoing research areas and innovative projects shaping the future of physics."
+];

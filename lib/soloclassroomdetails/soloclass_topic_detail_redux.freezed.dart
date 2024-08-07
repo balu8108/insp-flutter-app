@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SoloclassTopicDetailReduxAppState {
   INSPCardModel get selectedTopic => throw _privateConstructorUsedError;
   List<INSPCardModel> get allTopics => throw _privateConstructorUsedError;
+  SoloclassTopicwiseDetailsResponseModel get soloclasstopicdetail =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SoloclassTopicDetailReduxAppStateCopyWith<SoloclassTopicDetailReduxAppState>
@@ -32,7 +34,10 @@ abstract class $SoloclassTopicDetailReduxAppStateCopyWith<$Res> {
       _$SoloclassTopicDetailReduxAppStateCopyWithImpl<$Res,
           SoloclassTopicDetailReduxAppState>;
   @useResult
-  $Res call({INSPCardModel selectedTopic, List<INSPCardModel> allTopics});
+  $Res call(
+      {INSPCardModel selectedTopic,
+      List<INSPCardModel> allTopics,
+      SoloclassTopicwiseDetailsResponseModel soloclasstopicdetail});
 }
 
 /// @nodoc
@@ -49,11 +54,12 @@ class _$SoloclassTopicDetailReduxAppStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selectedTopic = freezed,
+    Object? selectedTopic = null,
     Object? allTopics = null,
+    Object? soloclasstopicdetail = null,
   }) {
     return _then(_value.copyWith(
-      selectedTopic: freezed == selectedTopic
+      selectedTopic: null == selectedTopic
           ? _value.selectedTopic
           : selectedTopic // ignore: cast_nullable_to_non_nullable
               as INSPCardModel,
@@ -61,6 +67,10 @@ class _$SoloclassTopicDetailReduxAppStateCopyWithImpl<$Res,
           ? _value.allTopics
           : allTopics // ignore: cast_nullable_to_non_nullable
               as List<INSPCardModel>,
+      soloclasstopicdetail: null == soloclasstopicdetail
+          ? _value.soloclasstopicdetail
+          : soloclasstopicdetail // ignore: cast_nullable_to_non_nullable
+              as SoloclassTopicwiseDetailsResponseModel,
     ) as $Val);
   }
 }
@@ -74,7 +84,10 @@ abstract class _$$SoloclassTopicDetailReduxAppStateImplCopyWith<$Res>
       __$$SoloclassTopicDetailReduxAppStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({INSPCardModel selectedTopic, List<INSPCardModel> allTopics});
+  $Res call(
+      {INSPCardModel selectedTopic,
+      List<INSPCardModel> allTopics,
+      SoloclassTopicwiseDetailsResponseModel soloclasstopicdetail});
 }
 
 /// @nodoc
@@ -90,11 +103,12 @@ class __$$SoloclassTopicDetailReduxAppStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selectedTopic = freezed,
+    Object? selectedTopic = null,
     Object? allTopics = null,
+    Object? soloclasstopicdetail = null,
   }) {
     return _then(_$SoloclassTopicDetailReduxAppStateImpl(
-      selectedTopic: freezed == selectedTopic
+      selectedTopic: null == selectedTopic
           ? _value.selectedTopic
           : selectedTopic // ignore: cast_nullable_to_non_nullable
               as INSPCardModel,
@@ -102,6 +116,10 @@ class __$$SoloclassTopicDetailReduxAppStateImplCopyWithImpl<$Res>
           ? _value._allTopics
           : allTopics // ignore: cast_nullable_to_non_nullable
               as List<INSPCardModel>,
+      soloclasstopicdetail: null == soloclasstopicdetail
+          ? _value.soloclasstopicdetail
+          : soloclasstopicdetail // ignore: cast_nullable_to_non_nullable
+              as SoloclassTopicwiseDetailsResponseModel,
     ));
   }
 }
@@ -112,11 +130,15 @@ class _$SoloclassTopicDetailReduxAppStateImpl
     with DiagnosticableTreeMixin
     implements _SoloclassTopicDetailReduxAppState {
   const _$SoloclassTopicDetailReduxAppStateImpl(
-      {required this.selectedTopic,
-      final List<INSPCardModel> allTopics = const []})
+      {this.selectedTopic = const INSPCardModel("", "", "", ""),
+      final List<INSPCardModel> allTopics = const [],
+      this.soloclasstopicdetail = const SoloclassTopicwiseDetailsResponseModel(
+          totalLectures: 0,
+          transformedData: TransformedModelData("", "", "", [], []))})
       : _allTopics = allTopics;
 
   @override
+  @JsonKey()
   final INSPCardModel selectedTopic;
   final List<INSPCardModel> _allTopics;
   @override
@@ -128,8 +150,12 @@ class _$SoloclassTopicDetailReduxAppStateImpl
   }
 
   @override
+  @JsonKey()
+  final SoloclassTopicwiseDetailsResponseModel soloclasstopicdetail;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SoloclassTopicDetailReduxAppState(selectedTopic: $selectedTopic, allTopics: $allTopics)';
+    return 'SoloclassTopicDetailReduxAppState(selectedTopic: $selectedTopic, allTopics: $allTopics, soloclasstopicdetail: $soloclasstopicdetail)';
   }
 
   @override
@@ -138,7 +164,8 @@ class _$SoloclassTopicDetailReduxAppStateImpl
     properties
       ..add(DiagnosticsProperty('type', 'SoloclassTopicDetailReduxAppState'))
       ..add(DiagnosticsProperty('selectedTopic', selectedTopic))
-      ..add(DiagnosticsProperty('allTopics', allTopics));
+      ..add(DiagnosticsProperty('allTopics', allTopics))
+      ..add(DiagnosticsProperty('soloclasstopicdetail', soloclasstopicdetail));
   }
 
   @override
@@ -146,17 +173,17 @@ class _$SoloclassTopicDetailReduxAppStateImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SoloclassTopicDetailReduxAppStateImpl &&
+            (identical(other.selectedTopic, selectedTopic) ||
+                other.selectedTopic == selectedTopic) &&
             const DeepCollectionEquality()
-                .equals(other.selectedTopic, selectedTopic) &&
-            const DeepCollectionEquality()
-                .equals(other._allTopics, _allTopics));
+                .equals(other._allTopics, _allTopics) &&
+            (identical(other.soloclasstopicdetail, soloclasstopicdetail) ||
+                other.soloclasstopicdetail == soloclasstopicdetail));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(selectedTopic),
-      const DeepCollectionEquality().hash(_allTopics));
+  int get hashCode => Object.hash(runtimeType, selectedTopic,
+      const DeepCollectionEquality().hash(_allTopics), soloclasstopicdetail);
 
   @JsonKey(ignore: true)
   @override
@@ -170,14 +197,17 @@ class _$SoloclassTopicDetailReduxAppStateImpl
 abstract class _SoloclassTopicDetailReduxAppState
     implements SoloclassTopicDetailReduxAppState {
   const factory _SoloclassTopicDetailReduxAppState(
-          {required final INSPCardModel selectedTopic,
-          final List<INSPCardModel> allTopics}) =
+          {final INSPCardModel selectedTopic,
+          final List<INSPCardModel> allTopics,
+          final SoloclassTopicwiseDetailsResponseModel soloclasstopicdetail}) =
       _$SoloclassTopicDetailReduxAppStateImpl;
 
   @override
   INSPCardModel get selectedTopic;
   @override
   List<INSPCardModel> get allTopics;
+  @override
+  SoloclassTopicwiseDetailsResponseModel get soloclasstopicdetail;
   @override
   @JsonKey(ignore: true)
   _$$SoloclassTopicDetailReduxAppStateImplCopyWith<

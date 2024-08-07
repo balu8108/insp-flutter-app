@@ -127,7 +127,6 @@ class LiveClassRoomRecordings {
   const LiveClassRoomRecordings(
       [this.id = 0,
       this.key = '',
-      this.classRoomId = 0,
       this.drmKeyId = '',
       this.hlsDrmKey = '',
       this.hlsDrmUrl = '',
@@ -137,7 +136,7 @@ class LiveClassRoomRecordings {
       this.createdAt = '',
       this.updatedAt = '']);
 
-  final int id, classRoomId;
+  final int id;
   final String key, drmKeyId, hlsDrmKey, hlsDrmUrl, tpStreamId, dRMType, status;
   final String createdAt, updatedAt;
 

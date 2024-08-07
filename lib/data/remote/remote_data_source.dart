@@ -9,6 +9,7 @@ import 'package:inspflutterfrontend/data/remote/models/mycourses/all_subjects_re
 import 'package:inspflutterfrontend/data/remote/models/ratingfeedback/latest_completed_class_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/soloclasses/latest_solo_classes_response_model.dart';
+import 'package:inspflutterfrontend/data/remote/models/soloclasses/soloclass_topicwise_details_response_model.dart';
 import 'package:inspflutterfrontend/data/remote/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:retrofit/dio.dart';
 
@@ -45,6 +46,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<LatestSoloClassesResponseModel>> getLatestSoloClasses(
       String secretTokenHeader);
+
+  Future<HttpResponse<SoloclassTopicwiseDetailsResponseModel>>
+      getSoloClassTopicWiseDetails(String topicId, String secretTokenHeader);
 
   Future<HttpResponse<LatestCompletedClassesResponseModel>>
       getLatestCompletedClasses(String secretTokenHeader);
@@ -146,6 +150,13 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClasses(
       String secretTokenHeader) {
     return deviceNetworkService.getAllSoloClasses(secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<SoloclassTopicwiseDetailsResponseModel>>
+      getSoloClassTopicWiseDetails(String topicId, String secretTokenHeader) {
+    return deviceNetworkService.getSoloClassTopicWiseDetails(
+        topicId, secretTokenHeader);
   }
 
   @override

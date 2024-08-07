@@ -137,7 +137,6 @@ LiveClassRoomRecordings _$LiveClassRoomRecordingsFromJson(
     LiveClassRoomRecordings(
       (json['id'] as num?)?.toInt() ?? 0,
       json['key'] as String? ?? '',
-      (json['classRoomId'] as num?)?.toInt() ?? 0,
       json['drmKeyId'] as String? ?? '',
       json['hlsDrmKey'] as String? ?? '',
       json['hlsDrmUrl'] as String? ?? '',
@@ -152,7 +151,6 @@ Map<String, dynamic> _$LiveClassRoomRecordingsToJson(
         LiveClassRoomRecordings instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'classRoomId': instance.classRoomId,
       'key': instance.key,
       'drmKeyId': instance.drmKeyId,
       'hlsDrmKey': instance.hlsDrmKey,

@@ -15,7 +15,6 @@ class MyCoursesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
-      
       dispatch(context, showTopicsForCourse(context, inspCardModel));
     }
 

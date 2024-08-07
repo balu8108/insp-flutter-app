@@ -4,6 +4,7 @@ import 'package:inspflutterfrontend/common/latest_solo_class_card.dart';
 import 'package:inspflutterfrontend/common/model/latest_solo_class_card_model.dart';
 import 'package:inspflutterfrontend/data/remote/remote_data_source.dart';
 import 'package:inspflutterfrontend/soloclasses/soloclasses_widget_redux.dart';
+import 'package:inspflutterfrontend/soloclassroomdetails/soloclass_topic_detail_screen.dart';
 
 import '../utils/capitalize.dart';
 
@@ -32,7 +33,7 @@ class SoloClassesWidget extends State {
   // call an API of get all subjects
   void getAllLatestSoloClasses() async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token 5ae177752da7bf65a30899c445458ded';
+    const token = 'Token 4fe844d94aac5559298d987f38083946';
     final latestSoloClass = await remoteDataSource.getLatestSoloClasses(token);
     if (latestSoloClass.data.data.isNotEmpty) {
       var allSubjectsResults = latestSoloClass.data.data;
@@ -58,7 +59,13 @@ class SoloClassesWidget extends State {
     getAllLatestSoloClasses();
   }
 
-  void _handleSeeAll() {}
+  void _handleSeeAll() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => SoloclassTopicDetailScreen.getScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

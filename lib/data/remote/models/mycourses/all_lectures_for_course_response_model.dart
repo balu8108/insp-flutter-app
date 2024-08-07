@@ -108,14 +108,12 @@ class LiveClassRoomFile {
       this.key = '',
       this.isDownloadable = false,
       this.isShareable = false,
-      this.classRoomId = 0,
       this.createdAt = '',
       this.updatedAt = '']);
 
   final int id;
   final String key;
   final bool isDownloadable, isShareable;
-  final int classRoomId;
   final String createdAt, updatedAt;
 
   factory LiveClassRoomFile.fromJson(Map<String, Object?> json) =>
