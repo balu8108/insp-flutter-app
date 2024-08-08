@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/base/base.dart';
 import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/home/my_app_bar.dart';
+import 'package:inspflutterfrontend/home/student_home_screen.dart';
 import 'package:inspflutterfrontend/home/teacher_home_screen.dart';
 import 'package:inspflutterfrontend/mycourses/my_courses_redux.dart';
 
@@ -17,7 +18,7 @@ class HomeScreen extends StatelessWidget {
             converter: (store) => store.state,
             builder: (context, MyCoursesAppState state) => Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: TeacherHomeScreen())));
+                child: StudentHomeScreen())));
   }
 
   static getScreen(INSPCardModel selectedItem) {

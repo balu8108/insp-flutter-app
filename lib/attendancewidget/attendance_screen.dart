@@ -1,66 +1,195 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/common/extensions.dart';
-import 'package:inspflutterfrontend/common/insp_card.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:inspflutterfrontend/common/insp_heading.dart';
-import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/mycourseswidget/my_courses_widget_redux.dart';
-
-import '../data/hardcoded/mycourses_subjects.dart';
-import '../data/hardcoded/secret_key.dart';
-import '../data/remote/models/mycourses/all_subjects_request_model.dart';
-import '../data/remote/remote_data_source.dart';
 
 class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({super.key});
+
   @override
-  State<StatefulWidget> createState() {
-    return MyCoursesWidgetState();
-  }
+  State<AttendanceScreen> createState() => _AttendanceScreenState();
 }
 
-class MyCoursesWidgetState extends State {
-  MyCoursesWidgetAppState myCoursesWidgetAppState =
-      const MyCoursesWidgetAppState();
-
-  MyCoursesWidgetState();
-
-  void updateState(MyCoursesWidgetAppState myCoursesWidgetAppState) {
-    setState(() {
-      this.myCoursesWidgetAppState = myCoursesWidgetAppState;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // callCourseApi();
-    updateState(myCoursesWidgetAppState.copyWith(
-        myCoursesInspCardModels: myCoursesData));
-  }
+class _AttendanceScreenState extends State<AttendanceScreen> {
+  final List<Map<String, dynamic>> attendanceData = [
+    {
+      "id": 1,
+      "name": "Physics",
+      "percentage": 70.0,
+      "color": Color.fromRGBO(227, 141, 141, 1)
+    },
+    {
+      "id": 2,
+      "name": "Chemistry",
+      "percentage": 80.0,
+      "color": Color.fromRGBO(149, 171, 224, 1)
+    },
+    {
+      "id": 3,
+      "name": "Mathematics",
+      "percentage": 90.0,
+      "color": Color.fromRGBO(239, 219, 111, 1)
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
+    double averagePercentage = _calculateAveragePercentage();
+
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: const Color.fromRGBO(232, 242, 249, 1),
       ),
-      child: Column(children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              INSPHeading('Attendance'),
+              const Text(
+                "See All",
+                style: TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis),
+              ),
+            ],
+          ),
+          const SizedBox(height: 17),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 2,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      height: 200,
+                      child: PieChart(
+                        PieChartData(
+                          sections: _buildPieChartSections(),
+                          borderData: FlBorderData(show: false),
+                          sectionsSpace: 0,
+                          centerSpaceRadius: 50,
+                        ),
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${averagePercentage.toStringAsFixed(1)}%',
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Color.fromRGBO(44, 51, 41, 1),
+                          ),
+                        ),
+                        const Text(
+                          'Average',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Color.fromRGBO(44, 51, 41, 1),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 36),
+              Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: _buildProgressBars(),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<PieChartSectionData> _buildPieChartSections() {
+    return attendanceData.map((data) {
+      final value = data['percentage'] as double;
+      final color = data['color'] as Color;
+      return PieChartSectionData(
+        color: color,
+        // value: value,
+        // title: '${data['percentage']}%',
+        // titleStyle: const TextStyle(
+        //   fontSize: 12,
+        //   fontWeight: FontWeight.bold,
+        //   color: Colors.amber,
+        // ),
+      );
+    }).toList();
+  }
+
+  double _calculateAveragePercentage() {
+    double sum = attendanceData.fold(
+        0, (prev, data) => prev + (data['percentage'] as double));
+    return sum / attendanceData.length;
+  }
+
+  List<Widget> _buildProgressBars() {
+    return attendanceData.map((data) {
+      final value = data['percentage'] as double;
+      final color = data['color'] as Color;
+      final subjectName = data['name'] as String;
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
           children: [
-            INSPHeading('Attendance'),
-            const Text("See All",
-                style:
-                    TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis)),
+            Container(
+              width: 13,
+              height: 13,
+              margin: const EdgeInsets.only(right: 8.0),
+              decoration: BoxDecoration(
+                color: color,
+                shape: BoxShape.circle,
+              ),
+            ),
+            Text(
+              subjectName,
+              style: const TextStyle(
+                fontSize: 13,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Container(
+              width: 120,
+              height: 8,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  width: 100 * (value / 100),
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Text(
+              '${value.toStringAsFixed(1)}%',
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.black,
+              ),
+            ),
           ],
         ),
-        const SizedBox(
-          height: 17,
-        ),
-        const Center(child: Text('No items')),
-      ]),
-    );
+      );
+    }).toList();
   }
 }

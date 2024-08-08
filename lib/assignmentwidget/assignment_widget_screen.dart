@@ -42,6 +42,7 @@ class MyCoursesWidgetState extends State {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 270,
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
