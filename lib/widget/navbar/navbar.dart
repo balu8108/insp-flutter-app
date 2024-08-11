@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/pages/student/assignment/mainpage/assignmentScreen.dart';
 import 'package:inspflutterfrontend/pages/common/calender/calendar_screen.dart';
+import 'package:inspflutterfrontend/pages/teacher/suggestion/suggestion_page.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/pages/student/library/mainpage/library_screen.dart';
-import 'package:inspflutterfrontend/widget/popups/student_suggestion.dart';
 
 class Navbar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -64,8 +64,13 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
           // Handle Library button press
         }),
         _buildTextButton('Suggestion', () {
-          showDialog(
-              context: context, builder: (BuildContext) => StudentSuggestion());
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SuggestionPage()),
+          );
+
+          // showDialog(
+          //     context: context, builder: (BuildContext) => StudentSuggestion());
           // Handle Suggestion button press
         }),
         _buildTextButton('INSP Portal', () {

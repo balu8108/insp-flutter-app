@@ -32,7 +32,7 @@ class SoloClassesWidget extends State {
   // call an API of get all subjects
   void getAllLatestSoloClasses() async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token 4fe844d94aac5559298d987f38083946';
+    const token = 'Token efa8ee6b54ed6121764aa378b9451ca9';
     final latestSoloClass = await remoteDataSource.getLatestSoloClasses(token);
     if (latestSoloClass.data.data.isNotEmpty) {
       var allSubjectsResults = latestSoloClass.data.data;

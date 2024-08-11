@@ -20,7 +20,7 @@ class RatingFeedbackDetail extends StatelessWidget {
     dispatch(context, initialRatingDetail(context));
 
     void onPressedTopic(BuildContext context, INSPCardModel inspCardModel) {
-      // dispatch(context, sendToTopicLectureScreen(context, inspCardModel));
+      dispatch(context, showRatingFeedbackDetail(context, inspCardModel));
     }
 
     return Scaffold(
