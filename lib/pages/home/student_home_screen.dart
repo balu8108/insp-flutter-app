@@ -45,7 +45,7 @@ class StudentHomeScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         flex: 7, // 70%
-                        child: AttendanceScreen(),
+                        child: AttendanceWidget(),
                       ),
                       SizedBox(width: 16),
                       Expanded(
