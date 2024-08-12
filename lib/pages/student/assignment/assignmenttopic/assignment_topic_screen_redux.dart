@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/pages/student/assignment/assignmenttopic/assignment_topic_screen.dart';
+import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/card/model/topic_assignment_card_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
@@ -64,8 +65,9 @@ ThunkAction<AssignmentTopicScreenAppState> showAssignmentForTopic(
         context, UpdateSelectedItem(selectedItem: inspCardModel));
     final remoteDataSource = RemoteDataSource();
     final topicId = inspCardModel.id;
-    final allAssignment = await remoteDataSource.getAllAssignmentForTopic(
-        topicId, 'Token ${secretKeyToken}');
+    String userToken = await getUserToken();
+    final allAssignment =
+        await remoteDataSource.getAllAssignmentForTopic(topicId, userToken);
     if (allAssignment.response.statusCode == 200) {
       final List<TopicAssignmentCardModel> allTopicsForSubject = allAssignment
               .data.data

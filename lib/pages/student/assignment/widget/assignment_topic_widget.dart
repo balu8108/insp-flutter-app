@@ -26,6 +26,8 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
     super.initState();
   }
 
+  final ScrollController _scrollController = ScrollController();
+
   Widget _buildHeading(BuildContext context) {
     return context.isWebOrLandScape()
         ? Row(
@@ -80,66 +82,69 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
               margin: const EdgeInsets.only(right: 16),
               child: widget.allAssignemntofTopic.isNotEmpty
                   ? Scrollbar(
+                      controller: _scrollController,
                       child: ListView.separated(
-                      scrollDirection: Axis.vertical,
-                      itemCount: widget.allAssignemntofTopic.length,
-                      itemBuilder: (context, index) {
-                        final assignment = widget.allAssignemntofTopic[index];
-                        return Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                          color: Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  assignment.topicName,
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  assignment.instructorName,
-                                  style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Color.fromRGBO(44, 51, 41, 0.47)),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(height: 16),
-                                const Text(
-                                  'Description',
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  assignment.description,
-                                  style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Color.fromRGBO(44, 51, 41, 0.47)),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(height: 16),
-                                FileBoxComponent(
-                                  data: assignment.assignmentFiles,
-                                  type: "live",
-                                  scrollDirection: "horizontal",
-                                  maxHeight: 60,
-                                )
-                              ],
+                        scrollDirection: Axis.vertical,
+                        itemCount: widget.allAssignemntofTopic.length,
+                        itemBuilder: (context, index) {
+                          final assignment = widget.allAssignemntofTopic[index];
+                          return Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
                             ),
-                          ),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(
-                          width: 10,
-                        );
-                      },
-                    ))
+                            color: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    assignment.topicName,
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    assignment.instructorName,
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        color:
+                                            Color.fromRGBO(44, 51, 41, 0.47)),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  const Text(
+                                    'Description',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    assignment.description,
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        color:
+                                            Color.fromRGBO(44, 51, 41, 0.47)),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  FileBoxComponent(
+                                    data: assignment.assignmentFiles,
+                                    type: "live",
+                                    scrollDirection: "horizontal",
+                                    maxHeight: 60,
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(
+                            width: 10,
+                          );
+                        },
+                      ))
                   : const Padding(
                       padding: EdgeInsets.only(top: 16),
                       child: Text(

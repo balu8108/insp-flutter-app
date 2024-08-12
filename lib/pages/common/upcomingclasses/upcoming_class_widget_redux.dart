@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/upcoming_lecture_card_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
@@ -51,8 +52,9 @@ ThunkAction<UpcomingWidgetAppState> getAllUpcomingClass(BuildContext context) {
   return (Store<UpcomingWidgetAppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
-      const token = 'Token efa8ee6b54ed6121764aa378b9451ca9';
-      final allLecture = await remoteDataSource.getAllUpcomingClasses(token);
+      String userToken = await getUserToken();
+      final allLecture =
+          await remoteDataSource.getAllUpcomingClasses(userToken);
       final UpcomingLectureCardModel allSubjectsResults =
           UpcomingLectureCardModel(
               allLecture.data.data.ongoing,

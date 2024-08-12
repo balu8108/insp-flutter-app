@@ -8,7 +8,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dispatch(context, navigateToHomeIfLoggedIn(context));
     return Scaffold(
       body: Center(
         child: StoreConnector<LoginAppState, LoginAppState>(
@@ -100,8 +99,8 @@ class LoginScreen extends StatelessWidget {
                             color: Color(0x613A3541),
                           ),
                           contentPadding: const EdgeInsets.all(14.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
                               color: Color.fromRGBO(58, 53, 65, 0.23),
                               width: 1.0,
                             ),

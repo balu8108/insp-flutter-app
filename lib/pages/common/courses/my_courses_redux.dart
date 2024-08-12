@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/utils/class_constants.dart';
 import 'package:inspflutterfrontend/utils/extensions.dart';
+import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/card/model/lecture_card_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
@@ -122,9 +123,11 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
       classLevel = ClassLevel.Class_12.name;
     }
 
+    String userToken = await getUserToken();
+
     if (classLevel != null && classType != null) {
       final response = await remoteDataSource.getAllLecturesForCourse(
-          classType, classLevel, 'Token $secretKeyToken');
+          classType, classLevel, userToken);
 
       if (response.response.statusCode == 200) {
         final List<LectureCardModel> lecturesForCourse = (response.data.data
@@ -146,8 +149,7 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
         updateEmptyTopicsForSelectedCourse(context);
       }
     } else if (selectedCardName.contains('inpho')) {
-      final allSoloClass =
-          await remoteDataSource.getAllSoloClasses('Token $secretKeyToken');
+      final allSoloClass = await remoteDataSource.getAllSoloClasses(userToken);
       if (allSoloClass.response.statusCode == 200) {
         final List<LectureCardModel> lecturesForSoloClass =
             (allSoloClass.data.data.map((it) => LectureCardModel(

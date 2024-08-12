@@ -10,11 +10,13 @@ Widget LectureRecordingCardWidget(
     required description,
     required files,
     required agenda}) {
+  final ScrollController _scrollController = ScrollController();
   return Container(
       height: 100,
       margin: const EdgeInsets.only(right: 16),
       child: liveClassRoomRecordings.isNotEmpty
           ? Scrollbar(
+              controller: _scrollController,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: liveClassRoomRecordings.length,

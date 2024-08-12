@@ -73,13 +73,13 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                               topicName,
                               '$scheduledStartTime - $scheduledEndTime',
                             ),
-                            const SizedBox(height: 6),
-                            _buildRow(
+                            const SizedBox(height: 2),
+                            _buildSecondRow(
                               context,
                               data.mentorName,
                               scheduledDate,
                             ),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 2),
                             Text(
                               data.classLevel,
                               style: const TextStyle(
@@ -126,6 +126,30 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        Text(
+          rightText,
+          style: const TextStyle(
+            fontSize: 10,
+            color: Color.fromRGBO(44, 51, 41, 0.47),
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row _buildSecondRow(BuildContext context, String leftText, String rightText) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          leftText,
+          style: const TextStyle(
+            fontSize: 10,
+            color: Color.fromRGBO(44, 51, 41, 0.47),
+            fontWeight: FontWeight.w400,
           ),
         ),
         Text(

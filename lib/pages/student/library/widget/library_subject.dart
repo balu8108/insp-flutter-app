@@ -17,6 +17,8 @@ class LibrarySubject extends StatefulWidget {
 }
 
 class LibrarySubjectState extends State<LibrarySubject> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,6 +37,7 @@ class LibrarySubjectState extends State<LibrarySubject> {
             height: 230.0,
             child: librarySubjects.isNotEmpty
                 ? Scrollbar(
+                    controller: _scrollController,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: librarySubjects.length,

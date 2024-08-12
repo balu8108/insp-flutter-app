@@ -24,6 +24,7 @@ class MyCoursesWidgetState extends State<MyCoursesWidget> {
   MyCoursesWidgetState(this.onViewDetailsClicked);
 
   final void Function(BuildContext, INSPCardModel) onViewDetailsClicked;
+  final ScrollController _scrollController = ScrollController();
 
   void updateState(MyCoursesWidgetAppState myCoursesWidgetAppState) {
     setState(() {
@@ -56,6 +57,7 @@ class MyCoursesWidgetState extends State<MyCoursesWidget> {
             height: 230.0,
             child: myCoursesWidgetAppState.myCoursesInspCardModels.isNotEmpty
                 ? Scrollbar(
+                    controller: _scrollController,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: myCoursesWidgetAppState

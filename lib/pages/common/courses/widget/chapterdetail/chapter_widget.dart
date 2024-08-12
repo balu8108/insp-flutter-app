@@ -24,6 +24,8 @@ class ChapterWidgetState extends State<ChapterWidget> {
     super.initState();
   }
 
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,6 +44,7 @@ class ChapterWidgetState extends State<ChapterWidget> {
             height: 230.0,
             child: widget.allTopicsForSelectedCourse.isNotEmpty
                 ? Scrollbar(
+                    controller: _scrollController,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: widget.allTopicsForSelectedCourse.length,

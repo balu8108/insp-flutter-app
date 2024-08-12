@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/utils/class_constants.dart';
+import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/card/model/lecture_card_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
@@ -67,8 +68,9 @@ ThunkAction<LibraryLectureReduxAppState> showLecturesForTopic(
 
       final remoteDataSource = RemoteDataSource();
       final topicId = inspCardModel.id;
+      String userToken = await getUserToken();
       final allTopics = await remoteDataSource.getAllLectureByTopic(
-          topicId, "both", 'Token $secretKeyToken');
+          topicId, "both", userToken);
 
       if (allTopics.response.statusCode == 200) {
         final List<LectureCardModel> allTopicBasedLecture = allTopics.data.data

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 import 'package:inspflutterfrontend/widget/card/latest_assignment_card.dart';
 import 'package:inspflutterfrontend/widget/card/model/latest_assignment_card_model.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:inspflutterfrontend/pages/teacher/dashboard/myupload/myupload_widget_redux.dart';
-import 'package:inspflutterfrontend/widget/popups/add_assignment.dart';
+import 'package:inspflutterfrontend/widget/popups/assignmentPopup/add_assignment.dart';
 
 import '../../../../utils/capitalize.dart';
 
@@ -23,7 +24,7 @@ class MyUploadWidgetState extends State {
 
   MyUploadWidgetState();
 
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   void updateState(MyUploadWidgetAppState myUploadWidgetAppState) {
     setState(() {
@@ -34,8 +35,9 @@ class MyUploadWidgetState extends State {
   // call an API of get all subjects
   void getAllLatestAssignmentClasses() async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token efa8ee6b54ed6121764aa378b9451ca9';
-    final latestAssignment = await remoteDataSource.getLatestAssignment(token);
+    String userToken = await getUserToken();
+    final latestAssignment =
+        await remoteDataSource.getLatestAssignment(userToken);
     if (latestAssignment.data.data.isNotEmpty) {
       var allAssignmentResults = latestAssignment.data.data;
 
@@ -79,7 +81,7 @@ class MyUploadWidgetState extends State {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return AddAssignment();
+                      return AddAssignment.getScreen();
                     });
               },
               child: Text("+ Add Assignment"),

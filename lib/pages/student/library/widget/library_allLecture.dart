@@ -23,6 +23,8 @@ class LibraryAlllectureWidget extends StatefulWidget {
 class LibraryAlllectureWidgetState extends State<LibraryAlllectureWidget> {
   LibraryAlllectureWidgetState();
 
+  final ScrollController _scrollController = ScrollController();
+
   void onPressedMyCourse(BuildContext context, LectureCardModel inspCardModel) {
     Navigator.push(
         context,
@@ -49,6 +51,7 @@ class LibraryAlllectureWidgetState extends State<LibraryAlllectureWidget> {
             height: 220.0,
             child: widget.lectureDetailsForLibrary.isNotEmpty
                 ? Scrollbar(
+                    controller: _scrollController,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: widget.lectureDetailsForLibrary.length,

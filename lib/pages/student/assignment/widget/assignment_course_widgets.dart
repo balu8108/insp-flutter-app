@@ -26,6 +26,7 @@ class MyCoursesWidgetState extends State<AssignmentCourseWidgets> {
 
   final void Function(BuildContext, INSPCardModel) onViewDetailsClicked;
   final void Function() callCourseApi;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +46,7 @@ class MyCoursesWidgetState extends State<AssignmentCourseWidgets> {
             height: 220.0,
             child: assignmentCoursesData.isNotEmpty
                 ? Scrollbar(
+                    controller: _scrollController,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: assignmentCoursesData.length,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/pages/teacher/ratingandfeedback/mainpage/rating_and_feedback.dart';
+import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 import 'package:inspflutterfrontend/widget/card/latest_completed_class_card.dart';
 import 'package:inspflutterfrontend/widget/card/model/latest_completed_class_card_model.dart';
@@ -22,7 +23,7 @@ class RatingFeedbackWidgetState extends State {
 
   RatingFeedbackWidgetState();
 
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   void updateState(RatingFeedbackWidgetAppState ratingFeedbackWidgetAppState) {
     setState(() {
@@ -33,9 +34,9 @@ class RatingFeedbackWidgetState extends State {
   // call an API of get all subjects
   void getAllLatestCompletedClasses() async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token efa8ee6b54ed6121764aa378b9451ca9';
+    String userToken = await getUserToken();
     final latestCompletedClass =
-        await remoteDataSource.getLatestCompletedClasses(token);
+        await remoteDataSource.getLatestCompletedClasses(userToken);
     if (latestCompletedClass.data.data.isNotEmpty) {
       var allSubjectsResults = latestCompletedClass.data.data;
 
@@ -81,7 +82,7 @@ class RatingFeedbackWidgetState extends State {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            INSPHeading('Rating & Feedbac'),
+            INSPHeading('Rating & Feedback'),
             TextButton(
                 onPressed: _handleSeeAll,
                 child: const Text("See All",

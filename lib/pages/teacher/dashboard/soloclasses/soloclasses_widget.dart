@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 import 'package:inspflutterfrontend/widget/card/latest_solo_class_card.dart';
 import 'package:inspflutterfrontend/widget/card/model/latest_solo_class_card_model.dart';
@@ -21,7 +22,7 @@ class SoloClassesWidget extends State {
 
   SoloClassesWidget();
 
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   void updateState(SoloClassesWidgetAppState soloClassesWidgetAppState) {
     setState(() {
@@ -32,8 +33,9 @@ class SoloClassesWidget extends State {
   // call an API of get all subjects
   void getAllLatestSoloClasses() async {
     final remoteDataSource = RemoteDataSource();
-    const token = 'Token efa8ee6b54ed6121764aa378b9451ca9';
-    final latestSoloClass = await remoteDataSource.getLatestSoloClasses(token);
+    String userToken = await getUserToken();
+    final latestSoloClass =
+        await remoteDataSource.getLatestSoloClasses(userToken);
     if (latestSoloClass.data.data.isNotEmpty) {
       var allSubjectsResults = latestSoloClass.data.data;
 

@@ -8,7 +8,7 @@ Widget RatingFeedbackBottomWidgets(
     {required BuildContext context,
     required String heading,
     required List<RatingFeedbackCardModal> ratingFeedbackCard}) {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(

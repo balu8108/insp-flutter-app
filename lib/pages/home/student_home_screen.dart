@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/pages/student/dashboard/assignment/assignment_widget.dart';
 import 'package:inspflutterfrontend/pages/student/dashboard/attendance/attendance_widget.dart';
+import 'package:inspflutterfrontend/pages/student/library/widget/library_subject.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/pages/student/library/mainpage/library_screen.dart';
 import 'package:inspflutterfrontend/pages/common/courses/my_courses_screen.dart';
@@ -54,9 +55,9 @@ class StudentHomeScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  // LibraryWidget(
-                  //   onViewDetailsClicked: onPressedLibrary,
-                  // ),
+                  LibrarySubject(
+                    onViewDetailsClicked: onPressedLibrary,
+                  ),
                 ],
               ),
             ),
