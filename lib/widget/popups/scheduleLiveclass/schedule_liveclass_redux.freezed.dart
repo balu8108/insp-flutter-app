@@ -21,6 +21,7 @@ mixin _$ScheduleLiveclassAppState {
   String? get selectedStartTime => throw _privateConstructorUsedError;
   String? get selectedEndTime => throw _privateConstructorUsedError;
   String? get selectedChapter => throw _privateConstructorUsedError;
+  String? get selectedTopic => throw _privateConstructorUsedError;
   String? get selectedClassLevel => throw _privateConstructorUsedError;
   String? get selectedCourseType => throw _privateConstructorUsedError;
   String? get lectureNo => throw _privateConstructorUsedError;
@@ -48,6 +49,7 @@ abstract class $ScheduleLiveclassAppStateCopyWith<$Res> {
       String? selectedStartTime,
       String? selectedEndTime,
       String? selectedChapter,
+      String? selectedTopic,
       String? selectedClassLevel,
       String? selectedCourseType,
       String? lectureNo,
@@ -78,6 +80,7 @@ class _$ScheduleLiveclassAppStateCopyWithImpl<$Res,
     Object? selectedStartTime = freezed,
     Object? selectedEndTime = freezed,
     Object? selectedChapter = freezed,
+    Object? selectedTopic = freezed,
     Object? selectedClassLevel = freezed,
     Object? selectedCourseType = freezed,
     Object? lectureNo = freezed,
@@ -108,6 +111,10 @@ class _$ScheduleLiveclassAppStateCopyWithImpl<$Res,
       selectedChapter: freezed == selectedChapter
           ? _value.selectedChapter
           : selectedChapter // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedTopic: freezed == selectedTopic
+          ? _value.selectedTopic
+          : selectedTopic // ignore: cast_nullable_to_non_nullable
               as String?,
       selectedClassLevel: freezed == selectedClassLevel
           ? _value.selectedClassLevel
@@ -164,6 +171,7 @@ abstract class _$$ScheduleLiveclassAppStateImplCopyWith<$Res>
       String? selectedStartTime,
       String? selectedEndTime,
       String? selectedChapter,
+      String? selectedTopic,
       String? selectedClassLevel,
       String? selectedCourseType,
       String? lectureNo,
@@ -193,6 +201,7 @@ class __$$ScheduleLiveclassAppStateImplCopyWithImpl<$Res>
     Object? selectedStartTime = freezed,
     Object? selectedEndTime = freezed,
     Object? selectedChapter = freezed,
+    Object? selectedTopic = freezed,
     Object? selectedClassLevel = freezed,
     Object? selectedCourseType = freezed,
     Object? lectureNo = freezed,
@@ -223,6 +232,10 @@ class __$$ScheduleLiveclassAppStateImplCopyWithImpl<$Res>
       freezed == selectedChapter
           ? _value.selectedChapter
           : selectedChapter // ignore: cast_nullable_to_non_nullable
+              as String?,
+      freezed == selectedTopic
+          ? _value.selectedTopic
+          : selectedTopic // ignore: cast_nullable_to_non_nullable
               as String?,
       freezed == selectedClassLevel
           ? _value.selectedClassLevel
@@ -275,6 +288,7 @@ class _$ScheduleLiveclassAppStateImpl
       this.selectedStartTime = '',
       this.selectedEndTime = '',
       this.selectedChapter = '',
+      this.selectedTopic = '',
       this.selectedClassLevel = '',
       this.selectedCourseType = '',
       this.lectureNo = '',
@@ -303,6 +317,9 @@ class _$ScheduleLiveclassAppStateImpl
   @override
   @JsonKey()
   final String? selectedChapter;
+  @override
+  @JsonKey()
+  final String? selectedTopic;
   @override
   @JsonKey()
   final String? selectedClassLevel;
@@ -351,7 +368,7 @@ class _$ScheduleLiveclassAppStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScheduleLiveclassAppState(selectedSubject: $selectedSubject, selectedDate: $selectedDate, selectedStartTime: $selectedStartTime, selectedEndTime: $selectedEndTime, selectedChapter: $selectedChapter, selectedClassLevel: $selectedClassLevel, selectedCourseType: $selectedCourseType, lectureNo: $lectureNo, agenda: $agenda, description: $description, allTopics: $allTopics, pickedFilesName: $pickedFilesName, pickedFiles: $pickedFiles, isStudentMuted: $isStudentMuted)';
+    return 'ScheduleLiveclassAppState(selectedSubject: $selectedSubject, selectedDate: $selectedDate, selectedStartTime: $selectedStartTime, selectedEndTime: $selectedEndTime, selectedChapter: $selectedChapter, selectedTopic: $selectedTopic, selectedClassLevel: $selectedClassLevel, selectedCourseType: $selectedCourseType, lectureNo: $lectureNo, agenda: $agenda, description: $description, allTopics: $allTopics, pickedFilesName: $pickedFilesName, pickedFiles: $pickedFiles, isStudentMuted: $isStudentMuted)';
   }
 
   @override
@@ -364,6 +381,7 @@ class _$ScheduleLiveclassAppStateImpl
       ..add(DiagnosticsProperty('selectedStartTime', selectedStartTime))
       ..add(DiagnosticsProperty('selectedEndTime', selectedEndTime))
       ..add(DiagnosticsProperty('selectedChapter', selectedChapter))
+      ..add(DiagnosticsProperty('selectedTopic', selectedTopic))
       ..add(DiagnosticsProperty('selectedClassLevel', selectedClassLevel))
       ..add(DiagnosticsProperty('selectedCourseType', selectedCourseType))
       ..add(DiagnosticsProperty('lectureNo', lectureNo))
@@ -390,6 +408,8 @@ class _$ScheduleLiveclassAppStateImpl
                 other.selectedEndTime == selectedEndTime) &&
             (identical(other.selectedChapter, selectedChapter) ||
                 other.selectedChapter == selectedChapter) &&
+            (identical(other.selectedTopic, selectedTopic) ||
+                other.selectedTopic == selectedTopic) &&
             (identical(other.selectedClassLevel, selectedClassLevel) ||
                 other.selectedClassLevel == selectedClassLevel) &&
             (identical(other.selectedCourseType, selectedCourseType) ||
@@ -417,6 +437,7 @@ class _$ScheduleLiveclassAppStateImpl
       selectedStartTime,
       selectedEndTime,
       selectedChapter,
+      selectedTopic,
       selectedClassLevel,
       selectedCourseType,
       lectureNo,
@@ -442,6 +463,7 @@ abstract class _ScheduleLiveclassAppState implements ScheduleLiveclassAppState {
       final String? selectedStartTime,
       final String? selectedEndTime,
       final String? selectedChapter,
+      final String? selectedTopic,
       final String? selectedClassLevel,
       final String? selectedCourseType,
       final String? lectureNo,
@@ -462,6 +484,8 @@ abstract class _ScheduleLiveclassAppState implements ScheduleLiveclassAppState {
   String? get selectedEndTime;
   @override
   String? get selectedChapter;
+  @override
+  String? get selectedTopic;
   @override
   String? get selectedClassLevel;
   @override

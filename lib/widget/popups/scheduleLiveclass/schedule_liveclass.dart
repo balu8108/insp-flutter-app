@@ -70,14 +70,16 @@ class ScheduleLiveClass extends StatelessWidget {
                           child: Text(item.label),
                         );
                       }).toList(),
-                      selectedValue: state.selectedSubject,
+                      selectedValue: state.selectedSubject!.isEmpty
+                          ? null
+                          : state.selectedSubject,
                       onChanged: (String? newValue) {
                         dispatch(
                             context,
                             UpdateLiveClassSelectedSubject(
                                 selectedSubject: newValue));
                       },
-                      hintText: "Select Subject",
+                      hintText: "Select Subject...",
                     ),
                     const SizedBox(height: 16.0),
                     // Class level Dropdown
@@ -88,14 +90,16 @@ class ScheduleLiveClass extends StatelessWidget {
                           child: Text(item.label),
                         );
                       }).toList(),
-                      selectedValue: state.selectedSubject,
+                      selectedValue: state.selectedClassLevel!.isEmpty
+                          ? null
+                          : state.selectedClassLevel,
                       onChanged: (String? newValue) {
                         dispatch(
                             context,
                             UpdateLiveClassSelectedClassLevel(
                                 selectedClassLevel: newValue));
                       },
-                      hintText: "Select class level",
+                      hintText: "Select class level...",
                     ),
                     const SizedBox(height: 16.0),
                     // Chapter Dropdown
@@ -106,7 +110,9 @@ class ScheduleLiveClass extends StatelessWidget {
                           child: Text(item.label),
                         );
                       }).toList(),
-                      selectedValue: state.selectedSubject,
+                      selectedValue: state.selectedChapter!.isEmpty
+                          ? null
+                          : state.selectedChapter,
                       onChanged: (String? newValue) {
                         dispatch(context,
                             showTopicsforLiveClassByChapter(context, newValue));
@@ -122,12 +128,12 @@ class ScheduleLiveClass extends StatelessWidget {
                           child: Text(item.label),
                         );
                       }).toList(),
-                      selectedValue: state.selectedSubject,
+                      selectedValue: state.selectedTopic!.isEmpty
+                          ? null
+                          : state.selectedTopic,
                       onChanged: (String? newValue) {
-                        dispatch(
-                            context,
-                            UpdateLiveClassSelectedChapter(
-                                selectedChapter: newValue));
+                        dispatch(context,
+                            UpdateSelectedTopic(selectedTopic: newValue));
                       },
                       hintText: "Select topic...",
                     ),
@@ -140,7 +146,9 @@ class ScheduleLiveClass extends StatelessWidget {
                           child: Text(item.label),
                         );
                       }).toList(),
-                      selectedValue: state.selectedSubject,
+                      selectedValue: state.selectedCourseType!.isEmpty
+                          ? null
+                          : state.selectedCourseType,
                       onChanged: (String? newValue) {
                         dispatch(
                             context,
@@ -149,6 +157,7 @@ class ScheduleLiveClass extends StatelessWidget {
                       },
                       hintText: "Select course type...",
                     ),
+                    const SizedBox(height: 16.0),
                     TextFormField(
                       maxLines: 2,
                       onChanged: (text) {
@@ -184,6 +193,7 @@ class ScheduleLiveClass extends StatelessWidget {
                             horizontal: 8.0, vertical: 12.0),
                       ),
                     ),
+                    const SizedBox(height: 16.0),
                     // Description TextFormField
                     TextFormField(
                       maxLines: 2,

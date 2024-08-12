@@ -24,6 +24,7 @@ class ScheduleLiveclassAppState with _$ScheduleLiveclassAppState {
       @Default('') String? selectedStartTime,
       @Default('') String? selectedEndTime,
       @Default('') String? selectedChapter,
+      @Default('') String? selectedTopic,
       @Default('') String? selectedClassLevel,
       @Default('') String? selectedCourseType,
       @Default('') String? lectureNo,
@@ -45,6 +46,11 @@ class UpdateLiveClassSelectedSubject extends ScheduleLiveclassAction {
 class UpdateAllTopics extends ScheduleLiveclassAction {
   List<ChapterTopicModel> allTopics;
   UpdateAllTopics({required this.allTopics});
+}
+
+class UpdateSelectedTopic extends ScheduleLiveclassAction {
+  String? selectedTopic;
+  UpdateSelectedTopic({required this.selectedTopic});
 }
 
 class UpdateLiveClassSelectedDate extends ScheduleLiveclassAction {
@@ -119,6 +125,8 @@ ScheduleLiveclassAppState _scheduleLiveclassStateReducer(
       return state.copyWith(selectedSubject: action.selectedSubject);
     case UpdateAllTopics():
       return state.copyWith(allTopics: action.allTopics);
+    case UpdateSelectedTopic():
+      return state.copyWith(selectedTopic: action.selectedTopic);
     case UpdateLiveClassSelectedDate():
       return state.copyWith(selectedDate: action.selectedDate);
     case UpdateLiveClassSelectedStartTime():
@@ -191,6 +199,7 @@ ThunkAction<ScheduleLiveclassAppState> showTopicsforLiveClassByChapter(
     BuildContext context, String? newValue) {
   return (Store<ScheduleLiveclassAppState> store) async {
     try {
+      store.dispatch(UpdateSelectedTopic(selectedTopic: ''));
       store.dispatch(UpdateLiveClassSelectedChapter(selectedChapter: newValue));
       var chapterId =
           chapter.firstWhere((item) => item.label == newValue).value;
