@@ -7,6 +7,8 @@ import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_su
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_topic_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_topics_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_topics_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/latest_completed_class_response_model.dart';
@@ -96,6 +98,11 @@ abstract class NetworkService {
   @GET('/schedule-live-class/get-all')
   Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
       getAllUpcomingClasses(@Header('Authorization') String secretTokenHeader);
+
+  @POST('/lecture/get-lecture-no')
+  Future<HttpResponse<GetLectureNoResponseModel>> getLectureNumber(
+      @Body() GetLectureNoRequestModel lectureNoRequestModel,
+      @Header('Authorization') String secretTokenHeader);
 
   @GET('/lecture/get-lecture-by-id/{roomId}')
   Future<HttpResponse<LectureDetailByRoomIdResponseModel>>

@@ -6,6 +6,8 @@ import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_fo
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_topic_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/latest_completed_class_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/rating_feedback_rating_detail_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
@@ -75,6 +77,9 @@ abstract class RemoteDataSource {
   Future<HttpResponse<AllLecturesForCourseResponseModel>>
       getAllLecturesForCourse(
           String classType, String classLevel, String secretTokenHeader);
+
+  Future<HttpResponse<GetLectureNoResponseModel>> getLectureNumber(
+      GetLectureNoRequestModel lectureNoRequestModel, String secretTokenHeader);
 
   Future<HttpResponse<AllLecturesForTopicResponseModel>> getAllLectureByTopic(
       String topicId, String topicType, String secretTokenHeader);
@@ -204,5 +209,13 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       String topicId, String secretTokenHeader) {
     return deviceNetworkService.getAllAssignmentForTopic(
         topicId, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<GetLectureNoResponseModel>> getLectureNumber(
+      GetLectureNoRequestModel lectureNoRequestModel,
+      String secretTokenHeader) {
+    return deviceNetworkService.getLectureNumber(
+        lectureNoRequestModel, secretTokenHeader);
   }
 }
