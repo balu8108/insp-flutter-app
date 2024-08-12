@@ -1,15 +1,39 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/login/login_screen.dart';
-import 'package:inspflutterfrontend/onboarding/onboarding_screen.dart';
+import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
+import 'package:inspflutterfrontend/pages/home/home_screen.dart';
+import 'package:inspflutterfrontend/pages/login/login_screen.dart';
+import 'package:inspflutterfrontend/pages/onboarding/onboarding_screen.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  LoginResponseModelResult userData =
+      const LoginResponseModelResult('', '', '', '', '', '', '', '', 0, 0);
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    LoginResponseModelResult userDatas = await getUserData();
+    setState(() {
+      userData = userDatas; // Store the fetched data
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +42,9 @@ class MyApp extends StatelessWidget {
       home: Builder(
         builder: (context) {
           if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
-            return LoginScreen.getScreen();
+            return userData.token == ""
+                ? LoginScreen.getScreen()
+                : HomeScreen(userData: userData);
           } else {
             return AnimatedSplashScreen(
               duration: 3000,
