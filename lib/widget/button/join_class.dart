@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart'; // Assuming you're using Redux for state management
 
 class JoinClassBtn extends StatelessWidget {
   // final bool isLoading;
@@ -10,10 +9,9 @@ class JoinClassBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
     // final userProfile = StoreProvider.of<AppState>(context).state.auth.userProfile; // Adjust to your actual state structure
 
-    Color backColor = Color(0xFF3C8DBC);
+    Color backColor = const Color(0xFF3C8DBC);
     Color textColor = Colors.white;
     String text = 'Start';
     bool btnDisabled = false;
@@ -74,16 +72,16 @@ class JoinClassBtn extends StatelessWidget {
         child: ElevatedButton(
           onPressed: btnDisabled ? null : null,
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(backColor),
-            foregroundColor: MaterialStateProperty.all(textColor),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            backgroundColor: WidgetStateProperty.all(backColor),
+            foregroundColor: WidgetStateProperty.all(textColor),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
                     8.0), // Adjust border radius as needed
               ),
             ),
             minimumSize:
-                MaterialStateProperty.all(const Size(double.infinity, 48.0)),
+                WidgetStateProperty.all(const Size(double.infinity, 48.0)),
           ),
           child: Text(
             text,
