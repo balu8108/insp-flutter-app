@@ -1,6 +1,6 @@
-import 'package:inspflutterfrontend/common/model/insp_card_model.dart';
+import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 
-import '../remote/models/mycourses/all_subjects_response_model.dart';
+import '../../apiservices/models/mycourses/all_subjects_response_model.dart';
 
 const myCoursesDescriptions = [
   "Prepare for the Olympiad journey with our Foundation Course, meticulously designed to ignite curiosity and foster problem-solving skills. Dive into advanced topics and lay a strong foundation for competitive examinations.",
