@@ -10,6 +10,7 @@ import 'package:inspflutterfrontend/popups/student_suggestion.dart';
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -28,17 +29,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             MaterialPageRoute(
                 builder: (context) => HomeScreen.getScreen(inspCardModel)),
           );
-          // Handle Home button press
         }),
         _buildTextButton('Calendar', () {
-          // Handle Calendar button press
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => LiveclassCalendarScreen()),
           );
         }),
         _buildTextButton('Assignments', () {
-          // Handle Assignments button press
           INSPCardModel inspCardModel = const INSPCardModel(
               '1',
               'Physics',
@@ -62,33 +60,63 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             MaterialPageRoute(
                 builder: (context) => LibraryScreen.getScreen(inspCardModel)),
           );
-          // Handle Library button press
         }),
         _buildTextButton('Suggestion', () {
           showDialog(
               context: context, builder: (BuildContext) => StudentSuggestion());
-          // Handle Suggestion button press
         }),
-        _buildTextButton('INSP Portal', () {
-          // Handle INSP Portal button press
-        }),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () {
-                // Handle profile click
-              },
-              child: const CircleAvatar(
-                backgroundColor: Colors.blue,
-                child: Text(
-                  'T',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
+        PopupMenuButton<String>(
+          icon: const Center(
+            child: CircleAvatar(
+              backgroundColor: Colors.blue,
+              child: Text(
+                'T',
+                style: TextStyle(color: Colors.white, fontSize: 18),
               ),
             ),
           ),
+          itemBuilder: (BuildContext context) {
+            return [
+              PopupMenuItem<String>(
+                value: 'profile',
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const CircleAvatar(
+                          radius: 40.0,
+                          backgroundColor: Colors.blue,
+                          child: const Text(
+                            'T',
+                            style: TextStyle(color: Colors.white, fontSize: 32),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Test400',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w500),
+                        ),
+                        const SizedBox(height: 15),
+                        TextButton(
+                          onPressed: () {
+                            // Handle Logout
+                            Navigator.pop(context); // Close the popup menu
+                          },
+                          child: const Text('Logout'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ];
+          },
+          onSelected: (String value) {
+            // No action needed here since the profile is handled in PopupMenuItem
+          },
         ),
       ],
     );
