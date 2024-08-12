@@ -11,6 +11,33 @@ List<ChapterTopicModel> subjectList = [
   ChapterTopicModel(value: "3", label: "CHEMISTRY"),
 ];
 
+List<ChapterTopicModel> classLevel = [
+  ChapterTopicModel(value: "Class_11", label: "Class_11"),
+  ChapterTopicModel(value: "Class_12", label: "Class_12"),
+  ChapterTopicModel(value: "Foundation_Olympiad", label: "Foundation_Olympiad"),
+  ChapterTopicModel(
+      value: "JEE_Advanced_Mastery_Top_500",
+      label: "JEE_Advanced_Mastery_Top_500"),
+];
+
+List<ChapterTopicModel> classLevelGeneral = [
+  ChapterTopicModel(value: "General_Discussion", label: "General_Discussion"),
+  ChapterTopicModel(value: "PTM_Discussion", label: "PTM_Discussion"),
+];
+
+List<ChapterTopicModel> classType = [
+  ChapterTopicModel(value: "CRASHCOURSE", label: "Crash Course"),
+  ChapterTopicModel(value: "REGULARCLASS", label: "Regular Classes"),
+];
+
+List<ChapterTopicModel> chapter = [
+  ChapterTopicModel(value: "8", label: "ELECTRO-MAGNETISM"),
+  ChapterTopicModel(value: "10", label: "GEOMETRICAL & WAVE OPTICS"),
+  ChapterTopicModel(value: "3", label: "HEAT & THERMODYNAMICS"),
+  ChapterTopicModel(value: "2", label: "MECHANICS"),
+  ChapterTopicModel(value: "12", label: "MODERN PHYSICS"),
+];
+
 List<ChapterTopicModel> topicList = [
   ChapterTopicModel(value: "36", label: "ALTERNATING CURRENT "),
   ChapterTopicModel(value: "37", label: "ATOMIC STRUCTURE "),
