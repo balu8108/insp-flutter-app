@@ -43,7 +43,7 @@ dependencies:
   redux_thunk: ^0.4.0
   retrofit: ">=4.0.0 <5.0.0"
   logger: any #for logging purpose
-  shared_preferences: ^2.2.3
+  shared_preferences: ^2.3.1
   fluttertoast: ^8.2.5
   file_picker: ^8.0.7
   collection: ^1.18.0
