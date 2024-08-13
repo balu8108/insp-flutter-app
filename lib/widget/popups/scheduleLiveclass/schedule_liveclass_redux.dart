@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:inspflutterfrontend/data/hardcoded/topic_list.dart';
@@ -20,31 +21,36 @@ part 'schedule_liveclass_redux.freezed.dart';
 @freezed
 class ScheduleLiveclassAppState with _$ScheduleLiveclassAppState {
   const factory ScheduleLiveclassAppState(
-      [@Default('') String? selectedSubject,
+      {required String classroomId,
+      required bool isEditScreen,
+      required String? selectedSubject,
       @Default('') String? selectedSubjectError,
-      @Default('') String? selectedDate,
+      required String? selectedDate,
       @Default('') String? selectedDateError,
-      @Default('') String? selectedStartTime,
+      required String? selectedStartTime,
       @Default('') String? selectedStartTimeError,
-      @Default('') String? selectedEndTime,
+      required String? selectedEndTime,
       @Default('') String? selectedEndTimeError,
-      @Default('') String? selectedChapter,
+      required String? selectedChapter,
       @Default('') String? selectedChapterError,
-      @Default('') String? selectedTopic,
+      required String? selectedTopic,
       @Default('') String? selectedTopicError,
-      @Default('') String? selectedClassLevel,
+      required String? selectedClassLevel,
       @Default('') String? selectedClassLevelError,
-      @Default('') String? selectedCourseType,
+      required String? selectedCourseType,
       @Default('') String? selectedCourseTypeError,
-      @Default('') String? lectureNo,
-      @Default('') String? agenda,
+      required String? lectureNo,
+      required String? agenda,
       @Default('') String? agendaError,
-      @Default('') String? description,
+      required String? description,
       @Default('') String? descriptionError,
       @Default([]) List<ChapterTopicModel> allTopics,
       @Default([]) List<String> pickedFilesName,
+      required List<LiveClassRoomFile> previousFiles,
+      @Default([]) List<int> deletedFileId,
       @Default([]) List<PlatformFile> pickedFiles,
-      @Default(false) bool? isStudentMuted]) = _ScheduleLiveclassAppState;
+      required bool? isStudentMuted,
+      @Default(false) bool isClassLoading}) = _ScheduleLiveclassAppState;
 }
 
 sealed class ScheduleLiveclassAction {}
@@ -187,9 +193,19 @@ class UpdateLiveClassIsStudentMuted extends ScheduleLiveclassAction {
   UpdateLiveClassIsStudentMuted({required this.isStudentMuted});
 }
 
+class UpdateIsClassLoading extends ScheduleLiveclassAction {
+  bool isClassLoading;
+  UpdateIsClassLoading({required this.isClassLoading});
+}
+
 class RemoveLiveClassFile extends ScheduleLiveclassAction {
   String filename;
   RemoveLiveClassFile({required this.filename});
+}
+
+class RemovePreviousLiveClassFile extends ScheduleLiveclassAction {
+  int id;
+  RemovePreviousLiveClassFile({required this.id});
 }
 
 ScheduleLiveclassAppState _scheduleLiveclassStateReducer(
@@ -199,67 +215,89 @@ ScheduleLiveclassAppState _scheduleLiveclassStateReducer(
       return state.copyWith(
           selectedSubject: action.selectedSubject, selectedSubjectError: '');
     case UpdateLiveClassSelectedSubjectError():
-      return state.copyWith(selectedSubjectError: action.selectedSubjectError);
+      return state.copyWith(
+          selectedSubjectError: action.selectedSubjectError,
+          isClassLoading: false);
     case UpdateAllTopics():
       return state.copyWith(allTopics: action.allTopics);
     case UpdateSelectedTopic():
       return state.copyWith(
           selectedTopic: action.selectedTopic, selectedTopicError: '');
     case UpdateSelectedTopicError():
-      return state.copyWith(selectedTopicError: action.selectedTopicsError);
+      return state.copyWith(
+          selectedTopicError: action.selectedTopicsError,
+          isClassLoading: false);
     case UpdateLiveClassSelectedDate():
       return state.copyWith(
           selectedDate: action.selectedDate, selectedDateError: '');
     case UpdateLiveClassSelectedDateError():
-      return state.copyWith(selectedDateError: action.selectedDateError);
+      return state.copyWith(
+          selectedDateError: action.selectedDateError, isClassLoading: false);
     case UpdateLiveClassSelectedStartTime():
       return state.copyWith(
           selectedStartTime: action.selectedStartTime,
           selectedStartTimeError: '');
     case UpdateLiveClassSelectedStartTimeError():
       return state.copyWith(
-          selectedStartTimeError: action.selectedStartTimeError);
+          selectedStartTimeError: action.selectedStartTimeError,
+          isClassLoading: false);
     case UpdateLiveClassSelectedEndTime():
       return state.copyWith(
           selectedEndTime: action.selectedEndTime, selectedEndTimeError: '');
     case UpdateLiveClassSelectedEndTimeError():
-      return state.copyWith(selectedEndTimeError: action.selectedEndTimeError);
+      return state.copyWith(
+          selectedEndTimeError: action.selectedEndTimeError,
+          isClassLoading: false);
     case UpdateLiveClassSelectedChapter():
       return state.copyWith(
           selectedChapter: action.selectedChapter, selectedChapterError: '');
     case UpdateLiveClassSelectedChapterError():
-      return state.copyWith(selectedChapterError: action.selectedChapterError);
+      return state.copyWith(
+          selectedChapterError: action.selectedChapterError,
+          isClassLoading: false);
     case UpdateLiveClassSelectedClassLevel():
       return state.copyWith(
           selectedClassLevel: action.selectedClassLevel,
           selectedClassLevelError: '');
     case UpdateLiveClassSelectedClassLevelError():
       return state.copyWith(
-          selectedClassLevelError: action.selectedClassLevelError);
+          selectedClassLevelError: action.selectedClassLevelError,
+          isClassLoading: false);
     case UpdateLiveClassSelectedCourseType():
       return state.copyWith(
           selectedCourseType: action.selectedCourseType,
           selectedCourseTypeError: '');
     case UpdateLiveClassSelectedCourseTypeError():
       return state.copyWith(
-          selectedCourseTypeError: action.selectedCourseTypeError);
+          selectedCourseTypeError: action.selectedCourseTypeError,
+          isClassLoading: false);
     case UpdateLiveClassLectureNo():
       return state.copyWith(lectureNo: action.lectureNo);
     case UpdateLiveClassAgenda():
       return state.copyWith(agenda: action.agenda, agendaError: '');
     case UpdateLiveClassAgendaError():
-      return state.copyWith(agendaError: action.agendaError);
+      return state.copyWith(
+          agendaError: action.agendaError, isClassLoading: false);
     case UpdateLiveClassDescription():
       return state.copyWith(
           description: action.description, descriptionError: '');
     case UpdateLiveClassDescriptionError():
-      return state.copyWith(descriptionError: action.descriptionError);
+      return state.copyWith(
+          descriptionError: action.descriptionError, isClassLoading: false);
     case UpdateLiveClassPickedFiles():
       return state.copyWith(pickedFiles: action.pickedFiles);
     case UpdateLiveClassPickedFilesName():
       return state.copyWith(pickedFilesName: action.pickedFilesName);
     case UpdateLiveClassIsStudentMuted():
       return state.copyWith(isStudentMuted: action.isStudentMuted);
+    case UpdateIsClassLoading():
+      return state.copyWith(isClassLoading: action.isClassLoading);
+    case RemovePreviousLiveClassFile():
+      return state.copyWith(
+          deletedFileId: [...state.deletedFileId, action.id],
+          previousFiles: state.previousFiles
+              .where((file) => file.id != action.id)
+              .toList());
     case RemoveLiveClassFile():
       return state.copyWith(
         pickedFilesName: state.pickedFilesName
@@ -325,10 +363,7 @@ ThunkAction<ScheduleLiveclassAppState> getLectureNumberAPI(
       final GetLectureNoRequestModel lectureRequestData =
           GetLectureNoRequestModel(
               classLevel: store.state.selectedClassLevel ?? '',
-              classType: classType
-                  .firstWhere(
-                      (item) => item.label == store.state.selectedCourseType)
-                  .value,
+              classType: store.state.selectedCourseType ?? '',
               isSoloClass: false,
               subjectName: store.state.selectedSubject ?? '');
       String userToken = await getUserToken();
@@ -384,6 +419,8 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
     BuildContext context) {
   return (Store<ScheduleLiveclassAppState> store) async {
     List<MultipartFile> files = [];
+
+    store.dispatch(UpdateIsClassLoading(isClassLoading: true));
 
     if (store.state.selectedSubject == null ||
         store.state.selectedSubject!.isEmpty) {
@@ -473,9 +510,7 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
     };
 
     FormData formData = FormData.fromMap({
-      'classType': classType
-          .firstWhere((item) => item.label == store.state.selectedCourseType)
-          .value,
+      'classType': store.state.selectedCourseType,
       'topic': jsonEncode(jsonTopicObject),
       'chapter': jsonEncode(jsonChapterObject),
       'subject': jsonEncode(jsonSubjectObject),
@@ -506,6 +541,7 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
       );
 
       if (response.statusCode == 201) {
+        store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         Navigator.of(context).pop();
         Fluttertoast.showToast(
             msg: 'Class Scheduled successfully',
@@ -514,6 +550,7 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
             timeInSecForIosWeb: 1,
             fontSize: 20.0);
       } else {
+        store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         Navigator.of(context).pop();
         Fluttertoast.showToast(
             msg: 'Failed to create class',
@@ -523,6 +560,163 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
             fontSize: 20.0);
       }
     } catch (e) {
+      store.dispatch(UpdateIsClassLoading(isClassLoading: false));
+      Fluttertoast.showToast(
+          msg: 'Some issue, please try again',
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: const Color(0xFF3C8DBC),
+          timeInSecForIosWeb: 1,
+          fontSize: 20.0);
+    }
+  };
+}
+
+ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
+    BuildContext context) {
+  return (Store<ScheduleLiveclassAppState> store) async {
+    List<MultipartFile> files = [];
+
+    store.dispatch(UpdateIsClassLoading(isClassLoading: true));
+
+    if (store.state.selectedSubject == null ||
+        store.state.selectedSubject!.isEmpty) {
+      store.dispatch(UpdateLiveClassSelectedSubjectError(
+          selectedSubjectError: 'Please select a subject'));
+      return;
+    }
+    if (store.state.selectedClassLevel == null ||
+        store.state.selectedClassLevel!.isEmpty) {
+      store.dispatch(UpdateLiveClassSelectedClassLevelError(
+          selectedClassLevelError: 'Please select a classlevel'));
+      return;
+    }
+    if (store.state.selectedCourseType == null ||
+        store.state.selectedCourseType!.isEmpty) {
+      store.dispatch(UpdateLiveClassSelectedCourseTypeError(
+          selectedCourseTypeError: 'Please select a classtype'));
+      return;
+    }
+    if (store.state.selectedDate == null || store.state.selectedDate!.isEmpty) {
+      store.dispatch(UpdateLiveClassSelectedDateError(
+          selectedDateError: 'Please select a date'));
+      return;
+    }
+    if (store.state.selectedStartTime == null ||
+        store.state.selectedStartTime!.isEmpty) {
+      store.dispatch(UpdateLiveClassSelectedStartTimeError(
+          selectedStartTimeError: 'Please select a start time'));
+      return;
+    }
+    if (store.state.selectedEndTime == null ||
+        store.state.selectedEndTime!.isEmpty) {
+      store.dispatch(UpdateLiveClassSelectedEndTimeError(
+          selectedEndTimeError: 'Please select a end time'));
+      return;
+    }
+    if (store.state.selectedChapter == null ||
+        store.state.selectedChapter!.isEmpty) {
+      store.dispatch(UpdateLiveClassSelectedChapterError(
+          selectedChapterError: 'Please select a chapter'));
+      return;
+    }
+    if (store.state.selectedTopic == null ||
+        store.state.selectedTopic!.isEmpty) {
+      store.dispatch(UpdateSelectedTopicError(
+          selectedTopicsError: 'Please select a topic'));
+      return;
+    }
+    if (store.state.agenda == null || store.state.agenda!.isEmpty) {
+      store.dispatch(
+          UpdateLiveClassAgendaError(agendaError: 'Please enter an agenda'));
+      return;
+    }
+    if (store.state.description == null || store.state.description!.isEmpty) {
+      store.dispatch(UpdateLiveClassDescriptionError(
+          descriptionError: 'Please enter an description'));
+      return;
+    }
+
+    for (PlatformFile file in store.state.pickedFiles) {
+      if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
+        files.add(MultipartFile.fromBytes(file.bytes!, filename: file.name));
+      } else {
+        files
+            .add(await MultipartFile.fromFile(file.path!, filename: file.name));
+      }
+    }
+    Map<String, dynamic> jsonSubjectObject = {
+      'value': subjectList
+          .firstWhere((item) => item.label == store.state.selectedSubject)
+          .value,
+      'label': store.state.selectedSubject,
+    };
+
+    Map<String, dynamic> jsonTopicObject = {
+      'value': topicList
+          .firstWhere((item) => item.label == store.state.selectedTopic)
+          .value,
+      'label': store.state.selectedTopic,
+    };
+
+    Map<String, dynamic> jsonChapterObject = {
+      'value': chapter
+          .firstWhere((item) => item.label == store.state.selectedChapter)
+          .value,
+      'label': store.state.selectedChapter,
+    };
+
+    FormData formData = FormData.fromMap({
+      'classType': store.state.selectedCourseType,
+      'topic': jsonEncode(jsonTopicObject),
+      'chapter': jsonEncode(jsonChapterObject),
+      'subject': jsonEncode(jsonSubjectObject),
+      'classLevel': store.state.selectedClassLevel ?? '',
+      'scheduledDate': store.state.selectedDate,
+      'scheduledStartTime': store.state.selectedStartTime,
+      'scheduledEndTime': store.state.selectedEndTime,
+      'agenda': store.state.agenda,
+      'lectureNo': store.state.lectureNo,
+      'description': store.state.description,
+      'muteAllStudents': store.state.isStudentMuted,
+      'blockStudentsCamera': false,
+      'files': files,
+    });
+
+    final dio = Dio();
+    try {
+      String userToken = await getUserToken();
+      Response response = await dio.post(
+        'https://dev.insp.1labventures.in/schedule-live-class/update-schedule-data',
+        data: formData,
+        options: Options(
+          headers: {
+            'Authorization': userToken, // Include the token in the header
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        store.dispatch(UpdateIsClassLoading(isClassLoading: false));
+        Navigator.of(context).pop();
+        Fluttertoast.showToast(
+            msg: 'Class updated successfully',
+            toastLength: Toast.LENGTH_LONG,
+            backgroundColor: const Color(0xFF3C8DBC),
+            timeInSecForIosWeb: 1,
+            fontSize: 20.0);
+      } else {
+        store.dispatch(UpdateIsClassLoading(isClassLoading: false));
+        Navigator.of(context).pop();
+        Fluttertoast.showToast(
+            msg: 'Failed to create class',
+            toastLength: Toast.LENGTH_LONG,
+            backgroundColor: const Color(0xFF3C8DBC),
+            timeInSecForIosWeb: 1,
+            fontSize: 20.0);
+      }
+    } catch (e) {
+      store.dispatch(UpdateIsClassLoading(isClassLoading: false));
       Fluttertoast.showToast(
           msg: 'Some issue, please try again',
           toastLength: Toast.LENGTH_LONG,

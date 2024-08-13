@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
+import 'package:inspflutterfrontend/utils/extractFileNameFromS3URL.dart';
 import 'package:inspflutterfrontend/widget/inputField/picked_file.dart';
 import 'package:inspflutterfrontend/widget/inputField/textfield_suffix.dart';
 import 'package:inspflutterfrontend/widget/inputField/textfield_withoutsuffix.dart';
@@ -33,7 +35,7 @@ class ScheduleLiveClass extends StatelessWidget {
           firstDate: DateTime(2020, 8),
           lastDate: DateTime(2101));
       if (picked != null && picked != selectedDate) {
-        final String formattedDate = DateFormat('dd/MM/yyyy').format(picked);
+        final String formattedDate = DateFormat('yyyy-MM-dd').format(picked);
         dispatch(
             context, UpdateLiveClassSelectedDate(selectedDate: formattedDate));
       }
@@ -46,7 +48,8 @@ class ScheduleLiveClass extends StatelessWidget {
         initialTime: selectedStartTime,
       );
       if (pickedStartTime != null) {
-        final String formattedTime = pickedStartTime.format(context);
+        final String formattedTime =
+            '${pickedStartTime.hour.toString().padLeft(2, '0')}:${pickedStartTime.minute.toString().padLeft(2, '0')}';
         dispatch(context,
             UpdateLiveClassSelectedStartTime(selectedStartTime: formattedTime));
       }
@@ -59,7 +62,8 @@ class ScheduleLiveClass extends StatelessWidget {
         initialTime: selectedEndTime,
       );
       if (pickedEndTime != null) {
-        final String formattedTime = pickedEndTime.format(context);
+        final String formattedTime =
+            '${pickedEndTime.hour.toString().padLeft(2, '0')}:${pickedEndTime.minute.toString().padLeft(2, '0')}';
         dispatch(context,
             UpdateLiveClassSelectedEndTime(selectedEndTime: formattedTime));
       }
@@ -76,8 +80,11 @@ class ScheduleLiveClass extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
                 title: Row(
                   children: [
-                    const Text("Schedule Class",
-                        style: TextStyle(
+                    Text(
+                        state.isEditScreen
+                            ? "Update Schedule Class"
+                            : "Schedule Class",
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w500,
                         )),
@@ -287,6 +294,7 @@ class ScheduleLiveClass extends StatelessWidget {
                         const SizedBox(height: 16.0),
                         TextFieldWithoutSuffix(
                             hintText: "Agenda",
+                            value: state.agenda,
                             onChanged: (text) {
                               dispatch(
                                   context, UpdateLiveClassAgenda(agenda: text));
@@ -295,6 +303,7 @@ class ScheduleLiveClass extends StatelessWidget {
                         const SizedBox(height: 16.0),
                         TextFieldWithoutSuffix(
                             hintText: "Description",
+                            value: state.description,
                             onChanged: (text) {
                               dispatch(
                                   context,
@@ -311,6 +320,43 @@ class ScheduleLiveClass extends StatelessWidget {
                                   context, RemoveLiveClassFile(filename: file));
                             },
                             pickedFilesName: state.pickedFilesName),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: state.previousFiles.length,
+                          itemBuilder: (context, index) {
+                            final LiveClassRoomFile file =
+                                state.previousFiles[index];
+                            return Container(
+                              margin: const EdgeInsets.all(2.0),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFE3E1E1),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 5.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    extractFileNameFromS3URL(file.key),
+                                    style: const TextStyle(
+                                      fontSize: 15.0,
+                                      color: Color(0xFF718096),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.close),
+                                    onPressed: () => dispatch(
+                                        context,
+                                        RemovePreviousLiveClassFile(
+                                            id: file.id)),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                         const SizedBox(height: 16.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -343,32 +389,72 @@ class ScheduleLiveClass extends StatelessWidget {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.20,
                           child: ElevatedButton(
-                            onPressed: createAssignment,
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor:
-                                  const Color.fromRGBO(60, 141, 188, 1),
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 16.0),
-                              textStyle: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
+                              onPressed: state.isClassLoading
+                                  ? null
+                                  : createAssignment,
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor:
+                                    const Color.fromRGBO(60, 141, 188, 1),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16.0),
+                                textStyle: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
                               ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                            ),
-                            child: Text("Schedule Class"),
-                          ),
+                              child: state.isClassLoading
+                                  ? const Center(
+                                      child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                    ))
+                                  : Text(state.isEditScreen
+                                      ? "Update Class"
+                                      : "Schedule Class")),
                         ),
                       ])
                 ]));
   }
 
-  static getScreen() {
+  static getScreen(
+    String classroomId,
+    bool isEditScreen,
+    String selectedSubject,
+    String selectedDate,
+    String selectedStartTime,
+    String selectedEndTime,
+    String selectedChapter,
+    String selectedTopic,
+    String selectedClassLevel,
+    String selectedCourseType,
+    String lectureNo,
+    String agenda,
+    String description,
+    bool isStudentMuted,
+    List<LiveClassRoomFile> previousFiles,
+  ) {
     return getBaseScreen<ScheduleLiveclassAppState, ScheduleLiveClass>(
         scheduleLiveclassStateReducer,
-        const ScheduleLiveclassAppState(),
+        ScheduleLiveclassAppState(
+            classroomId: classroomId,
+            isEditScreen: isEditScreen,
+            selectedSubject: selectedSubject,
+            selectedDate: selectedDate,
+            selectedStartTime: selectedStartTime,
+            selectedEndTime: selectedEndTime,
+            selectedChapter: selectedChapter,
+            selectedTopic: selectedTopic,
+            selectedClassLevel: selectedClassLevel,
+            selectedCourseType: selectedCourseType,
+            lectureNo: lectureNo,
+            agenda: agenda,
+            description: description,
+            isStudentMuted: isStudentMuted,
+            previousFiles: previousFiles),
         const ScheduleLiveClass());
   }
 

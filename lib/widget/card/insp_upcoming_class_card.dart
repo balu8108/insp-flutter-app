@@ -4,6 +4,7 @@ import 'package:inspflutterfrontend/widget/card/model/upcoming_lecture_card_mode
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/utils/capitalize.dart';
 import 'package:inspflutterfrontend/utils/timeconvert.dart';
+import 'package:inspflutterfrontend/widget/popups/scheduleLiveclass/schedule_liveclass.dart';
 import '../button/join_class.dart';
 
 class ScheduleClassBox extends StatefulWidget {
@@ -61,46 +62,78 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                 return Column(
                   children: [
                     Card(
-                      key: UniqueKey(),
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildRow(
-                              context,
-                              topicName,
-                              '$scheduledStartTime - $scheduledEndTime',
+                        key: UniqueKey(),
+                        color: Colors.white,
+                        child: Stack(children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildRow(
+                                  context,
+                                  topicName,
+                                  '$scheduledStartTime - $scheduledEndTime',
+                                ),
+                                const SizedBox(height: 2),
+                                _buildSecondRow(
+                                  context,
+                                  data.mentorName,
+                                  scheduledDate,
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  data.classLevel,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 10,
+                                    color: Color.fromRGBO(44, 51, 41, 0.47),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                _buildFileBox(data.liveClassRoomFiles),
+                                const SizedBox(height: 16),
+                                _buildDescription(
+                                  'Description',
+                                  data.liveClassRoomDetail.description,
+                                ),
+                                const SizedBox(height: 16),
+                                JoinClassBtn(status: data.classStatus),
+                              ],
                             ),
-                            const SizedBox(height: 2),
-                            _buildSecondRow(
-                              context,
-                              data.mentorName,
-                              scheduledDate,
+                          ),
+                          Positioned(
+                            right: 8,
+                            top: 8,
+                            child: IconButton(
+                              icon: const Icon(Icons.edit, color: Colors.grey),
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return ScheduleLiveClass.getScreen(
+                                          data.roomId,
+                                          true,
+                                          data.subjectName,
+                                          data.scheduledDate,
+                                          data.scheduledStartTime,
+                                          data.scheduledEndTime,
+                                          data.liveClassRoomDetail.chapterName,
+                                          data.liveClassRoomDetail.topicName,
+                                          data.classLevel,
+                                          data.classType,
+                                          data.liveClassRoomDetail.lectureNo
+                                              .toString(),
+                                          data.liveClassRoomDetail.agenda,
+                                          data.liveClassRoomDetail.description,
+                                          data.muteAllStudents,
+                                          data.liveClassRoomFiles);
+                                    });
+                                // Add your edit functionality here
+                              },
                             ),
-                            const SizedBox(height: 2),
-                            Text(
-                              data.classLevel,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10,
-                                color: Color.fromRGBO(44, 51, 41, 0.47),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            _buildFileBox(data.liveClassRoomFiles),
-                            const SizedBox(height: 16),
-                            _buildDescription(
-                              'Description',
-                              data.liveClassRoomDetail.description,
-                            ),
-                            const SizedBox(height: 16),
-                            JoinClassBtn(status: data.classStatus),
-                          ],
-                        ),
-                      ),
-                    ),
+                          ),
+                        ]))
                   ],
                 );
               },

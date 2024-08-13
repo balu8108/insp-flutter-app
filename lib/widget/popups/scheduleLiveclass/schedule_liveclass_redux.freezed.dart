@@ -16,6 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ScheduleLiveclassAppState {
+  String get classroomId => throw _privateConstructorUsedError;
+  bool get isEditScreen => throw _privateConstructorUsedError;
   String? get selectedSubject => throw _privateConstructorUsedError;
   String? get selectedSubjectError => throw _privateConstructorUsedError;
   String? get selectedDate => throw _privateConstructorUsedError;
@@ -39,8 +41,12 @@ mixin _$ScheduleLiveclassAppState {
   String? get descriptionError => throw _privateConstructorUsedError;
   List<ChapterTopicModel> get allTopics => throw _privateConstructorUsedError;
   List<String> get pickedFilesName => throw _privateConstructorUsedError;
+  List<LiveClassRoomFile> get previousFiles =>
+      throw _privateConstructorUsedError;
+  List<int> get deletedFileId => throw _privateConstructorUsedError;
   List<PlatformFile> get pickedFiles => throw _privateConstructorUsedError;
   bool? get isStudentMuted => throw _privateConstructorUsedError;
+  bool get isClassLoading => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ScheduleLiveclassAppStateCopyWith<ScheduleLiveclassAppState> get copyWith =>
@@ -54,7 +60,9 @@ abstract class $ScheduleLiveclassAppStateCopyWith<$Res> {
       _$ScheduleLiveclassAppStateCopyWithImpl<$Res, ScheduleLiveclassAppState>;
   @useResult
   $Res call(
-      {String? selectedSubject,
+      {String classroomId,
+      bool isEditScreen,
+      String? selectedSubject,
       String? selectedSubjectError,
       String? selectedDate,
       String? selectedDateError,
@@ -77,8 +85,11 @@ abstract class $ScheduleLiveclassAppStateCopyWith<$Res> {
       String? descriptionError,
       List<ChapterTopicModel> allTopics,
       List<String> pickedFilesName,
+      List<LiveClassRoomFile> previousFiles,
+      List<int> deletedFileId,
       List<PlatformFile> pickedFiles,
-      bool? isStudentMuted});
+      bool? isStudentMuted,
+      bool isClassLoading});
 }
 
 /// @nodoc
@@ -95,6 +106,8 @@ class _$ScheduleLiveclassAppStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? classroomId = null,
+    Object? isEditScreen = null,
     Object? selectedSubject = freezed,
     Object? selectedSubjectError = freezed,
     Object? selectedDate = freezed,
@@ -118,10 +131,21 @@ class _$ScheduleLiveclassAppStateCopyWithImpl<$Res,
     Object? descriptionError = freezed,
     Object? allTopics = null,
     Object? pickedFilesName = null,
+    Object? previousFiles = null,
+    Object? deletedFileId = null,
     Object? pickedFiles = null,
     Object? isStudentMuted = freezed,
+    Object? isClassLoading = null,
   }) {
     return _then(_value.copyWith(
+      classroomId: null == classroomId
+          ? _value.classroomId
+          : classroomId // ignore: cast_nullable_to_non_nullable
+              as String,
+      isEditScreen: null == isEditScreen
+          ? _value.isEditScreen
+          : isEditScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
       selectedSubject: freezed == selectedSubject
           ? _value.selectedSubject
           : selectedSubject // ignore: cast_nullable_to_non_nullable
@@ -214,6 +238,14 @@ class _$ScheduleLiveclassAppStateCopyWithImpl<$Res,
           ? _value.pickedFilesName
           : pickedFilesName // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      previousFiles: null == previousFiles
+          ? _value.previousFiles
+          : previousFiles // ignore: cast_nullable_to_non_nullable
+              as List<LiveClassRoomFile>,
+      deletedFileId: null == deletedFileId
+          ? _value.deletedFileId
+          : deletedFileId // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       pickedFiles: null == pickedFiles
           ? _value.pickedFiles
           : pickedFiles // ignore: cast_nullable_to_non_nullable
@@ -222,6 +254,10 @@ class _$ScheduleLiveclassAppStateCopyWithImpl<$Res,
           ? _value.isStudentMuted
           : isStudentMuted // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isClassLoading: null == isClassLoading
+          ? _value.isClassLoading
+          : isClassLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -236,7 +272,9 @@ abstract class _$$ScheduleLiveclassAppStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? selectedSubject,
+      {String classroomId,
+      bool isEditScreen,
+      String? selectedSubject,
       String? selectedSubjectError,
       String? selectedDate,
       String? selectedDateError,
@@ -259,8 +297,11 @@ abstract class _$$ScheduleLiveclassAppStateImplCopyWith<$Res>
       String? descriptionError,
       List<ChapterTopicModel> allTopics,
       List<String> pickedFilesName,
+      List<LiveClassRoomFile> previousFiles,
+      List<int> deletedFileId,
       List<PlatformFile> pickedFiles,
-      bool? isStudentMuted});
+      bool? isStudentMuted,
+      bool isClassLoading});
 }
 
 /// @nodoc
@@ -276,6 +317,8 @@ class __$$ScheduleLiveclassAppStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? classroomId = null,
+    Object? isEditScreen = null,
     Object? selectedSubject = freezed,
     Object? selectedSubjectError = freezed,
     Object? selectedDate = freezed,
@@ -299,110 +342,133 @@ class __$$ScheduleLiveclassAppStateImplCopyWithImpl<$Res>
     Object? descriptionError = freezed,
     Object? allTopics = null,
     Object? pickedFilesName = null,
+    Object? previousFiles = null,
+    Object? deletedFileId = null,
     Object? pickedFiles = null,
     Object? isStudentMuted = freezed,
+    Object? isClassLoading = null,
   }) {
     return _then(_$ScheduleLiveclassAppStateImpl(
-      freezed == selectedSubject
+      classroomId: null == classroomId
+          ? _value.classroomId
+          : classroomId // ignore: cast_nullable_to_non_nullable
+              as String,
+      isEditScreen: null == isEditScreen
+          ? _value.isEditScreen
+          : isEditScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedSubject: freezed == selectedSubject
           ? _value.selectedSubject
           : selectedSubject // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedSubjectError
+      selectedSubjectError: freezed == selectedSubjectError
           ? _value.selectedSubjectError
           : selectedSubjectError // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedDate
+      selectedDate: freezed == selectedDate
           ? _value.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedDateError
+      selectedDateError: freezed == selectedDateError
           ? _value.selectedDateError
           : selectedDateError // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedStartTime
+      selectedStartTime: freezed == selectedStartTime
           ? _value.selectedStartTime
           : selectedStartTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedStartTimeError
+      selectedStartTimeError: freezed == selectedStartTimeError
           ? _value.selectedStartTimeError
           : selectedStartTimeError // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedEndTime
+      selectedEndTime: freezed == selectedEndTime
           ? _value.selectedEndTime
           : selectedEndTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedEndTimeError
+      selectedEndTimeError: freezed == selectedEndTimeError
           ? _value.selectedEndTimeError
           : selectedEndTimeError // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedChapter
+      selectedChapter: freezed == selectedChapter
           ? _value.selectedChapter
           : selectedChapter // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedChapterError
+      selectedChapterError: freezed == selectedChapterError
           ? _value.selectedChapterError
           : selectedChapterError // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedTopic
+      selectedTopic: freezed == selectedTopic
           ? _value.selectedTopic
           : selectedTopic // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedTopicError
+      selectedTopicError: freezed == selectedTopicError
           ? _value.selectedTopicError
           : selectedTopicError // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedClassLevel
+      selectedClassLevel: freezed == selectedClassLevel
           ? _value.selectedClassLevel
           : selectedClassLevel // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedClassLevelError
+      selectedClassLevelError: freezed == selectedClassLevelError
           ? _value.selectedClassLevelError
           : selectedClassLevelError // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedCourseType
+      selectedCourseType: freezed == selectedCourseType
           ? _value.selectedCourseType
           : selectedCourseType // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedCourseTypeError
+      selectedCourseTypeError: freezed == selectedCourseTypeError
           ? _value.selectedCourseTypeError
           : selectedCourseTypeError // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == lectureNo
+      lectureNo: freezed == lectureNo
           ? _value.lectureNo
           : lectureNo // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == agenda
+      agenda: freezed == agenda
           ? _value.agenda
           : agenda // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == agendaError
+      agendaError: freezed == agendaError
           ? _value.agendaError
           : agendaError // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == description
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == descriptionError
+      descriptionError: freezed == descriptionError
           ? _value.descriptionError
           : descriptionError // ignore: cast_nullable_to_non_nullable
               as String?,
-      null == allTopics
+      allTopics: null == allTopics
           ? _value._allTopics
           : allTopics // ignore: cast_nullable_to_non_nullable
               as List<ChapterTopicModel>,
-      null == pickedFilesName
+      pickedFilesName: null == pickedFilesName
           ? _value._pickedFilesName
           : pickedFilesName // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      null == pickedFiles
+      previousFiles: null == previousFiles
+          ? _value._previousFiles
+          : previousFiles // ignore: cast_nullable_to_non_nullable
+              as List<LiveClassRoomFile>,
+      deletedFileId: null == deletedFileId
+          ? _value._deletedFileId
+          : deletedFileId // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      pickedFiles: null == pickedFiles
           ? _value._pickedFiles
           : pickedFiles // ignore: cast_nullable_to_non_nullable
               as List<PlatformFile>,
-      freezed == isStudentMuted
+      isStudentMuted: freezed == isStudentMuted
           ? _value.isStudentMuted
           : isStudentMuted // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isClassLoading: null == isClassLoading
+          ? _value.isClassLoading
+          : isClassLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -413,94 +479,94 @@ class _$ScheduleLiveclassAppStateImpl
     with DiagnosticableTreeMixin
     implements _ScheduleLiveclassAppState {
   const _$ScheduleLiveclassAppStateImpl(
-      [this.selectedSubject = '',
+      {required this.classroomId,
+      required this.isEditScreen,
+      required this.selectedSubject,
       this.selectedSubjectError = '',
-      this.selectedDate = '',
+      required this.selectedDate,
       this.selectedDateError = '',
-      this.selectedStartTime = '',
+      required this.selectedStartTime,
       this.selectedStartTimeError = '',
-      this.selectedEndTime = '',
+      required this.selectedEndTime,
       this.selectedEndTimeError = '',
-      this.selectedChapter = '',
+      required this.selectedChapter,
       this.selectedChapterError = '',
-      this.selectedTopic = '',
+      required this.selectedTopic,
       this.selectedTopicError = '',
-      this.selectedClassLevel = '',
+      required this.selectedClassLevel,
       this.selectedClassLevelError = '',
-      this.selectedCourseType = '',
+      required this.selectedCourseType,
       this.selectedCourseTypeError = '',
-      this.lectureNo = '',
-      this.agenda = '',
+      required this.lectureNo,
+      required this.agenda,
       this.agendaError = '',
-      this.description = '',
+      required this.description,
       this.descriptionError = '',
       final List<ChapterTopicModel> allTopics = const [],
       final List<String> pickedFilesName = const [],
+      required final List<LiveClassRoomFile> previousFiles,
+      final List<int> deletedFileId = const [],
       final List<PlatformFile> pickedFiles = const [],
-      this.isStudentMuted = false])
+      required this.isStudentMuted,
+      this.isClassLoading = false})
       : _allTopics = allTopics,
         _pickedFilesName = pickedFilesName,
+        _previousFiles = previousFiles,
+        _deletedFileId = deletedFileId,
         _pickedFiles = pickedFiles;
 
   @override
-  @JsonKey()
+  final String classroomId;
+  @override
+  final bool isEditScreen;
+  @override
   final String? selectedSubject;
   @override
   @JsonKey()
   final String? selectedSubjectError;
   @override
-  @JsonKey()
   final String? selectedDate;
   @override
   @JsonKey()
   final String? selectedDateError;
   @override
-  @JsonKey()
   final String? selectedStartTime;
   @override
   @JsonKey()
   final String? selectedStartTimeError;
   @override
-  @JsonKey()
   final String? selectedEndTime;
   @override
   @JsonKey()
   final String? selectedEndTimeError;
   @override
-  @JsonKey()
   final String? selectedChapter;
   @override
   @JsonKey()
   final String? selectedChapterError;
   @override
-  @JsonKey()
   final String? selectedTopic;
   @override
   @JsonKey()
   final String? selectedTopicError;
   @override
-  @JsonKey()
   final String? selectedClassLevel;
   @override
   @JsonKey()
   final String? selectedClassLevelError;
   @override
-  @JsonKey()
   final String? selectedCourseType;
   @override
   @JsonKey()
   final String? selectedCourseTypeError;
   @override
-  @JsonKey()
   final String? lectureNo;
   @override
-  @JsonKey()
   final String? agenda;
   @override
   @JsonKey()
   final String? agendaError;
   @override
-  @JsonKey()
   final String? description;
   @override
   @JsonKey()
@@ -523,6 +589,23 @@ class _$ScheduleLiveclassAppStateImpl
     return EqualUnmodifiableListView(_pickedFilesName);
   }
 
+  final List<LiveClassRoomFile> _previousFiles;
+  @override
+  List<LiveClassRoomFile> get previousFiles {
+    if (_previousFiles is EqualUnmodifiableListView) return _previousFiles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_previousFiles);
+  }
+
+  final List<int> _deletedFileId;
+  @override
+  @JsonKey()
+  List<int> get deletedFileId {
+    if (_deletedFileId is EqualUnmodifiableListView) return _deletedFileId;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_deletedFileId);
+  }
+
   final List<PlatformFile> _pickedFiles;
   @override
   @JsonKey()
@@ -533,12 +616,14 @@ class _$ScheduleLiveclassAppStateImpl
   }
 
   @override
-  @JsonKey()
   final bool? isStudentMuted;
+  @override
+  @JsonKey()
+  final bool isClassLoading;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScheduleLiveclassAppState(selectedSubject: $selectedSubject, selectedSubjectError: $selectedSubjectError, selectedDate: $selectedDate, selectedDateError: $selectedDateError, selectedStartTime: $selectedStartTime, selectedStartTimeError: $selectedStartTimeError, selectedEndTime: $selectedEndTime, selectedEndTimeError: $selectedEndTimeError, selectedChapter: $selectedChapter, selectedChapterError: $selectedChapterError, selectedTopic: $selectedTopic, selectedTopicError: $selectedTopicError, selectedClassLevel: $selectedClassLevel, selectedClassLevelError: $selectedClassLevelError, selectedCourseType: $selectedCourseType, selectedCourseTypeError: $selectedCourseTypeError, lectureNo: $lectureNo, agenda: $agenda, agendaError: $agendaError, description: $description, descriptionError: $descriptionError, allTopics: $allTopics, pickedFilesName: $pickedFilesName, pickedFiles: $pickedFiles, isStudentMuted: $isStudentMuted)';
+    return 'ScheduleLiveclassAppState(classroomId: $classroomId, isEditScreen: $isEditScreen, selectedSubject: $selectedSubject, selectedSubjectError: $selectedSubjectError, selectedDate: $selectedDate, selectedDateError: $selectedDateError, selectedStartTime: $selectedStartTime, selectedStartTimeError: $selectedStartTimeError, selectedEndTime: $selectedEndTime, selectedEndTimeError: $selectedEndTimeError, selectedChapter: $selectedChapter, selectedChapterError: $selectedChapterError, selectedTopic: $selectedTopic, selectedTopicError: $selectedTopicError, selectedClassLevel: $selectedClassLevel, selectedClassLevelError: $selectedClassLevelError, selectedCourseType: $selectedCourseType, selectedCourseTypeError: $selectedCourseTypeError, lectureNo: $lectureNo, agenda: $agenda, agendaError: $agendaError, description: $description, descriptionError: $descriptionError, allTopics: $allTopics, pickedFilesName: $pickedFilesName, previousFiles: $previousFiles, deletedFileId: $deletedFileId, pickedFiles: $pickedFiles, isStudentMuted: $isStudentMuted, isClassLoading: $isClassLoading)';
   }
 
   @override
@@ -546,6 +631,8 @@ class _$ScheduleLiveclassAppStateImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ScheduleLiveclassAppState'))
+      ..add(DiagnosticsProperty('classroomId', classroomId))
+      ..add(DiagnosticsProperty('isEditScreen', isEditScreen))
       ..add(DiagnosticsProperty('selectedSubject', selectedSubject))
       ..add(DiagnosticsProperty('selectedSubjectError', selectedSubjectError))
       ..add(DiagnosticsProperty('selectedDate', selectedDate))
@@ -572,8 +659,11 @@ class _$ScheduleLiveclassAppStateImpl
       ..add(DiagnosticsProperty('descriptionError', descriptionError))
       ..add(DiagnosticsProperty('allTopics', allTopics))
       ..add(DiagnosticsProperty('pickedFilesName', pickedFilesName))
+      ..add(DiagnosticsProperty('previousFiles', previousFiles))
+      ..add(DiagnosticsProperty('deletedFileId', deletedFileId))
       ..add(DiagnosticsProperty('pickedFiles', pickedFiles))
-      ..add(DiagnosticsProperty('isStudentMuted', isStudentMuted));
+      ..add(DiagnosticsProperty('isStudentMuted', isStudentMuted))
+      ..add(DiagnosticsProperty('isClassLoading', isClassLoading));
   }
 
   @override
@@ -581,6 +671,10 @@ class _$ScheduleLiveclassAppStateImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ScheduleLiveclassAppStateImpl &&
+            (identical(other.classroomId, classroomId) ||
+                other.classroomId == classroomId) &&
+            (identical(other.isEditScreen, isEditScreen) ||
+                other.isEditScreen == isEditScreen) &&
             (identical(other.selectedSubject, selectedSubject) ||
                 other.selectedSubject == selectedSubject) &&
             (identical(other.selectedSubjectError, selectedSubjectError) ||
@@ -629,14 +723,22 @@ class _$ScheduleLiveclassAppStateImpl
             const DeepCollectionEquality()
                 .equals(other._pickedFilesName, _pickedFilesName) &&
             const DeepCollectionEquality()
+                .equals(other._previousFiles, _previousFiles) &&
+            const DeepCollectionEquality()
+                .equals(other._deletedFileId, _deletedFileId) &&
+            const DeepCollectionEquality()
                 .equals(other._pickedFiles, _pickedFiles) &&
             (identical(other.isStudentMuted, isStudentMuted) ||
-                other.isStudentMuted == isStudentMuted));
+                other.isStudentMuted == isStudentMuted) &&
+            (identical(other.isClassLoading, isClassLoading) ||
+                other.isClassLoading == isClassLoading));
   }
 
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        classroomId,
+        isEditScreen,
         selectedSubject,
         selectedSubjectError,
         selectedDate,
@@ -660,8 +762,11 @@ class _$ScheduleLiveclassAppStateImpl
         descriptionError,
         const DeepCollectionEquality().hash(_allTopics),
         const DeepCollectionEquality().hash(_pickedFilesName),
+        const DeepCollectionEquality().hash(_previousFiles),
+        const DeepCollectionEquality().hash(_deletedFileId),
         const DeepCollectionEquality().hash(_pickedFiles),
-        isStudentMuted
+        isStudentMuted,
+        isClassLoading
       ]);
 
   @JsonKey(ignore: true)
@@ -674,32 +779,41 @@ class _$ScheduleLiveclassAppStateImpl
 
 abstract class _ScheduleLiveclassAppState implements ScheduleLiveclassAppState {
   const factory _ScheduleLiveclassAppState(
-      [final String? selectedSubject,
+      {required final String classroomId,
+      required final bool isEditScreen,
+      required final String? selectedSubject,
       final String? selectedSubjectError,
-      final String? selectedDate,
+      required final String? selectedDate,
       final String? selectedDateError,
-      final String? selectedStartTime,
+      required final String? selectedStartTime,
       final String? selectedStartTimeError,
-      final String? selectedEndTime,
+      required final String? selectedEndTime,
       final String? selectedEndTimeError,
-      final String? selectedChapter,
+      required final String? selectedChapter,
       final String? selectedChapterError,
-      final String? selectedTopic,
+      required final String? selectedTopic,
       final String? selectedTopicError,
-      final String? selectedClassLevel,
+      required final String? selectedClassLevel,
       final String? selectedClassLevelError,
-      final String? selectedCourseType,
+      required final String? selectedCourseType,
       final String? selectedCourseTypeError,
-      final String? lectureNo,
-      final String? agenda,
+      required final String? lectureNo,
+      required final String? agenda,
       final String? agendaError,
-      final String? description,
+      required final String? description,
       final String? descriptionError,
       final List<ChapterTopicModel> allTopics,
       final List<String> pickedFilesName,
+      required final List<LiveClassRoomFile> previousFiles,
+      final List<int> deletedFileId,
       final List<PlatformFile> pickedFiles,
-      final bool? isStudentMuted]) = _$ScheduleLiveclassAppStateImpl;
+      required final bool? isStudentMuted,
+      final bool isClassLoading}) = _$ScheduleLiveclassAppStateImpl;
 
+  @override
+  String get classroomId;
+  @override
+  bool get isEditScreen;
   @override
   String? get selectedSubject;
   @override
@@ -747,9 +861,15 @@ abstract class _ScheduleLiveclassAppState implements ScheduleLiveclassAppState {
   @override
   List<String> get pickedFilesName;
   @override
+  List<LiveClassRoomFile> get previousFiles;
+  @override
+  List<int> get deletedFileId;
+  @override
   List<PlatformFile> get pickedFiles;
   @override
   bool? get isStudentMuted;
+  @override
+  bool get isClassLoading;
   @override
   @JsonKey(ignore: true)
   _$$ScheduleLiveclassAppStateImplCopyWith<_$ScheduleLiveclassAppStateImpl>

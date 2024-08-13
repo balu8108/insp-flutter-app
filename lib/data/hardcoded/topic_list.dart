@@ -26,8 +26,8 @@ List<ChapterTopicModel> classLevelGeneral = [
 ];
 
 List<ChapterTopicModel> classType = [
-  ChapterTopicModel(value: "CRASHCOURSE", label: "Crash Course"),
-  ChapterTopicModel(value: "REGULARCLASS", label: "Regular Classes"),
+  ChapterTopicModel(value: "CRASHCOURSE", label: "CRASHCOURSE"),
+  ChapterTopicModel(value: "REGULARCLASS", label: "REGULARCLASS"),
 ];
 
 List<ChapterTopicModel> chapter = [

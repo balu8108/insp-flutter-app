@@ -4,18 +4,21 @@ class TextFieldWithoutSuffix extends StatelessWidget {
   final String? selectedValueError;
   final ValueChanged<String?>? onChanged;
   final String hintText;
+  final String? value;
 
-  const TextFieldWithoutSuffix({
-    Key? key,
-    this.selectedValueError,
-    this.onChanged,
-    this.hintText = "Select",
-  }) : super(key: key);
+  const TextFieldWithoutSuffix(
+      {Key? key,
+      this.selectedValueError,
+      this.onChanged,
+      this.hintText = "Select",
+      this.value})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       maxLines: 2,
+      controller: TextEditingController()..text = value!,
       onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hintText,
