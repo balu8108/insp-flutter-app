@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
 import 'package:inspflutterfrontend/pages/common/courses/my_courses_screen.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
+import 'package:inspflutterfrontend/pages/login/login_screen.dart';
 import 'package:inspflutterfrontend/pages/student/assignment/mainpage/assignmentScreen.dart';
 import 'package:inspflutterfrontend/pages/common/calender/calendar_screen.dart';
 import 'package:inspflutterfrontend/pages/teacher/suggestion/suggestion_page.dart';
 import 'package:inspflutterfrontend/pages/teacher/uploads/mainpage/myuploads.dart';
 import 'package:inspflutterfrontend/utils/getUserDetail.dart';
+import 'package:inspflutterfrontend/utils/localstorage.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/pages/student/library/mainpage/library_screen.dart';
 import 'package:inspflutterfrontend/widget/popups/student_suggestion.dart';
@@ -83,25 +85,7 @@ class _NavbarState extends State<Navbar> {
               _buildTextButton('INSP Portal', () {
                 _onButtonPressed('INSP Portal');
               }),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: GestureDetector(
-                    onTap: () {
-                      // Handle profile click
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: Colors.blue,
-                      child: Text(
-                        userData.name[0].toUpperCase(),
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              _buildUserMenu()
             ]
           : [
               _buildTextButton('Home', () {
@@ -123,31 +107,13 @@ class _NavbarState extends State<Navbar> {
               }),
               _buildTextButton('Suggestion', () {
                 _onButtonPressed('Suggestion');
-                _navigateToScreen(context, SuggestionPage());
+                _navigateToScreen(context, DataTableExampleApp());
               }),
               _buildTextButton('INSP Portal', () {
                 _onButtonPressed('INSP Portal');
                 // Handle INSP Portal button press
               }),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: GestureDetector(
-                    onTap: () {
-                      // Handle profile click
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: Colors.blue,
-                      child: Text(
-                        userData.name[0].toUpperCase(),
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              _buildUserMenu()
             ],
     );
   }
@@ -182,6 +148,65 @@ class _NavbarState extends State<Navbar> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildUserMenu() {
+    return PopupMenuButton<String>(
+      color: Colors.white,
+      icon: CircleAvatar(
+        backgroundColor: Colors.blue,
+        child: Text(
+          userData.name.isNotEmpty ? userData.name[0].toUpperCase() : '',
+          style: const TextStyle(color: Colors.white, fontSize: 18),
+        ),
+      ),
+      onSelected: (value) async {
+        if (value == 'Logout') {
+          await logoutData("insp_user_profile");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen.getScreen()),
+          );
+        }
+      },
+      offset: Offset(-50, kToolbarHeight),
+      itemBuilder: (context) => [
+        PopupMenuItem<String>(
+          value: 'Profile',
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
+            child: Column(
+              children: [
+                Center(
+                  child: CircleAvatar(
+                    radius: 40.0,
+                    backgroundColor: Colors.blue,
+                    child: Text(
+                      userData.name.isNotEmpty
+                          ? userData.name[0].toUpperCase()
+                          : '',
+                      style: const TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Text(userData.name),
+              ],
+            ),
+          ),
+        ),
+        PopupMenuItem<String>(
+          value: 'Logout',
+          child: Row(
+            children: [
+              const Icon(Icons.logout),
+              const SizedBox(width: 10),
+              const Text('Logout'),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
