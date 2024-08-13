@@ -9,7 +9,7 @@ part of 'topic_assignment_card_model.dart';
 TopicAssignmentCardModel _$TopicAssignmentCardModelFromJson(
         Map<String, dynamic> json) =>
     TopicAssignmentCardModel(
-      json['id'] as String,
+      (json['id'] as num).toInt(),
       json['description'] as String,
       (json['AssignmentFiles'] as List<dynamic>)
           .map((e) => LiveClassRoomFile.fromJson(e as Map<String, dynamic>))
@@ -21,9 +21,9 @@ TopicAssignmentCardModel _$TopicAssignmentCardModelFromJson(
 Map<String, dynamic> _$TopicAssignmentCardModelToJson(
         TopicAssignmentCardModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'description': instance.description,
       'topicName': instance.topicName,
       'instructorName': instance.instructorName,
-      'id': instance.id,
       'AssignmentFiles': instance.assignmentFiles,
     };

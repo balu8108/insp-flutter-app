@@ -81,7 +81,7 @@ class MyUploadWidgetState extends State {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return AddAssignment.getScreen();
+                      return AddAssignment.getScreen(0, false, '', '', '', []);
                     });
               },
               child: Text("+ Add Assignment"),

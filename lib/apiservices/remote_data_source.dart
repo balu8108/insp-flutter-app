@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/all_assignment_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
@@ -86,6 +87,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<AllAssignmentResponseModel>> getAllAssignmentForTopic(
       String topicId, String secretTokenHeader);
+
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteAssignment(
+      int assignmentId, String secretTokenHeader);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -209,6 +213,13 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       String topicId, String secretTokenHeader) {
     return deviceNetworkService.getAllAssignmentForTopic(
         topicId, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteAssignment(
+      int assignmentId, String secretTokenHeader) {
+    return deviceNetworkService.deleteAssignment(
+        assignmentId, secretTokenHeader);
   }
 
   @override

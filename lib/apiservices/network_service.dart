@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/all_assignment_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_request_model.dart';
@@ -17,6 +18,7 @@ import 'package:inspflutterfrontend/apiservices/models/soloclasses/all_solo_clas
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
+import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
 
@@ -27,7 +29,7 @@ import 'models/upcomingclasses/all_lectures_for_upcoming_response_model.dart';
 
 part 'network_service.g.dart';
 
-@RestApi(baseUrl: 'https://dev.insp.1labventures.in/')
+@RestApi(baseUrl: '${api}/')
 abstract class NetworkService {
   factory NetworkService(Dio dio, {String baseUrl}) = _NetworkService;
 
@@ -112,6 +114,11 @@ abstract class NetworkService {
   @GET('/assignment/get-all-assignments-topic-id')
   Future<HttpResponse<AllAssignmentResponseModel>> getAssigmentByTopicId(
       @Query('topicId') String topicId,
+      @Header('Authorization') String secretTokenHeader);
+
+  @DELETE('/assignment/delete-assignment/{assignmentId}')
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteAssignment(
+      @Path() int assignmentId,
       @Header('Authorization') String secretTokenHeader);
 
   @GET('/lecture/get-all-lecture/{classType}/{classLevel}')

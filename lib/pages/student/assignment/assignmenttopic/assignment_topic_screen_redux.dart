@@ -71,12 +71,8 @@ ThunkAction<AssignmentTopicScreenAppState> showAssignmentForTopic(
     if (allAssignment.response.statusCode == 200) {
       final List<TopicAssignmentCardModel> allTopicsForSubject = allAssignment
               .data.data
-              .map((it) => TopicAssignmentCardModel(
-                  it.id.toString(),
-                  it.description,
-                  it.assignmentFiles,
-                  it.topicName,
-                  it.instructorName))
+              .map((it) => TopicAssignmentCardModel(it.id, it.description,
+                  it.assignmentFiles, it.topicName, it.instructorName))
               .toList() ??
           [];
 

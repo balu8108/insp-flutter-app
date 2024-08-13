@@ -10,7 +10,10 @@ import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_cha
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
+import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:inspflutterfrontend/data/hardcoded/topic_list.dart';
+import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
+import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
 import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -21,7 +24,7 @@ part 'schedule_liveclass_redux.freezed.dart';
 @freezed
 class ScheduleLiveclassAppState with _$ScheduleLiveclassAppState {
   const factory ScheduleLiveclassAppState(
-      {required String classroomId,
+      {required int classroomId,
       required bool isEditScreen,
       required String? selectedSubject,
       @Default('') String? selectedSubjectError,
@@ -530,7 +533,7 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
     try {
       String userToken = await getUserToken();
       Response response = await dio.post(
-        'https://dev.insp.1labventures.in/schedule-live-class/create',
+        '${api}/schedule-live-class/create',
         data: formData,
         options: Options(
           headers: {
@@ -540,8 +543,9 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
         ),
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
+        UpcomingClassesScreen.dispatch(context, getAllUpcomingClass(context));
         Navigator.of(context).pop();
         Fluttertoast.showToast(
             msg: 'Class Scheduled successfully',
@@ -665,7 +669,10 @@ ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
       'label': store.state.selectedChapter,
     };
 
+    // formData.append("classId", scheduleData?.id);
+
     FormData formData = FormData.fromMap({
+      'classId': store.state.classroomId,
       'classType': store.state.selectedCourseType,
       'topic': jsonEncode(jsonTopicObject),
       'chapter': jsonEncode(jsonChapterObject),
@@ -680,13 +687,15 @@ ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
       'muteAllStudents': store.state.isStudentMuted,
       'blockStudentsCamera': false,
       'files': files,
+      if (store.state.deletedFileId.isNotEmpty)
+        'deletedFileIds': jsonEncode(store.state.deletedFileId),
     });
 
     final dio = Dio();
     try {
       String userToken = await getUserToken();
       Response response = await dio.post(
-        'https://dev.insp.1labventures.in/schedule-live-class/update-schedule-data',
+        '${api}/schedule-live-class/update-schedule-data',
         data: formData,
         options: Options(
           headers: {
@@ -697,6 +706,7 @@ ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
       );
 
       if (response.statusCode == 200) {
+        UpcomingClassesScreen.dispatch(context, getAllUpcomingClass(context));
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         Navigator.of(context).pop();
         Fluttertoast.showToast(
@@ -716,6 +726,7 @@ ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
             fontSize: 20.0);
       }
     } catch (e) {
+      print(e);
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
       Fluttertoast.showToast(
           msg: 'Some issue, please try again',

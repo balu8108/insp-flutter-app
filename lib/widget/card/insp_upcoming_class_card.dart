@@ -106,13 +106,15 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                             right: 8,
                             top: 8,
                             child: IconButton(
-                              icon: const Icon(Icons.edit, color: Colors.grey),
+                              icon: const Icon(Icons.edit, color: Colors.black),
+                              iconSize: 16.0, // Adjust the icon size
+                              padding: const EdgeInsets.all(4.0),
                               onPressed: () {
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return ScheduleLiveClass.getScreen(
-                                          data.roomId,
+                                          data.id,
                                           true,
                                           data.subjectName,
                                           data.scheduledDate,

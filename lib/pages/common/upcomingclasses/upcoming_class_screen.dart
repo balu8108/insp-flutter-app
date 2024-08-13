@@ -43,21 +43,8 @@ class UpcomingClassesScreen extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return ScheduleLiveClass.getScreen(
-                                '',
-                                false,
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                false, []);
+                            return ScheduleLiveClass.getScreen(0, false, '', '',
+                                '', '', '', '', '', '', '', '', '', false, []);
                           });
                     },
                     child: const Text(

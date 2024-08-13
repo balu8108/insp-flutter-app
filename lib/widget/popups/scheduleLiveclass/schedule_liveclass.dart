@@ -20,6 +20,10 @@ class ScheduleLiveClass extends StatelessWidget {
       dispatch(context, handleCreateLiveClass(context));
     }
 
+    void updateAssignment() {
+      dispatch(context, handleUpdateLiveClass(context));
+    }
+
     void uploadFile() {
       dispatch(context, pickFilesforliveclass(context));
     }
@@ -391,7 +395,9 @@ class ScheduleLiveClass extends StatelessWidget {
                           child: ElevatedButton(
                               onPressed: state.isClassLoading
                                   ? null
-                                  : createAssignment,
+                                  : state.isEditScreen
+                                      ? updateAssignment
+                                      : createAssignment,
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
                                 backgroundColor:
@@ -421,7 +427,7 @@ class ScheduleLiveClass extends StatelessWidget {
   }
 
   static getScreen(
-    String classroomId,
+    int classroomId,
     bool isEditScreen,
     String selectedSubject,
     String selectedDate,

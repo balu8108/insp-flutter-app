@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ScheduleLiveclassAppState {
-  String get classroomId => throw _privateConstructorUsedError;
+  int get classroomId => throw _privateConstructorUsedError;
   bool get isEditScreen => throw _privateConstructorUsedError;
   String? get selectedSubject => throw _privateConstructorUsedError;
   String? get selectedSubjectError => throw _privateConstructorUsedError;
@@ -60,7 +60,7 @@ abstract class $ScheduleLiveclassAppStateCopyWith<$Res> {
       _$ScheduleLiveclassAppStateCopyWithImpl<$Res, ScheduleLiveclassAppState>;
   @useResult
   $Res call(
-      {String classroomId,
+      {int classroomId,
       bool isEditScreen,
       String? selectedSubject,
       String? selectedSubjectError,
@@ -141,7 +141,7 @@ class _$ScheduleLiveclassAppStateCopyWithImpl<$Res,
       classroomId: null == classroomId
           ? _value.classroomId
           : classroomId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       isEditScreen: null == isEditScreen
           ? _value.isEditScreen
           : isEditScreen // ignore: cast_nullable_to_non_nullable
@@ -272,7 +272,7 @@ abstract class _$$ScheduleLiveclassAppStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String classroomId,
+      {int classroomId,
       bool isEditScreen,
       String? selectedSubject,
       String? selectedSubjectError,
@@ -352,7 +352,7 @@ class __$$ScheduleLiveclassAppStateImplCopyWithImpl<$Res>
       classroomId: null == classroomId
           ? _value.classroomId
           : classroomId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       isEditScreen: null == isEditScreen
           ? _value.isEditScreen
           : isEditScreen // ignore: cast_nullable_to_non_nullable
@@ -516,7 +516,7 @@ class _$ScheduleLiveclassAppStateImpl
         _pickedFiles = pickedFiles;
 
   @override
-  final String classroomId;
+  final int classroomId;
   @override
   final bool isEditScreen;
   @override
@@ -779,7 +779,7 @@ class _$ScheduleLiveclassAppStateImpl
 
 abstract class _ScheduleLiveclassAppState implements ScheduleLiveclassAppState {
   const factory _ScheduleLiveclassAppState(
-      {required final String classroomId,
+      {required final int classroomId,
       required final bool isEditScreen,
       required final String? selectedSubject,
       final String? selectedSubjectError,
@@ -811,7 +811,7 @@ abstract class _ScheduleLiveclassAppState implements ScheduleLiveclassAppState {
       final bool isClassLoading}) = _$ScheduleLiveclassAppStateImpl;
 
   @override
-  String get classroomId;
+  int get classroomId;
   @override
   bool get isEditScreen;
   @override
