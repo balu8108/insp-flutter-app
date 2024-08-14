@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/widget/card/insp_card.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
+import 'package:inspflutterfrontend/widget/popups/scheduleLiveclass/schedule_liveclass.dart';
+import 'package:inspflutterfrontend/widget/popups/scheduleSoloclass/schedule_soloclass.dart';
 
 class SoloclassroomTopicsWidgets extends StatefulWidget {
   const SoloclassroomTopicsWidgets(
@@ -26,7 +28,37 @@ class _SoloclassroomTopicsWidgetsState
       ),
       child: Column(
         children: [
-          INSPHeading('Solo Class'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              INSPHeading('Solo Recording'),
+              Container(
+                width: 100,
+                child: ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ScheduleSoloClass.getScreen(
+                                0, false, '', '', '', '', '', []);
+                          });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: const Color.fromRGBO(60, 141, 188, 1),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      textStyle: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                    child: const Text("Solo record")),
+              ),
+            ],
+          ),
           const SizedBox(
             height: 16,
           ),

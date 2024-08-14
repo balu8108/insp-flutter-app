@@ -130,7 +130,7 @@ class _$SoloclassTopicDetailReduxAppStateImpl
     with DiagnosticableTreeMixin
     implements _SoloclassTopicDetailReduxAppState {
   const _$SoloclassTopicDetailReduxAppStateImpl(
-      {this.selectedTopic = const INSPCardModel("", "", "", ""),
+      {required this.selectedTopic,
       final List<INSPCardModel> allTopics = const [],
       this.soloclasstopicdetail = const SoloclassTopicwiseDetailsResponseModel(
           totalLectures: 0,
@@ -138,7 +138,6 @@ class _$SoloclassTopicDetailReduxAppStateImpl
       : _allTopics = allTopics;
 
   @override
-  @JsonKey()
   final INSPCardModel selectedTopic;
   final List<INSPCardModel> _allTopics;
   @override
@@ -197,7 +196,7 @@ class _$SoloclassTopicDetailReduxAppStateImpl
 abstract class _SoloclassTopicDetailReduxAppState
     implements SoloclassTopicDetailReduxAppState {
   const factory _SoloclassTopicDetailReduxAppState(
-          {final INSPCardModel selectedTopic,
+          {required final INSPCardModel selectedTopic,
           final List<INSPCardModel> allTopics,
           final SoloclassTopicwiseDetailsResponseModel soloclasstopicdetail}) =
       _$SoloclassTopicDetailReduxAppStateImpl;
