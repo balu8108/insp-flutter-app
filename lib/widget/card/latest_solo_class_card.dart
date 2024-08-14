@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
+import 'package:inspflutterfrontend/pages/teacher/soloclasses/soloclass_topic_detail_screen.dart';
 import 'package:inspflutterfrontend/utils/extensions.dart';
+import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/card/model/latest_solo_class_card_model.dart';
 
 Widget LatestSoloClassCard(
@@ -56,6 +59,19 @@ Widget LatestSoloClassCard(
           Center(
               child: TextButton(
                   onPressed: () {
+                    INSPCardModel selectedTopic = INSPCardModel(
+                        "15",
+                        soloCardModel.topic.capitalizeFirstLetter(),
+                        'Nitin Sachan',
+                        topicDescriptionConstants[int.parse("15" ?? '1')] ??
+                            '');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SoloclassTopicDetailScreen.getScreen(
+                                  selectedTopic)),
+                    );
                     // onPressedViewDetails(context, inspCardModel);
                   },
                   child: const Text(

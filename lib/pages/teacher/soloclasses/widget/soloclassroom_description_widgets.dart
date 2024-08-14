@@ -3,12 +3,16 @@ import 'package:inspflutterfrontend/apiservices/models/soloclasses/soloclass_top
 import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
 import 'package:inspflutterfrontend/utils/file_box_component.dart';
 import 'package:inspflutterfrontend/widget/card/lecture_recording_card.dart';
+import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 
 class SoloclassroomDescriptionWidgets extends StatefulWidget {
   const SoloclassroomDescriptionWidgets(
-      {super.key, required this.soloclasstopicdetail});
+      {super.key,
+      required this.soloclasstopicdetail,
+      required this.selectedTopic});
   final SoloclassTopicwiseDetailsResponseModel soloclasstopicdetail;
+  final INSPCardModel selectedTopic;
 
   @override
   State<SoloclassroomDescriptionWidgets> createState() =>
@@ -28,8 +32,7 @@ class _SoloclassroomDescriptionWidgetsState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          INSPHeading(
-              '( ${widget.soloclasstopicdetail.transformedData.topic} )'),
+          INSPHeading(widget.selectedTopic.name),
           const SizedBox(height: 40),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,17 +51,17 @@ class _SoloclassroomDescriptionWidgetsState
                       ),
                     ),
                     const SizedBox(height: 20),
-                    Text(
-                      topicDescriptionConstants[int.parse(widget
-                              .soloclasstopicdetail.transformedData.topicId)] ??
-                          '',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Color.fromRGBO(44, 51, 41, 0.47),
-                        height: 1.75,
-                      ),
-                      overflow: TextOverflow.visible,
-                    ),
+                    if (widget.selectedTopic.id.isNotEmpty)
+                      Text(
+                        topicDescriptionConstants[
+                            int.parse(widget.selectedTopic.id)]!,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color.fromRGBO(44, 51, 41, 0.47),
+                          height: 1.75,
+                        ),
+                        overflow: TextOverflow.visible,
+                      )
                   ],
                 ),
               ),

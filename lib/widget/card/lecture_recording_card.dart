@@ -92,8 +92,12 @@ Widget LectureRecordingCardWidget(
                 },
               ),
             )
-          : const Center(child: Text('No items'))
-      // Assuming a gap of 16px between items
-
-      );
+          : const Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: Text(
+                'No data available for this topic.',
+                style: TextStyle(fontSize: 12),
+              ),
+            ));
+  // Assuming a gap of 16px between items
 }
