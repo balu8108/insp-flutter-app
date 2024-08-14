@@ -130,6 +130,10 @@ abstract class NetworkService {
           @Path() String classLevel,
           @Header('Authorization') String secretTokenHeader);
 
+  @GET('/assignment/recent-assignment')
+  Future<HttpResponse<AllAssignmentResponseModel>> getRecentAssignment(
+      @Header('Authorization') String secretTokenHeader);
+
   @POST('/student-feedback/get-all-student-feedback')
   Future<HttpResponse<AllStudentFeedbackResponseModel>> getAllStudentFeedback(
       @Body() AllStudentFeedbackRequestModel feedbackrequest,
