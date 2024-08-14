@@ -38,6 +38,11 @@ class UpdateRatingFeedbackCard extends RatingFeedbackDetailAction {
   UpdateRatingFeedbackCard({required this.ratingFeedbackCard});
 }
 
+class UpdateSelectedItem extends RatingFeedbackDetailAction {
+  INSPCardModel selectedItem;
+  UpdateSelectedItem({required this.selectedItem});
+}
+
 RatingFeedbackDetailAppState _ratingFeedbackDetailStateReducer(
     RatingFeedbackDetailAppState state, RatingFeedbackDetailAction action) {
   switch (action) {
@@ -45,6 +50,8 @@ RatingFeedbackDetailAppState _ratingFeedbackDetailStateReducer(
       return state.copyWith(ratingFeedbackCard: action.ratingFeedbackCard);
     case UpdateAllTopic():
       return state.copyWith(allTopic: action.allTopic);
+    case UpdateSelectedItem():
+      return state.copyWith(selectedItem: action.selectedItem);
   }
 }
 
@@ -59,6 +66,7 @@ ThunkAction<RatingFeedbackDetailAppState> showRatingFeedbackDetail(
     BuildContext context, INSPCardModel inspCardModel) {
   return (Store<RatingFeedbackDetailAppState> store) async {
     try {
+      store.dispatch(UpdateSelectedItem(selectedItem: inspCardModel));
       final remoteDataSource = RemoteDataSource();
       final topicId = inspCardModel.id;
       String userToken = await getUserToken();
@@ -67,7 +75,8 @@ ThunkAction<RatingFeedbackDetailAppState> showRatingFeedbackDetail(
       if (allTopics.response.statusCode == 200) {
         final List<RatingFeedbackCardModal> ratingFeedbackCardData = allTopics
             .data.topicDetails
-            .map((it) => RatingFeedbackCardModal(it.raterName, it.feedback))
+            .map((it) =>
+                RatingFeedbackCardModal(it.raterName, it.feedback, it.rating))
             .toList();
         store.dispatch(UpdateRatingFeedbackCard(
             ratingFeedbackCard: ratingFeedbackCardData));
