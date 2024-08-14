@@ -24,3 +24,17 @@ Future<String> getUserToken() async {
     return "";
   }
 }
+
+Future<bool> isTeacherLogin() async {
+  String? data = await getData('insp_user_profile');
+  if (data != null && data.isNotEmpty) {
+    final LoginResponseModelResult userData =
+        LoginResponseModelResult.fromJson(jsonDecode(data));
+    if (userData.userType == 1) {
+      return true;
+    }
+    return false;
+  } else {
+    return false;
+  }
+}

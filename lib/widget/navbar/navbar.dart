@@ -5,7 +5,7 @@ import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/pages/login/login_screen.dart';
 import 'package:inspflutterfrontend/pages/student/assignment/mainpage/assignmentScreen.dart';
 import 'package:inspflutterfrontend/pages/common/calender/calendar_screen.dart';
-import 'package:inspflutterfrontend/pages/teacher/suggestion/suggestion_page.dart';
+import 'package:inspflutterfrontend/pages/teacher/suggestion/main_suggestion_page.dart';
 import 'package:inspflutterfrontend/pages/teacher/uploads/mainpage/myuploads.dart';
 import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 import 'package:inspflutterfrontend/utils/localstorage.dart';
@@ -107,7 +107,7 @@ class _NavbarState extends State<Navbar> {
               }),
               _buildTextButton('Suggestion', () {
                 _onButtonPressed('Suggestion');
-                _navigateToScreen(context, DataTableExampleApp());
+                _navigateToScreen(context, MainSuggestionPage.getScreen());
               }),
               _buildTextButton('INSP Portal', () {
                 _onButtonPressed('INSP Portal');

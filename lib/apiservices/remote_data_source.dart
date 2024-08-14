@@ -1,11 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/all_assignment_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_topic_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/latest_completed_class_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/rating_feedback_rating_detail_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
@@ -76,11 +81,23 @@ abstract class RemoteDataSource {
       getAllLecturesForCourse(
           String classType, String classLevel, String secretTokenHeader);
 
+  Future<HttpResponse<GetLectureNoResponseModel>> getLectureNumber(
+      GetLectureNoRequestModel lectureNoRequestModel, String secretTokenHeader);
+
   Future<HttpResponse<AllLecturesForTopicResponseModel>> getAllLectureByTopic(
       String topicId, String topicType, String secretTokenHeader);
 
   Future<HttpResponse<AllAssignmentResponseModel>> getAllAssignmentForTopic(
       String topicId, String secretTokenHeader);
+
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteAssignment(
+      int assignmentId, String secretTokenHeader);
+
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteStudentFeedback(
+      int feedbackId, String secretTokenHeader);
+
+  Future<HttpResponse<AllStudentFeedbackResponseModel>> getAllStudentFeedback(
+      AllStudentFeedbackRequestModel feedbackrequest, String secretTokenHeader);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -204,5 +221,35 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       String topicId, String secretTokenHeader) {
     return deviceNetworkService.getAllAssignmentForTopic(
         topicId, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteAssignment(
+      int assignmentId, String secretTokenHeader) {
+    return deviceNetworkService.deleteAssignment(
+        assignmentId, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<GetLectureNoResponseModel>> getLectureNumber(
+      GetLectureNoRequestModel lectureNoRequestModel,
+      String secretTokenHeader) {
+    return deviceNetworkService.getLectureNumber(
+        lectureNoRequestModel, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteStudentFeedback(
+      int feedbackId, String secretTokenHeader) {
+    return deviceNetworkService.deleteStudentFeedback(
+        feedbackId, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<AllStudentFeedbackResponseModel>> getAllStudentFeedback(
+      AllStudentFeedbackRequestModel feedbackrequest,
+      String secretTokenHeader) {
+    return deviceNetworkService.getAllStudentFeedback(
+        feedbackrequest, secretTokenHeader);
   }
 }

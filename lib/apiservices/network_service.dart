@@ -1,12 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/all_assignment_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_topic_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_topics_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_topics_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/latest_completed_class_response_model.dart';
@@ -15,6 +20,7 @@ import 'package:inspflutterfrontend/apiservices/models/soloclasses/all_solo_clas
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
+import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
 
@@ -25,7 +31,7 @@ import 'models/upcomingclasses/all_lectures_for_upcoming_response_model.dart';
 
 part 'network_service.g.dart';
 
-@RestApi(baseUrl: 'https://api.inspedu.in/')
+@RestApi(baseUrl: '${api}/')
 abstract class NetworkService {
   factory NetworkService(Dio dio, {String baseUrl}) = _NetworkService;
 
@@ -97,6 +103,11 @@ abstract class NetworkService {
   Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
       getAllUpcomingClasses(@Header('Authorization') String secretTokenHeader);
 
+  @POST('/lecture/get-lecture-no')
+  Future<HttpResponse<GetLectureNoResponseModel>> getLectureNumber(
+      @Body() GetLectureNoRequestModel lectureNoRequestModel,
+      @Header('Authorization') String secretTokenHeader);
+
   @GET('/lecture/get-lecture-by-id/{roomId}')
   Future<HttpResponse<LectureDetailByRoomIdResponseModel>>
       getLecturesDetailByRoomId(@Path() String roomId,
@@ -107,12 +118,27 @@ abstract class NetworkService {
       @Query('topicId') String topicId,
       @Header('Authorization') String secretTokenHeader);
 
+  @DELETE('/assignment/delete-assignment/{assignmentId}')
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteAssignment(
+      @Path() int assignmentId,
+      @Header('Authorization') String secretTokenHeader);
+
   @GET('/lecture/get-all-lecture/{classType}/{classLevel}')
   Future<HttpResponse<AllLecturesForCourseResponseModel>>
       getAllLecturesForCourse(
           @Path() String classType,
           @Path() String classLevel,
           @Header('Authorization') String secretTokenHeader);
+
+  @POST('/student-feedback/get-all-student-feedback')
+  Future<HttpResponse<AllStudentFeedbackResponseModel>> getAllStudentFeedback(
+      @Body() AllStudentFeedbackRequestModel feedbackrequest,
+      @Header('Authorization') String secretTokenHeader);
+
+  @DELETE('/student-feedback/delete-student-feedback/{feedbackId}')
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteStudentFeedback(
+      @Path() int feedbackId,
+      @Header('Authorization') String secretTokenHeader);
 
   @GET('/assignment/get-assignment-by-topic-id/{topicId}')
   Future<HttpResponse<AllAssignmentResponseModel>> getAllAssignmentForTopic(

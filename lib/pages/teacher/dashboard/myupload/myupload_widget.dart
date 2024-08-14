@@ -57,6 +57,10 @@ class MyUploadWidgetState extends State {
     }
   }
 
+  void temporyFunction() {
+    print("noting");
+  }
+
   @override
   void initState() {
     super.initState();
@@ -81,7 +85,8 @@ class MyUploadWidgetState extends State {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return AddAssignment.getScreen();
+                      return AddAssignment.getScreen(
+                          0, false, '', '', '', [], temporyFunction);
                     });
               },
               child: Text("+ Add Assignment"),

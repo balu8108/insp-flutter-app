@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
+import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:inspflutterfrontend/data/hardcoded/topic_list.dart';
 import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 import 'package:redux/redux.dart';
@@ -17,11 +19,19 @@ part 'add_assignment_redux.freezed.dart';
 @freezed
 class AddAssignmentAppState with _$AddAssignmentAppState {
   const factory AddAssignmentAppState(
-      [@Default('') String? selectedSubject,
-      @Default('') String? selectedTopic,
-      @Default('') String? description,
+      {required int assignmentId,
+      required bool isEditScreen,
+      required String? selectedSubject,
+      @Default('') String? selectedSubjectError,
+      required String? selectedTopic,
+      @Default('') String? selectedTopicError,
+      required String? description,
+      @Default('') String? descriptionError,
+      required List<LiveClassRoomFile> previousFiles,
+      @Default([]) List<int> deletedFileId,
       @Default([]) List<String> pickedFilesName,
-      @Default([]) List<PlatformFile> pickedFiles]) = _AddAssignmentAppState;
+      @Default([]) List<PlatformFile> pickedFiles,
+      @Default(false) bool isAssignmentLoading}) = _AddAssignmentAppState;
 }
 
 sealed class AddAssignmentAction {}
@@ -31,14 +41,29 @@ class UpdateSelectedSubject extends AddAssignmentAction {
   UpdateSelectedSubject({required this.selectedSubject});
 }
 
+class UpdateSelectedSubjectError extends AddAssignmentAction {
+  String? selectedSubjectError;
+  UpdateSelectedSubjectError({required this.selectedSubjectError});
+}
+
 class UpdateSelectedTopic extends AddAssignmentAction {
   String? selectedTopic;
   UpdateSelectedTopic({required this.selectedTopic});
 }
 
+class UpdateSelectedTopicError extends AddAssignmentAction {
+  String? selectedTopicError;
+  UpdateSelectedTopicError({required this.selectedTopicError});
+}
+
 class UpdateDescription extends AddAssignmentAction {
-  String description;
+  String? description;
   UpdateDescription({required this.description});
+}
+
+class UpdateDescriptionError extends AddAssignmentAction {
+  String descriptionError;
+  UpdateDescriptionError({required this.descriptionError});
 }
 
 class UpdatePickedFiles extends AddAssignmentAction {
@@ -51,24 +76,51 @@ class UpdatePickedFilesName extends AddAssignmentAction {
   UpdatePickedFilesName({required this.pickedFilesName});
 }
 
+class UpdateIsAssignmentLoading extends AddAssignmentAction {
+  bool isAssignmentLoading;
+  UpdateIsAssignmentLoading({required this.isAssignmentLoading});
+}
+
 class RemoveFileAction extends AddAssignmentAction {
   String filename;
   RemoveFileAction({required this.filename});
+}
+
+class RemovePreviousAssignmentFile extends AddAssignmentAction {
+  int id;
+  RemovePreviousAssignmentFile({required this.id});
 }
 
 AddAssignmentAppState _addAssignmentStateReducer(
     AddAssignmentAppState state, AddAssignmentAction action) {
   switch (action) {
     case UpdateSelectedSubject():
-      return state.copyWith(selectedSubject: action.selectedSubject);
+      return state.copyWith(
+          selectedSubject: action.selectedSubject, selectedSubjectError: '');
+    case UpdateSelectedSubjectError():
+      return state.copyWith(selectedSubjectError: action.selectedSubjectError);
     case UpdateSelectedTopic():
-      return state.copyWith(selectedTopic: action.selectedTopic);
+      return state.copyWith(
+          selectedTopic: action.selectedTopic, selectedTopicError: '');
+    case UpdateSelectedTopicError():
+      return state.copyWith(selectedTopicError: action.selectedTopicError);
     case UpdateDescription():
-      return state.copyWith(description: action.description);
+      return state.copyWith(
+          description: action.description, descriptionError: '');
+    case UpdateDescriptionError():
+      return state.copyWith(descriptionError: action.descriptionError);
     case UpdatePickedFiles():
       return state.copyWith(pickedFiles: action.pickedFiles);
     case UpdatePickedFilesName():
       return state.copyWith(pickedFilesName: action.pickedFilesName);
+    case UpdateIsAssignmentLoading():
+      return state.copyWith(isAssignmentLoading: action.isAssignmentLoading);
+    case RemovePreviousAssignmentFile():
+      return state.copyWith(
+          deletedFileId: [...state.deletedFileId, action.id],
+          previousFiles: state.previousFiles
+              .where((file) => file.id != action.id)
+              .toList());
     case RemoveFileAction():
       return state.copyWith(
         pickedFilesName: state.pickedFilesName
@@ -115,6 +167,26 @@ ThunkAction<AddAssignmentAppState> handleCreate(BuildContext context) {
   return (Store<AddAssignmentAppState> store) async {
     List<MultipartFile> files = [];
 
+    store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: true));
+
+    if (store.state.selectedSubject == null ||
+        store.state.selectedSubject!.isEmpty) {
+      store.dispatch(UpdateSelectedSubjectError(
+          selectedSubjectError: 'Please select a subject'));
+      return;
+    }
+    if (store.state.selectedTopic == null ||
+        store.state.selectedTopic!.isEmpty) {
+      store.dispatch(UpdateSelectedTopicError(
+          selectedTopicError: 'Please select a topic'));
+      return;
+    }
+    if (store.state.description == null || store.state.description!.isEmpty) {
+      store.dispatch(UpdateDescriptionError(
+          descriptionError: 'Please enter an description'));
+      return;
+    }
+
     for (PlatformFile file in store.state.pickedFiles) {
       if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
         files.add(MultipartFile.fromBytes(file.bytes!, filename: file.name));
@@ -148,7 +220,7 @@ ThunkAction<AddAssignmentAppState> handleCreate(BuildContext context) {
     try {
       String userToken = await getUserToken();
       Response response = await dio.post(
-        'https://dev.insp.1labventures.in/assignment/upload-assignments',
+        '${api}/assignment/upload-assignments',
         data: formData,
         options: Options(
           headers: {
@@ -159,6 +231,7 @@ ThunkAction<AddAssignmentAppState> handleCreate(BuildContext context) {
       );
 
       if (response.statusCode == 201) {
+        store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
         Navigator.of(context).pop();
         Fluttertoast.showToast(
             msg: 'Files uploaded successfully',
@@ -167,6 +240,7 @@ ThunkAction<AddAssignmentAppState> handleCreate(BuildContext context) {
             timeInSecForIosWeb: 1,
             fontSize: 20.0);
       } else {
+        store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
         Navigator.of(context).pop();
         Fluttertoast.showToast(
             msg: 'Failed to upload files',
@@ -176,6 +250,112 @@ ThunkAction<AddAssignmentAppState> handleCreate(BuildContext context) {
             fontSize: 20.0);
       }
     } catch (e) {
+      store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
+      Fluttertoast.showToast(
+          msg: 'Some issue, please try again',
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: const Color(0xFF3C8DBC),
+          timeInSecForIosWeb: 1,
+          fontSize: 20.0);
+    }
+  };
+}
+
+ThunkAction<AddAssignmentAppState> handleUpdate(
+    BuildContext context, Function() fetchAssignmentAfterUpdateorDelete) {
+  return (Store<AddAssignmentAppState> store) async {
+    List<MultipartFile> files = [];
+
+    store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: true));
+
+    if (store.state.selectedSubject == null ||
+        store.state.selectedSubject!.isEmpty) {
+      store.dispatch(UpdateSelectedSubjectError(
+          selectedSubjectError: 'Please select a subject'));
+      return;
+    }
+    if (store.state.selectedTopic == null ||
+        store.state.selectedTopic!.isEmpty) {
+      store.dispatch(UpdateSelectedTopicError(
+          selectedTopicError: 'Please select a topic'));
+      return;
+    }
+    if (store.state.description == null || store.state.description!.isEmpty) {
+      store.dispatch(UpdateDescriptionError(
+          descriptionError: 'Please enter an description'));
+      return;
+    }
+
+    for (PlatformFile file in store.state.pickedFiles) {
+      if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
+        files.add(MultipartFile.fromBytes(file.bytes!, filename: file.name));
+      } else {
+        files
+            .add(await MultipartFile.fromFile(file.path!, filename: file.name));
+      }
+    }
+
+    Map<String, dynamic> jsonObject = {
+      'value': subjectList
+          .firstWhere((item) => item.label == store.state.selectedSubject)
+          .value,
+      'label': store.state.selectedSubject,
+    };
+
+    Map<String, dynamic> jsonObjectTwo = {
+      'value': topicList
+          .firstWhere((item) => item.label == store.state.selectedTopic)
+          .value,
+      'label': store.state.selectedTopic,
+    };
+
+    FormData formData = FormData.fromMap({
+      'assignmentId': store.state.assignmentId,
+      'subject': jsonEncode(jsonObject),
+      'topic': jsonEncode(jsonObjectTwo),
+      'description': store.state.description,
+      'files': files,
+      if (store.state.deletedFileId.isNotEmpty)
+        'deletedFileIds': jsonEncode(store.state.deletedFileId),
+    });
+
+    final dio = Dio();
+    try {
+      String userToken = await getUserToken();
+      Response response = await dio.post(
+        '${api}/assignment/update-assignments',
+        data: formData,
+        options: Options(
+          headers: {
+            'Authorization': userToken, // Include the token in the header
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
+        fetchAssignmentAfterUpdateorDelete();
+        Navigator.of(context).pop();
+        Fluttertoast.showToast(
+            msg: 'Assignment update successfully',
+            toastLength: Toast.LENGTH_LONG,
+            backgroundColor: const Color(0xFF3C8DBC),
+            timeInSecForIosWeb: 1,
+            fontSize: 20.0);
+      } else {
+        store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
+        Navigator.of(context).pop();
+        Fluttertoast.showToast(
+            msg: 'Failed to update assignment',
+            toastLength: Toast.LENGTH_LONG,
+            backgroundColor: const Color(0xFF3C8DBC),
+            timeInSecForIosWeb: 1,
+            fontSize: 20.0);
+      }
+    } catch (e) {
+      print(e);
+      store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
       Fluttertoast.showToast(
           msg: 'Some issue, please try again',
           toastLength: Toast.LENGTH_LONG,

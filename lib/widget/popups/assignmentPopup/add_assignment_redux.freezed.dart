@@ -16,11 +16,20 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AddAssignmentAppState {
+  int get assignmentId => throw _privateConstructorUsedError;
+  bool get isEditScreen => throw _privateConstructorUsedError;
   String? get selectedSubject => throw _privateConstructorUsedError;
+  String? get selectedSubjectError => throw _privateConstructorUsedError;
   String? get selectedTopic => throw _privateConstructorUsedError;
+  String? get selectedTopicError => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  String? get descriptionError => throw _privateConstructorUsedError;
+  List<LiveClassRoomFile> get previousFiles =>
+      throw _privateConstructorUsedError;
+  List<int> get deletedFileId => throw _privateConstructorUsedError;
   List<String> get pickedFilesName => throw _privateConstructorUsedError;
   List<PlatformFile> get pickedFiles => throw _privateConstructorUsedError;
+  bool get isAssignmentLoading => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddAssignmentAppStateCopyWith<AddAssignmentAppState> get copyWith =>
@@ -34,11 +43,19 @@ abstract class $AddAssignmentAppStateCopyWith<$Res> {
       _$AddAssignmentAppStateCopyWithImpl<$Res, AddAssignmentAppState>;
   @useResult
   $Res call(
-      {String? selectedSubject,
+      {int assignmentId,
+      bool isEditScreen,
+      String? selectedSubject,
+      String? selectedSubjectError,
       String? selectedTopic,
+      String? selectedTopicError,
       String? description,
+      String? descriptionError,
+      List<LiveClassRoomFile> previousFiles,
+      List<int> deletedFileId,
       List<String> pickedFilesName,
-      List<PlatformFile> pickedFiles});
+      List<PlatformFile> pickedFiles,
+      bool isAssignmentLoading});
 }
 
 /// @nodoc
@@ -55,25 +72,61 @@ class _$AddAssignmentAppStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? assignmentId = null,
+    Object? isEditScreen = null,
     Object? selectedSubject = freezed,
+    Object? selectedSubjectError = freezed,
     Object? selectedTopic = freezed,
+    Object? selectedTopicError = freezed,
     Object? description = freezed,
+    Object? descriptionError = freezed,
+    Object? previousFiles = null,
+    Object? deletedFileId = null,
     Object? pickedFilesName = null,
     Object? pickedFiles = null,
+    Object? isAssignmentLoading = null,
   }) {
     return _then(_value.copyWith(
+      assignmentId: null == assignmentId
+          ? _value.assignmentId
+          : assignmentId // ignore: cast_nullable_to_non_nullable
+              as int,
+      isEditScreen: null == isEditScreen
+          ? _value.isEditScreen
+          : isEditScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
       selectedSubject: freezed == selectedSubject
           ? _value.selectedSubject
           : selectedSubject // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedSubjectError: freezed == selectedSubjectError
+          ? _value.selectedSubjectError
+          : selectedSubjectError // ignore: cast_nullable_to_non_nullable
               as String?,
       selectedTopic: freezed == selectedTopic
           ? _value.selectedTopic
           : selectedTopic // ignore: cast_nullable_to_non_nullable
               as String?,
+      selectedTopicError: freezed == selectedTopicError
+          ? _value.selectedTopicError
+          : selectedTopicError // ignore: cast_nullable_to_non_nullable
+              as String?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      descriptionError: freezed == descriptionError
+          ? _value.descriptionError
+          : descriptionError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      previousFiles: null == previousFiles
+          ? _value.previousFiles
+          : previousFiles // ignore: cast_nullable_to_non_nullable
+              as List<LiveClassRoomFile>,
+      deletedFileId: null == deletedFileId
+          ? _value.deletedFileId
+          : deletedFileId // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       pickedFilesName: null == pickedFilesName
           ? _value.pickedFilesName
           : pickedFilesName // ignore: cast_nullable_to_non_nullable
@@ -82,6 +135,10 @@ class _$AddAssignmentAppStateCopyWithImpl<$Res,
           ? _value.pickedFiles
           : pickedFiles // ignore: cast_nullable_to_non_nullable
               as List<PlatformFile>,
+      isAssignmentLoading: null == isAssignmentLoading
+          ? _value.isAssignmentLoading
+          : isAssignmentLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -96,11 +153,19 @@ abstract class _$$AddAssignmentAppStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? selectedSubject,
+      {int assignmentId,
+      bool isEditScreen,
+      String? selectedSubject,
+      String? selectedSubjectError,
       String? selectedTopic,
+      String? selectedTopicError,
       String? description,
+      String? descriptionError,
+      List<LiveClassRoomFile> previousFiles,
+      List<int> deletedFileId,
       List<String> pickedFilesName,
-      List<PlatformFile> pickedFiles});
+      List<PlatformFile> pickedFiles,
+      bool isAssignmentLoading});
 }
 
 /// @nodoc
@@ -115,33 +180,73 @@ class __$$AddAssignmentAppStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? assignmentId = null,
+    Object? isEditScreen = null,
     Object? selectedSubject = freezed,
+    Object? selectedSubjectError = freezed,
     Object? selectedTopic = freezed,
+    Object? selectedTopicError = freezed,
     Object? description = freezed,
+    Object? descriptionError = freezed,
+    Object? previousFiles = null,
+    Object? deletedFileId = null,
     Object? pickedFilesName = null,
     Object? pickedFiles = null,
+    Object? isAssignmentLoading = null,
   }) {
     return _then(_$AddAssignmentAppStateImpl(
-      freezed == selectedSubject
+      assignmentId: null == assignmentId
+          ? _value.assignmentId
+          : assignmentId // ignore: cast_nullable_to_non_nullable
+              as int,
+      isEditScreen: null == isEditScreen
+          ? _value.isEditScreen
+          : isEditScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedSubject: freezed == selectedSubject
           ? _value.selectedSubject
           : selectedSubject // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == selectedTopic
+      selectedSubjectError: freezed == selectedSubjectError
+          ? _value.selectedSubjectError
+          : selectedSubjectError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedTopic: freezed == selectedTopic
           ? _value.selectedTopic
           : selectedTopic // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == description
+      selectedTopicError: freezed == selectedTopicError
+          ? _value.selectedTopicError
+          : selectedTopicError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      null == pickedFilesName
+      descriptionError: freezed == descriptionError
+          ? _value.descriptionError
+          : descriptionError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      previousFiles: null == previousFiles
+          ? _value._previousFiles
+          : previousFiles // ignore: cast_nullable_to_non_nullable
+              as List<LiveClassRoomFile>,
+      deletedFileId: null == deletedFileId
+          ? _value._deletedFileId
+          : deletedFileId // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      pickedFilesName: null == pickedFilesName
           ? _value._pickedFilesName
           : pickedFilesName // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      null == pickedFiles
+      pickedFiles: null == pickedFiles
           ? _value._pickedFiles
           : pickedFiles // ignore: cast_nullable_to_non_nullable
               as List<PlatformFile>,
+      isAssignmentLoading: null == isAssignmentLoading
+          ? _value.isAssignmentLoading
+          : isAssignmentLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -152,23 +257,60 @@ class _$AddAssignmentAppStateImpl
     with DiagnosticableTreeMixin
     implements _AddAssignmentAppState {
   const _$AddAssignmentAppStateImpl(
-      [this.selectedSubject = '',
-      this.selectedTopic = '',
-      this.description = '',
+      {required this.assignmentId,
+      required this.isEditScreen,
+      required this.selectedSubject,
+      this.selectedSubjectError = '',
+      required this.selectedTopic,
+      this.selectedTopicError = '',
+      required this.description,
+      this.descriptionError = '',
+      required final List<LiveClassRoomFile> previousFiles,
+      final List<int> deletedFileId = const [],
       final List<String> pickedFilesName = const [],
-      final List<PlatformFile> pickedFiles = const []])
-      : _pickedFilesName = pickedFilesName,
+      final List<PlatformFile> pickedFiles = const [],
+      this.isAssignmentLoading = false})
+      : _previousFiles = previousFiles,
+        _deletedFileId = deletedFileId,
+        _pickedFilesName = pickedFilesName,
         _pickedFiles = pickedFiles;
 
   @override
-  @JsonKey()
+  final int assignmentId;
+  @override
+  final bool isEditScreen;
+  @override
   final String? selectedSubject;
   @override
   @JsonKey()
+  final String? selectedSubjectError;
+  @override
   final String? selectedTopic;
   @override
   @JsonKey()
+  final String? selectedTopicError;
+  @override
   final String? description;
+  @override
+  @JsonKey()
+  final String? descriptionError;
+  final List<LiveClassRoomFile> _previousFiles;
+  @override
+  List<LiveClassRoomFile> get previousFiles {
+    if (_previousFiles is EqualUnmodifiableListView) return _previousFiles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_previousFiles);
+  }
+
+  final List<int> _deletedFileId;
+  @override
+  @JsonKey()
+  List<int> get deletedFileId {
+    if (_deletedFileId is EqualUnmodifiableListView) return _deletedFileId;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_deletedFileId);
+  }
+
   final List<String> _pickedFilesName;
   @override
   @JsonKey()
@@ -188,8 +330,12 @@ class _$AddAssignmentAppStateImpl
   }
 
   @override
+  @JsonKey()
+  final bool isAssignmentLoading;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AddAssignmentAppState(selectedSubject: $selectedSubject, selectedTopic: $selectedTopic, description: $description, pickedFilesName: $pickedFilesName, pickedFiles: $pickedFiles)';
+    return 'AddAssignmentAppState(assignmentId: $assignmentId, isEditScreen: $isEditScreen, selectedSubject: $selectedSubject, selectedSubjectError: $selectedSubjectError, selectedTopic: $selectedTopic, selectedTopicError: $selectedTopicError, description: $description, descriptionError: $descriptionError, previousFiles: $previousFiles, deletedFileId: $deletedFileId, pickedFilesName: $pickedFilesName, pickedFiles: $pickedFiles, isAssignmentLoading: $isAssignmentLoading)';
   }
 
   @override
@@ -197,11 +343,19 @@ class _$AddAssignmentAppStateImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'AddAssignmentAppState'))
+      ..add(DiagnosticsProperty('assignmentId', assignmentId))
+      ..add(DiagnosticsProperty('isEditScreen', isEditScreen))
       ..add(DiagnosticsProperty('selectedSubject', selectedSubject))
+      ..add(DiagnosticsProperty('selectedSubjectError', selectedSubjectError))
       ..add(DiagnosticsProperty('selectedTopic', selectedTopic))
+      ..add(DiagnosticsProperty('selectedTopicError', selectedTopicError))
       ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('descriptionError', descriptionError))
+      ..add(DiagnosticsProperty('previousFiles', previousFiles))
+      ..add(DiagnosticsProperty('deletedFileId', deletedFileId))
       ..add(DiagnosticsProperty('pickedFilesName', pickedFilesName))
-      ..add(DiagnosticsProperty('pickedFiles', pickedFiles));
+      ..add(DiagnosticsProperty('pickedFiles', pickedFiles))
+      ..add(DiagnosticsProperty('isAssignmentLoading', isAssignmentLoading));
   }
 
   @override
@@ -209,26 +363,50 @@ class _$AddAssignmentAppStateImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddAssignmentAppStateImpl &&
+            (identical(other.assignmentId, assignmentId) ||
+                other.assignmentId == assignmentId) &&
+            (identical(other.isEditScreen, isEditScreen) ||
+                other.isEditScreen == isEditScreen) &&
             (identical(other.selectedSubject, selectedSubject) ||
                 other.selectedSubject == selectedSubject) &&
+            (identical(other.selectedSubjectError, selectedSubjectError) ||
+                other.selectedSubjectError == selectedSubjectError) &&
             (identical(other.selectedTopic, selectedTopic) ||
                 other.selectedTopic == selectedTopic) &&
+            (identical(other.selectedTopicError, selectedTopicError) ||
+                other.selectedTopicError == selectedTopicError) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.descriptionError, descriptionError) ||
+                other.descriptionError == descriptionError) &&
+            const DeepCollectionEquality()
+                .equals(other._previousFiles, _previousFiles) &&
+            const DeepCollectionEquality()
+                .equals(other._deletedFileId, _deletedFileId) &&
             const DeepCollectionEquality()
                 .equals(other._pickedFilesName, _pickedFilesName) &&
             const DeepCollectionEquality()
-                .equals(other._pickedFiles, _pickedFiles));
+                .equals(other._pickedFiles, _pickedFiles) &&
+            (identical(other.isAssignmentLoading, isAssignmentLoading) ||
+                other.isAssignmentLoading == isAssignmentLoading));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      assignmentId,
+      isEditScreen,
       selectedSubject,
+      selectedSubjectError,
       selectedTopic,
+      selectedTopicError,
       description,
+      descriptionError,
+      const DeepCollectionEquality().hash(_previousFiles),
+      const DeepCollectionEquality().hash(_deletedFileId),
       const DeepCollectionEquality().hash(_pickedFilesName),
-      const DeepCollectionEquality().hash(_pickedFiles));
+      const DeepCollectionEquality().hash(_pickedFiles),
+      isAssignmentLoading);
 
   @JsonKey(ignore: true)
   @override
@@ -240,22 +418,46 @@ class _$AddAssignmentAppStateImpl
 
 abstract class _AddAssignmentAppState implements AddAssignmentAppState {
   const factory _AddAssignmentAppState(
-      [final String? selectedSubject,
-      final String? selectedTopic,
-      final String? description,
+      {required final int assignmentId,
+      required final bool isEditScreen,
+      required final String? selectedSubject,
+      final String? selectedSubjectError,
+      required final String? selectedTopic,
+      final String? selectedTopicError,
+      required final String? description,
+      final String? descriptionError,
+      required final List<LiveClassRoomFile> previousFiles,
+      final List<int> deletedFileId,
       final List<String> pickedFilesName,
-      final List<PlatformFile> pickedFiles]) = _$AddAssignmentAppStateImpl;
+      final List<PlatformFile> pickedFiles,
+      final bool isAssignmentLoading}) = _$AddAssignmentAppStateImpl;
 
+  @override
+  int get assignmentId;
+  @override
+  bool get isEditScreen;
   @override
   String? get selectedSubject;
   @override
+  String? get selectedSubjectError;
+  @override
   String? get selectedTopic;
   @override
+  String? get selectedTopicError;
+  @override
   String? get description;
+  @override
+  String? get descriptionError;
+  @override
+  List<LiveClassRoomFile> get previousFiles;
+  @override
+  List<int> get deletedFileId;
   @override
   List<String> get pickedFilesName;
   @override
   List<PlatformFile> get pickedFiles;
+  @override
+  bool get isAssignmentLoading;
   @override
   @JsonKey(ignore: true)
   _$$AddAssignmentAppStateImplCopyWith<_$AddAssignmentAppStateImpl>

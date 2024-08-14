@@ -8,7 +8,8 @@ class TopicAssignmentCardModel {
   const TopicAssignmentCardModel(this.id, this.description,
       this.assignmentFiles, this.topicName, this.instructorName);
 
-  final String description, topicName, instructorName, id;
+  final int id;
+  final String description, topicName, instructorName;
   @JsonKey(name: 'AssignmentFiles')
   final List<LiveClassRoomFile> assignmentFiles;
 
