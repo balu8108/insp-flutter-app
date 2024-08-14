@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/pages/teacher/uploads/mainpage/myuploads.dart';
 import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/widget/card/model/latest_assignment_card_model.dart';
 
@@ -56,7 +57,11 @@ Widget LatestAssignmentCard(
           Center(
               child: TextButton(
                   onPressed: () {
-                    // onPressedViewDetails(context, inspCardModel);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyUploads()),
+                    );
                   },
                   child: const Text(
                     'View Details',

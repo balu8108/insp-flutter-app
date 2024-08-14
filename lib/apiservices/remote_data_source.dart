@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/all_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_topic_response_model.dart';
@@ -90,6 +92,12 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<DeleteAssignmentResponseModel>> deleteAssignment(
       int assignmentId, String secretTokenHeader);
+
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteStudentFeedback(
+      int feedbackId, String secretTokenHeader);
+
+  Future<HttpResponse<AllStudentFeedbackResponseModel>> getAllStudentFeedback(
+      AllStudentFeedbackRequestModel feedbackrequest, String secretTokenHeader);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -228,5 +236,20 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       String secretTokenHeader) {
     return deviceNetworkService.getLectureNumber(
         lectureNoRequestModel, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteStudentFeedback(
+      int feedbackId, String secretTokenHeader) {
+    return deviceNetworkService.deleteStudentFeedback(
+        feedbackId, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<AllStudentFeedbackResponseModel>> getAllStudentFeedback(
+      AllStudentFeedbackRequestModel feedbackrequest,
+      String secretTokenHeader) {
+    return deviceNetworkService.getAllStudentFeedback(
+        feedbackrequest, secretTokenHeader);
   }
 }

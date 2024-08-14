@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/pages/student/assignment/assignmenttopic/assignment_topic_screen.dart';
-import 'package:inspflutterfrontend/pages/student/assignment/assignmenttopic/assignment_topic_screen_redux.dart';
 import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -40,8 +38,8 @@ DeleteAssignmentAppState deleteAssignmentStateReducer(
   return upState;
 }
 
-ThunkAction<DeleteAssignmentAppState> deleteAssignment(
-    BuildContext context, int assignmentId) {
+ThunkAction<DeleteAssignmentAppState> deleteAssignment(BuildContext context,
+    int assignmentId, Function() fetchAssignmentAfterUpdateorDelete) {
   return (Store<DeleteAssignmentAppState> store) async {
     try {
       String userToken = await getUserToken();
@@ -50,8 +48,8 @@ ThunkAction<DeleteAssignmentAppState> deleteAssignment(
           await remoteDataSource.deleteAssignment(assignmentId, userToken);
 
       if (deleteTopicData.response.statusCode == 200) {
-        // AssignmentTopicScreen.dispatch(
-        //     context, initialFetchAssignment(context));
+        fetchAssignmentAfterUpdateorDelete();
+        Navigator.of(context).pop();
         Fluttertoast.showToast(
             msg: 'Assignment Deleted Succesfully',
             toastLength: Toast.LENGTH_LONG,
@@ -59,6 +57,7 @@ ThunkAction<DeleteAssignmentAppState> deleteAssignment(
             timeInSecForIosWeb: 1,
             fontSize: 20.0);
       } else {
+        Navigator.of(context).pop();
         Fluttertoast.showToast(
             msg: 'Some issue, please try again',
             toastLength: Toast.LENGTH_LONG,
@@ -67,6 +66,7 @@ ThunkAction<DeleteAssignmentAppState> deleteAssignment(
             fontSize: 20.0);
       }
     } catch (error) {
+      Navigator.of(context).pop();
       Fluttertoast.showToast(
           msg: 'Some issue, please try again',
           toastLength: Toast.LENGTH_LONG,

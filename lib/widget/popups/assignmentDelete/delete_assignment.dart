@@ -4,14 +4,13 @@ import 'package:inspflutterfrontend/base/base.dart';
 import 'package:inspflutterfrontend/widget/popups/assignmentDelete/delete_assignment_redux.dart';
 
 class DeleteAssignemnt extends StatelessWidget {
-  const DeleteAssignemnt({super.key});
+  const DeleteAssignemnt(
+      {super.key, required this.fetchAssignmentAfterUpdateorDelete});
+
+  final Function() fetchAssignmentAfterUpdateorDelete;
 
   @override
   Widget build(BuildContext context) {
-    void createAssignment(int assignmentId) {
-      dispatch(context, deleteAssignment(context, assignmentId));
-    }
-
     return StoreConnector<DeleteAssignmentAppState, DeleteAssignmentAppState>(
         converter: (store) => store.state,
         builder: (context, DeleteAssignmentAppState state) =>
@@ -80,8 +79,10 @@ class DeleteAssignemnt extends StatelessWidget {
                         Container(
                           width: 100,
                           child: ElevatedButton(
-                              onPressed: () =>
-                                  createAssignment(state.assignmentId),
+                              onPressed: () => dispatch(
+                                  context,
+                                  deleteAssignment(context, state.assignmentId,
+                                      fetchAssignmentAfterUpdateorDelete)),
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
                                 backgroundColor:
@@ -102,11 +103,14 @@ class DeleteAssignemnt extends StatelessWidget {
                 ])));
   }
 
-  static getScreen(int assignmentId) {
+  static getScreen(
+      int assignmentId, Function() fetchAssignmentAfterUpdateorDelete) {
     return getBaseScreen<DeleteAssignmentAppState, DeleteAssignemnt>(
         deleteAssignmentStateReducer,
         DeleteAssignmentAppState(assignmentId: assignmentId),
-        const DeleteAssignemnt());
+        DeleteAssignemnt(
+            fetchAssignmentAfterUpdateorDelete:
+                fetchAssignmentAfterUpdateorDelete));
   }
 
   static dispatch(BuildContext context, dynamic action) {

@@ -7,14 +7,15 @@ import 'package:inspflutterfrontend/widget/popups/assignmentDelete/delete_assign
 import 'package:inspflutterfrontend/widget/popups/assignmentPopup/add_assignment.dart';
 
 class AssignmentTopicWidget extends StatefulWidget {
-  const AssignmentTopicWidget({
-    super.key,
-    required this.heading,
-    required this.allAssignemntofTopic,
-  });
+  const AssignmentTopicWidget(
+      {super.key,
+      required this.heading,
+      required this.allAssignemntofTopic,
+      required this.fetchAssignmentAfterUpdateorDelete});
 
   final String heading;
   final List<TopicAssignmentCardModel> allAssignemntofTopic;
+  final Function() fetchAssignmentAfterUpdateorDelete;
 
   @override
   State<StatefulWidget> createState() {
@@ -160,7 +161,9 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
                                                 'PHYSICS',
                                                 assignment.topicName,
                                                 assignment.description,
-                                                assignment.assignmentFiles);
+                                                assignment.assignmentFiles,
+                                                widget
+                                                    .fetchAssignmentAfterUpdateorDelete);
                                           });
                                       // Add your edit functionality here
                                     },
@@ -179,8 +182,9 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
                                           context: context,
                                           builder: (BuildContext context) {
                                             return DeleteAssignemnt.getScreen(
-                                              assignment.id,
-                                            );
+                                                assignment.id,
+                                                widget
+                                                    .fetchAssignmentAfterUpdateorDelete);
                                           });
                                       // Add your edit functionality here
                                     },

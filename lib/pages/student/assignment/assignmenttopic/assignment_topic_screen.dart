@@ -12,6 +12,11 @@ class AssignmentTopicScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     dispatch(context, initialFetchAssignment(context));
+
+    void fetchAssignmentAfterUpdateorDelete() {
+      dispatch(context, initialFetchAssignment(context));
+    }
+
     return Scaffold(
         appBar: Navbar(),
         body: StoreConnector<AssignmentTopicScreenAppState,
@@ -33,11 +38,12 @@ class AssignmentTopicScreen extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         AssignmentTopicWidget(
-                                          heading:
-                                              "Assignments (${state.selectedtopic.name})",
-                                          allAssignemntofTopic:
-                                              state.allAssignmentOfTopic,
-                                        ),
+                                            heading:
+                                                "Assignments (${state.selectedtopic.name})",
+                                            allAssignemntofTopic:
+                                                state.allAssignmentOfTopic,
+                                            fetchAssignmentAfterUpdateorDelete:
+                                                fetchAssignmentAfterUpdateorDelete),
                                       ],
                                     ),
                                   ),

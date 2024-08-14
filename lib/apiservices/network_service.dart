@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/all_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_response_model.dart';
@@ -127,6 +129,16 @@ abstract class NetworkService {
           @Path() String classType,
           @Path() String classLevel,
           @Header('Authorization') String secretTokenHeader);
+
+  @POST('/student-feedback/get-all-student-feedback')
+  Future<HttpResponse<AllStudentFeedbackResponseModel>> getAllStudentFeedback(
+      @Body() AllStudentFeedbackRequestModel feedbackrequest,
+      @Header('Authorization') String secretTokenHeader);
+
+  @DELETE('/student-feedback/delete-student-feedback/{feedbackId}')
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteStudentFeedback(
+      @Path() int feedbackId,
+      @Header('Authorization') String secretTokenHeader);
 
   @GET('/assignment/get-assignment-by-topic-id/{topicId}')
   Future<HttpResponse<AllAssignmentResponseModel>> getAllAssignmentForTopic(

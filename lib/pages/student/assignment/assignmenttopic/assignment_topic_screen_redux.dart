@@ -6,7 +6,6 @@ import 'package:inspflutterfrontend/pages/student/assignment/assignmenttopic/ass
 import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/card/model/topic_assignment_card_model.dart';
-import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';

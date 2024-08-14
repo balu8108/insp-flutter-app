@@ -1,120 +1,89 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
+import 'package:inspflutterfrontend/pages/teacher/suggestion/widget/CustomPaginatedTable.dart';
 
-class MyDataSource extends DataTableSource {
+class DataTableExampleApp extends StatefulWidget {
+  const DataTableExampleApp(
+      {super.key,
+      required this.data,
+      required this.totalpage,
+      required this.page,
+      required this.getpreviousornextFeedback,
+      required this.deleteFeedback});
+  final List<FeedbackModel> data;
+  final int totalpage, page;
+  final Function(BuildContext, int) getpreviousornextFeedback;
+  final Function(BuildContext, int) deleteFeedback;
   @override
-  int get rowCount => 3;
+  _DataTableExampleAppState createState() => _DataTableExampleAppState();
+}
+
+class _DataTableExampleAppState extends State<DataTableExampleApp> {
+  // State management for columns and rows
+  late List<CustomDataColumn> columns;
+  late List<CustomDataRow> rows;
 
   @override
-  DataRow? getRow(int index) {
-    switch (index) {
-      case 0:
-        return const DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0')),
-            DataCell(Text('03/01/2024')),
-            DataCell(Text('Abhishek Mali')),
-            DataCell(
-              SizedBox(
-                width: 150, // Set max width here
-                child: const Text(
-                  'Recording not available in iPhone 14 Plus',
-                  overflow: TextOverflow.visible,
-                ),
+  void initState() {
+    super.initState();
+    // Initialize columns
+    columns = [
+      CustomDataColumn(label: 'S.No'),
+      CustomDataColumn(label: 'Date & Time'),
+      CustomDataColumn(label: 'Student Name'),
+      CustomDataColumn(label: 'Feedback'),
+      CustomDataColumn(label: 'Action'),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Initialize rows
+    if (widget.data.isNotEmpty) {
+      rows = widget.data.map((data) {
+        return CustomDataRow(
+          cells: [
+            CustomDataCell(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0), // Add padding from top and bottom
+                    child: Text('${data.id}'))),
+            CustomDataCell(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0), // Add padding from top and bottom
+                    child: Text(data.createdAt))),
+            CustomDataCell(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0), // Add padding from top and bottom
+                    child: Text(data.studentName))),
+            CustomDataCell(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0), // Add padding from top and bottom
+                    child: Text(data.feedback))),
+            CustomDataCell(
+              child: IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  widget.deleteFeedback(context, data.id);
+                },
               ),
-            ),
-            DataCell(Text('Action'))
+            ), // Example action text
           ],
         );
-      case 1:
-        return const DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0')),
-            DataCell(Text('03/01/2024')),
-            DataCell(Text('Abhishek Mali')),
-            DataCell(
-              SizedBox(
-                width: 150, // Set max width here
-                child: const Text(
-                  'Pls add poll feature in recording also like in unacademy special class for those who are attempting by pausing the video and then answering the questions',
-                  overflow: TextOverflow.visible,
-                ),
-              ),
-            ),
-            DataCell(Text('Action'))
-          ],
-        );
-      case 2:
-        return const DataRow(
-          cells: <DataCell>[
-            DataCell(Text('0')),
-            DataCell(Text('03/01/2024')),
-            DataCell(Text('Abhishek Mali')),
-            DataCell(
-              SizedBox(
-                width: 150, // Set max width here
-                child: const Text(
-                  'Google Chrome Version 122.0.6261.71 (Official Build) (64-bit) intel core i5 Ram 8.00 GB (7.78 GB usable) network upload and download speed 50mb/s not able too see lecture of kinetic theory of gases 1st classs champs batch',
-                  overflow: TextOverflow.visible,
-                ),
-              ),
-            ),
-            DataCell(Text('Action'))
-          ],
-        );
-      default:
-        return null;
+      }).toList();
+    } else {
+      rows = [];
     }
-  }
 
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => 0;
-}
-
-final DataTableSource dataSource = MyDataSource();
-
-void main() => runApp(const DataTableExampleApp());
-
-class DataTableExampleApp extends StatelessWidget {
-  const DataTableExampleApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: SingleChildScrollView(
-        padding: EdgeInsets.all(12.0),
-        child: SuggestionPage(),
-      ),
-    );
-  }
-}
-
-class SuggestionPage extends StatelessWidget {
-  const SuggestionPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return PaginatedDataTable(
-      columns: const <DataColumn>[
-        DataColumn(
-          label: Text('S.No'),
-        ),
-        DataColumn(
-          label: Text('Date & time'),
-        ),
-        DataColumn(
-          label: Text('Student Name'),
-        ),
-        DataColumn(
-          label: Text('Feedback'),
-        ),
-        DataColumn(
-          label: Text('Action'),
-        ),
-      ],
-      source: dataSource,
-    );
+    return CustomPaginatedTable(
+        columns: columns,
+        rows: rows,
+        rowsPerPage: 10,
+        totalPages: widget.totalpage,
+        page: widget.page,
+        getpreviousornextFeedback: widget.getpreviousornextFeedback);
   }
 }

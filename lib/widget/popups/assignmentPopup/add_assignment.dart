@@ -10,7 +10,10 @@ import 'package:inspflutterfrontend/widget/inputField/textfield_withoutsuffix.da
 import 'package:inspflutterfrontend/widget/popups/assignmentPopup/add_assignment_redux.dart';
 
 class AddAssignment extends StatelessWidget {
-  const AddAssignment({super.key});
+  const AddAssignment(
+      {super.key, required this.fetchAssignmentAfterUpdateorDelete});
+
+  final Function() fetchAssignmentAfterUpdateorDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,8 @@ class AddAssignment extends StatelessWidget {
     }
 
     void updateAssignment() {
-      dispatch(context, handleUpdate(context));
+      dispatch(
+          context, handleUpdate(context, fetchAssignmentAfterUpdateorDelete));
     }
 
     void uploadFile() {
@@ -91,9 +95,9 @@ class AddAssignment extends StatelessWidget {
                                   );
                                 }).toList(),
                                 selectedValueError: state.selectedTopicError,
-                                selectedValue: state.selectedTopicError!.isEmpty
+                                selectedValue: state.selectedTopic!.isEmpty
                                     ? null
-                                    : state.selectedTopicError,
+                                    : state.selectedTopic,
                                 onChanged: state.selectedSubject == "PHYSICS"
                                     ? (String? newValue) {
                                         dispatch(
@@ -210,7 +214,8 @@ class AddAssignment extends StatelessWidget {
       String? selectedSubject,
       String? selectedTopic,
       String? description,
-      List<LiveClassRoomFile> previousFiles) {
+      List<LiveClassRoomFile> previousFiles,
+      Function() fetchAssignmentAfterUpdateorDelete) {
     return getBaseScreen<AddAssignmentAppState, AddAssignment>(
         addAssignmentStateReducer,
         AddAssignmentAppState(
@@ -220,7 +225,9 @@ class AddAssignment extends StatelessWidget {
             selectedTopic: selectedTopic,
             description: description,
             previousFiles: previousFiles),
-        const AddAssignment());
+        AddAssignment(
+            fetchAssignmentAfterUpdateorDelete:
+                fetchAssignmentAfterUpdateorDelete));
   }
 
   static dispatch(BuildContext context, dynamic action) {

@@ -9,8 +9,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:inspflutterfrontend/data/hardcoded/topic_list.dart';
-import 'package:inspflutterfrontend/pages/student/assignment/assignmenttopic/assignment_topic_screen.dart';
-import 'package:inspflutterfrontend/pages/student/assignment/assignmenttopic/assignment_topic_screen_redux.dart';
 import 'package:inspflutterfrontend/utils/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -263,7 +261,8 @@ ThunkAction<AddAssignmentAppState> handleCreate(BuildContext context) {
   };
 }
 
-ThunkAction<AddAssignmentAppState> handleUpdate(BuildContext context) {
+ThunkAction<AddAssignmentAppState> handleUpdate(
+    BuildContext context, Function() fetchAssignmentAfterUpdateorDelete) {
   return (Store<AddAssignmentAppState> store) async {
     List<MultipartFile> files = [];
 
@@ -336,8 +335,7 @@ ThunkAction<AddAssignmentAppState> handleUpdate(BuildContext context) {
 
       if (response.statusCode == 200) {
         store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
-        // AssignmentTopicScreen.dispatch(
-        //     context, initialFetchAssignment(context));
+        fetchAssignmentAfterUpdateorDelete();
         Navigator.of(context).pop();
         Fluttertoast.showToast(
             msg: 'Assignment update successfully',
@@ -356,6 +354,7 @@ ThunkAction<AddAssignmentAppState> handleUpdate(BuildContext context) {
             fontSize: 20.0);
       }
     } catch (e) {
+      print(e);
       store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
       Fluttertoast.showToast(
           msg: 'Some issue, please try again',
