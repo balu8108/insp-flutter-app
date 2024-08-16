@@ -69,59 +69,72 @@ class MyUploadWidgetState extends State {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: const Color.fromRGBO(232, 242, 249, 1),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 32),
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: const Color.fromRGBO(232, 242, 249, 1),
+        ),
+        child: Column(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              INSPHeading('My Uploads'),
+              TextButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AddAssignment.getScreen(
+                            0, false, '', '', '', [], temporyFunction);
+                      });
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  overlayColor: Colors.transparent,
+                  splashFactory: NoSplash.splashFactory,
+                ),
+                child: Text(
+                  "+ Add Assignment",
+                  style: TextStyle(
+                      color: Color.fromRGBO(60, 141, 188, 1),
+                      backgroundColor: Colors.transparent),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 17,
+          ),
+          const SizedBox(
+            height: 17,
+          ),
+          SizedBox(
+              height: 200.0,
+              child: myUploadWidgetAppState.myUploadData.isNotEmpty
+                  ? Scrollbar(
+                      controller: _scrollController,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: myUploadWidgetAppState.myUploadData.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return LatestAssignmentCard(
+                              assignmentCardModel:
+                                  myUploadWidgetAppState.myUploadData[index],
+                              context: context);
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(
+                            width: 16,
+                          );
+                        },
+                      ),
+                    )
+                  : const Center(child: Text('No item')))
+        ]),
       ),
-      child: Column(children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            INSPHeading('My Uploads'),
-            TextButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AddAssignment.getScreen(
-                          0, false, '', '', '', [], temporyFunction);
-                    });
-              },
-              child: Text("+ Add Assignment"),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 17,
-        ),
-        const SizedBox(
-          height: 17,
-        ),
-        SizedBox(
-            height: 200.0,
-            child: myUploadWidgetAppState.myUploadData.isNotEmpty
-                ? Scrollbar(
-                    controller: _scrollController,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: myUploadWidgetAppState.myUploadData.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return LatestAssignmentCard(
-                            assignmentCardModel:
-                                myUploadWidgetAppState.myUploadData[index],
-                            context: context);
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(
-                          width: 16,
-                        );
-                      },
-                    ),
-                  )
-                : const Center(child: Text('No item')))
-      ]),
     );
   }
 }

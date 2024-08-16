@@ -24,6 +24,7 @@ class UpcomingClassesScreen extends StatelessWidget {
             child: Column(children: [
               SizedBox(
                   width: double.infinity,
+                  height: 39,
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor:

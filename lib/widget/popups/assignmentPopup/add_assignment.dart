@@ -202,7 +202,7 @@ class AddAssignment extends StatelessWidget {
                                     ))
                                   : Text(state.isEditScreen
                                       ? "Update Assignment"
-                                      : "Schedule Assignment")),
+                                      : "Send")),
                         ),
                       ])
                 ])));

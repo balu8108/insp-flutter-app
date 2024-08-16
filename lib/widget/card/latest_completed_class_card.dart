@@ -75,6 +75,11 @@ Widget LatestCompletedClassCard(
                       ),
                     );
                   },
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    overlayColor: Colors.transparent,
+                    splashFactory: NoSplash.splashFactory,
+                  ),
                   child: const Text(
                     'View Details',
                     style: TextStyle(

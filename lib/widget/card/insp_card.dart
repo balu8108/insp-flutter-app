@@ -63,6 +63,11 @@ Widget INSPCard(
                   onPressed: () {
                     onPressedViewDetails(context, inspCardModel);
                   },
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    overlayColor: Colors.transparent,
+                    splashFactory: NoSplash.splashFactory,
+                  ),
                   child: const Text(
                     'View Details',
                     style: TextStyle(
