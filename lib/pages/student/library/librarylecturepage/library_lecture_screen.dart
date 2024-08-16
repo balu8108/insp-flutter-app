@@ -52,7 +52,7 @@ class LibraryLectureScreen extends StatelessWidget {
     return getBaseScreen<LibraryLectureReduxAppState, LibraryLectureScreen>(
         LibraryLectureTopicStateReducer,
         LibraryLectureReduxAppState(selectedtopic: selectedtopic),
-        const LibraryLectureScreen());
+        LibraryLectureScreen());
   }
 
   static dispatch(BuildContext context, dynamic action) {

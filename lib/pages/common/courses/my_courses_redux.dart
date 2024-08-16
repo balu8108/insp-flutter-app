@@ -121,6 +121,12 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
     } else if (selectedCardName.contains('12th')) {
       classType = ClassType.REGULAR_CLASS.value;
       classLevel = ClassLevel.Class_12.name;
+    } else if (selectedCardName.contains('mastery')) {
+      classType = ClassType.REGULAR_CLASS.value;
+      classLevel = ClassLevel.JEE_Advanced_Mastery_Top_500.name;
+    } else if (selectedCardName.contains('discussion')) {
+      classType = ClassType.REGULAR_CLASS.value;
+      classLevel = ClassLevel.General_Discussion.name;
     }
 
     String userToken = await getUserToken();

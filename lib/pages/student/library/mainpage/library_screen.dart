@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/pages/common/alltopicswidget/all_topics_widget.dart';
 import 'package:inspflutterfrontend/pages/student/library/librarylecturepage/library_lecture_screen.dart';
+import 'package:inspflutterfrontend/pages/student/library/librarysoloclass/library_soloclass_screen.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
@@ -31,6 +32,15 @@ class LibraryScreen extends StatelessWidget {
       );
     }
 
+    void onPressedSoloClass(BuildContext context, INSPCardModel inspCardModel) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                LibrarySoloclassScreen.getScreen(inspCardModel)),
+      );
+    }
+
     return Scaffold(
       appBar: Navbar(),
       body: StoreConnector<LibraryAppState, LibraryAppState>(
@@ -53,9 +63,14 @@ class LibraryScreen extends StatelessWidget {
                           onViewDetailsClicked: onPressedLibrarySubject,
                         ),
                         const SizedBox(height: 24),
-                        AllTopicWidget.getScreen(
-                            heading: 'Library (${state.selectedItem.name})',
-                            onPressedViewDetails: onPressedMyCourse)
+                        if (state.selectedItem.name == "Topic Based Recording")
+                          AllTopicWidget.getScreen(
+                              heading: 'Library (${state.selectedItem.name})',
+                              onPressedViewDetails: onPressedSoloClass)
+                        else
+                          AllTopicWidget.getScreen(
+                              heading: 'Library (${state.selectedItem.name})',
+                              onPressedViewDetails: onPressedMyCourse)
                       ],
                     ),
                   ),

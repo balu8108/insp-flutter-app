@@ -148,4 +148,9 @@ abstract class NetworkService {
   Future<HttpResponse<AllAssignmentResponseModel>> getAllAssignmentForTopic(
       @Path() String topicId,
       @Header('Authorization') String secretTokenHeader);
+
+  @GET('/solo-lecture/get-soloclass-for-topicbasedrecording/{topicId}')
+  Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClassForTopic(
+      @Path() String topicId,
+      @Header('Authorization') String secretTokenHeader);
 }
