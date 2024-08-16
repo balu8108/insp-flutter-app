@@ -63,8 +63,7 @@ Widget RatingFeedbackBottomWidgets(
       ),
       child: Column(children: [
         INSPHeading(heading),
-        const SizedBox(height: 16),
-        const SizedBox(height: 16),
+        const SizedBox(height: 32),
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Expanded(
             child: DonutChart(ratingFeedbackCard: ratingFeedbackCard),

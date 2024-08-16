@@ -82,7 +82,7 @@ class RatingFeedbackWidgetState extends State {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            INSPHeading('Rating & Feedback'),
+            Expanded(flex: 5, child: INSPHeading('Rating & Feedback')),
             TextButton(
                 onPressed: _handleSeeAll,
                 child: const Text("See All",

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget INSPHeading(String heading){
+Widget INSPHeading(String heading) {
   return Row(
     children: [
       Container(
@@ -14,9 +14,11 @@ Widget INSPHeading(String heading){
       const SizedBox(
         width: 8,
       ),
-      Text(
-        heading,
-          style: const TextStyle(fontSize: 16, overflow: TextOverflow.ellipsis))
+      Expanded(
+          flex: 9,
+          child: Text(heading,
+              style: const TextStyle(
+                  fontSize: 16, overflow: TextOverflow.ellipsis)))
     ],
   );
 }

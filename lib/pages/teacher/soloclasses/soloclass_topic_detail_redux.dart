@@ -24,7 +24,7 @@ part 'soloclass_topic_detail_redux.freezed.dart';
 class SoloclassTopicDetailReduxAppState
     with _$SoloclassTopicDetailReduxAppState {
   const factory SoloclassTopicDetailReduxAppState({
-    @Default(INSPCardModel("", "", "", "")) INSPCardModel selectedTopic,
+    required INSPCardModel selectedTopic,
     @Default([]) List<INSPCardModel> allTopics,
     @Default(SoloclassTopicwiseDetailsResponseModel(
         totalLectures: 0,
@@ -76,8 +76,6 @@ class UpdateAllTopicDetails extends SoloclassTopicDetailAction {
 ThunkAction<SoloclassTopicDetailReduxAppState> showAllTopics(
     BuildContext context) {
   return (Store<SoloclassTopicDetailReduxAppState> store) async {
-    // store.dispatch(
-    //     context, UpdateSelectedTopic(selectedTopics: inspCardModel));
     final remoteDataSource = RemoteDataSource();
 
     final allTopics = await remoteDataSource.getAllTopics(
@@ -93,9 +91,7 @@ ThunkAction<SoloclassTopicDetailReduxAppState> showAllTopics(
               topicDescriptionConstants[int.parse(it.id ?? '1')] ?? ''))
           .toList();
 
-      store.dispatch(
-          showSoloclassTopicwiseDetails(context, allTopicsForSubject[0]));
-
+      store.dispatch(initialFetchTopicDetail(context, allTopicsForSubject[0]));
       store.dispatch(UpdateAllTopic(allTopics: allTopicsForSubject));
     }
   };
@@ -104,15 +100,29 @@ ThunkAction<SoloclassTopicDetailReduxAppState> showAllTopics(
 ThunkAction<SoloclassTopicDetailReduxAppState> showSoloclassTopicwiseDetails(
     BuildContext context, INSPCardModel inspCardModel) {
   return (Store<SoloclassTopicDetailReduxAppState> store) async {
+    store.dispatch(UpdateSelectedTopic(selectedTopics: inspCardModel));
+
     final remoteDataSource = RemoteDataSource();
-
     String userToken = await getUserToken();
-
-    final allTopics = await remoteDataSource.getSoloClassTopicWiseDetails(
-        inspCardModel.id, userToken);
-    if (allTopics.response.statusCode == 200) {
-      final dataForTopic = allTopics.data;
-      store.dispatch(UpdateAllTopicDetails(soloclasstopicdetail: dataForTopic));
+    try {
+      final allTopics = await remoteDataSource.getSoloClassTopicWiseDetails(
+          inspCardModel.id, userToken);
+      if (allTopics.response.statusCode == 200) {
+        final dataForTopic = allTopics.data;
+        store.dispatch(
+            UpdateAllTopicDetails(soloclasstopicdetail: dataForTopic));
+      } else {
+        const defaultValue = SoloclassTopicwiseDetailsResponseModel(
+            totalLectures: 0,
+            transformedData: TransformedModelData("", "", "", [], []));
+        store.dispatch(
+            UpdateAllTopicDetails(soloclasstopicdetail: defaultValue));
+      }
+    } catch (e) {
+      const defaultValue = SoloclassTopicwiseDetailsResponseModel(
+          totalLectures: 0,
+          transformedData: TransformedModelData("", "", "", [], []));
+      store.dispatch(UpdateAllTopicDetails(soloclasstopicdetail: defaultValue));
     }
   };
 }
@@ -121,6 +131,18 @@ ThunkAction<SoloclassTopicDetailReduxAppState> initialFetchTopics(
     BuildContext context) {
   return (Store<SoloclassTopicDetailReduxAppState> store) async {
     store.dispatch(showAllTopics(context));
+  };
+}
+
+ThunkAction<SoloclassTopicDetailReduxAppState> initialFetchTopicDetail(
+    BuildContext context, INSPCardModel apiData) {
+  return (Store<SoloclassTopicDetailReduxAppState> store) async {
+    if (store.state.selectedTopic.id.isNotEmpty) {
+      store.dispatch(
+          showSoloclassTopicwiseDetails(context, store.state.selectedTopic));
+    } else {
+      store.dispatch(showSoloclassTopicwiseDetails(context, apiData));
+    }
   };
 }
 

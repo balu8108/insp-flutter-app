@@ -32,6 +32,7 @@ class StudentHomeScreen extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               flex: 9,
@@ -41,16 +42,16 @@ class StudentHomeScreen extends StatelessWidget {
                     onViewDetailsClicked: onPressedMyCourse,
                   ),
                   const SizedBox(height: 16),
-                  const Row(
+                  Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         flex: 7, // 70%
                         child: AttendanceWidget(),
                       ),
                       SizedBox(width: 16),
                       Expanded(
                         flex: 3, // 30%
-                        child: AssignmentWidget(),
+                        child: AssignmentWidget.getScreen(),
                       ),
                     ],
                   ),

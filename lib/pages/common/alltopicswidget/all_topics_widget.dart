@@ -37,10 +37,9 @@ class AllTopicWidget extends StatelessWidget {
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  INSPHeading(heading),
-                  const SizedBox(height: 16),
-                  const Spacer(),
+                  Expanded(flex: 5, child: INSPHeading(heading)),
                   searchBox(context, filterWithQuery),
                 ],
               ),
@@ -59,6 +58,12 @@ class AllTopicWidget extends StatelessWidget {
                       style: TextStyle(fontSize: 20),
                     ),
                   ],
+                )
+              else if (heading.contains("Chemistry"))
+                AssignmentSubjectTopic(
+                  key: UniqueKey(),
+                  allSubjectTopics: state.filterSubjectTopics,
+                  onViewDetailsClicked: onPressedViewDetails,
                 )
               else
                 AssignmentSubjectTopic(

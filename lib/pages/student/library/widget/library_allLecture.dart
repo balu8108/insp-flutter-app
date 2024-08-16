@@ -43,7 +43,13 @@ class LibraryAlllectureWidgetState extends State<LibraryAlllectureWidget> {
       ),
       child: Column(
         children: [
-          INSPHeading('Physics ( ${widget.heading} )'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                  flex: 9, child: INSPHeading('Physics ( ${widget.heading} )')),
+            ],
+          ),
           const SizedBox(
             height: 16,
           ),

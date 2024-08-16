@@ -48,7 +48,8 @@ class SoloclassTopicDetailScreen extends StatelessWidget {
                                 const SizedBox(height: 16),
                                 SoloclassroomDescriptionWidgets(
                                     soloclasstopicdetail:
-                                        state.soloclasstopicdetail)
+                                        state.soloclasstopicdetail,
+                                    selectedTopic: state.selectedTopic)
                               ],
                             ),
                           ),
@@ -64,11 +65,11 @@ class SoloclassTopicDetailScreen extends StatelessWidget {
         ));
   }
 
-  static getScreen() {
+  static getScreen(INSPCardModel selectedTopic) {
     return getBaseScreen<SoloclassTopicDetailReduxAppState,
             SoloclassTopicDetailScreen>(
         soloclassTopicDetailReducer,
-        SoloclassTopicDetailReduxAppState(),
+        SoloclassTopicDetailReduxAppState(selectedTopic: selectedTopic),
         const SoloclassTopicDetailScreen());
   }
 

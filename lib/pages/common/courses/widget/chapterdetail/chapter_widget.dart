@@ -38,7 +38,12 @@ class ChapterWidgetState extends State<ChapterWidget> {
       ),
       child: Column(
         children: [
-          INSPHeading(widget.title),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(flex: 9, child: INSPHeading(widget.title)),
+            ],
+          ),
           const SizedBox(
             height: 16,
           ),

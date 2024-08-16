@@ -47,7 +47,7 @@ class _AttendanceWidgetState extends State<AttendanceWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              INSPHeading('Attendance'),
+              Expanded(flex: 5, child: INSPHeading('Attendance')),
               const Text(
                 "See All",
                 style: TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis),

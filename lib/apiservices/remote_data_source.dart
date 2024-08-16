@@ -96,8 +96,14 @@ abstract class RemoteDataSource {
   Future<HttpResponse<DeleteAssignmentResponseModel>> deleteStudentFeedback(
       int feedbackId, String secretTokenHeader);
 
+  Future<HttpResponse<AllAssignmentResponseModel>> getRecentAssignment(
+      String secretTokenHeader);
+
   Future<HttpResponse<AllStudentFeedbackResponseModel>> getAllStudentFeedback(
       AllStudentFeedbackRequestModel feedbackrequest, String secretTokenHeader);
+
+  Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClassForTopic(
+      String topicId, String secretTokenHeader);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -251,5 +257,18 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       String secretTokenHeader) {
     return deviceNetworkService.getAllStudentFeedback(
         feedbackrequest, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<AllAssignmentResponseModel>> getRecentAssignment(
+      String secretTokenHeader) {
+    return deviceNetworkService.getRecentAssignment(secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClassForTopic(
+      String topicId, String secretTokenHeader) {
+    return deviceNetworkService.getAllSoloClassForTopic(
+        topicId, secretTokenHeader);
   }
 }

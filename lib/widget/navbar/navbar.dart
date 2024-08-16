@@ -16,8 +16,6 @@ import 'package:inspflutterfrontend/widget/popups/student_suggestion.dart';
 class Navbar extends StatefulWidget implements PreferredSizeWidget {
   Navbar({super.key});
 
-  final GlobalKey<_NavbarState> _navbarKey = GlobalKey<_NavbarState>();
-
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 

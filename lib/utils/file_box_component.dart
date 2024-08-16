@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/utils/extractFileNameFromS3URL.dart';
+import 'package:inspflutterfrontend/widget/popups/pdfviewer.dart';
 
 class FileBoxComponent extends StatelessWidget {
   final List<LiveClassRoomFile> data;
@@ -32,9 +33,15 @@ class FileBoxComponent extends StatelessWidget {
 
                   return GestureDetector(
                     onTap: () {
-                      // Dispatch action to open modal
-                      // Replace with your actual dispatch logic
-                      // dispatch(setIsDocModalOpen(item?.id, item?.key, type, true));
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const PdfViewerFromUrl(
+                            pdfUrl:
+                                'https://insp-test-local-bucket.s3.ap-south-1.amazonaws.com/pdf1.pdf',
+                          );
+                        },
+                      );
                     },
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 8.0),

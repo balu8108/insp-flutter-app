@@ -188,7 +188,7 @@ ThunkAction<AddAssignmentAppState> handleCreate(BuildContext context) {
     }
 
     for (PlatformFile file in store.state.pickedFiles) {
-      if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
+      if (kIsWeb) {
         files.add(MultipartFile.fromBytes(file.bytes!, filename: file.name));
       } else {
         files
@@ -287,7 +287,7 @@ ThunkAction<AddAssignmentAppState> handleUpdate(
     }
 
     for (PlatformFile file in store.state.pickedFiles) {
-      if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
+      if (kIsWeb) {
         files.add(MultipartFile.fromBytes(file.bytes!, filename: file.name));
       } else {
         files

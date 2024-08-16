@@ -22,7 +22,12 @@ class RecordingDetailWidget extends StatelessWidget {
           color: const Color.fromRGBO(232, 242, 249, 1),
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          INSPHeading('Recorded Class'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(flex: 9, child: INSPHeading('Recorded Class')),
+            ],
+          ),
           const SizedBox(
             height: 40,
           ),
