@@ -33,27 +33,50 @@ class _LiveclassCalendarState extends State<LiveclassCalendar> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(251, 50.0),
-                backgroundColor:
-                    const Color.fromRGBO(60, 141, 188, 1), // Background color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5), // Border radius
+          Padding(
+            padding: const EdgeInsets.all(8.0), // Padding around the buttons
+            child: Row(
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(
+                        200, 50.0), // Set a fixed size for the button
+                    backgroundColor: const Color.fromRGBO(
+                        60, 141, 188, 1), // Background color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5), // Border radius
+                    ),
+                  ),
+                  onPressed: () {
+                    // Handle "View Time Table" button press
+                  },
+                  child: const Text(
+                    'Upload Time Table',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-              ),
-              onPressed: () {
-                // Handle button press
-              },
-              child: const Text(
-                'View Time Table',
-                style: TextStyle(color: Colors.white),
-              ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(200, 50.0),
+                    backgroundColor: const Color.fromRGBO(60, 141, 188, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  onPressed: () {
+                    // Handle "Upload Time Table" button press
+                  },
+                  child: const Text(
+                    'View Time Table',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 10),
-          Container(
+          const SizedBox(height: 15),
+          Expanded(
             child: ValueListenableBuilder<DateTime>(
               valueListenable: _selectedDay,
               builder: (context, selectedDay, _) {

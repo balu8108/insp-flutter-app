@@ -137,16 +137,19 @@ class _NavbarState extends State<Navbar> {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: TextButton(
         onPressed: onPressed,
-        child: Text(
-          text,
-          style: TextStyle(
-            color: Colors.black,
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.black,
+          textStyle: TextStyle(
             fontSize: 16,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
             decoration:
                 isSelected ? TextDecoration.underline : TextDecoration.none,
           ),
+          backgroundColor: Colors.transparent,
+          overlayColor: Colors.transparent,
+          splashFactory: NoSplash.splashFactory,
         ),
+        child: Text(text),
       ),
     );
   }
