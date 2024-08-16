@@ -16,7 +16,12 @@ Widget RatingFeedbackBottomWidgets(
         color: const Color.fromRGBO(232, 242, 249, 1),
       ),
       child: Column(children: [
-        INSPHeading(heading),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(flex: 9, child: INSPHeading(heading)),
+          ],
+        ),
         const SizedBox(
           height: 16,
         ),

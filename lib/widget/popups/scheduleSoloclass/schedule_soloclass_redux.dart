@@ -292,7 +292,7 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
     }
 
     for (PlatformFile file in store.state.pickedFiles) {
-      if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
+      if (kIsWeb) {
         files.add(MultipartFile.fromBytes(file.bytes!, filename: file.name));
       } else {
         files
@@ -390,7 +390,7 @@ ThunkAction<ScheduleSoloclassAppState> handleUpdateSoloClass(
     }
 
     for (PlatformFile file in store.state.pickedFiles) {
-      if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
+      if (kIsWeb) {
         files.add(MultipartFile.fromBytes(file.bytes!, filename: file.name));
       } else {
         files

@@ -79,7 +79,7 @@ class MyUploadWidgetState extends State {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            INSPHeading('My Uploads'),
+            Expanded(flex: 5, child: INSPHeading('My Uploads')),
             TextButton(
               onPressed: () {
                 showDialog(

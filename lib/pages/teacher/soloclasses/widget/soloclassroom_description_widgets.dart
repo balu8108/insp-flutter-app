@@ -32,7 +32,12 @@ class _SoloclassroomDescriptionWidgetsState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          INSPHeading(widget.selectedTopic.name),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(flex: 9, child: INSPHeading(widget.selectedTopic.name)),
+            ],
+          ),
           const SizedBox(height: 40),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,

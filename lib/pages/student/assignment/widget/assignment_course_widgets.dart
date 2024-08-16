@@ -38,7 +38,12 @@ class MyCoursesWidgetState extends State<AssignmentCourseWidgets> {
       ),
       child: Column(
         children: [
-          INSPHeading('My Courses'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(flex: 9, child: INSPHeading('My Courses')),
+            ],
+          ),
           const SizedBox(
             height: 16,
           ),

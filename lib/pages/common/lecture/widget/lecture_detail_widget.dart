@@ -39,8 +39,15 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          INSPHeading(
-              'Details : ( ${lec.liveClassRoomDetail.topicName} ) :(${ClassLevel.getValueFromName(lec.classLevel)})'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                  flex: 9,
+                  child: INSPHeading(
+                      'Details : ( ${lec.liveClassRoomDetail.topicName} ) :(${ClassLevel.getValueFromName(lec.classLevel)})')),
+            ],
+          ),
           const SizedBox(
             height: 40,
           ),

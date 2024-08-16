@@ -84,7 +84,7 @@ class SoloClassesWidget extends State {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            INSPHeading('Solo Classes'),
+            Expanded(flex: 5, child: INSPHeading('Solo Classes')),
             TextButton(onPressed: _handleSeeAll, child: Text("See All"))
           ],
         ),

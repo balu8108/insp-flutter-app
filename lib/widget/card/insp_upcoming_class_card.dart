@@ -46,11 +46,12 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
   Widget build(BuildContext context) {
     upcomingData = _getUpcomingData(widget.type);
     return SizedBox(
-      height: upcomingData.isNotEmpty ? upcomingData.length * 350 : 100,
       child: upcomingData.isNotEmpty
-          ? ListView.separated(
+          ? GridView.builder(
               itemCount: upcomingData.length,
-              itemBuilder: (BuildContext context, int index) {
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
                 final data = upcomingData[index];
                 final scheduledStartTime = convertTime(data.scheduledStartTime);
                 final scheduledEndTime = convertTime(data.scheduledEndTime);
@@ -59,88 +60,90 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                     ? "General"
                     : capitalizeFirstLetter(data.liveClassRoomDetail.topicName);
 
-                return Column(
-                  children: [
-                    Card(
-                        key: UniqueKey(),
-                        color: Colors.white,
-                        child: Stack(children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _buildRow(
-                                  context,
-                                  topicName,
-                                  '$scheduledStartTime - $scheduledEndTime',
+                return Column(children: [
+                  Card(
+                      key: UniqueKey(),
+                      color: Colors.white,
+                      child: Stack(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildRow(
+                                context,
+                                topicName,
+                                '$scheduledStartTime - $scheduledEndTime',
+                              ),
+                              const SizedBox(height: 2),
+                              _buildSecondRow(
+                                context,
+                                data.mentorName,
+                                scheduledDate,
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                data.classLevel,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 10,
+                                  color: Color.fromRGBO(44, 51, 41, 0.47),
                                 ),
-                                const SizedBox(height: 2),
-                                _buildSecondRow(
-                                  context,
-                                  data.mentorName,
-                                  scheduledDate,
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  data.classLevel,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 10,
-                                    color: Color.fromRGBO(44, 51, 41, 0.47),
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                _buildFileBox(data.liveClassRoomFiles),
-                                const SizedBox(height: 16),
-                                _buildDescription(
-                                  'Description',
-                                  data.liveClassRoomDetail.description,
-                                ),
-                                const SizedBox(height: 16),
-                                JoinClassBtn(status: data.classStatus),
-                              ],
-                            ),
+                              ),
+                              const SizedBox(height: 16),
+                              _buildFileBox(data.liveClassRoomFiles),
+                              const SizedBox(height: 16),
+                              _buildDescription(
+                                'Description',
+                                data.liveClassRoomDetail.description,
+                              ),
+                              const SizedBox(height: 16),
+                              JoinClassBtn(status: data.classStatus),
+                            ],
                           ),
-                          Positioned(
-                            right: 8,
-                            top: 8,
-                            child: IconButton(
-                              icon: const Icon(Icons.edit, color: Colors.black),
-                              iconSize: 16.0, // Adjust the icon size
-                              padding: const EdgeInsets.all(4.0),
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return ScheduleLiveClass.getScreen(
-                                          data.id,
-                                          true,
-                                          data.subjectName,
-                                          data.scheduledDate,
-                                          data.scheduledStartTime,
-                                          data.scheduledEndTime,
-                                          data.liveClassRoomDetail.chapterName,
-                                          data.liveClassRoomDetail.topicName,
-                                          data.classLevel,
-                                          data.classType,
-                                          data.liveClassRoomDetail.lectureNo
-                                              .toString(),
-                                          data.liveClassRoomDetail.agenda,
-                                          data.liveClassRoomDetail.description,
-                                          data.muteAllStudents,
-                                          data.liveClassRoomFiles);
-                                    });
-                                // Add your edit functionality here
-                              },
-                            ),
+                        ),
+                        Positioned(
+                          right: 8,
+                          top: 8,
+                          child: IconButton(
+                            icon: const Icon(Icons.edit, color: Colors.black),
+                            iconSize: 16.0, // Adjust the icon size
+                            padding: const EdgeInsets.all(4.0),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return ScheduleLiveClass.getScreen(
+                                        data.id,
+                                        true,
+                                        data.subjectName,
+                                        data.scheduledDate,
+                                        data.scheduledStartTime,
+                                        data.scheduledEndTime,
+                                        data.liveClassRoomDetail.chapterName,
+                                        data.liveClassRoomDetail.topicName,
+                                        data.classLevel,
+                                        data.classType,
+                                        data.liveClassRoomDetail.lectureNo
+                                            .toString(),
+                                        data.liveClassRoomDetail.agenda,
+                                        data.liveClassRoomDetail.description,
+                                        data.muteAllStudents,
+                                        data.liveClassRoomFiles);
+                                  });
+                              // Add your edit functionality here
+                            },
                           ),
-                        ]))
-                  ],
-                );
+                        ),
+                      ]))
+                ]);
               },
-              separatorBuilder: (BuildContext context, int index) =>
-                  const SizedBox(width: 17),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 1,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                mainAxisExtent: 280,
+              ),
             )
           : const Center(child: Text('No items')),
     );
@@ -150,27 +153,33 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Tooltip(
-          message: leftText,
+        Expanded(
+            flex: 5,
+            child: Tooltip(
+              message: leftText,
+              child: Text(
+                leftText,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: Color(0xFF2C3329),
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            )),
+        const SizedBox(width: 5),
+        Expanded(
+          flex: 5,
           child: Text(
-            leftText,
+            rightText,
             style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-              color: Color(0xFF2C3329),
+              fontSize: 10,
+              color: Color.fromRGBO(44, 51, 41, 0.47),
+              fontWeight: FontWeight.w400,
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
           ),
-        ),
-        Text(
-          rightText,
-          style: const TextStyle(
-            fontSize: 10,
-            color: Color.fromRGBO(44, 51, 41, 0.47),
-            fontWeight: FontWeight.w400,
-          ),
-        ),
+        )
       ],
     );
   }

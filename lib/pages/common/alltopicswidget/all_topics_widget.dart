@@ -37,10 +37,9 @@ class AllTopicWidget extends StatelessWidget {
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  INSPHeading(heading),
-                  const SizedBox(height: 16),
-                  const Spacer(),
+                  Expanded(flex: 5, child: INSPHeading(heading)),
                   searchBox(context, filterWithQuery),
                 ],
               ),

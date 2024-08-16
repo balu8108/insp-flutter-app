@@ -68,7 +68,16 @@ class UpcomingClassesScreen extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           return Column(
                             children: [
-                              INSPHeading(classCategories[index].label),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                      flex: 9,
+                                      child: INSPHeading(
+                                          classCategories[index].label)),
+                                ],
+                              ),
                               const SizedBox(height: 20),
                               ScheduleClassBox(
                                   type: classCategories[index].category,

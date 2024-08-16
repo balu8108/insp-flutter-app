@@ -23,7 +23,12 @@ class AssignmentWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            INSPHeading('Assignment'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(flex: 9, child: INSPHeading('Assignment')),
+              ],
+            ),
             const SizedBox(height: 17),
             state.allRecentAssignment.isNotEmpty
                 ? Expanded(

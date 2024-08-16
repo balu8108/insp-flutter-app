@@ -56,7 +56,12 @@ class _LibraryLectureWidgetState extends State<LibraryLectureWidget> {
           )
         : Column(
             children: [
-              INSPHeading(widget.heading),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(flex: 9, child: INSPHeading(widget.heading)),
+                ],
+              ),
               const SizedBox(height: 16),
               // searchBox(context, _filterWithQueryText),
             ],

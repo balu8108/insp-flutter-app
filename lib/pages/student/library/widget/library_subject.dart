@@ -29,7 +29,12 @@ class LibrarySubjectState extends State<LibrarySubject> {
       ),
       child: Column(
         children: [
-          INSPHeading('Library'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(flex: 9, child: INSPHeading('Library')),
+            ],
+          ),
           const SizedBox(
             height: 16,
           ),

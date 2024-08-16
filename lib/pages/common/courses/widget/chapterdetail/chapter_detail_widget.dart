@@ -63,7 +63,13 @@ class ChapterDetailWidgetState extends State<ChapterDetailWidget> {
           )
         : Column(
             children: [
-              INSPHeading(widget.selectedChapter.name),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                      flex: 9, child: INSPHeading(widget.selectedChapter.name)),
+                ],
+              ),
               const SizedBox(height: 16),
               searchBox(context, _filterWithQueryText),
             ],
