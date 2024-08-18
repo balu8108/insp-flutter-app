@@ -31,7 +31,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
       String userToken = await getUserToken();
       final pdfData = await remoteDataSource.getDocumentUrl(
           widget.pdfId, "live", userToken);
-      if (pdfData.data.status == 200) {
+      if (pdfData.data.status == true) {
         final String pdfUrl = pdfData.data.data.getUrl;
         final pdfBytes = await InternetFile.get(pdfUrl);
         _pdfController = PdfControllerPinch(
@@ -40,7 +40,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
         updateState(pdfViewerAppState.copyWith(fileUrl: pdfUrl));
       } else {
         // Handle error response
-        print('Error:');
+        print('Error h:');
       }
     } catch (e) {
       // Handle any other errors

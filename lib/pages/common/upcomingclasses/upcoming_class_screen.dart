@@ -61,38 +61,42 @@ class UpcomingClassesScreen extends StatelessWidget {
                 height: 17,
               ),
               SizedBox(
-                height: 700,
-                child: classCategories.isNotEmpty
-                    ? ListView.separated(
-                        scrollDirection: Axis.vertical,
-                        itemCount: classCategories.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                      flex: 9,
-                                      child: INSPHeading(
-                                          classCategories[index].label)),
-                                ],
-                              ),
-                              const SizedBox(height: 20),
-                              ScheduleClassBox(
-                                  type: classCategories[index].category,
-                                  upcomingWidgetAppState: state.weeklyData),
-                            ],
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const SizedBox(
-                            width: 17,
-                          );
-                        })
-                    : const Center(child: Text('No items')),
-              )
+                  height: 700,
+                  child: classCategories.isNotEmpty
+                      ? ListView.separated(
+                          scrollDirection: Axis.vertical,
+                          itemCount: classCategories.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                        flex: 9,
+                                        child: INSPHeading(
+                                            classCategories[index].label)),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                ScheduleClassBox(
+                                    type: classCategories[index].category,
+                                    upcomingWidgetAppState: state.weeklyData),
+                              ],
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const SizedBox(
+                              height: 20,
+                            );
+                          })
+                      : const Center(
+                          child: Text(
+                          'No items',
+                          style: TextStyle(
+                              color: Color.fromRGBO(44, 51, 41, 0.47)),
+                        )))
             ])));
   }
 
