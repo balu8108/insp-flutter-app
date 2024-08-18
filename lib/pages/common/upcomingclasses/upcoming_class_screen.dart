@@ -24,7 +24,7 @@ class UpcomingClassesScreen extends StatelessWidget {
             child: Column(children: [
               SizedBox(
                   width: double.infinity,
-                  height: 39,
+                  height: 40,
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor:
@@ -69,16 +69,7 @@ class UpcomingClassesScreen extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           return Column(
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                      flex: 9,
-                                      child: INSPHeading(
-                                          classCategories[index].label)),
-                                ],
-                              ),
+                              INSPHeading(classCategories[index].label),
                               const SizedBox(height: 20),
                               ScheduleClassBox(
                                   type: classCategories[index].category,

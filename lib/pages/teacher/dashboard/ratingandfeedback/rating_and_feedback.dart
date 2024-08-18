@@ -6,6 +6,7 @@ import 'package:inspflutterfrontend/widget/card/latest_completed_class_card.dart
 import 'package:inspflutterfrontend/widget/card/model/latest_completed_class_card_model.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:inspflutterfrontend/pages/teacher/dashboard/ratingandfeedback/rating_and_feedback_widget_redux.dart';
+import 'package:inspflutterfrontend/widget/loader/data_loader.dart';
 
 import '../../../../utils/capitalize.dart';
 
@@ -24,14 +25,16 @@ class RatingFeedbackWidgetState extends State {
   RatingFeedbackWidgetState();
 
   final ScrollController _scrollController = ScrollController();
+  bool _isLoading = true;
 
   void updateState(RatingFeedbackWidgetAppState ratingFeedbackWidgetAppState) {
     setState(() {
       this.ratingFeedbackWidgetAppState = ratingFeedbackWidgetAppState;
+      _isLoading = false;
     });
   }
 
-  // call an API of get all subjects
+  // call an API of  latest fiished cleasses
   void getAllLatestCompletedClasses() async {
     final remoteDataSource = RemoteDataSource();
     String userToken = await getUserToken();
@@ -54,6 +57,10 @@ class RatingFeedbackWidgetState extends State {
 
       updateState(ratingFeedbackWidgetAppState.copyWith(
           latestCompletedClassData: latestCompletedCardModels));
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -87,16 +94,20 @@ class RatingFeedbackWidgetState extends State {
                 onPressed: _handleSeeAll,
                 child: const Text("See All",
                     style: TextStyle(
-                        fontSize: 12, overflow: TextOverflow.ellipsis)))
+                        fontSize: 14,
+                        overflow: TextOverflow.ellipsis,
+                        color: Color(0xFF2C3329))))
           ],
         ),
         const SizedBox(
           height: 17,
         ),
-        SizedBox(
-            height: 500.0,
-            child:
-                ratingFeedbackWidgetAppState.latestCompletedClassData.isNotEmpty
+        _isLoading
+            ? DataLoader()
+            : SizedBox(
+                height: 500.0,
+                child: ratingFeedbackWidgetAppState
+                        .latestCompletedClassData.isNotEmpty
                     ? Scrollbar(
                         controller: _scrollController,
                         child: ListView.separated(

@@ -105,6 +105,13 @@ ThunkAction<LoginAppState> handleLogin(BuildContext context) {
               MaterialPageRoute(
                   builder: (context) => HomeScreen(
                       userData: result.data.loginResponseModelResult)));
+
+          Fluttertoast.showToast(
+              msg: "Loging you in !!",
+              toastLength: Toast.LENGTH_LONG,
+              backgroundColor: const Color(0xFF3C8DBC),
+              timeInSecForIosWeb: 1,
+              fontSize: 20.0);
         } else {
           LoginScreen.dispatch(context, UpdateIsLoading(isLoading: false));
           Fluttertoast.showToast(

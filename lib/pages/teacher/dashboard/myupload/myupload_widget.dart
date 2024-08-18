@@ -91,12 +91,12 @@ class MyUploadWidgetState extends State {
                               0, false, '', '', '', [], temporyFunction);
                         });
                   },
-                  child: Text("+ Add Assignment"),
+                  child: Text(
+                    "+ Add Assignment",
+                    style: TextStyle(color: Color(0xFF3C8DBC)),
+                  ),
                 ),
               ],
-            ),
-            const SizedBox(
-              height: 17,
             ),
             const SizedBox(
               height: 17,

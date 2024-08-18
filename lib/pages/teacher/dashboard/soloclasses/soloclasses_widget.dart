@@ -7,32 +7,36 @@ import 'package:inspflutterfrontend/widget/card/latest_solo_class_card.dart';
 import 'package:inspflutterfrontend/widget/card/model/latest_solo_class_card_model.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:inspflutterfrontend/pages/teacher/dashboard/soloclasses/soloclasses_widget_redux.dart';
+import 'package:inspflutterfrontend/widget/loader/data_loader.dart';
 
 import '../../../../utils/capitalize.dart';
 
 class Soloclasses extends StatefulWidget {
   const Soloclasses({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return SoloClassesWidget();
   }
 }
 
-class SoloClassesWidget extends State {
+class SoloClassesWidget extends State<Soloclasses> {
   SoloClassesWidgetAppState soloClassesWidgetAppState =
       const SoloClassesWidgetAppState(latestSoloClassesData: []);
 
   SoloClassesWidget();
 
   final ScrollController _scrollController = ScrollController();
+  bool _isLoading = true; // Loading state variable
 
   void updateState(SoloClassesWidgetAppState soloClassesWidgetAppState) {
     setState(() {
       this.soloClassesWidgetAppState = soloClassesWidgetAppState;
+      _isLoading = false; // Stop loading when data is fetched
     });
   }
 
-  // call an API of get all subjects
+  // Call an API to get all latest solo classes
   void getAllLatestSoloClasses() async {
     final remoteDataSource = RemoteDataSource();
     String userToken = await getUserToken();
@@ -53,6 +57,10 @@ class SoloClassesWidget extends State {
 
       updateState(soloClassesWidgetAppState.copyWith(
           latestSoloClassesData: latestSoloCardModels));
+    } else {
+      setState(() {
+        _isLoading = false; // Stop loading even if no data is found
+      });
     }
   }
 
@@ -85,35 +93,49 @@ class SoloClassesWidget extends State {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(flex: 5, child: INSPHeading('Solo Classes')),
-            TextButton(onPressed: _handleSeeAll, child: Text("See All"))
+            TextButton(
+              child: Text(
+                "See All",
+                style: TextStyle(fontSize: 14, color: Colors.black),
+              ),
+              onPressed: _handleSeeAll,
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                overlayColor: Colors.transparent,
+                splashFactory: NoSplash.splashFactory,
+              ),
+            ),
           ],
         ),
         const SizedBox(
           height: 17,
         ),
-        SizedBox(
-            height: 200.0,
-            child: soloClassesWidgetAppState.latestSoloClassesData.isNotEmpty
-                ? Scrollbar(
-                    controller: _scrollController,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: soloClassesWidgetAppState
-                          .latestSoloClassesData.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return LatestSoloClassCard(
-                            soloCardModel: soloClassesWidgetAppState
-                                .latestSoloClassesData[index],
-                            context: context);
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(
-                          width: 16,
-                        );
-                      },
-                    ),
-                  )
-                : const Center(child: Text('No item')))
+        _isLoading
+            ? DataLoader()
+            : SizedBox(
+                height: 200.0,
+                child: soloClassesWidgetAppState
+                        .latestSoloClassesData.isNotEmpty
+                    ? Scrollbar(
+                        controller: _scrollController,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: soloClassesWidgetAppState
+                              .latestSoloClassesData.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return LatestSoloClassCard(
+                                soloCardModel: soloClassesWidgetAppState
+                                    .latestSoloClassesData[index],
+                                context: context);
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const SizedBox(
+                              width: 16,
+                            );
+                          },
+                        ),
+                      )
+                    : const Center(child: Text('No item')))
       ]),
     );
   }
