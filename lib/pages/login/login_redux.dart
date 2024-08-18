@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:toastification/toastification.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
@@ -107,29 +107,35 @@ ThunkAction<LoginAppState> handleLogin(BuildContext context) {
                       userData: result.data.loginResponseModelResult)));
         } else {
           LoginScreen.dispatch(context, UpdateIsLoading(isLoading: false));
-          Fluttertoast.showToast(
-              msg: "Invalid credentials",
-              toastLength: Toast.LENGTH_LONG,
-              backgroundColor: const Color(0xFF3C8DBC),
-              timeInSecForIosWeb: 1,
-              fontSize: 20.0);
+          toastification.show(
+            context: context, // optional if you use ToastificationWrapper
+            type: ToastificationType.warning,
+            style: ToastificationStyle.fillColored,
+            autoCloseDuration: const Duration(seconds: 3),
+            title: const Text('Invalid Credential'),
+            alignment: Alignment.topRight,
+          );
         }
       } else {
         LoginScreen.dispatch(context, UpdateIsLoading(isLoading: false));
-        Fluttertoast.showToast(
-            msg: "error logging in",
-            toastLength: Toast.LENGTH_LONG,
-            backgroundColor: const Color(0xFF3C8DBC),
-            timeInSecForIosWeb: 1,
-            fontSize: 20.0);
+        toastification.show(
+          context: context, // optional if you use ToastificationWrapper
+          type: ToastificationType.error,
+          style: ToastificationStyle.fillColored,
+          autoCloseDuration: const Duration(seconds: 3),
+          title: const Text('Error logging in'),
+          alignment: Alignment.topRight,
+        );
       }
     } else {
-      Fluttertoast.showToast(
-          msg: "Please add credentials",
-          toastLength: Toast.LENGTH_LONG,
-          backgroundColor: const Color(0xFF3C8DBC),
-          timeInSecForIosWeb: 1,
-          fontSize: 20.0);
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.warning,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: const Text("Please add credentials"),
+        alignment: Alignment.topRight,
+      );
     }
   };
 }

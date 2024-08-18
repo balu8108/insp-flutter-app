@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/utils/extractFileNameFromS3URL.dart';
-import 'package:inspflutterfrontend/widget/popups/pdfviewer.dart';
+import 'package:inspflutterfrontend/widget/popups/pdfviewer/pdfviewer.dart';
 
 class FileBoxComponent extends StatelessWidget {
   final List<LiveClassRoomFile> data;
@@ -26,9 +26,7 @@ class FileBoxComponent extends StatelessWidget {
                     : Axis.vertical,
                 itemCount: data.length,
                 itemBuilder: (context, index) {
-                  var item = data[index];
-                  // var userProfile = StoreProvider.of<YourAppState>(context).state.auth.userProfile; // Adjust as per your Redux setup
-                  // var userRoleType = checkUserType(userProfile);
+                  final LiveClassRoomFile item = data[index];
                   var userRoleType = "TEACHER";
 
                   return GestureDetector(
@@ -36,9 +34,8 @@ class FileBoxComponent extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return const PdfViewerFromUrl(
-                            pdfUrl:
-                                'https://insp-test-local-bucket.s3.ap-south-1.amazonaws.com/pdf1.pdf',
+                          return PdfViewerFromUrl(
+                            pdfId: item.id.toString(),
                           );
                         },
                       );

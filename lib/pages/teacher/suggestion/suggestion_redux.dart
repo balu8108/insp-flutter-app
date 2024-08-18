@@ -1,7 +1,7 @@
 // This file is "main.dart"
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:toastification/toastification.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
@@ -87,27 +87,33 @@ ThunkAction<SuggestionAppState> deleteAssignment(
 
       if (deleteTopicData.response.statusCode == 200) {
         store.dispatch(getAllFeedback(context, store.state.page));
-        Fluttertoast.showToast(
-            msg: 'Feedback Deleted Succesfully',
-            toastLength: Toast.LENGTH_LONG,
-            backgroundColor: const Color(0xFF3C8DBC),
-            timeInSecForIosWeb: 1,
-            fontSize: 20.0);
+        toastification.show(
+          context: context, // optional if you use ToastificationWrapper
+          type: ToastificationType.success,
+          style: ToastificationStyle.fillColored,
+          autoCloseDuration: const Duration(seconds: 3),
+          title: const Text('Feedback Deleted Succesfully'),
+          alignment: Alignment.topRight,
+        );
       } else {
-        Fluttertoast.showToast(
-            msg: 'Some issue, please try again',
-            toastLength: Toast.LENGTH_LONG,
-            backgroundColor: const Color(0xFF3C8DBC),
-            timeInSecForIosWeb: 1,
-            fontSize: 20.0);
+        toastification.show(
+          context: context, // optional if you use ToastificationWrapper
+          type: ToastificationType.warning,
+          style: ToastificationStyle.fillColored,
+          autoCloseDuration: const Duration(seconds: 3),
+          title: const Text('Some issue, please try again'),
+          alignment: Alignment.topRight,
+        );
       }
     } catch (error) {
-      Fluttertoast.showToast(
-          msg: 'Some issue, please try again',
-          toastLength: Toast.LENGTH_LONG,
-          backgroundColor: const Color(0xFF3C8DBC),
-          timeInSecForIosWeb: 1,
-          fontSize: 20.0);
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.error,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: const Text('Some issue, please try again'),
+        alignment: Alignment.topRight,
+      );
     }
   };
 }
