@@ -11,9 +11,7 @@ import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:inspflutterfrontend/data/hardcoded/topic_list.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
-import 'package:inspflutterfrontend/utils/getUserDetail.dart';
+import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:toastification/toastification.dart';
@@ -419,7 +417,7 @@ ThunkAction<ScheduleLiveclassAppState> showTopicsforLiveClassByChapter(
 }
 
 ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
-    BuildContext context) {
+    BuildContext context, Function() getAllUpcomingClass) {
   return (Store<ScheduleLiveclassAppState> store) async {
     List<MultipartFile> files = [];
 
@@ -545,7 +543,7 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
 
       if (response.statusCode == 200) {
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-        UpcomingClassesScreen.dispatch(context, getAllUpcomingClass(context));
+        getAllUpcomingClass();
         Navigator.of(context).pop();
         toastification.show(
           context: context, // optional if you use ToastificationWrapper
@@ -582,7 +580,7 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
 }
 
 ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
-    BuildContext context) {
+    BuildContext context, Function() getAllUpcomingClass) {
   return (Store<ScheduleLiveclassAppState> store) async {
     List<MultipartFile> files = [];
 
@@ -712,7 +710,7 @@ ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
       );
 
       if (response.statusCode == 200) {
-        UpcomingClassesScreen.dispatch(context, getAllUpcomingClass(context));
+        getAllUpcomingClass();
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         Navigator.of(context).pop();
         toastification.show(

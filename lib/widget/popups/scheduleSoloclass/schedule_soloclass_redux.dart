@@ -11,7 +11,7 @@ import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:inspflutterfrontend/data/hardcoded/topic_list.dart';
-import 'package:inspflutterfrontend/utils/getUserDetail.dart';
+import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:toastification/toastification.dart';

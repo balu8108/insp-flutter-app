@@ -8,14 +8,16 @@ import 'package:inspflutterfrontend/widget/popups/scheduleLiveclass/schedule_liv
 import '../button/join_class.dart';
 
 class ScheduleClassBox extends StatefulWidget {
-  const ScheduleClassBox({
-    Key? key,
-    required this.type,
-    required this.upcomingWidgetAppState,
-  }) : super(key: key);
+  const ScheduleClassBox(
+      {Key? key,
+      required this.type,
+      required this.upcomingWidgetAppState,
+      required this.getUpcomingClass})
+      : super(key: key);
 
   final String type;
   final UpcomingLectureCardModel upcomingWidgetAppState;
+  final Function() getUpcomingClass;
 
   @override
   State<StatefulWidget> createState() => ScheduleClassBoxWidgetState();
@@ -105,12 +107,12 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                             ),
                           ),
                           Positioned(
-                            right: 8,
-                            top: 8,
+                            right: 0,
+                            top: 0,
                             child: IconButton(
                               icon: const Icon(Icons.edit, color: Colors.black),
                               iconSize: 16.0, // Adjust the icon size
-                              padding: const EdgeInsets.all(4.0),
+                              // padding: const EdgeInsets.all(1.0),
                               onPressed: () {
                                 showDialog(
                                     context: context,
@@ -131,7 +133,8 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                                           data.liveClassRoomDetail.agenda,
                                           data.liveClassRoomDetail.description,
                                           data.muteAllStudents,
-                                          data.liveClassRoomFiles);
+                                          data.liveClassRoomFiles,
+                                          widget.getUpcomingClass);
                                     });
                                 // Add your edit functionality here
                               },
