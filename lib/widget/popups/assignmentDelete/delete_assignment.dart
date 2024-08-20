@@ -41,15 +41,21 @@ class DeleteAssignemnt extends StatelessWidget {
                     content: const SizedBox(
                       height: 50,
                       width: 500, // Set your desired width here
-                      child: Column(mainAxisSize: MainAxisSize.min, children: [
-                        Text(
-                            "Are you sure? You want to delete this assignment.",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w500,
-                            )),
-                      ]),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment
+                              .start, // Aligns the column to the start (top)
+                          crossAxisAlignment: CrossAxisAlignment
+                              .start, // Aligns the text to the start (left)
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                                "Are you sure? You want to delete this assignment.",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                          ]),
                     ),
                     actions: <Widget>[
                   Row(

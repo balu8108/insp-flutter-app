@@ -11,14 +11,17 @@ import 'package:inspflutterfrontend/widget/popups/assignmentPopup/add_assignment
 
 class AddAssignment extends StatelessWidget {
   const AddAssignment(
-      {super.key, required this.fetchAssignmentAfterUpdateorDelete});
+      {super.key,
+      required this.fetchAssignmentAfterUpdateorDelete,
+      required this.getAssignment});
 
   final Function() fetchAssignmentAfterUpdateorDelete;
+  final Function() getAssignment;
 
   @override
   Widget build(BuildContext context) {
     void createAssignment() {
-      dispatch(context, handleCreate(context));
+      dispatch(context, handleCreate(context, getAssignment));
     }
 
     void updateAssignment() {
@@ -215,7 +218,8 @@ class AddAssignment extends StatelessWidget {
       String? selectedTopic,
       String? description,
       List<LiveClassRoomFile> previousFiles,
-      Function() fetchAssignmentAfterUpdateorDelete) {
+      Function() fetchAssignmentAfterUpdateorDelete,
+      Function() getAssignment) {
     return getBaseScreen<AddAssignmentAppState, AddAssignment>(
         addAssignmentStateReducer,
         AddAssignmentAppState(
@@ -227,7 +231,8 @@ class AddAssignment extends StatelessWidget {
             previousFiles: previousFiles),
         AddAssignment(
             fetchAssignmentAfterUpdateorDelete:
-                fetchAssignmentAfterUpdateorDelete));
+                fetchAssignmentAfterUpdateorDelete,
+            getAssignment: getAssignment));
   }
 
   static dispatch(BuildContext context, dynamic action) {

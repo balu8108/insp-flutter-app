@@ -107,7 +107,7 @@ ThunkAction<LoginAppState> handleLogin(BuildContext context) {
                       userData: result.data.loginResponseModelResult)));
           toastification.show(
             context: context, // optional if you use ToastificationWrapper
-            type: ToastificationType.warning,
+            type: ToastificationType.success,
             style: ToastificationStyle.fillColored,
             autoCloseDuration: const Duration(seconds: 3),
             title: const Text("Loging you in !!"),
@@ -117,7 +117,7 @@ ThunkAction<LoginAppState> handleLogin(BuildContext context) {
           LoginScreen.dispatch(context, UpdateIsLoading(isLoading: false));
           toastification.show(
             context: context, // optional if you use ToastificationWrapper
-            type: ToastificationType.success,
+            type: ToastificationType.warning,
             style: ToastificationStyle.fillColored,
             autoCloseDuration: const Duration(seconds: 3),
             title: const Text('Invalid Credential'),

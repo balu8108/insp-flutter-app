@@ -118,7 +118,12 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                                           data.liveClassRoomDetail.description,
                                         ),
                                         const SizedBox(height: 16),
-                                        JoinClassBtn(status: data.classStatus),
+                                        if (widget.type == "Ongoing" ||
+                                            widget.type == "Completed" ||
+                                            isTeacher)
+                                          JoinClassBtn(
+                                              status: data.classStatus,
+                                              isTeacher: isTeacher),
                                       ],
                                     ),
                                   ),
@@ -207,17 +212,14 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
               ),
             )),
         const SizedBox(width: 5),
-        Expanded(
-          flex: 5,
-          child: Text(
-            rightText,
-            style: const TextStyle(
-              fontSize: 10,
-              color: Color.fromRGBO(44, 51, 41, 0.47),
-              fontWeight: FontWeight.w400,
-            ),
+        Text(
+          rightText,
+          style: const TextStyle(
+            fontSize: 10,
+            color: Color.fromRGBO(44, 51, 41, 0.47),
+            fontWeight: FontWeight.w400,
           ),
-        )
+        ),
       ],
     );
   }
@@ -252,11 +254,7 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
             data: files,
             type: "live",
             scrollDirection: "vertical",
-            maxHeight: files.isNotEmpty
-                ? files.length * 50 > 100
-                    ? 100
-                    : files.length * 50
-                : 50,
+            maxHeight: files.length * 50 > 50 ? 60 : files.length * 50,
             isTeacher: isTeacher,
           )
         : const Text(
