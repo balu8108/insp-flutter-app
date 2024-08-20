@@ -7,12 +7,14 @@ class FileBoxComponent extends StatelessWidget {
   final List<LiveClassRoomFile> data;
   final String type, scrollDirection;
   final double maxHeight;
+  final bool isTeacher;
 
   FileBoxComponent(
       {required this.data,
       required this.type,
       required this.scrollDirection,
-      required this.maxHeight});
+      required this.maxHeight,
+      required this.isTeacher});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,6 @@ class FileBoxComponent extends StatelessWidget {
                 itemCount: data.length,
                 itemBuilder: (context, index) {
                   final LiveClassRoomFile item = data[index];
-                  var userRoleType = "TEACHER";
 
                   return GestureDetector(
                     onTap: () {
@@ -73,7 +74,7 @@ class FileBoxComponent extends StatelessWidget {
                           const SizedBox(
                             width: 16,
                           ),
-                          if (item.isDownloadable || userRoleType == "TEACHER")
+                          if (isTeacher)
                             Expanded(
                                 flex: 2,
                                 child: GestureDetector(

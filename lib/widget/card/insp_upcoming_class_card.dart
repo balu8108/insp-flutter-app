@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/utils/file_box_component.dart';
+import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/upcoming_lecture_card_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/utils/capitalize.dart';
@@ -64,84 +65,110 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                       : capitalizeFirstLetter(
                           data.liveClassRoomDetail.topicName);
 
-                  return Column(children: [
-                    Card(
-                        key: UniqueKey(),
-                        color: Colors.white,
-                        child: Stack(children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _buildRow(
-                                  context,
-                                  topicName,
-                                  '$scheduledStartTime - $scheduledEndTime',
-                                ),
-                                const SizedBox(height: 2),
-                                _buildSecondRow(
-                                  context,
-                                  data.mentorName,
-                                  scheduledDate,
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  data.classLevel,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 10,
-                                    color: Color.fromRGBO(44, 51, 41, 0.47),
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                _buildFileBox(data.liveClassRoomFiles),
-                                const SizedBox(height: 16),
-                                _buildDescription(
-                                  'Description',
-                                  data.liveClassRoomDetail.description,
-                                ),
-                                const SizedBox(height: 16),
-                                JoinClassBtn(status: data.classStatus),
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            right: 0,
-                            top: 0,
-                            child: IconButton(
-                              icon: const Icon(Icons.edit, color: Colors.black),
-                              iconSize: 16.0, // Adjust the icon size
-                              // padding: const EdgeInsets.all(1.0),
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return ScheduleLiveClass.getScreen(
-                                          data.id,
-                                          true,
-                                          data.subjectName,
-                                          data.scheduledDate,
-                                          data.scheduledStartTime,
-                                          data.scheduledEndTime,
-                                          data.liveClassRoomDetail.chapterName,
-                                          data.liveClassRoomDetail.topicName,
+                  return FutureBuilder<bool>(
+                      future: isTeacherLogin(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return const Center(
+                              child: Text('Error loading data'));
+                        } else {
+                          bool isTeacher = snapshot.data ?? false;
+                          return Column(children: [
+                            Card(
+                                key: UniqueKey(),
+                                color: Colors.white,
+                                child: Stack(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        _buildRow(
+                                          context,
+                                          topicName,
+                                          '$scheduledStartTime - $scheduledEndTime',
+                                        ),
+                                        const SizedBox(height: 2),
+                                        _buildSecondRow(
+                                          context,
+                                          data.mentorName,
+                                          scheduledDate,
+                                        ),
+                                        const SizedBox(height: 2),
+                                        Text(
                                           data.classLevel,
-                                          data.classType,
-                                          data.liveClassRoomDetail.lectureNo
-                                              .toString(),
-                                          data.liveClassRoomDetail.agenda,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 10,
+                                            color: Color.fromRGBO(
+                                                44, 51, 41, 0.47),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 16),
+                                        _buildFileBox(
+                                            data.liveClassRoomFiles, isTeacher),
+                                        const SizedBox(height: 16),
+                                        _buildDescription(
+                                          'Description',
                                           data.liveClassRoomDetail.description,
-                                          data.muteAllStudents,
-                                          data.liveClassRoomFiles,
-                                          widget.getUpcomingClass);
-                                    });
-                                // Add your edit functionality here
-                              },
-                            ),
-                          ),
-                        ]))
-                  ]);
+                                        ),
+                                        const SizedBox(height: 16),
+                                        JoinClassBtn(status: data.classStatus),
+                                      ],
+                                    ),
+                                  ),
+                                  if (isTeacher)
+                                    Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: IconButton(
+                                        icon: const Icon(Icons.edit,
+                                            color: Colors.black),
+                                        iconSize: 16.0, // Adjust the icon size
+                                        // padding: const EdgeInsets.all(1.0),
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return ScheduleLiveClass
+                                                    .getScreen(
+                                                        data.id,
+                                                        true,
+                                                        data.subjectName,
+                                                        data.scheduledDate,
+                                                        data.scheduledStartTime,
+                                                        data.scheduledEndTime,
+                                                        data.liveClassRoomDetail
+                                                            .chapterName,
+                                                        data.liveClassRoomDetail
+                                                            .topicName,
+                                                        data.classLevel,
+                                                        data.classType,
+                                                        data.liveClassRoomDetail
+                                                            .lectureNo
+                                                            .toString(),
+                                                        data.liveClassRoomDetail
+                                                            .agenda,
+                                                        data.liveClassRoomDetail
+                                                            .description,
+                                                        data.muteAllStudents,
+                                                        data.liveClassRoomFiles,
+                                                        widget
+                                                            .getUpcomingClass);
+                                              });
+                                          // Add your edit functionality here
+                                        },
+                                      ),
+                                    ),
+                                ]))
+                          ]);
+                        }
+                      });
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1,
@@ -219,7 +246,7 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
     );
   }
 
-  Widget _buildFileBox(List<LiveClassRoomFile> files) {
+  Widget _buildFileBox(List<LiveClassRoomFile> files, bool isTeacher) {
     return files.isNotEmpty
         ? FileBoxComponent(
             data: files,
@@ -230,6 +257,7 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                     ? 100
                     : files.length * 50
                 : 50,
+            isTeacher: isTeacher,
           )
         : const Text(
             'No Files',

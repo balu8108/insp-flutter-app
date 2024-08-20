@@ -105,18 +105,19 @@ ThunkAction<LoginAppState> handleLogin(BuildContext context) {
               MaterialPageRoute(
                   builder: (context) => HomeScreen(
                       userData: result.data.loginResponseModelResult)));
-
-          Fluttertoast.showToast(
-              msg: "Loging you in !!",
-              toastLength: Toast.LENGTH_LONG,
-              backgroundColor: const Color(0xFF3C8DBC),
-              timeInSecForIosWeb: 1,
-              fontSize: 20.0);
+          toastification.show(
+            context: context, // optional if you use ToastificationWrapper
+            type: ToastificationType.warning,
+            style: ToastificationStyle.fillColored,
+            autoCloseDuration: const Duration(seconds: 3),
+            title: const Text("Loging you in !!"),
+            alignment: Alignment.topRight,
+          );
         } else {
           LoginScreen.dispatch(context, UpdateIsLoading(isLoading: false));
           toastification.show(
             context: context, // optional if you use ToastificationWrapper
-            type: ToastificationType.warning,
+            type: ToastificationType.success,
             style: ToastificationStyle.fillColored,
             autoCloseDuration: const Duration(seconds: 3),
             title: const Text('Invalid Credential'),
