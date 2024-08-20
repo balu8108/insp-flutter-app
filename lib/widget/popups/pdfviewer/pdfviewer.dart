@@ -25,7 +25,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
   }
 
   // call an API of get all subjects
-  void getAllLatestSoloClasses() async {
+  void getPdfUrl() async {
     try {
       final remoteDataSource = RemoteDataSource();
       String userToken = await getUserToken();
@@ -51,7 +51,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
   @override
   void initState() {
     super.initState();
-    getAllLatestSoloClasses();
+    getPdfUrl();
   }
 
   @override
