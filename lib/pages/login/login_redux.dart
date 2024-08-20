@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/apiservices/models/login/device_login_request_model.dart';
 import 'package:toastification/toastification.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
@@ -13,7 +14,6 @@ import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:retrofit/dio.dart';
 
-import '../../apiservices/models/login/login_request_model.dart';
 import '../../apiservices/models/login/login_response_model.dart';
 import '../../apiservices/remote_data_source.dart';
 
@@ -82,7 +82,7 @@ ThunkAction<LoginAppState> handleLogin(BuildContext context) {
     if (store.state.password.isNotEmpty && store.state.emailId.isNotEmpty) {
       LoginScreen.dispatch(context, UpdateIsLoading(isLoading: true));
       final loginRemoteDataSource = RemoteDataSource();
-      final loginRequestModel = LoginRequestModel(
+      final loginRequestModel = DeviceLoginRequestModel(
           secret_key: secretKey,
           email: store.state.emailId,
           password: store.state.password,
