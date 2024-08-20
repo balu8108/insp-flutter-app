@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:inspflutterfrontend/widget/popups/timetableUpload/timetable_upload.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class LiveclassCalendar extends StatefulWidget {
@@ -62,6 +63,11 @@ class _LiveclassCalendarState extends State<LiveclassCalendar> {
                               ),
                               onPressed: () {
                                 // Handle "View Time Table" button press
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const TimetableUpload();
+                                    });
                               },
                               child: const Text(
                                 'Upload Time Table',
@@ -79,7 +85,7 @@ class _LiveclassCalendarState extends State<LiveclassCalendar> {
                               ),
                             ),
                             onPressed: () {
-                              // Handle "Upload Time Table" button press
+                              TimetableUpload();
                             },
                             child: const Text(
                               'View Time Table',
