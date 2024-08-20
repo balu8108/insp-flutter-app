@@ -4,6 +4,9 @@ import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignm
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/generic/generic_open_file_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_response_model.dart';
@@ -153,4 +156,16 @@ abstract class NetworkService {
   Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClassForTopic(
       @Path() String topicId,
       @Header('Authorization') String secretTokenHeader);
+
+  @GET('/generic/open-file')
+  Future<HttpResponse<GenericOpenFileResponseModel>> getDocumentUrl(
+      @Query('docId') String docId,
+      @Query('docType') String docType,
+      @Header('Authorization') String secretTokenHeader);
+
+  @POST('/student-feedback/create-student-feedback')
+  Future<HttpResponse<CreateStudentFeedbackResponseModel>>
+      createStudentFeedback(
+          @Body() CreateStudentFeedbackRequestModel feedbackrequest,
+          @Header('Authorization') String secretTokenHeader);
 }

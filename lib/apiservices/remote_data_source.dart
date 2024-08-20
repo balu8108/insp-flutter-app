@@ -4,6 +4,9 @@ import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignm
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/generic/generic_open_file_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_topic_response_model.dart';
@@ -104,6 +107,13 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClassForTopic(
       String topicId, String secretTokenHeader);
+
+  Future<HttpResponse<GenericOpenFileResponseModel>> getDocumentUrl(
+      String docId, String docType, String secretTokenHeader);
+
+  Future<HttpResponse<CreateStudentFeedbackResponseModel>>
+      createStudentFeedback(CreateStudentFeedbackRequestModel feedbackrequest,
+          String secretTokenHeader);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -270,5 +280,20 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       String topicId, String secretTokenHeader) {
     return deviceNetworkService.getAllSoloClassForTopic(
         topicId, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<GenericOpenFileResponseModel>> getDocumentUrl(
+      String docId, String docType, String secretTokenHeader) {
+    return deviceNetworkService.getDocumentUrl(
+        docId, docType, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<CreateStudentFeedbackResponseModel>>
+      createStudentFeedback(CreateStudentFeedbackRequestModel feedbackrequest,
+          String secretTokenHeader) {
+    return deviceNetworkService.createStudentFeedback(
+        feedbackrequest, secretTokenHeader);
   }
 }

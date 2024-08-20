@@ -7,11 +7,11 @@ import 'package:inspflutterfrontend/pages/student/assignment/mainpage/assignment
 import 'package:inspflutterfrontend/pages/common/calender/calendar_screen.dart';
 import 'package:inspflutterfrontend/pages/teacher/suggestion/main_suggestion_page.dart';
 import 'package:inspflutterfrontend/pages/teacher/uploads/mainpage/myuploads.dart';
-import 'package:inspflutterfrontend/utils/getUserDetail.dart';
+import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/utils/localstorage.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/pages/student/library/mainpage/library_screen.dart';
-import 'package:inspflutterfrontend/widget/popups/student_suggestion.dart';
+import 'package:inspflutterfrontend/widget/popups/studentSuggestion/student_suggestion.dart';
 
 class Navbar extends StatefulWidget implements PreferredSizeWidget {
   Navbar({super.key});
@@ -78,7 +78,7 @@ class _NavbarState extends State<Navbar> {
                 _onButtonPressed('Suggestion');
                 showDialog(
                     context: context,
-                    builder: (BuildContext) => StudentSuggestion());
+                    builder: (BuildContext) => StudentSuggestion.getScreen());
               }),
               _buildTextButton('INSP Portal', () {
                 _onButtonPressed('INSP Portal');

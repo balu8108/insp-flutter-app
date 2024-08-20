@@ -12,16 +12,18 @@ import 'package:inspflutterfrontend/widget/inputField/dropdown.dart';
 import 'package:inspflutterfrontend/widget/popups/scheduleLiveclass/schedule_liveclass_redux.dart';
 
 class ScheduleLiveClass extends StatelessWidget {
-  const ScheduleLiveClass({super.key});
+  const ScheduleLiveClass({super.key, required this.deleteFeedback});
+
+  final Function() deleteFeedback;
 
   @override
   Widget build(BuildContext context) {
     void createAssignment() {
-      dispatch(context, handleCreateLiveClass(context));
+      dispatch(context, handleCreateLiveClass(context, deleteFeedback));
     }
 
     void updateAssignment() {
-      dispatch(context, handleUpdateLiveClass(context));
+      dispatch(context, handleUpdateLiveClass(context, deleteFeedback));
     }
 
     void uploadFile() {
@@ -427,22 +429,22 @@ class ScheduleLiveClass extends StatelessWidget {
   }
 
   static getScreen(
-    int classroomId,
-    bool isEditScreen,
-    String selectedSubject,
-    String selectedDate,
-    String selectedStartTime,
-    String selectedEndTime,
-    String selectedChapter,
-    String selectedTopic,
-    String selectedClassLevel,
-    String selectedCourseType,
-    String lectureNo,
-    String agenda,
-    String description,
-    bool isStudentMuted,
-    List<LiveClassRoomFile> previousFiles,
-  ) {
+      int classroomId,
+      bool isEditScreen,
+      String selectedSubject,
+      String selectedDate,
+      String selectedStartTime,
+      String selectedEndTime,
+      String selectedChapter,
+      String selectedTopic,
+      String selectedClassLevel,
+      String selectedCourseType,
+      String lectureNo,
+      String agenda,
+      String description,
+      bool isStudentMuted,
+      List<LiveClassRoomFile> previousFiles,
+      Function() deleteFeedback) {
     return getBaseScreen<ScheduleLiveclassAppState, ScheduleLiveClass>(
         scheduleLiveclassStateReducer,
         ScheduleLiveclassAppState(
@@ -461,7 +463,7 @@ class ScheduleLiveClass extends StatelessWidget {
             description: description,
             isStudentMuted: isStudentMuted,
             previousFiles: previousFiles),
-        const ScheduleLiveClass());
+        ScheduleLiveClass(deleteFeedback: deleteFeedback));
   }
 
   static dispatch(BuildContext context, dynamic action) {

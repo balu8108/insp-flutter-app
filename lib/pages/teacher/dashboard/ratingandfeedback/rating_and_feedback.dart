@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/pages/teacher/ratingandfeedback/mainpage/rating_and_feedback.dart';
-import 'package:inspflutterfrontend/utils/getUserDetail.dart';
+import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 import 'package:inspflutterfrontend/widget/card/latest_completed_class_card.dart';
 import 'package:inspflutterfrontend/widget/card/model/latest_completed_class_card_model.dart';

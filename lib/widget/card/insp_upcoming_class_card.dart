@@ -8,14 +8,16 @@ import 'package:inspflutterfrontend/widget/popups/scheduleLiveclass/schedule_liv
 import '../button/join_class.dart';
 
 class ScheduleClassBox extends StatefulWidget {
-  const ScheduleClassBox({
-    Key? key,
-    required this.type,
-    required this.upcomingWidgetAppState,
-  }) : super(key: key);
+  const ScheduleClassBox(
+      {Key? key,
+      required this.type,
+      required this.upcomingWidgetAppState,
+      required this.getUpcomingClass})
+      : super(key: key);
 
   final String type;
   final UpcomingLectureCardModel upcomingWidgetAppState;
+  final Function() getUpcomingClass;
 
   @override
   State<StatefulWidget> createState() => ScheduleClassBoxWidgetState();
@@ -46,107 +48,116 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
   Widget build(BuildContext context) {
     upcomingData = _getUpcomingData(widget.type);
     return SizedBox(
-      child: upcomingData.isNotEmpty
-          ? GridView.builder(
-              itemCount: upcomingData.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final data = upcomingData[index];
-                final scheduledStartTime = convertTime(data.scheduledStartTime);
-                final scheduledEndTime = convertTime(data.scheduledEndTime);
-                final scheduledDate = formatDate(data.scheduledDate);
-                final topicName = data.liveClassRoomDetail.topicName.isEmpty
-                    ? "General"
-                    : capitalizeFirstLetter(data.liveClassRoomDetail.topicName);
+        child: upcomingData.isNotEmpty
+            ? GridView.builder(
+                itemCount: upcomingData.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final data = upcomingData[index];
+                  final scheduledStartTime =
+                      convertTime(data.scheduledStartTime);
+                  final scheduledEndTime = convertTime(data.scheduledEndTime);
+                  final scheduledDate = formatDate(data.scheduledDate);
+                  final topicName = data.liveClassRoomDetail.topicName.isEmpty
+                      ? "General"
+                      : capitalizeFirstLetter(
+                          data.liveClassRoomDetail.topicName);
 
-                return Column(children: [
-                  Card(
-                      key: UniqueKey(),
-                      color: Colors.white,
-                      child: Stack(children: [
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildRow(
-                                context,
-                                topicName,
-                                '$scheduledStartTime - $scheduledEndTime',
-                              ),
-                              const SizedBox(height: 2),
-                              _buildSecondRow(
-                                context,
-                                data.mentorName,
-                                scheduledDate,
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                data.classLevel,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 10,
-                                  color: Color.fromRGBO(44, 51, 41, 0.47),
+                  return Column(children: [
+                    Card(
+                        key: UniqueKey(),
+                        color: Colors.white,
+                        child: Stack(children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildRow(
+                                  context,
+                                  topicName,
+                                  '$scheduledStartTime - $scheduledEndTime',
                                 ),
-                              ),
-                              const SizedBox(height: 16),
-                              _buildFileBox(data.liveClassRoomFiles),
-                              const SizedBox(height: 16),
-                              _buildDescription(
-                                'Description',
-                                data.liveClassRoomDetail.description,
-                              ),
-                              const SizedBox(height: 16),
-                              JoinClassBtn(status: data.classStatus),
-                            ],
+                                const SizedBox(height: 2),
+                                _buildSecondRow(
+                                  context,
+                                  data.mentorName,
+                                  scheduledDate,
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  data.classLevel,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 10,
+                                    color: Color.fromRGBO(44, 51, 41, 0.47),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                _buildFileBox(data.liveClassRoomFiles),
+                                const SizedBox(height: 16),
+                                _buildDescription(
+                                  'Description',
+                                  data.liveClassRoomDetail.description,
+                                ),
+                                const SizedBox(height: 16),
+                                JoinClassBtn(status: data.classStatus),
+                              ],
+                            ),
                           ),
-                        ),
-                        Positioned(
-                          right: 8,
-                          top: 8,
-                          child: IconButton(
-                            icon: const Icon(Icons.edit, color: Colors.black),
-                            iconSize: 16.0, // Adjust the icon size
-                            padding: const EdgeInsets.all(4.0),
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return ScheduleLiveClass.getScreen(
-                                        data.id,
-                                        true,
-                                        data.subjectName,
-                                        data.scheduledDate,
-                                        data.scheduledStartTime,
-                                        data.scheduledEndTime,
-                                        data.liveClassRoomDetail.chapterName,
-                                        data.liveClassRoomDetail.topicName,
-                                        data.classLevel,
-                                        data.classType,
-                                        data.liveClassRoomDetail.lectureNo
-                                            .toString(),
-                                        data.liveClassRoomDetail.agenda,
-                                        data.liveClassRoomDetail.description,
-                                        data.muteAllStudents,
-                                        data.liveClassRoomFiles);
-                                  });
-                              // Add your edit functionality here
-                            },
+                          Positioned(
+                            right: 0,
+                            top: 0,
+                            child: IconButton(
+                              icon: const Icon(Icons.edit, color: Colors.black),
+                              iconSize: 16.0, // Adjust the icon size
+                              // padding: const EdgeInsets.all(1.0),
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return ScheduleLiveClass.getScreen(
+                                          data.id,
+                                          true,
+                                          data.subjectName,
+                                          data.scheduledDate,
+                                          data.scheduledStartTime,
+                                          data.scheduledEndTime,
+                                          data.liveClassRoomDetail.chapterName,
+                                          data.liveClassRoomDetail.topicName,
+                                          data.classLevel,
+                                          data.classType,
+                                          data.liveClassRoomDetail.lectureNo
+                                              .toString(),
+                                          data.liveClassRoomDetail.agenda,
+                                          data.liveClassRoomDetail.description,
+                                          data.muteAllStudents,
+                                          data.liveClassRoomFiles,
+                                          widget.getUpcomingClass);
+                                    });
+                                // Add your edit functionality here
+                              },
+                            ),
                           ),
-                        ),
-                      ]))
-                ]);
-              },
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                mainAxisExtent: 280,
-              ),
-            )
-          : const Center(child: Text('No items')),
-    );
+                        ]))
+                  ]);
+                },
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  mainAxisExtent: 280,
+                ),
+              )
+            : const Column(children: [
+                Center(
+                    child: Text(
+                  'No items',
+                  style: TextStyle(color: Color.fromRGBO(44, 51, 41, 0.47)),
+                )),
+                SizedBox(height: 20),
+              ]));
   }
 
   Row _buildRow(BuildContext context, String leftText, String rightText) {
