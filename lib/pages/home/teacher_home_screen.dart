@@ -61,7 +61,7 @@ class TeacherHomeScreen extends StatelessWidget {
                         MyCoursesWidget(
                             onViewDetailsClicked: onPressedMyCourse),
                         const SizedBox(height: 16),
-                        const Row(
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
@@ -69,13 +69,13 @@ class TeacherHomeScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   Soloclasses(),
-                                  SizedBox(height: 16),
-                                  MyUpload(),
+                                  const SizedBox(height: 16),
+                                  MyUpload.getScreen(),
                                 ],
                               ),
                             ),
-                            SizedBox(width: 16),
-                            Expanded(
+                            const SizedBox(width: 16),
+                            const Expanded(
                               flex: 4, // 40%
                               child: RatingFeedback(),
                             ),

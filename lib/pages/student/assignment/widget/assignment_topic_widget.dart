@@ -74,6 +74,10 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
 
   @override
   Widget build(BuildContext context) {
+    void temporyFunction() {
+      print("noting");
+    }
+
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -189,7 +193,8 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
                                                           assignment
                                                               .assignmentFiles,
                                                           widget
-                                                              .fetchAssignmentAfterUpdateorDelete);
+                                                              .fetchAssignmentAfterUpdateorDelete,
+                                                          temporyFunction);
                                                     });
                                                 // Add your edit functionality here
                                               },

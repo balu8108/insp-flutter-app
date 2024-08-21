@@ -165,9 +165,12 @@ class _NavbarState extends State<Navbar> {
       onSelected: (value) async {
         if (value == 'Logout') {
           await logoutData("insp_user_profile");
-          Navigator.push(
+          Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => LoginScreen.getScreen()),
+            MaterialPageRoute(
+              builder: (context) => LoginScreen.getScreen(),
+            ),
+            (route) => false, // This removes all the previous routes
           );
         }
       },

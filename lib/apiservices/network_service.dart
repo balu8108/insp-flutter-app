@@ -10,6 +10,7 @@ import 'package:inspflutterfrontend/apiservices/models/generic/generic_open_file
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/login/device_login_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_topic_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_response_model.dart';
@@ -38,9 +39,14 @@ part 'network_service.g.dart';
 abstract class NetworkService {
   factory NetworkService(Dio dio, {String baseUrl}) = _NetworkService;
 
+  @POST('https://inspedu.in/webservices/apis/login')
+  Future<HttpResponse<LoginResponseModel>> doesTokenValid(
+    @Body() LoginRequestModel loginRequestModel,
+  );
+
   @POST('https://inspedu.in/webservices/apis/login_app')
   Future<HttpResponse<LoginResponseModel>> deviceLogin(
-    @Body() LoginRequestModel loginRequestModel,
+    @Body() DeviceLoginRequestModel loginRequestModel,
   );
 
   @POST('https://inspedu.in/webservices/apis/subjects')

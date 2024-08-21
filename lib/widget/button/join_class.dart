@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 
 class JoinClassBtn extends StatelessWidget {
-  // final bool isLoading;
   final String status;
-  // final Function onClickHandler;
+  final bool isTeacher;
 
-  JoinClassBtn({required this.status});
+  JoinClassBtn({required this.status, required this.isTeacher});
 
   @override
   Widget build(BuildContext context) {
-    // final userProfile = StoreProvider.of<AppState>(context).state.auth.userProfile; // Adjust to your actual state structure
-
     Color backColor = const Color(0xFF3C8DBC);
     Color textColor = Colors.white;
-    String text = 'Start';
     bool btnDisabled = false;
 
     final Map<String, Map<String, String>> classStatusText = {
@@ -41,22 +37,13 @@ class JoinClassBtn extends StatelessWidget {
       'NOT_CONDUCTED': 'NOT_CONDUCTED',
     };
 
-    if (true) {
-      // Assuming user_type is an integer in your userProfile
-      text = (1 == 1)
-          ? classStatusText['teacher']![status] ??
-              'Unknown' // Using null-aware operator and providing a fallback value if status is not found
-          : classStatusText['student']![status] ??
-              'Unknown'; // Using null-aware operator and providing a fallback value if status is not found
-    }
+    String text = isTeacher
+        ? classStatusText['teacher']![status] ?? ''
+        : classStatusText['student']![status] ?? '';
 
     if (status == classStatus['ONGOING']) {
       backColor = const Color.fromARGB(255, 193, 227, 182);
       textColor = const Color.fromARGB(255, 107, 104, 112);
-    } else if (status == classStatus['NOT_STARTED']) {
-      // if (0 == 0) {
-      //   backColor = const Color.fromARGB(255, 255, 89, 89);
-      // }
     } else if (status == classStatus['FINISHED']) {
       backColor = const Color.fromARGB(255, 232, 232, 232);
       textColor = const Color.fromARGB(255, 107, 104, 112);
@@ -70,18 +57,22 @@ class JoinClassBtn extends StatelessWidget {
     return SizedBox(
         width: double.infinity, // Set width to 100% of the parent container
         child: ElevatedButton(
-          onPressed: btnDisabled ? null : null,
+          onPressed: btnDisabled
+              ? null
+              : () {
+                  // Add your onClick logic here
+                },
           style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(backColor),
-            foregroundColor: WidgetStateProperty.all(textColor),
-            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+            backgroundColor: MaterialStateProperty.all(backColor),
+            foregroundColor: MaterialStateProperty.all(textColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
                     8.0), // Adjust border radius as needed
               ),
             ),
             minimumSize:
-                WidgetStateProperty.all(const Size(double.infinity, 48.0)),
+                MaterialStateProperty.all(const Size(double.infinity, 48.0)),
           ),
           child: Text(
             text,

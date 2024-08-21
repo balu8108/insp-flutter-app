@@ -100,11 +100,12 @@ class _$MyUploadWidgetAppStateImpl
     with DiagnosticableTreeMixin
     implements _MyUploadWidgetAppState {
   const _$MyUploadWidgetAppStateImpl(
-      {required final List<LatestAssignmentCardModel> myUploadData})
+      {final List<LatestAssignmentCardModel> myUploadData = const []})
       : _myUploadData = myUploadData;
 
   final List<LatestAssignmentCardModel> _myUploadData;
   @override
+  @JsonKey()
   List<LatestAssignmentCardModel> get myUploadData {
     if (_myUploadData is EqualUnmodifiableListView) return _myUploadData;
     // ignore: implicit_dynamic_type
@@ -147,7 +148,7 @@ class _$MyUploadWidgetAppStateImpl
 
 abstract class _MyUploadWidgetAppState implements MyUploadWidgetAppState {
   const factory _MyUploadWidgetAppState(
-          {required final List<LatestAssignmentCardModel> myUploadData}) =
+          {final List<LatestAssignmentCardModel> myUploadData}) =
       _$MyUploadWidgetAppStateImpl;
 
   @override

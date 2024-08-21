@@ -8,6 +8,7 @@ import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_f
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/generic/generic_open_file_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/login/device_login_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_topic_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_request_model.dart';
@@ -34,8 +35,11 @@ import 'network_service.dart';
 abstract class RemoteDataSource {
   factory RemoteDataSource() = RemoteDataSourceImpl;
 
-  Future<HttpResponse<LoginResponseModel>> deviceLogin(
+  Future<HttpResponse<LoginResponseModel>> doesTokenValid(
       LoginRequestModel deviceInsightsRequestModel);
+
+  Future<HttpResponse<LoginResponseModel>> deviceLogin(
+      DeviceLoginRequestModel deviceInsightsRequestModel);
 
   Future<HttpResponse<AllSubjectsResponseModel>> getAllSubjects(
       AllSubjectsRequestModel allSubjectsRequestModel);
@@ -120,8 +124,14 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   final deviceNetworkService = NetworkService(Dio());
 
   @override
-  Future<HttpResponse<LoginResponseModel>> deviceLogin(
+  Future<HttpResponse<LoginResponseModel>> doesTokenValid(
       LoginRequestModel loginRequestModel) {
+    return deviceNetworkService.doesTokenValid(loginRequestModel);
+  }
+
+  @override
+  Future<HttpResponse<LoginResponseModel>> deviceLogin(
+      DeviceLoginRequestModel loginRequestModel) {
     return deviceNetworkService.deviceLogin(loginRequestModel);
   }
 

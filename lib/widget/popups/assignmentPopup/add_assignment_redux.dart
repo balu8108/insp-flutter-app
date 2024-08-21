@@ -163,7 +163,8 @@ ThunkAction<AddAssignmentAppState> pickFiles(BuildContext context) {
   };
 }
 
-ThunkAction<AddAssignmentAppState> handleCreate(BuildContext context) {
+ThunkAction<AddAssignmentAppState> handleCreate(
+    BuildContext context, Function() getAssignment) {
   return (Store<AddAssignmentAppState> store) async {
     List<MultipartFile> files = [];
 
@@ -232,6 +233,7 @@ ThunkAction<AddAssignmentAppState> handleCreate(BuildContext context) {
 
       if (response.statusCode == 201) {
         store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
+        getAssignment();
         Navigator.of(context).pop();
         toastification.show(
           context: context, // optional if you use ToastificationWrapper
