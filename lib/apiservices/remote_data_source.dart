@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/all_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/calendar/all_calendar_scheduled_data_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_request_model.dart';
@@ -71,6 +72,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
       getAllUpcomingClasses(String secretTokenHeader);
+
+  Future<HttpResponse<AllCalendarScheduledDataModel>> getAllCalendarData(
+      String secretTokenHeader);
 
   Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClasses(
       String secretTokenHeader);
@@ -198,6 +202,14 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
       getAllUpcomingClasses(String secretTokenHeader) {
     return deviceNetworkService.getAllUpcomingClasses(secretTokenHeader);
+  }
+
+// for the calendar data
+
+  @override
+  Future<HttpResponse<AllCalendarScheduledDataModel>> getAllCalendarData(
+      String secretTokenHeader) {
+    return deviceNetworkService.getAllCalendarData(secretTokenHeader);
   }
 
   @override
