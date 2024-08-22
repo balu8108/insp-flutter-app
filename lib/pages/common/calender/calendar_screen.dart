@@ -24,9 +24,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
               child: UpcomingClassesScreen.getScreen(),
             ),
             const SizedBox(width: 17), // Adds spacing between the components
-            const Expanded(
+            Expanded(
               flex: 9,
-              child: LiveclassCalendar(),
+              child: LiveclassCalendar.getScreen(),
             ),
           ],
         ),

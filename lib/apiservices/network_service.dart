@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/all_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/calendar/all_calendar_scheduled_data_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_request_model.dart';
@@ -111,6 +112,11 @@ abstract class NetworkService {
   @GET('/schedule-live-class/get-all')
   Future<HttpResponse<AllLecturesForUpcomingResponseModel>>
       getAllUpcomingClasses(@Header('Authorization') String secretTokenHeader);
+
+// for the calendar data section
+  @GET('schedule-live-class/get-all-calender-data')
+  Future<HttpResponse<AllCalendarScheduledDataModel>> getAllCalendarData(
+      @Header('Authorization') String secretTokenHeader);
 
   @POST('/lecture/get-lecture-no')
   Future<HttpResponse<GetLectureNoResponseModel>> getLectureNumber(
