@@ -60,6 +60,7 @@ dependencies:
   desktop_webview_window: ^0.2.3
   url_launcher: ^6.3.0
   universal_platform: ^1.1.0
+  webview_universal: ^0.0.5
 
 dev_dependencies:
   flutter_test:

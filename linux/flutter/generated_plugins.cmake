@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   desktop_webview_window
   flutter_webrtc
   url_launcher_linux
+  webview_universal
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

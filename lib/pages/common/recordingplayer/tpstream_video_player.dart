@@ -14,6 +14,6 @@ class TPStreamVideoPlayerWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           color: const Color.fromRGBO(232, 242, 249, 1),
         ),
-        child: WebViewExample());
+        child: MyApp());
   }
 }

@@ -10,6 +10,7 @@
 #include <flutter_webrtc/flutter_web_r_t_c_plugin.h>
 #include <pdfx/pdfx_plugin.h>
 #include <url_launcher_windows/url_launcher_windows.h>
+#include <webview_universal/webview_universal_plugin.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   DesktopWebviewWindowPluginRegisterWithRegistrar(
@@ -20,4 +21,6 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("PdfxPlugin"));
   UrlLauncherWindowsRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("UrlLauncherWindows"));
+  WebviewUniversalPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("WebviewUniversalPlugin"));
 }

@@ -1,34 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/link.dart';
-import 'package:url_launcher/url_launcher.dart';
+import "package:webview_universal/webview_universal.dart";
 
-class WebViewExample extends StatefulWidget {
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _WebViewExampleState createState() => _WebViewExampleState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class _WebViewExampleState extends State<WebViewExample> {
+class _MyAppState extends State<MyApp> {
+  WebViewController webViewController = WebViewController();
+
   @override
   void initState() {
     super.initState();
-    _openBrowser();
-  }
-
-  Future<void> _openBrowser() async {
-    const url =
-        'https://app.tpstreams.com/embed/gcma48/uZfMzhPDJEs/?access_token=e5572614-8772-4d6d-8b9f-fc54f9644bc0';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      print('Could not launch $url');
-    }
+    webViewController.init(
+      context: context,
+      setState: setState,
+      uri: Uri.parse(
+          "https://app.tpstreams.com/embed/gcma48/uZfMzhPDJEs/?access_token=e8c04c94-0eda-4464-b6fb-57f870d9a92e"),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text('Opening browser...'),
+      child: WebView(
+        controller: webViewController,
       ),
     );
   }
