@@ -4,7 +4,6 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   desktop_webview_window
-  flutter_webrtc
   pdfx
   url_launcher_windows
   webview_universal
