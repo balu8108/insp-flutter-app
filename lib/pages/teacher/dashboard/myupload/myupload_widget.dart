@@ -11,7 +11,7 @@ class MyUpload extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController _scrollController = ScrollController();
+    final ScrollController scrollController = ScrollController();
 
     void temporyFunction() {
       print("noting");
@@ -68,9 +68,10 @@ class MyUpload extends StatelessWidget {
                         height: 200.0,
                         child: state.myUploadData.isNotEmpty
                             ? Scrollbar(
-                                controller: _scrollController,
+                                controller: scrollController,
                                 child: ListView.separated(
                                   scrollDirection: Axis.horizontal,
+                                  controller: scrollController,
                                   itemCount: state.myUploadData.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {

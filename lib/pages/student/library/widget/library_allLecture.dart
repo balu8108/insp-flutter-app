@@ -25,6 +25,17 @@ class LibraryAlllectureWidgetState extends State<LibraryAlllectureWidget> {
 
   final ScrollController _scrollController = ScrollController();
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   void onPressedMyCourse(BuildContext context, LectureCardModel inspCardModel) {
     Navigator.push(
         context,
@@ -60,6 +71,7 @@ class LibraryAlllectureWidgetState extends State<LibraryAlllectureWidget> {
                     controller: _scrollController,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
+                      controller: _scrollController,
                       itemCount: widget.lectureDetailsForLibrary.length,
                       itemBuilder: (BuildContext context, int index) {
                         return INSPLectureCard(

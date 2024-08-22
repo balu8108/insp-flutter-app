@@ -43,11 +43,11 @@ class TeacherHomeScreen extends StatelessWidget {
                 children: [
                   MyCoursesWidget(onViewDetailsClicked: onPressedMyCourse),
                   const SizedBox(height: 16),
-                  const Soloclasses(),
+                  Soloclasses.getScreen(),
                   const SizedBox(height: 16),
-                  const MyUpload(),
+                  MyUpload.getScreen(),
                   const SizedBox(height: 16),
-                  const RatingFeedback(),
+                  RatingFeedback.getScreen(),
                 ],
               )
             : Row(
@@ -68,16 +68,16 @@ class TeacherHomeScreen extends StatelessWidget {
                               flex: 6, // 60%
                               child: Column(
                                 children: [
-                                  Soloclasses(),
+                                  Soloclasses.getScreen(),
                                   const SizedBox(height: 16),
                                   MyUpload.getScreen(),
                                 ],
                               ),
                             ),
                             const SizedBox(width: 16),
-                            const Expanded(
+                            Expanded(
                               flex: 4, // 40%
-                              child: RatingFeedback(),
+                              child: RatingFeedback.getScreen(),
                             ),
                           ],
                         ),

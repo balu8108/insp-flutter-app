@@ -3,15 +3,16 @@ import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_d
 
 Widget LectureLeaderboardCard(
     {required List<LeaderBoards> leaderboardDetails, required int questionNo}) {
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController scrollController = ScrollController();
   return Container(
     height: 400,
     margin: const EdgeInsets.only(right: 16),
     child: leaderboardDetails.isNotEmpty
         ? Scrollbar(
-            controller: _scrollController,
+            controller: scrollController,
             child: ListView.separated(
               scrollDirection: Axis.vertical,
+              controller: scrollController,
               itemCount: leaderboardDetails.length,
               itemBuilder: (context, index) {
                 return Container(

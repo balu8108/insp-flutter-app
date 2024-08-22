@@ -4,17 +4,19 @@ import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/popups/pdfviewer/pdfviewer_redux.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:internet_file/internet_file.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class PdfViewerFromUrl extends StatefulWidget {
-  final String pdfId;
+  final String pdfId, type;
 
-  const PdfViewerFromUrl({super.key, required this.pdfId});
+  const PdfViewerFromUrl({super.key, required this.pdfId, required this.type});
 
   @override
   _PdfViewerFromUrlState createState() => _PdfViewerFromUrlState();
 }
 
 class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
+  PdfController? _pdfControllerWindow;
   PdfControllerPinch? _pdfController;
   PDFViewerAppState pdfViewerAppState = const PDFViewerAppState();
 
@@ -30,13 +32,19 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
       final remoteDataSource = RemoteDataSource();
       String userToken = await getUserToken();
       final pdfData = await remoteDataSource.getDocumentUrl(
-          widget.pdfId, "live", userToken);
+          widget.pdfId, widget.type, userToken);
       if (pdfData.data.status == true) {
         final String pdfUrl = pdfData.data.data.getUrl;
         final pdfBytes = await InternetFile.get(pdfUrl);
-        _pdfController = PdfControllerPinch(
-          document: PdfDocument.openData(pdfBytes),
-        );
+        if (UniversalPlatform.isWindows) {
+          _pdfControllerWindow = PdfController(
+            document: PdfDocument.openData(pdfBytes),
+          );
+        } else {
+          _pdfController = PdfControllerPinch(
+            document: PdfDocument.openData(pdfBytes),
+          );
+        }
         updateState(pdfViewerAppState.copyWith(fileUrl: pdfUrl));
       } else {
         // Handle error response
@@ -56,7 +64,11 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
 
   @override
   void dispose() {
-    _pdfController?.dispose();
+    if (UniversalPlatform.isWindows) {
+      _pdfControllerWindow?.dispose();
+    } else {
+      _pdfController?.dispose();
+    }
     super.dispose();
   }
 
@@ -89,10 +101,12 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
       content: Container(
         width: 600, // Set desired width
         height: 800, // Set desired height
-        child: _pdfController != null
-            ? PdfViewPinch(
-                controller: _pdfController!,
-              )
+        child: _pdfController != null || _pdfControllerWindow != null
+            ? UniversalPlatform.isWindows
+                ? PdfView(controller: _pdfControllerWindow!)
+                : PdfViewPinch(
+                    controller: _pdfController!,
+                  )
             : Center(
                 child:
                     CircularProgressIndicator()), // Show a loader until the PDF is loaded

@@ -82,8 +82,7 @@ class FileBoxComponent extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return PdfViewerFromUrl(
-                            pdfId: item.id.toString(),
-                          );
+                              pdfId: item.id.toString(), type: type);
                         },
                       );
                     },

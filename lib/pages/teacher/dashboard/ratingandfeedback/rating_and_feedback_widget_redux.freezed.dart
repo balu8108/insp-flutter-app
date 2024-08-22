@@ -102,12 +102,13 @@ class _$RatingFeedbackWidgetAppStateImpl
     with DiagnosticableTreeMixin
     implements _RatingFeedbackWidgetAppState {
   const _$RatingFeedbackWidgetAppStateImpl(
-      {required final List<LatestCompletedClassCardModel>
-          latestCompletedClassData})
+      {final List<LatestCompletedClassCardModel> latestCompletedClassData =
+          const []})
       : _latestCompletedClassData = latestCompletedClassData;
 
   final List<LatestCompletedClassCardModel> _latestCompletedClassData;
   @override
+  @JsonKey()
   List<LatestCompletedClassCardModel> get latestCompletedClassData {
     if (_latestCompletedClassData is EqualUnmodifiableListView)
       return _latestCompletedClassData;
@@ -154,7 +155,7 @@ class _$RatingFeedbackWidgetAppStateImpl
 abstract class _RatingFeedbackWidgetAppState
     implements RatingFeedbackWidgetAppState {
   const factory _RatingFeedbackWidgetAppState(
-      {required final List<LatestCompletedClassCardModel>
+      {final List<LatestCompletedClassCardModel>
           latestCompletedClassData}) = _$RatingFeedbackWidgetAppStateImpl;
 
   @override

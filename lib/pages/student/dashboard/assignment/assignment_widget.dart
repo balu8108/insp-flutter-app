@@ -10,7 +10,7 @@ class AssignmentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController _scrollController = ScrollController();
+    final ScrollController scrollController = ScrollController();
     dispatch(context, showRecentAssignment(context));
     return StoreConnector<AssignmentWidgetAppState, AssignmentWidgetAppState>(
       converter: (store) => store.state,
@@ -33,9 +33,9 @@ class AssignmentWidget extends StatelessWidget {
             state.allRecentAssignment.isNotEmpty
                 ? Expanded(
                     child: Scrollbar(
-                      controller: _scrollController,
+                      controller: scrollController,
                       child: ListView.separated(
-                        controller: _scrollController,
+                        controller: scrollController,
                         itemCount: state.allRecentAssignment.length,
                         itemBuilder: (BuildContext context, int index) {
                           return LatestAssignmentCard(

@@ -10,15 +10,16 @@ Widget LectureRecordingCardWidget(
     required description,
     required files,
     required agenda}) {
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController scrollController = ScrollController();
   return Container(
       height: 100,
       margin: const EdgeInsets.only(right: 16),
       child: liveClassRoomRecordings.isNotEmpty
           ? Scrollbar(
-              controller: _scrollController,
+              controller: scrollController,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
+                controller: scrollController,
                 itemCount: liveClassRoomRecordings.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(

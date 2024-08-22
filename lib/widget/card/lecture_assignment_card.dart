@@ -6,19 +6,18 @@ import 'package:inspflutterfrontend/widget/card/model/lecture_assignment_card_mo
 class LectureAssignmentCard extends StatelessWidget {
   final List<LectureAssignmentCardModel> assignmentDetails;
 
-  const LectureAssignmentCard({Key? key, required this.assignmentDetails})
-      : super(key: key);
+  const LectureAssignmentCard({super.key, required this.assignmentDetails});
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController _scrollController = ScrollController();
+    final ScrollController scrollController = ScrollController();
     return Container(
         height:
             assignmentDetails.isNotEmpty ? assignmentDetails.length * 200 : 100,
         margin: const EdgeInsets.only(right: 16),
         child: assignmentDetails.isNotEmpty
             ? Scrollbar(
-                controller: _scrollController,
+                controller: scrollController,
                 child: FutureBuilder<bool>(
                     future: isTeacherLogin(),
                     builder: (context, snapshot) {
@@ -30,6 +29,7 @@ class LectureAssignmentCard extends StatelessWidget {
                         bool isTeacher = snapshot.data ?? false;
                         return ListView.separated(
                           scrollDirection: Axis.vertical,
+                          controller: scrollController,
                           itemCount: assignmentDetails.length,
                           itemBuilder: (context, index) {
                             final assignment = assignmentDetails[index];
@@ -60,7 +60,7 @@ class LectureAssignmentCard extends StatelessWidget {
                                     const SizedBox(height: 16),
                                     FileBoxComponent(
                                       data: assignment.assignmentFiles,
-                                      type: "live",
+                                      type: "assignment",
                                       scrollDirection: "horizontal",
                                       maxHeight: 60,
                                       isTeacher: isTeacher,

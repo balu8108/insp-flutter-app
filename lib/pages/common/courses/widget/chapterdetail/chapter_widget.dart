@@ -21,12 +21,18 @@ class ChapterWidget extends StatefulWidget {
 }
 
 class ChapterWidgetState extends State<ChapterWidget> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
   }
 
-  final ScrollController _scrollController = ScrollController();
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +60,7 @@ class ChapterWidgetState extends State<ChapterWidget> {
                     controller: _scrollController,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
+                      controller: _scrollController,
                       itemCount: widget.allTopicsForSelectedCourse.length,
                       itemBuilder: (BuildContext context, int index) {
                         return INSPCard(

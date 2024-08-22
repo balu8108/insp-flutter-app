@@ -40,6 +40,12 @@ class MyCoursesWidgetState extends State<MyCoursesWidget> {
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -65,6 +71,7 @@ class MyCoursesWidgetState extends State<MyCoursesWidget> {
                     controller: _scrollController,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
+                      controller: _scrollController,
                       itemCount: myCoursesWidgetAppState
                           .myCoursesInspCardModels.length,
                       itemBuilder: (BuildContext context, int index) {

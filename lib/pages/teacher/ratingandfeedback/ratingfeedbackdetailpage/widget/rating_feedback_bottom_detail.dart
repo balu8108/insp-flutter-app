@@ -5,56 +5,11 @@ import 'package:inspflutterfrontend/widget/card/model/rating_feedback_card_model
 import 'package:inspflutterfrontend/widget/card/rating_feedback_card.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 
-// Widget RatingFeedbackBottomWidgets(
-//     {required BuildContext context,
-//     required String heading,
-//     required List<RatingFeedbackCardModal> ratingFeedbackCard}) {
-//   final ScrollController _scrollController = ScrollController();
-//   return Container(
-//       padding: const EdgeInsets.all(16.0),
-//       decoration: BoxDecoration(
-//         borderRadius: BorderRadius.circular(16),
-//         color: const Color.fromRGBO(232, 242, 249, 1),
-//       ),
-//       child: Column(children: [
-//         INSPHeading(heading),
-//         const SizedBox(
-//           height: 16,
-//         ),
-//         Row(children: [
-//           SizedBox(
-//               height: 500.0,
-//               child: ratingFeedbackCard.isNotEmpty
-//                   ? Scrollbar(
-//                       controller: _scrollController,
-//                       child: ListView.separated(
-//                         scrollDirection: Axis.vertical,
-//                         itemCount: ratingFeedbackCard.length,
-//                         itemBuilder: (BuildContext context, int index) {
-//                           final cardModel = ratingFeedbackCard[index];
-//                           return RatingFeedbackCard(
-//                             context: context,
-//                             username: cardModel.raterName,
-//                             feedback: cardModel.feedback,
-//                           );
-//                         },
-//                         separatorBuilder: (BuildContext context, int index) {
-//                           return const SizedBox(
-//                             height: 20,
-//                           );
-//                         },
-//                       ),
-//                     )
-//                   : const Center(child: Text('No item')))
-//         ])
-//       ]));
-// }
-
 Widget RatingFeedbackBottomWidgets(
     {required BuildContext context,
     required String heading,
     required List<RatingFeedbackCardModal> ratingFeedbackCard}) {
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController scrollController = ScrollController();
   return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -66,8 +21,8 @@ Widget RatingFeedbackBottomWidgets(
         const SizedBox(height: 32),
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Expanded(
-            child: DonutChart(ratingFeedbackCard: ratingFeedbackCard),
             flex: 5,
+            child: DonutChart(ratingFeedbackCard: ratingFeedbackCard),
           ),
           const Spacer(),
           Expanded(
@@ -76,9 +31,10 @@ Widget RatingFeedbackBottomWidgets(
                   height: 500.0,
                   child: ratingFeedbackCard.isNotEmpty
                       ? Scrollbar(
-                          controller: _scrollController,
+                          controller: scrollController,
                           child: ListView.separated(
                             scrollDirection: Axis.vertical,
+                            controller: scrollController,
                             itemCount: ratingFeedbackCard.length,
                             itemBuilder: (BuildContext context, int index) {
                               final cardModel = ratingFeedbackCard[index];

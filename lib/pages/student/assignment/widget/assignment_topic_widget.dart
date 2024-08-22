@@ -25,12 +25,17 @@ class AssignmentTopicWidget extends StatefulWidget {
 }
 
 class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
   }
 
-  final ScrollController _scrollController = ScrollController();
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   Widget _buildHeading(BuildContext context) {
     return context.isWebOrLandScape()
@@ -110,6 +115,7 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
                               bool isTeacher = snapshot.data ?? false;
                               return ListView.separated(
                                 scrollDirection: Axis.vertical,
+                                controller: _scrollController,
                                 itemCount: widget.allAssignemntofTopic.length,
                                 itemBuilder: (context, index) {
                                   final TopicAssignmentCardModel assignment =
@@ -159,7 +165,7 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
                                               FileBoxComponent(
                                                 data:
                                                     assignment.assignmentFiles,
-                                                type: "live",
+                                                type: "assignment",
                                                 scrollDirection: "horizontal",
                                                 maxHeight: 60,
                                                 isTeacher: isTeacher,

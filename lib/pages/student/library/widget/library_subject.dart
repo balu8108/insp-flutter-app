@@ -20,6 +20,17 @@ class LibrarySubjectState extends State<LibrarySubject> {
   final ScrollController _scrollController = ScrollController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -45,6 +56,7 @@ class LibrarySubjectState extends State<LibrarySubject> {
                     controller: _scrollController,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
+                      controller: _scrollController,
                       itemCount: librarySubjects.length,
                       itemBuilder: (BuildContext context, int index) {
                         return INSPCard(

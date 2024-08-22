@@ -100,11 +100,12 @@ class _$SoloClassesWidgetAppStateImpl
     with DiagnosticableTreeMixin
     implements _SoloClassesWidgetAppState {
   const _$SoloClassesWidgetAppStateImpl(
-      {required final List<LatestSoloClassCardModel> latestSoloClassesData})
+      {final List<LatestSoloClassCardModel> latestSoloClassesData = const []})
       : _latestSoloClassesData = latestSoloClassesData;
 
   final List<LatestSoloClassCardModel> _latestSoloClassesData;
   @override
+  @JsonKey()
   List<LatestSoloClassCardModel> get latestSoloClassesData {
     if (_latestSoloClassesData is EqualUnmodifiableListView)
       return _latestSoloClassesData;
@@ -149,8 +150,8 @@ class _$SoloClassesWidgetAppStateImpl
 
 abstract class _SoloClassesWidgetAppState implements SoloClassesWidgetAppState {
   const factory _SoloClassesWidgetAppState(
-      {required final List<LatestSoloClassCardModel>
-          latestSoloClassesData}) = _$SoloClassesWidgetAppStateImpl;
+          {final List<LatestSoloClassCardModel> latestSoloClassesData}) =
+      _$SoloClassesWidgetAppStateImpl;
 
   @override
   List<LatestSoloClassCardModel> get latestSoloClassesData;
