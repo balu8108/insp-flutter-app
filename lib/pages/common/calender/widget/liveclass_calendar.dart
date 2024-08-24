@@ -173,7 +173,17 @@ class LiveclassCalendar extends StatelessWidget {
                                 },
                               ),
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 30),
+                            Center(
+                              child: Text(
+                                "Today's Event",
+                                style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromRGBO(58, 53, 65, 0.85)),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
                             Container(
                                 height: 500,
                                 child: state.calendarScreenAllEventsForADay
@@ -188,27 +198,65 @@ class LiveclassCalendar extends StatelessWidget {
                                           itemBuilder: (BuildContext context,
                                               int index) {
                                             return Card(
+                                              elevation: 0,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        10.0), // Rounded corners
+                                                    BorderRadius.circular(4.0),
                                                 side: BorderSide(
-                                                  color: Colors
-                                                      .blue, // Border color
-                                                  width: 2.0, // Border width
+                                                  color: Color.fromRGBO(
+                                                      143, 206, 243, 1),
+                                                  width: 1.0,
                                                 ),
                                               ),
-                                              color: Colors.grey[
-                                                  200], // Background color
-                                              child: Padding(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Color.fromRGBO(
+                                                      143, 206, 243, 0.3),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          4.0),
+                                                  backgroundBlendMode:
+                                                      BlendMode.multiply,
+                                                ),
                                                 padding:
                                                     const EdgeInsets.all(8.0),
                                                 child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(state
-                                                        .calendarScreenAllEventsForADay[
-                                                            index]
-                                                        .title),
+                                                    Text(
+                                                      state
+                                                          .calendarScreenAllEventsForADay[
+                                                              index]
+                                                          .title,
+                                                      style: TextStyle(
+                                                        fontSize: 17,
+                                                        color: Color.fromRGBO(
+                                                            5, 89, 137, 1),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      state
+                                                          .calendarScreenAllEventsForADay[
+                                                              index]
+                                                          .classType,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Color.fromRGBO(
+                                                            40, 141, 188, 1),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      state
+                                                          .calendarScreenAllEventsForADay[
+                                                              index]
+                                                          .classLevel,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Color.fromRGBO(
+                                                            60, 141, 188, 1),
+                                                      ),
+                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -223,7 +271,12 @@ class LiveclassCalendar extends StatelessWidget {
                                           },
                                         ),
                                       )
-                                    : null)
+                                    : Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Text("No classes scheduled !!",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black))))
                           ],
                         ));
                   }
