@@ -6,6 +6,7 @@ import 'package:inspflutterfrontend/apiservices/models/calendar/all_calendar_sch
 import 'package:inspflutterfrontend/pages/common/calender/widget/event_data_model.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
+import 'package:intl/intl.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -106,6 +107,15 @@ ThunkAction<CalendarWidgetAppState> getAllCalendarDataDateWise(
           _groupEvents(tempVariable);
 
       store.dispatch(UpdateDateWiseData(data: calendarEventData));
+      print(calendarEventData);
+      DateTime todayMidnight = DateTime.utc(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
+      print(calendarEventData[todayMidnight]);
+      print(todayMidnight);
+
+      store.dispatch(UpdateCalendarScreenDayWise(
+          dataForOneDay: calendarEventData[todayMidnight] ?? []));
     } catch (error) {
       // Handle errors appropriately here
     }
