@@ -34,7 +34,8 @@ class LivePeersListWidget extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        "H", // Display the first letter of the peer's name
+                        peer.name[0]
+                            .toUpperCase(), // Display the first letter of the peer's name
                         style: const TextStyle(color: Colors.white),
                       ),
                     )));

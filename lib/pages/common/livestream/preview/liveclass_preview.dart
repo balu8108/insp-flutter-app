@@ -11,7 +11,11 @@ class LiveClassPreviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // dispatch(context, initialSetup(context));
+    dispatch(context, initialSetup(context));
+    void navigateToRoomScreen() {
+      dispatch(context, navigateToRoom(context, "srvsgDWKiQ", {}));
+    }
+
     return Scaffold(
         appBar: Navbar(),
         body: StoreConnector<ChatWidgetAppState, ChatWidgetAppState>(
@@ -30,8 +34,9 @@ class LiveClassPreviewScreen extends StatelessWidget {
                       const SizedBox(width: 16),
                       Expanded(
                           flex: 3,
-                          child:
-                              LiveCLassPreviowlWidget(allPeers: state.allPeers))
+                          child: LiveCLassPreviowlWidget(
+                              allPeers: state.allPeers,
+                              navigateToRoomScreen: navigateToRoomScreen))
                     ],
                   ),
                 ),

@@ -1,6 +1,7 @@
 // This file is "main.dart"
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/liveclass.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/chat_message_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_answer_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_model.dart';
@@ -84,6 +85,17 @@ ChatWidgetAppState chatMessageStateReducer(
 
 ThunkAction<ChatWidgetAppState> initialSetup(BuildContext context) {
   return (Store<ChatWidgetAppState> store) async {
-    initializeSocketConnections(store, "bGqWRzApdV");
+    initializeSocketConnections(store, "srvsgDWKiQ");
+  };
+}
+
+ThunkAction<ChatWidgetAppState> navigateToRoom(
+    BuildContext context, String roomId, dynamic userProfile) {
+  return (Store<ChatWidgetAppState> store) async {
+    await joinRoomHandler(store, roomId, userProfile);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LiveClassScreen.getScreen()),
+    );
   };
 }

@@ -1,7 +1,6 @@
 import 'package:inspflutterfrontend/pages/common/livestream/models/chat_message_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/peers/peers_widget_redux.dart';
 import 'package:inspflutterfrontend/socket/socket_events.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:redux/redux.dart';
@@ -23,8 +22,8 @@ void initializeSocketConnections(
 
     socket?.on(
         SOCKET_EVENTS.CONNECT, (_) => socketConnectionHandler(store, roomId));
-    // socket?.on(SOCKET_EVENTS.NEW_PEER_JOINED,
-    //     (data) => socketNewPeerJoinedHandler(store, data));
+    socket?.on(SOCKET_EVENTS.NEW_PEER_JOINED,
+        (data) => socketNewPeerJoinedHandler(store, data));
     // socket?.on(SOCKET_EVENTS.ROOM_UPDATE,
     //     (data) => roomUpdateResponseHandler(store, data));
     // socket?.on(SOCKET_EVENTS.PEER_LEAVED,

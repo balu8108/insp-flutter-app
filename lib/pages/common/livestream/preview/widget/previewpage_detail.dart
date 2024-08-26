@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/liveclass.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/preview/widget/peer_list.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
@@ -7,11 +6,10 @@ import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 
 class LiveCLassPreviowlWidget extends StatelessWidget {
   final List<PeersDataModel> allPeers;
-  // final Function(BuildContext, RecordingPlayerCard) onViewDetailsClicked;
+  final Function() navigateToRoomScreen;
 
-  LiveCLassPreviowlWidget({
-    required this.allPeers,
-  });
+  LiveCLassPreviowlWidget(
+      {required this.allPeers, required this.navigateToRoomScreen});
 
   @override
   Widget build(BuildContext context) {
@@ -197,13 +195,7 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                                     const EdgeInsets.symmetric(vertical: 12.0)),
                               ),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        LiveClassScreen.getScreen(),
-                                  ),
-                                );
+                                navigateToRoomScreen();
                               },
                               child: const Text(
                                 "Join class",
