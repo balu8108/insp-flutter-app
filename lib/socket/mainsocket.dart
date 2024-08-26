@@ -1,1 +1,175 @@
+import 'package:inspflutterfrontend/pages/common/livestream/models/chat_message_model.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/peers/peers_widget_redux.dart';
+import 'package:inspflutterfrontend/socket/socket_events.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:redux/redux.dart';
 
+IO.Socket? socket;
+
+void initializeSocketConnections(
+    Store<ChatWidgetAppState> store, String roomId) {
+  final String secretToken = '017e406ef336ccd64a3afa401ce09767';
+
+  if (secretToken.isNotEmpty) {
+    socket = IO.io(
+        "http://localhost:4000",
+        IO.OptionBuilder()
+            .setTransports(['websocket'])
+            .enableAutoConnect()
+            .setAuth({'secret_token': '017e406ef336ccd64a3afa401ce09767'})
+            .build());
+
+    socket?.on(
+        SOCKET_EVENTS.CONNECT, (_) => socketConnectionHandler(store, roomId));
+    // socket?.on(SOCKET_EVENTS.NEW_PEER_JOINED,
+    //     (data) => socketNewPeerJoinedHandler(store, data));
+    // socket?.on(SOCKET_EVENTS.ROOM_UPDATE,
+    //     (data) => roomUpdateResponseHandler(store, data));
+    // socket?.on(SOCKET_EVENTS.PEER_LEAVED,
+    //     (data) => peerLeavedResponseHandler(store, data));
+    // socket?.on(SOCKET_EVENTS.CHAT_MSG_FROM_SERVER,
+    //     (data) => chatMsgResponseHandler(store, data));
+    // socket?.on(SOCKET_EVENTS.QUESTION_MSG_SENT_FROM_SERVER,
+    //     (data) => questionMsgResponseHandler(store, data));
+    // socket?.on(SOCKET_EVENTS.LEADERBOARD_FROM_SERVER,
+    //     (data) => leaderBoardResponseHandler(store, data));
+    // socket?.on(SOCKET_EVENTS.LEADERBOARD_AVERAGE_ANSWER_FROM_SERVER,
+    //     (data) => leaderBoardAnswerResponseHandler(store, data));
+  }
+}
+
+void chatMsgResponseHandler(Store<dynamic> store, dynamic res) {
+  List<ChatMessageModel> newMessages = List<ChatMessageModel>.from(
+      (res as List<dynamic>).map((e) => ChatMessageModel.fromJson(e)));
+
+  List<ChatMessageModel> currentMessages = store.state.chatMessages;
+
+  List<ChatMessageModel> updatedMessages = [
+    ...currentMessages.take(50), // Take the last 50 messages
+    ...newMessages
+  ];
+  store.dispatch(UpdateChatMessages(chatMessages: updatedMessages));
+}
+
+void questionMsgResponseHandler(Store<dynamic> store, dynamic res) {
+  List<ChatMessageModel> newMessages = List<ChatMessageModel>.from(
+      (res as List<dynamic>).map((e) => ChatMessageModel.fromJson(e)));
+
+  List<ChatMessageModel> currentMessages = store.state.questionMessages;
+
+  List<ChatMessageModel> updatedMessages = [
+    ...currentMessages.take(50), // Take the last 50 messages
+    ...newMessages
+  ];
+  store.dispatch(UpdateQuestionMessage(questionMessages: updatedMessages));
+}
+
+void sendQuestionMsg(Store<dynamic> store, String questionMsg) {
+  socket?.emitWithAck(
+    SOCKET_EVENTS.QUESTION_MSG_SENT_TO_SERVER,
+    {'questionMsg': questionMsg},
+    ack: (res) {
+      if (res['success']) {
+        List<ChatMessageModel> newMessages = List<ChatMessageModel>.from(
+            (res['data'] as List<dynamic>)
+                .map((e) => ChatMessageModel.fromJson(e)));
+
+        List<ChatMessageModel> currentMessages = store.state.questionMessages;
+
+        List<ChatMessageModel> updatedMessages = [
+          ...currentMessages.take(50), // Take the last 50 messages
+          ...newMessages
+        ];
+
+        store
+            .dispatch(UpdateQuestionMessage(questionMessages: updatedMessages));
+      } else {
+        print('Error sending question message: ${res['error']}');
+      }
+    },
+  );
+}
+
+void leaderBoardResponseHandler(Store<dynamic> store, dynamic res) {
+  store.dispatch(UpdateLeaderBoard(leaderBoard: res['leaderBoard']));
+}
+
+void leaderBoardAnswerResponseHandler(Store<dynamic> store, dynamic res) {
+  store.dispatch(UpdateLeaderboardMessages(
+      leaderBoardAnswerPercentage: res['averagePeersOption']));
+}
+
+void sendQuestionHandler(Store<dynamic> store, dynamic data) {
+  socket?.emitWithAck(SOCKET_EVENTS.QUESTION_SENT_TO_SERVER, data, ack: (res) {
+    store.dispatch(UpdatePollData(pollData: res));
+  });
+}
+
+void socketConnectionHandler(Store<dynamic> store, String roomId) {
+  socket?.emitWithAck(SOCKET_EVENTS.JOIN_ROOM_PREVIEW, {'roomId': roomId},
+      ack: (res) {
+    if (res['success'] == true) {
+      store.dispatch(UpdateAllPeers(
+          allPeers: List<PeersDataModel>.from((res['peers'] as List<dynamic>)
+              .map((e) => PeersDataModel.fromJson(e)))));
+    }
+  });
+}
+
+void socketNewPeerJoinedHandler(Store<dynamic> store, dynamic res) {
+  final PeersDataModel newPeer = PeersDataModel.fromJson(res['peer']);
+  final List<PeersDataModel> currentPeers = store.state.allPeers;
+
+  if (!currentPeers.any((peer) => peer.id == newPeer.id)) {
+    store.dispatch(UpdateAllPeers(allPeers: [...currentPeers, newPeer]));
+  }
+}
+
+void roomUpdateResponseHandler(Store<dynamic> store, dynamic res) {
+  final List<PeersDataModel> updatedPeers = List<PeersDataModel>.from(
+      (res['peer'] as List<dynamic>).map((e) => PeersDataModel.fromJson(e)));
+  store.dispatch(UpdateAllPeers(allPeers: updatedPeers));
+}
+
+void peerLeavedResponseHandler(Store<dynamic> store, dynamic res) {
+  final PeersDataModel peerLeaved = PeersDataModel.fromJson(res['peerLeaved']);
+
+  final List<PeersDataModel> updatedPeers =
+      store.state.allPeers.where((peer) => peer.id != peerLeaved.id).toList();
+
+  store.dispatch(UpdateAllPeers(allPeers: updatedPeers));
+}
+
+Future<void> joinRoomHandler(
+    Store<dynamic> store, String roomId, dynamic userProfile) async {
+  socket?.emitWithAck(
+      SOCKET_EVENTS.JOIN_ROOM, {'roomId': roomId, 'peerDetails': userProfile},
+      ack: (res) {
+    if (res['success']) {
+      store.dispatch(UpdateLeaderboardMessages(
+          leaderBoardAnswerPercentage: res['leaderBoardData']));
+    } else {
+      // Handle failure
+    }
+  });
+}
+
+void sendChatMessage(String msg) {
+  socket?.emit(SOCKET_EVENTS.CHAT_MSG_TO_SERVER, {'msg': msg});
+}
+
+void sendAnswerHandler(dynamic data) {
+  socket?.emit(SOCKET_EVENTS.ANSWER_SENT_TO_SERVER, data);
+}
+
+void kickOutFromClass(String peerSocketId, String peerId) {
+  socket?.emit(SOCKET_EVENTS.KICK_OUT_FROM_CLASS_TO_SERVER,
+      {'peerSocketId': peerSocketId, 'peerId': peerId});
+}
+
+void sendPollTimeIncreaseToServer(String questionId, int timeIncreaseBy) {
+  socket?.emit(SOCKET_EVENTS.POLL_TIME_INCREASE_TO_SERVER,
+      {'questionId': questionId, 'timeIncreaseBy': timeIncreaseBy});
+}

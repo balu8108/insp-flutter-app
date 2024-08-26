@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/preview/liveclass_preview.dart';
 
 class JoinClassBtn extends StatelessWidget {
   final String status;
@@ -60,7 +61,12 @@ class JoinClassBtn extends StatelessWidget {
           onPressed: btnDisabled
               ? null
               : () {
-                  // Add your onClick logic here
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            LiveClassPreviewScreen.getScreen()),
+                  );
                 },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(backColor),
