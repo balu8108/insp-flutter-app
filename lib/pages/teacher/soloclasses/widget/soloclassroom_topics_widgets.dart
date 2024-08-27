@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/pages/teacher/soloclassrecording/screen/soloclassroomscreen.dart';
 import 'package:inspflutterfrontend/widget/card/insp_card.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
@@ -36,12 +37,18 @@ class _SoloclassroomTopicsWidgetsState
                 width: 100,
                 child: ElevatedButton(
                     onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return ScheduleSoloClass.getScreen(
-                                0, false, '', '', '', '', '', []);
-                          });
+                      // showDialog(
+                      //     context: context,
+                      //     builder: (BuildContext context) {
+                      //       return ScheduleSoloClass.getScreen(
+                      //           0, false, '', '', '', '', '', []);
+                      //     });
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Soloclassroomscreen()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
