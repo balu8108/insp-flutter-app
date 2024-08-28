@@ -5,6 +5,7 @@ import 'package:inspflutterfrontend/pages/common/calender/calendar_widget_redux.
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/popups/timetableUpload/timetable_upload.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:universal_html/js_util.dart';
 
 class LiveclassCalendar extends StatelessWidget {
   const LiveclassCalendar({super.key});
@@ -109,15 +110,13 @@ class LiveclassCalendar extends StatelessWidget {
                                       markerBuilder: (context, date, events) {
                                         if (events.isNotEmpty) {
                                           return Positioned(
-                                            right: 1,
-                                            bottom: 1,
                                             child: _buildEventsMarker(
                                                 date, events),
                                           );
                                         }
                                       },
                                     ),
-                                    rowHeight: 50,
+                                    rowHeight: 70,
                                     availableGestures: AvailableGestures.all,
                                     selectedDayPredicate: (day) {
                                       return isSameDay(selectedDay, day);
@@ -154,12 +153,25 @@ class LiveclassCalendar extends StatelessWidget {
                                                 calendarFormat: format));
                                       }
                                     },
+                                    // onPageChanged: (focusedDay) {
+                                    //   dispatch(
+                                    //       context,
+                                    //       UpdateFocusedDay(
+                                    //           focusedDay: focusedDay));
+                                    // },
+
                                     onPageChanged: (focusedDay) {
                                       dispatch(
                                           context,
                                           UpdateFocusedDay(
                                               focusedDay: focusedDay));
+
+                                      dispatch(
+                                          context,
+                                          UpdateCalendarScreenDayWise(
+                                              dataForOneDay: []));
                                     },
+
                                     onDayLongPressed: (day, focusedDay) {
                                       ValueNotifier<DateTime> selectedDay =
                                           ValueNotifier(day);
@@ -301,7 +313,8 @@ Widget _buildEventsMarker(DateTime date, List events) {
   return Container(
     decoration: BoxDecoration(
       shape: BoxShape.circle,
-      color: Colors.blue,
+      color: Color.fromRGBO(60, 141, 188, 1),
+      backgroundBlendMode: BlendMode.multiply,
     ),
     width: 16.0,
     height: 16.0,

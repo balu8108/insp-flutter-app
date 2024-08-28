@@ -107,12 +107,8 @@ ThunkAction<CalendarWidgetAppState> getAllCalendarDataDateWise(
           _groupEvents(tempVariable);
 
       store.dispatch(UpdateDateWiseData(data: calendarEventData));
-      print(calendarEventData);
       DateTime todayMidnight = DateTime.utc(
           DateTime.now().year, DateTime.now().month, DateTime.now().day);
-
-      print(calendarEventData[todayMidnight]);
-      print(todayMidnight);
 
       store.dispatch(UpdateCalendarScreenDayWise(
           dataForOneDay: calendarEventData[todayMidnight] ?? []));
