@@ -88,7 +88,7 @@ class TeacherHomeScreen extends StatelessWidget {
                   if (isWebOrLandScape)
                     Expanded(
                       flex: 3,
-                      child: UpcomingClassesScreen.getScreen(),
+                      child: const UpcomingClassesScreen(),
                     ),
                 ],
               ),

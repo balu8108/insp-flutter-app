@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/preview/widget/previewpage_detail.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/common/recordingplayer/tpstream_video_player.dart';
+import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 
 class LiveClassPreviewScreen extends StatelessWidget {
   const LiveClassPreviewScreen({super.key});
+  static void dispatch(BuildContext context, ChatWidgetAction action) {
+    StoreProvider.of<AppState>(context).dispatch(action);
+  }
 
   @override
   Widget build(BuildContext context) {
-    dispatch(context, initialSetup(context));
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(initialSetup(context));
     void navigateToRoomScreen() {
-      dispatch(context, navigateToRoom(context, "srvsgDWKiQ", {}));
+      store.dispatch(navigateToRoom(context, "rc8LNxmKMT", {}));
     }
 
     return Scaffold(
         appBar: Navbar(),
-        body: StoreConnector<ChatWidgetAppState, ChatWidgetAppState>(
-          converter: (store) => store.state,
+        body: StoreConnector<AppState, ChatWidgetAppState>(
+          converter: (store) => store.state.chatWidgetAppState,
           builder: (context, ChatWidgetAppState state) => Container(
               padding: const EdgeInsets.all(10.0),
               color: Colors.white,
@@ -42,16 +46,5 @@ class LiveClassPreviewScreen extends StatelessWidget {
                 ),
               )),
         ));
-  }
-
-  static getScreen() {
-    return getBaseScreen<ChatWidgetAppState, LiveClassPreviewScreen>(
-        chatMessageStateReducer,
-        ChatWidgetAppState(),
-        const LiveClassPreviewScreen());
-  }
-
-  static dispatch(BuildContext context, dynamic action) {
-    baseDispatch<ChatWidgetAppState>(context, action);
   }
 }

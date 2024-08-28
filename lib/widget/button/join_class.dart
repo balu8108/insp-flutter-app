@@ -64,8 +64,7 @@ class JoinClassBtn extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            LiveClassPreviewScreen.getScreen()),
+                        builder: (context) => LiveClassPreviewScreen()),
                   );
                 },
           style: ButtonStyle(

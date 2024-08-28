@@ -1,15 +1,19 @@
+import 'dart:math';
+
 import 'package:inspflutterfrontend/pages/common/livestream/models/chat_message_model.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_answer_model.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/socket_events.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:redux/redux.dart';
 
 IO.Socket? socket;
 
-void initializeSocketConnections(
-    Store<ChatWidgetAppState> store, String roomId) {
-  final String secretToken = '017e406ef336ccd64a3afa401ce09767';
+void initializeSocketConnections(Store<AppState> store, String roomId) {
+  final String secretToken = '70bc7fe19e8e055142e02bf67fa13de0';
 
   if (secretToken.isNotEmpty) {
     socket = IO.io(
@@ -17,87 +21,68 @@ void initializeSocketConnections(
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .enableAutoConnect()
-            .setAuth({'secret_token': '017e406ef336ccd64a3afa401ce09767'})
+            .setAuth({'secret_token': '70bc7fe19e8e055142e02bf67fa13de0'})
             .build());
 
     socket?.on(
         SOCKET_EVENTS.CONNECT, (_) => socketConnectionHandler(store, roomId));
     socket?.on(SOCKET_EVENTS.NEW_PEER_JOINED,
         (data) => socketNewPeerJoinedHandler(store, data));
-    // socket?.on(SOCKET_EVENTS.ROOM_UPDATE,
-    //     (data) => roomUpdateResponseHandler(store, data));
-    // socket?.on(SOCKET_EVENTS.PEER_LEAVED,
-    //     (data) => peerLeavedResponseHandler(store, data));
-    // socket?.on(SOCKET_EVENTS.CHAT_MSG_FROM_SERVER,
-    //     (data) => chatMsgResponseHandler(store, data));
-    // socket?.on(SOCKET_EVENTS.QUESTION_MSG_SENT_FROM_SERVER,
-    //     (data) => questionMsgResponseHandler(store, data));
-    // socket?.on(SOCKET_EVENTS.LEADERBOARD_FROM_SERVER,
-    //     (data) => leaderBoardResponseHandler(store, data));
-    // socket?.on(SOCKET_EVENTS.LEADERBOARD_AVERAGE_ANSWER_FROM_SERVER,
-    //     (data) => leaderBoardAnswerResponseHandler(store, data));
+    socket?.on(SOCKET_EVENTS.CHAT_MSG_FROM_SERVER,
+        (data) => chatMsgResponseHandler(store, data));
+    socket?.on(SOCKET_EVENTS.QUESTION_MSG_SENT_FROM_SERVER,
+        (data) => questionMsgResponseHandler(store, data));
+    // socket?.on(SOCKET_EVENTS.QUESTION_SENT_FROM_SERVER,
+    //     (data) => questionResponseHandler(store, data));
+    socket?.on(SOCKET_EVENTS.LEADERBOARD_FROM_SERVER,
+        (data) => leaderBoardResponseHandler(store, data));
+    socket?.on(SOCKET_EVENTS.LEADERBOARD_AVERAGE_ANSWER_FROM_SERVER,
+        (data) => leaderBoardAnswerResponseHandler(store, data));
   }
 }
 
-void chatMsgResponseHandler(Store<dynamic> store, dynamic res) {
-  List<ChatMessageModel> newMessages = List<ChatMessageModel>.from(
-      (res as List<dynamic>).map((e) => ChatMessageModel.fromJson(e)));
-
-  List<ChatMessageModel> currentMessages = store.state.chatMessages;
-
-  List<ChatMessageModel> updatedMessages = [
-    ...currentMessages.take(50), // Take the last 50 messages
-    ...newMessages
-  ];
-  store.dispatch(UpdateChatMessages(chatMessages: updatedMessages));
+void chatMsgResponseHandler(Store<AppState> store, dynamic res) {
+  store.dispatch(addServerChatMessage(res));
 }
 
-void questionMsgResponseHandler(Store<dynamic> store, dynamic res) {
-  List<ChatMessageModel> newMessages = List<ChatMessageModel>.from(
-      (res as List<dynamic>).map((e) => ChatMessageModel.fromJson(e)));
-
-  List<ChatMessageModel> currentMessages = store.state.questionMessages;
-
-  List<ChatMessageModel> updatedMessages = [
-    ...currentMessages.take(50), // Take the last 50 messages
-    ...newMessages
-  ];
-  store.dispatch(UpdateQuestionMessage(questionMessages: updatedMessages));
+void sendChatMessage(String msg) {
+  socket?.emit(SOCKET_EVENTS.CHAT_MSG_TO_SERVER, {'msg': msg});
 }
 
-void sendQuestionMsg(Store<dynamic> store, String questionMsg) {
-  socket?.emitWithAck(
+void questionMsgResponseHandler(Store<AppState> store, dynamic res) {
+  print("123445");
+  print(res);
+  store.dispatch(addServerQuestionMessage(res));
+}
+
+void questionResponseHandler(Store<AppState> store, dynamic res) {
+  print("1234456777");
+  print(res);
+  store.dispatch(addServerQuestionMessage(res));
+}
+
+void sendQuestionMsg(String questionMsg) {
+  socket?.emit(
     SOCKET_EVENTS.QUESTION_MSG_SENT_TO_SERVER,
     {'questionMsg': questionMsg},
-    ack: (res) {
-      if (res['success']) {
-        List<ChatMessageModel> newMessages = List<ChatMessageModel>.from(
-            (res['data'] as List<dynamic>)
-                .map((e) => ChatMessageModel.fromJson(e)));
-
-        List<ChatMessageModel> currentMessages = store.state.questionMessages;
-
-        List<ChatMessageModel> updatedMessages = [
-          ...currentMessages.take(50), // Take the last 50 messages
-          ...newMessages
-        ];
-
-        store
-            .dispatch(UpdateQuestionMessage(questionMessages: updatedMessages));
-      } else {
-        print('Error sending question message: ${res['error']}');
-      }
-    },
   );
 }
 
-void leaderBoardResponseHandler(Store<dynamic> store, dynamic res) {
-  store.dispatch(UpdateLeaderBoard(leaderBoard: res['leaderBoard']));
+void leaderBoardResponseHandler(Store<AppState> store, dynamic res) {
+  List<LeaderboardModel> leaderBoardList = (res['leaderBoard'] as List)
+      .map((item) => LeaderboardModel.fromJson(item))
+      .toList();
+  store.dispatch(UpdateLeaderBoard(leaderBoard: leaderBoardList));
 }
 
-void leaderBoardAnswerResponseHandler(Store<dynamic> store, dynamic res) {
+void leaderBoardAnswerResponseHandler(Store<AppState> store, dynamic res) {
+  List<LeaderBoardAnswerModel> leaderBoardListAnswer =
+      (res['averagePeersOption'] as List)
+          .map((item) => LeaderBoardAnswerModel.fromJson(item))
+          .toList();
+
   store.dispatch(UpdateLeaderboardMessages(
-      leaderBoardAnswerPercentage: res['averagePeersOption']));
+      leaderBoardAnswerPercentage: leaderBoardListAnswer));
 }
 
 void sendQuestionHandler(Store<dynamic> store, dynamic data) {
@@ -153,10 +138,6 @@ Future<void> joinRoomHandler(
       // Handle failure
     }
   });
-}
-
-void sendChatMessage(String msg) {
-  socket?.emit(SOCKET_EVENTS.CHAT_MSG_TO_SERVER, {'msg': msg});
 }
 
 void sendAnswerHandler(dynamic data) {

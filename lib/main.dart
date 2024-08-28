@@ -1,18 +1,37 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
+import 'package:inspflutterfrontend/pages/login/login_redux.dart';
 import 'package:inspflutterfrontend/pages/login/login_screen.dart';
 import 'package:inspflutterfrontend/pages/onboarding/onboarding_screen.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:inspflutterfrontend/redux/app_reducer.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:redux_thunk/redux_thunk.dart';
+import 'package:redux/redux.dart';
 
 void main() {
-  runApp(const MyApp());
+  final store = Store<AppState>(
+    appStateReducer,
+    initialState: const AppState(
+        loginState: LoginAppState(),
+        upcomingWidgetAppState: UpcomingWidgetAppState(),
+        chatWidgetAppState: ChatWidgetAppState()),
+    middleware: [thunkMiddleware],
+  );
+
+  runApp(MyApp(store: store));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.store});
+
+  final Store<AppState> store;
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -37,26 +56,28 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Builder(
-        builder: (context) {
-          if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
-            return userData.token == ""
-                ? LoginScreen.getScreen()
-                : HomeScreen(userData: userData);
-          } else {
-            return AnimatedSplashScreen(
-              duration: 3000,
-              splash: _buildSplashWidget(),
-              splashTransition: SplashTransition.sizeTransition,
-              nextScreen: const OnboardingScreen(),
-              backgroundColor: Colors.white,
-            );
-          }
-        },
-      ),
-    );
+    return StoreProvider<AppState>(
+        store: widget.store,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Builder(
+            builder: (context) {
+              if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
+                return userData.token == ""
+                    ? const LoginScreen()
+                    : HomeScreen(userData: userData);
+              } else {
+                return AnimatedSplashScreen(
+                  duration: 3000,
+                  splash: _buildSplashWidget(),
+                  splashTransition: SplashTransition.sizeTransition,
+                  nextScreen: const OnboardingScreen(),
+                  backgroundColor: Colors.white,
+                );
+              }
+            },
+          ),
+        ));
   }
 
   Widget _buildSplashWidget() {

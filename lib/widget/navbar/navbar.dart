@@ -168,7 +168,7 @@ class _NavbarState extends State<Navbar> {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => LoginScreen.getScreen(),
+              builder: (context) => const LoginScreen(),
             ),
             (route) => false, // This removes all the previous routes
           );

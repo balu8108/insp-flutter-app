@@ -19,9 +19,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            Expanded(
+            const Expanded(
               flex: 3,
-              child: UpcomingClassesScreen.getScreen(),
+              child: UpcomingClassesScreen(),
             ),
             const SizedBox(width: 17), // Adds spacing between the components
             Expanded(

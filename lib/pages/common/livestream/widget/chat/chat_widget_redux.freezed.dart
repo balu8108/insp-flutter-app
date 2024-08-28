@@ -21,7 +21,7 @@ mixin _$ChatWidgetAppState {
   List<LeaderboardModel> get leaderBoard => throw _privateConstructorUsedError;
   List<LeaderBoardAnswerModel> get leaderBoardAnswerPercentage =>
       throw _privateConstructorUsedError;
-  List<ChatMessageModel> get questionMessages =>
+  List<QuestionMessageModel> get questionMessages =>
       throw _privateConstructorUsedError;
   List<PollDataModel> get pollData => throw _privateConstructorUsedError;
 
@@ -41,7 +41,7 @@ abstract class $ChatWidgetAppStateCopyWith<$Res> {
       List<PeersDataModel> allPeers,
       List<LeaderboardModel> leaderBoard,
       List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
-      List<ChatMessageModel> questionMessages,
+      List<QuestionMessageModel> questionMessages,
       List<PollDataModel> pollData});
 }
 
@@ -85,7 +85,7 @@ class _$ChatWidgetAppStateCopyWithImpl<$Res, $Val extends ChatWidgetAppState>
       questionMessages: null == questionMessages
           ? _value.questionMessages
           : questionMessages // ignore: cast_nullable_to_non_nullable
-              as List<ChatMessageModel>,
+              as List<QuestionMessageModel>,
       pollData: null == pollData
           ? _value.pollData
           : pollData // ignore: cast_nullable_to_non_nullable
@@ -107,7 +107,7 @@ abstract class _$$ChatWidgetAppStateImplCopyWith<$Res>
       List<PeersDataModel> allPeers,
       List<LeaderboardModel> leaderBoard,
       List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
-      List<ChatMessageModel> questionMessages,
+      List<QuestionMessageModel> questionMessages,
       List<PollDataModel> pollData});
 }
 
@@ -149,7 +149,7 @@ class __$$ChatWidgetAppStateImplCopyWithImpl<$Res>
       questionMessages: null == questionMessages
           ? _value._questionMessages
           : questionMessages // ignore: cast_nullable_to_non_nullable
-              as List<ChatMessageModel>,
+              as List<QuestionMessageModel>,
       pollData: null == pollData
           ? _value._pollData
           : pollData // ignore: cast_nullable_to_non_nullable
@@ -166,7 +166,7 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
       final List<PeersDataModel> allPeers = const [],
       final List<LeaderboardModel> leaderBoard = const [],
       final List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage = const [],
-      final List<ChatMessageModel> questionMessages = const [],
+      final List<QuestionMessageModel> questionMessages = const [],
       final List<PollDataModel> pollData = const []})
       : _chatMessages = chatMessages,
         _allPeers = allPeers,
@@ -212,10 +212,10 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
     return EqualUnmodifiableListView(_leaderBoardAnswerPercentage);
   }
 
-  final List<ChatMessageModel> _questionMessages;
+  final List<QuestionMessageModel> _questionMessages;
   @override
   @JsonKey()
-  List<ChatMessageModel> get questionMessages {
+  List<QuestionMessageModel> get questionMessages {
     if (_questionMessages is EqualUnmodifiableListView)
       return _questionMessages;
     // ignore: implicit_dynamic_type
@@ -278,7 +278,7 @@ abstract class _ChatWidgetAppState implements ChatWidgetAppState {
       final List<PeersDataModel> allPeers,
       final List<LeaderboardModel> leaderBoard,
       final List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
-      final List<ChatMessageModel> questionMessages,
+      final List<QuestionMessageModel> questionMessages,
       final List<PollDataModel> pollData}) = _$ChatWidgetAppStateImpl;
 
   @override
@@ -290,7 +290,7 @@ abstract class _ChatWidgetAppState implements ChatWidgetAppState {
   @override
   List<LeaderBoardAnswerModel> get leaderBoardAnswerPercentage;
   @override
-  List<ChatMessageModel> get questionMessages;
+  List<QuestionMessageModel> get questionMessages;
   @override
   List<PollDataModel> get pollData;
   @override
