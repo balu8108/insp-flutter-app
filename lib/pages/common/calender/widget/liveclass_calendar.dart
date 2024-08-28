@@ -166,6 +166,7 @@ class LiveclassCalendar extends StatelessWidget {
                                           UpdateFocusedDay(
                                               focusedDay: focusedDay));
 
+                                      // Clear the selected day's data when the month changes
                                       dispatch(
                                           context,
                                           UpdateCalendarScreenDayWise(
