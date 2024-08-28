@@ -45,8 +45,7 @@ class _TimetableUploadState extends State<TimetableUpload> {
       ),
       content: SizedBox(
         width: 550,
-        height:
-            300, // Adjusted height to accommodate both picked and previous files
+        height: 200,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -113,49 +112,8 @@ class _TimetableUploadState extends State<TimetableUpload> {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+
             // Integrate PickedFile component
-            PickedFile(
-              uploadFile: _chooseFile,
-              removeFile: _removeFile,
-              pickedFilesName: selectedFiles,
-            ),
-            const SizedBox(height: 10),
-            // Previous files list
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: selectedFiles.length,
-                itemBuilder: (context, index) {
-                  final String file = selectedFiles[index];
-                  return Container(
-                    margin: const EdgeInsets.all(2.0),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFE3E1E1),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 5.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          file.split('/').last,
-                          style: const TextStyle(
-                            fontSize: 15.0,
-                            color: Color(0xFF718096),
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () => _removeFile(file),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
           ],
         ),
       ),
@@ -179,8 +137,7 @@ class _TimetableUploadState extends State<TimetableUpload> {
                 ),
               ),
               onPressed: () {
-                // Handle the file upload logic here
-                Navigator.of(context).pop(); // Dismiss the dialog
+                Navigator.of(context).pop();
               },
             ),
           ),

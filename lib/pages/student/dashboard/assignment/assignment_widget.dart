@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/base/base.dart';
 import 'package:inspflutterfrontend/pages/student/dashboard/assignment/assignment_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/teacher/uploads/mainpage/myuploads.dart';
 import 'package:inspflutterfrontend/widget/card/latest_assignment_card.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 
@@ -27,6 +28,20 @@ class AssignmentWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(flex: 9, child: INSPHeading('Assignment')),
+                const Spacer(),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MyUploads()),
+                      );
+                    },
+                    child: Text(
+                      "See All",
+                      style: TextStyle(
+                          color: Color.fromRGBO(44, 51, 41, 1), fontSize: 14),
+                    ))
               ],
             ),
             const SizedBox(height: 17),
@@ -50,7 +65,7 @@ class AssignmentWidget extends StatelessWidget {
                       ),
                     ),
                   )
-                : const Center(child: Text('No item')),
+                : const Center(child: Text('No Data')),
           ],
         ),
       ),

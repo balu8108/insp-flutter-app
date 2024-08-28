@@ -188,7 +188,7 @@ class AddAssignment extends StatelessWidget {
                                 backgroundColor:
                                     const Color.fromRGBO(60, 141, 188, 1),
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 16.0),
+                                    const EdgeInsets.symmetric(vertical: 22.0),
                                 textStyle: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,

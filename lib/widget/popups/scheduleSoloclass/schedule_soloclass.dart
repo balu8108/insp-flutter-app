@@ -211,7 +211,9 @@ class ScheduleSoloClass extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.20,
+                          height: 40,
+                          width: 200,
+                          // width: MediaQuery.of(context).size.width * 0.20,
                           child: ElevatedButton(
                               onPressed:
                                   state.isClassLoading ? null : createSoloClass,
@@ -219,8 +221,6 @@ class ScheduleSoloClass extends StatelessWidget {
                                 foregroundColor: Colors.white,
                                 backgroundColor:
                                     const Color.fromRGBO(60, 141, 188, 1),
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16.0),
                                 textStyle: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,

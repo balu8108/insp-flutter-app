@@ -11,7 +11,8 @@ class Soloclassroomscreen extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(43, 26, 43, 26),
       child: Row(children: [
         Expanded(flex: 1, child: SoloclassDescription()),
-        Expanded(flex: 1, child: SoloclassRecording()),
+        const SizedBox(width: 16),
+        Expanded(flex: 4, child: SoloclassRecording()),
       ]),
     );
   }
