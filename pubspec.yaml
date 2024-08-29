@@ -61,6 +61,7 @@ dependencies:
   universal_platform: ^1.1.0
   webview_universal: ^0.0.5
   uuid: ^4.4.2
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_test:

@@ -86,15 +86,8 @@ class _LiveQuestionState extends State<LiveQuestion> {
                       borderRadius: BorderRadius.circular(25),
                       borderSide: BorderSide.none,
                     ),
-                    hintText: 'Type Something...',
+                    hintText: 'Ask Something...',
                     hintStyle: const TextStyle(fontSize: 14),
-                    prefixIcon: IconButton(
-                      icon: const Icon(Icons.child_care),
-                      iconSize: 16.0,
-                      onPressed: () {
-                        print("click");
-                      },
-                    ),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.send),
                       iconSize: 16.0,

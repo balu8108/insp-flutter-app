@@ -17,7 +17,8 @@ class LiveChatSectionWidget extends StatelessWidget {
               children: [
                 LiveClassDetail(),
                 const SizedBox(height: 20),
-                LiveLeftPart()
+                LiveLeftPart(),
+                const SizedBox(height: 20),
               ],
             )));
   }

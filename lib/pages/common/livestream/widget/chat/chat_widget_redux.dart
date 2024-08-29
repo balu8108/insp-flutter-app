@@ -29,7 +29,7 @@ class ChatWidgetAppState with _$ChatWidgetAppState {
     @Default([]) List<LeaderboardModel> leaderBoard,
     @Default([]) List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
     @Default([]) List<QuestionMessageModel> questionMessages,
-    @Default([]) List<PollDataModel> pollData,
+    @Default(PollDataModel()) PollDataModel pollData,
   }) = _ChatWidgetAppState;
 }
 
@@ -59,7 +59,7 @@ class UpdateQuestionMessage extends ChatWidgetAction {
 }
 
 class UpdatePollData extends ChatWidgetAction {
-  List<PollDataModel> pollData;
+  PollDataModel pollData;
   UpdatePollData({required this.pollData});
 }
 
@@ -98,6 +98,14 @@ ThunkAction<AppState> navigateToRoom(
       context,
       MaterialPageRoute(builder: (context) => const LiveClassScreen()),
     );
+  };
+}
+
+ThunkAction<AppState> cleanState() {
+  return (Store<AppState> store) async {
+    PollDataModel polldata = const PollDataModel(
+        correctAnswers: [], noOfOptions: 0, questionId: '', type: '', time: 0);
+    store.dispatch(UpdatePollData(pollData: polldata));
   };
 }
 

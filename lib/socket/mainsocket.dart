@@ -4,6 +4,7 @@ import 'package:inspflutterfrontend/pages/common/livestream/models/chat_message_
 import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_answer_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/socket_events.dart';
@@ -85,9 +86,10 @@ void leaderBoardAnswerResponseHandler(Store<AppState> store, dynamic res) {
       leaderBoardAnswerPercentage: leaderBoardListAnswer));
 }
 
-void sendQuestionHandler(Store<dynamic> store, dynamic data) {
+void sendQuestionHandler(Store<AppState> store, dynamic data) {
   socket?.emitWithAck(SOCKET_EVENTS.QUESTION_SENT_TO_SERVER, data, ack: (res) {
-    store.dispatch(UpdatePollData(pollData: res));
+    PollDataModel pollDataModel = PollDataModel.fromJson(res);
+    store.dispatch(UpdatePollData(pollData: pollDataModel));
   });
 }
 
