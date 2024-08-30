@@ -16,6 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ChatWidgetAppState {
+  LecturesDetailResponseModelData get previewData =>
+      throw _privateConstructorUsedError;
   List<ChatMessageModel> get chatMessages => throw _privateConstructorUsedError;
   List<PeersDataModel> get allPeers => throw _privateConstructorUsedError;
   List<LeaderboardModel> get leaderBoard => throw _privateConstructorUsedError;
@@ -40,7 +42,8 @@ abstract class $ChatWidgetAppStateCopyWith<$Res> {
       _$ChatWidgetAppStateCopyWithImpl<$Res, ChatWidgetAppState>;
   @useResult
   $Res call(
-      {List<ChatMessageModel> chatMessages,
+      {LecturesDetailResponseModelData previewData,
+      List<ChatMessageModel> chatMessages,
       List<PeersDataModel> allPeers,
       List<LeaderboardModel> leaderBoard,
       List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
@@ -63,6 +66,7 @@ class _$ChatWidgetAppStateCopyWithImpl<$Res, $Val extends ChatWidgetAppState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? previewData = null,
     Object? chatMessages = null,
     Object? allPeers = null,
     Object? leaderBoard = null,
@@ -73,6 +77,10 @@ class _$ChatWidgetAppStateCopyWithImpl<$Res, $Val extends ChatWidgetAppState>
     Object? increasePollTimeModel = null,
   }) {
     return _then(_value.copyWith(
+      previewData: null == previewData
+          ? _value.previewData
+          : previewData // ignore: cast_nullable_to_non_nullable
+              as LecturesDetailResponseModelData,
       chatMessages: null == chatMessages
           ? _value.chatMessages
           : chatMessages // ignore: cast_nullable_to_non_nullable
@@ -118,7 +126,8 @@ abstract class _$$ChatWidgetAppStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<ChatMessageModel> chatMessages,
+      {LecturesDetailResponseModelData previewData,
+      List<ChatMessageModel> chatMessages,
       List<PeersDataModel> allPeers,
       List<LeaderboardModel> leaderBoard,
       List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
@@ -139,6 +148,7 @@ class __$$ChatWidgetAppStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? previewData = null,
     Object? chatMessages = null,
     Object? allPeers = null,
     Object? leaderBoard = null,
@@ -149,6 +159,10 @@ class __$$ChatWidgetAppStateImplCopyWithImpl<$Res>
     Object? increasePollTimeModel = null,
   }) {
     return _then(_$ChatWidgetAppStateImpl(
+      previewData: null == previewData
+          ? _value.previewData
+          : previewData // ignore: cast_nullable_to_non_nullable
+              as LecturesDetailResponseModelData,
       chatMessages: null == chatMessages
           ? _value._chatMessages
           : chatMessages // ignore: cast_nullable_to_non_nullable
@@ -189,7 +203,8 @@ class __$$ChatWidgetAppStateImplCopyWithImpl<$Res>
 
 class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
   const _$ChatWidgetAppStateImpl(
-      {final List<ChatMessageModel> chatMessages = const [],
+      {this.previewData = const LecturesDetailResponseModelData(),
+      final List<ChatMessageModel> chatMessages = const [],
       final List<PeersDataModel> allPeers = const [],
       final List<LeaderboardModel> leaderBoard = const [],
       final List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage = const [],
@@ -203,6 +218,9 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
         _leaderBoardAnswerPercentage = leaderBoardAnswerPercentage,
         _questionMessages = questionMessages;
 
+  @override
+  @JsonKey()
+  final LecturesDetailResponseModelData previewData;
   final List<ChatMessageModel> _chatMessages;
   @override
   @JsonKey()
@@ -262,7 +280,7 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
 
   @override
   String toString() {
-    return 'ChatWidgetAppState(chatMessages: $chatMessages, allPeers: $allPeers, leaderBoard: $leaderBoard, leaderBoardAnswerPercentage: $leaderBoardAnswerPercentage, questionMessages: $questionMessages, pollData: $pollData, questionFromServer: $questionFromServer, increasePollTimeModel: $increasePollTimeModel)';
+    return 'ChatWidgetAppState(previewData: $previewData, chatMessages: $chatMessages, allPeers: $allPeers, leaderBoard: $leaderBoard, leaderBoardAnswerPercentage: $leaderBoardAnswerPercentage, questionMessages: $questionMessages, pollData: $pollData, questionFromServer: $questionFromServer, increasePollTimeModel: $increasePollTimeModel)';
   }
 
   @override
@@ -270,6 +288,8 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChatWidgetAppStateImpl &&
+            (identical(other.previewData, previewData) ||
+                other.previewData == previewData) &&
             const DeepCollectionEquality()
                 .equals(other._chatMessages, _chatMessages) &&
             const DeepCollectionEquality().equals(other._allPeers, _allPeers) &&
@@ -291,6 +311,7 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      previewData,
       const DeepCollectionEquality().hash(_chatMessages),
       const DeepCollectionEquality().hash(_allPeers),
       const DeepCollectionEquality().hash(_leaderBoard),
@@ -310,7 +331,8 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
 
 abstract class _ChatWidgetAppState implements ChatWidgetAppState {
   const factory _ChatWidgetAppState(
-          {final List<ChatMessageModel> chatMessages,
+          {final LecturesDetailResponseModelData previewData,
+          final List<ChatMessageModel> chatMessages,
           final List<PeersDataModel> allPeers,
           final List<LeaderboardModel> leaderBoard,
           final List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
@@ -320,6 +342,8 @@ abstract class _ChatWidgetAppState implements ChatWidgetAppState {
           final IncreasePollTimeModel increasePollTimeModel}) =
       _$ChatWidgetAppStateImpl;
 
+  @override
+  LecturesDetailResponseModelData get previewData;
   @override
   List<ChatMessageModel> get chatMessages;
   @override

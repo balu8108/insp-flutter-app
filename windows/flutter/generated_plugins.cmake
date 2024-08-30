@@ -5,7 +5,6 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   desktop_webview_window
   pdfx
-  url_launcher_windows
   webview_universal
 )
 

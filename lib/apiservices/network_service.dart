@@ -11,6 +11,7 @@ import 'package:inspflutterfrontend/apiservices/models/generic/generic_open_file
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/liveclass/liveclass_preview_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/device_login_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_topic_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_request_model.dart';
@@ -180,4 +181,8 @@ abstract class NetworkService {
       createStudentFeedback(
           @Body() CreateStudentFeedbackRequestModel feedbackrequest,
           @Header('Authorization') String secretTokenHeader);
+
+  @GET('/schedule-live-class/get-details/{roomId}')
+  Future<HttpResponse<LiveClassPreviewResponseModel>> getRoomPreviewData(
+      @Path() String roomId, @Header('Authorization') String secretTokenHeader);
 }

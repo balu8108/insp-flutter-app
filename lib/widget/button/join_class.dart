@@ -4,8 +4,10 @@ import 'package:inspflutterfrontend/pages/common/livestream/preview/liveclass_pr
 class JoinClassBtn extends StatelessWidget {
   final String status;
   final bool isTeacher;
+  final String roomId;
 
-  JoinClassBtn({required this.status, required this.isTeacher});
+  JoinClassBtn(
+      {required this.status, required this.isTeacher, required this.roomId});
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,8 @@ class JoinClassBtn extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => LiveClassPreviewScreen()),
+                        builder: (context) =>
+                            LiveClassPreviewScreen(roomId: roomId)),
                   );
                 },
           style: ButtonStyle(

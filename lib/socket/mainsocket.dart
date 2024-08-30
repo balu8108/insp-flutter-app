@@ -39,6 +39,8 @@ void initializeSocketConnections(Store<AppState> store, String roomId) {
         (data) => leaderBoardAnswerResponseHandler(store, data));
     socket?.on(SOCKET_EVENTS.POLL_TIME_INCREASE_FROM_SERVER,
         (data) => pollTimeIncreaseResponseHandler(store, data));
+    socket?.on(SOCKET_EVENTS.DISCONNECT, (err) => {});
+    socket?.on(SOCKET_EVENTS.CONNECT_ERROR, (err) => {});
   }
 }
 
@@ -139,9 +141,21 @@ Future<void> joinRoomHandler(
   });
 }
 
+Future<void> sendFileHandler(Store<AppState> store, dynamic filesData) async {
+  socket?.emitWithAck(SOCKET_EVENTS.UPLOAD_FILE_TO_SERVER, filesData,
+      ack: (res) {
+    if (res['success']) {
+      print("IOSADA");
+      print(res['data']);
+      // store.dispatch(
+      //     UpdateLeaderboardMessages(leaderBoardAnswerPercentage: res['data']));
+    } else {
+      // Handle failure
+    }
+  });
+}
+
 void sendAnswerHandler(dynamic data) {
-  print("DFDF");
-  print(data);
   socket?.emit(SOCKET_EVENTS.ANSWER_SENT_TO_SERVER, data);
 }
 
