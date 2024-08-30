@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/livequestionanswer.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/mainsocket.dart';
 import 'package:inspflutterfrontend/widget/popups/questiongenerate/question_generate.dart';
-// import 'package:tpstreams_player_sdk/tpstreams_player_sdk.dart';
 
 class TPStreamLiveVideoPlayerWidget extends StatelessWidget {
   TPStreamLiveVideoPlayerWidget();
+
   static void dispatch(BuildContext context, ChatWidgetAppState action) {
     StoreProvider.of<AppState>(context).dispatch(action);
   }
@@ -21,30 +22,53 @@ class TPStreamLiveVideoPlayerWidget extends StatelessWidget {
       sendQuestionHandler(store, data);
     }
 
+    void submitAnswer(dynamic data) {
+      sendAnswerHandler(data);
+    }
+
     return StoreConnector<AppState, ChatWidgetAppState>(
-        converter: (store) => store.state.chatWidgetAppState,
-        builder: (context, ChatWidgetAppState state) => Container(
-            height: 600,
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: const Color.fromRGBO(232, 242, 249, 1),
-            ),
-            child: Column(
-              children: [
-                Tooltip(
-                    message: "Polls", // Adjust as per your utility function
-                    child: IconButton(
-                      icon: const Icon(Icons.poll),
-                      iconSize: 16.0,
-                      onPressed: () => showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return QuestionGenerate.getScreen(
-                                sendPollToServer: generatePoll);
-                          }),
-                    )),
-              ],
-            )));
+      converter: (store) => store.state.chatWidgetAppState,
+      builder: (context, ChatWidgetAppState state) => Stack(
+        children: [
+          Container(
+              height: 650,
+              width: double.infinity,
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: Colors.black12,
+              ),
+              child: Text("TP Stream content")),
+          Positioned(
+              bottom: 50,
+              left: 10,
+              child: Column(
+                children: [
+                  Tooltip(
+                      message: "Polls", // Adjust as per your utility function
+                      child: IconButton(
+                        icon: const Icon(Icons.poll),
+                        iconSize: 16.0,
+                        onPressed: () => showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return QuestionGenerate.getScreen(
+                                  sendPollToServer: generatePoll);
+                            }),
+                      )),
+                ],
+              )),
+          if (state.questionFromServer.correctAnswers.isNotEmpty)
+            Positioned(
+                bottom: 10,
+                right: 10,
+                child: LiveQuestionAnswer(
+                    polldata: state.questionFromServer,
+                    increasePollTimeModel: state.increasePollTimeModel,
+                    submitAnswer: submitAnswer))
+          // Additional children widgets can be added here, such as LiveQuestionAnswer().
+        ],
+      ),
+    );
   }
 }

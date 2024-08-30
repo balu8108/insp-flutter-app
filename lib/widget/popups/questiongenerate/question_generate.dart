@@ -73,6 +73,14 @@ class QuestionGenerate extends StatelessWidget {
                           onChanged: (newValue) {
                             dispatch(context,
                                 UpdateQuestionType(questionType: newValue));
+                            dispatch(
+                                context,
+                                updateDropdownItems(
+                                    context, state.noOfOptions.toString()));
+                            if (newValue == 'tf') {
+                              dispatch(
+                                  context, UpdateNoOfOptions(noOfOptions: 2));
+                            }
                           },
                           hintText: "Select Subject...",
                         ),
@@ -80,7 +88,9 @@ class QuestionGenerate extends StatelessWidget {
 
                         TextFieldDefault(
                           hintText: "Enter question no",
-                          selectedValue: state.questionNo.toString(),
+                          selectedValue: state.questionNo != null
+                              ? state.questionNo.toString()
+                              : '',
                           selectedValueError: state.questionNoError,
                           onChanged: (text) {
                             dispatch(
@@ -92,7 +102,8 @@ class QuestionGenerate extends StatelessWidget {
                         const SizedBox(height: 16.0),
                         TextFieldDefault(
                           hintText: "Enter timer in seconds",
-                          selectedValue: state.time.toString(),
+                          selectedValue:
+                              state.time != null ? state.time.toString() : '',
                           selectedValueError: state.timeError,
                           onChanged: (text) {
                             dispatch(
@@ -102,8 +113,11 @@ class QuestionGenerate extends StatelessWidget {
                         const SizedBox(height: 16.0),
                         TextFieldDefault(
                           hintText: "Select no. of options",
-                          selectedValue: state.noOfOptions.toString(),
+                          selectedValue: state.noOfOptions != null
+                              ? state.noOfOptions.toString()
+                              : '',
                           selectedValueError: state.noOfOptionsError,
+                          enableText: state.questionType == 'tf' ? false : true,
                           onChanged: (text) {
                             dispatch(
                                 context, updateDropdownItems(context, text));

@@ -93,28 +93,40 @@ ThunkAction<AppState> handleLogin(BuildContext context) {
         final HttpResponse<LoginResponseModel> result =
             await loginRemoteDataSource.deviceLogin(loginRequestModel);
 
-        if (result.response.statusCode == 201 && result.data.status == true) {
-          await storeData(
-            'insp_user_profile',
-            jsonEncode(result.data.loginResponseModelResult.toJson()),
-          );
+        if (result.response.statusCode == 201) {
+          if (result.data.status == true) {
+            await storeData(
+              'insp_user_profile',
+              jsonEncode(result.data.loginResponseModelResult.toJson()),
+            );
 
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  HomeScreen(userData: result.data.loginResponseModelResult),
-            ),
-          );
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    HomeScreen(userData: result.data.loginResponseModelResult),
+              ),
+            );
 
-          toastification.show(
-            context: context, // optional if you use ToastificationWrapper
-            type: ToastificationType.success,
-            style: ToastificationStyle.fillColored,
-            autoCloseDuration: const Duration(seconds: 3),
-            title: const Text("Logging you in !!"),
-            alignment: Alignment.topRight,
-          );
+            toastification.show(
+              context: context, // optional if you use ToastificationWrapper
+              type: ToastificationType.success,
+              style: ToastificationStyle.fillColored,
+              autoCloseDuration: const Duration(seconds: 3),
+              title: const Text("Logging you in !!"),
+              alignment: Alignment.topRight,
+            );
+          } else if (result.data.status == false) {
+            store.dispatch(UpdateIsLoading(isLoading: false));
+            toastification.show(
+              context: context, // optional if you use ToastificationWrapper
+              type: ToastificationType.warning,
+              style: ToastificationStyle.fillColored,
+              autoCloseDuration: const Duration(seconds: 3),
+              title: const Text("Sorry... Cannot Login More Than 2 Devices..."),
+              alignment: Alignment.topRight,
+            );
+          }
         } else {
           store.dispatch(UpdateIsLoading(isLoading: false));
           toastification.show(

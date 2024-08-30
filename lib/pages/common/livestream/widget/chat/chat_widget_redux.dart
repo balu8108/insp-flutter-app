@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/liveclass.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/chat_message_model.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/models/increase_polltime_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_answer_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
@@ -23,14 +24,16 @@ var uuid = Uuid();
 
 @freezed
 class ChatWidgetAppState with _$ChatWidgetAppState {
-  const factory ChatWidgetAppState({
-    @Default([]) List<ChatMessageModel> chatMessages,
-    @Default([]) List<PeersDataModel> allPeers,
-    @Default([]) List<LeaderboardModel> leaderBoard,
-    @Default([]) List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
-    @Default([]) List<QuestionMessageModel> questionMessages,
-    @Default(PollDataModel()) PollDataModel pollData,
-  }) = _ChatWidgetAppState;
+  const factory ChatWidgetAppState(
+      {@Default([]) List<ChatMessageModel> chatMessages,
+      @Default([]) List<PeersDataModel> allPeers,
+      @Default([]) List<LeaderboardModel> leaderBoard,
+      @Default([]) List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
+      @Default([]) List<QuestionMessageModel> questionMessages,
+      @Default(PollDataModel()) PollDataModel pollData,
+      @Default(PollDataModel()) PollDataModel questionFromServer,
+      @Default(IncreasePollTimeModel())
+      IncreasePollTimeModel increasePollTimeModel}) = _ChatWidgetAppState;
 }
 
 class UpdateAllPeers extends ChatWidgetAction {
@@ -63,6 +66,16 @@ class UpdatePollData extends ChatWidgetAction {
   UpdatePollData({required this.pollData});
 }
 
+class UpdateQuestionFromServer extends ChatWidgetAction {
+  PollDataModel questionFromServer;
+  UpdateQuestionFromServer({required this.questionFromServer});
+}
+
+class UpdateIncreasePollTimeModel extends ChatWidgetAction {
+  IncreasePollTimeModel increasePollTimeModel;
+  UpdateIncreasePollTimeModel({required this.increasePollTimeModel});
+}
+
 sealed class ChatWidgetAction {}
 
 ChatWidgetAppState chatMessageStateReducer(
@@ -80,13 +93,17 @@ ChatWidgetAppState chatMessageStateReducer(
     return state.copyWith(questionMessages: action.questionMessages);
   } else if (action is UpdatePollData) {
     return state.copyWith(pollData: action.pollData);
+  } else if (action is UpdateQuestionFromServer) {
+    return state.copyWith(questionFromServer: action.questionFromServer);
+  } else if (action is UpdateIncreasePollTimeModel) {
+    return state.copyWith(increasePollTimeModel: action.increasePollTimeModel);
   }
   return state;
 }
 
 ThunkAction<AppState> initialSetup(BuildContext context) {
   return (Store<AppState> store) async {
-    initializeSocketConnections(store, "rc8LNxmKMT");
+    initializeSocketConnections(store, "GvhJqN2RQs");
   };
 }
 
@@ -106,6 +123,15 @@ ThunkAction<AppState> cleanState() {
     PollDataModel polldata = const PollDataModel(
         correctAnswers: [], noOfOptions: 0, questionId: '', type: '', time: 0);
     store.dispatch(UpdatePollData(pollData: polldata));
+  };
+}
+
+ThunkAction<AppState> cleanQuestionState() {
+  return (Store<AppState> store) async {
+    PollDataModel questionFromServer = const PollDataModel(
+        correctAnswers: [], noOfOptions: 0, questionId: '', type: '', time: 0);
+    store.dispatch(
+        UpdateQuestionFromServer(questionFromServer: questionFromServer));
   };
 }
 

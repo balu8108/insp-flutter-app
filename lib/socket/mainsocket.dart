@@ -1,6 +1,4 @@
-import 'dart:math';
-
-import 'package:inspflutterfrontend/pages/common/livestream/models/chat_message_model.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/models/increase_polltime_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_answer_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
@@ -14,7 +12,7 @@ import 'package:redux/redux.dart';
 IO.Socket? socket;
 
 void initializeSocketConnections(Store<AppState> store, String roomId) {
-  final String secretToken = '70bc7fe19e8e055142e02bf67fa13de0';
+  final String secretToken = '0c77a0d127f48e550519ea0241b09650';
 
   if (secretToken.isNotEmpty) {
     socket = IO.io(
@@ -22,7 +20,7 @@ void initializeSocketConnections(Store<AppState> store, String roomId) {
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .enableAutoConnect()
-            .setAuth({'secret_token': '70bc7fe19e8e055142e02bf67fa13de0'})
+            .setAuth({'secret_token': '0c77a0d127f48e550519ea0241b09650'})
             .build());
 
     socket?.on(
@@ -33,12 +31,14 @@ void initializeSocketConnections(Store<AppState> store, String roomId) {
         (data) => chatMsgResponseHandler(store, data));
     socket?.on(SOCKET_EVENTS.QUESTION_MSG_SENT_FROM_SERVER,
         (data) => questionMsgResponseHandler(store, data));
-    // socket?.on(SOCKET_EVENTS.QUESTION_SENT_FROM_SERVER,
-    //     (data) => questionResponseHandler(store, data));
+    socket?.on(SOCKET_EVENTS.QUESTION_SENT_FROM_SERVER,
+        (data) => questionResponseHandler(store, data));
     socket?.on(SOCKET_EVENTS.LEADERBOARD_FROM_SERVER,
         (data) => leaderBoardResponseHandler(store, data));
     socket?.on(SOCKET_EVENTS.LEADERBOARD_AVERAGE_ANSWER_FROM_SERVER,
         (data) => leaderBoardAnswerResponseHandler(store, data));
+    socket?.on(SOCKET_EVENTS.POLL_TIME_INCREASE_FROM_SERVER,
+        (data) => pollTimeIncreaseResponseHandler(store, data));
   }
 }
 
@@ -51,15 +51,12 @@ void sendChatMessage(String msg) {
 }
 
 void questionMsgResponseHandler(Store<AppState> store, dynamic res) {
-  print("123445");
-  print(res);
   store.dispatch(addServerQuestionMessage(res));
 }
 
 void questionResponseHandler(Store<AppState> store, dynamic res) {
-  print("1234456777");
-  print(res);
-  store.dispatch(addServerQuestionMessage(res));
+  PollDataModel polldata = PollDataModel.fromJson(res['data']);
+  store.dispatch(UpdateQuestionFromServer(questionFromServer: polldata));
 }
 
 void sendQuestionMsg(String questionMsg) {
@@ -143,6 +140,8 @@ Future<void> joinRoomHandler(
 }
 
 void sendAnswerHandler(dynamic data) {
+  print("DFDF");
+  print(data);
   socket?.emit(SOCKET_EVENTS.ANSWER_SENT_TO_SERVER, data);
 }
 
@@ -154,4 +153,11 @@ void kickOutFromClass(String peerSocketId, String peerId) {
 void sendPollTimeIncreaseToServer(String questionId, int timeIncreaseBy) {
   socket?.emit(SOCKET_EVENTS.POLL_TIME_INCREASE_TO_SERVER,
       {'questionId': questionId, 'timeIncreaseBy': timeIncreaseBy});
+}
+
+void pollTimeIncreaseResponseHandler(Store<AppState> store, dynamic res) {
+  IncreasePollTimeModel increasePollTimeModel =
+      IncreasePollTimeModel.fromJson(res);
+  store.dispatch(UpdateIncreasePollTimeModel(
+      increasePollTimeModel: increasePollTimeModel));
 }

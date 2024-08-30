@@ -24,6 +24,9 @@ mixin _$ChatWidgetAppState {
   List<QuestionMessageModel> get questionMessages =>
       throw _privateConstructorUsedError;
   PollDataModel get pollData => throw _privateConstructorUsedError;
+  PollDataModel get questionFromServer => throw _privateConstructorUsedError;
+  IncreasePollTimeModel get increasePollTimeModel =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatWidgetAppStateCopyWith<ChatWidgetAppState> get copyWith =>
@@ -42,7 +45,9 @@ abstract class $ChatWidgetAppStateCopyWith<$Res> {
       List<LeaderboardModel> leaderBoard,
       List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
       List<QuestionMessageModel> questionMessages,
-      PollDataModel pollData});
+      PollDataModel pollData,
+      PollDataModel questionFromServer,
+      IncreasePollTimeModel increasePollTimeModel});
 }
 
 /// @nodoc
@@ -64,6 +69,8 @@ class _$ChatWidgetAppStateCopyWithImpl<$Res, $Val extends ChatWidgetAppState>
     Object? leaderBoardAnswerPercentage = null,
     Object? questionMessages = null,
     Object? pollData = null,
+    Object? questionFromServer = null,
+    Object? increasePollTimeModel = null,
   }) {
     return _then(_value.copyWith(
       chatMessages: null == chatMessages
@@ -90,6 +97,14 @@ class _$ChatWidgetAppStateCopyWithImpl<$Res, $Val extends ChatWidgetAppState>
           ? _value.pollData
           : pollData // ignore: cast_nullable_to_non_nullable
               as PollDataModel,
+      questionFromServer: null == questionFromServer
+          ? _value.questionFromServer
+          : questionFromServer // ignore: cast_nullable_to_non_nullable
+              as PollDataModel,
+      increasePollTimeModel: null == increasePollTimeModel
+          ? _value.increasePollTimeModel
+          : increasePollTimeModel // ignore: cast_nullable_to_non_nullable
+              as IncreasePollTimeModel,
     ) as $Val);
   }
 }
@@ -108,7 +123,9 @@ abstract class _$$ChatWidgetAppStateImplCopyWith<$Res>
       List<LeaderboardModel> leaderBoard,
       List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
       List<QuestionMessageModel> questionMessages,
-      PollDataModel pollData});
+      PollDataModel pollData,
+      PollDataModel questionFromServer,
+      IncreasePollTimeModel increasePollTimeModel});
 }
 
 /// @nodoc
@@ -128,6 +145,8 @@ class __$$ChatWidgetAppStateImplCopyWithImpl<$Res>
     Object? leaderBoardAnswerPercentage = null,
     Object? questionMessages = null,
     Object? pollData = null,
+    Object? questionFromServer = null,
+    Object? increasePollTimeModel = null,
   }) {
     return _then(_$ChatWidgetAppStateImpl(
       chatMessages: null == chatMessages
@@ -154,6 +173,14 @@ class __$$ChatWidgetAppStateImplCopyWithImpl<$Res>
           ? _value.pollData
           : pollData // ignore: cast_nullable_to_non_nullable
               as PollDataModel,
+      questionFromServer: null == questionFromServer
+          ? _value.questionFromServer
+          : questionFromServer // ignore: cast_nullable_to_non_nullable
+              as PollDataModel,
+      increasePollTimeModel: null == increasePollTimeModel
+          ? _value.increasePollTimeModel
+          : increasePollTimeModel // ignore: cast_nullable_to_non_nullable
+              as IncreasePollTimeModel,
     ));
   }
 }
@@ -167,7 +194,9 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
       final List<LeaderboardModel> leaderBoard = const [],
       final List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage = const [],
       final List<QuestionMessageModel> questionMessages = const [],
-      this.pollData = const PollDataModel()})
+      this.pollData = const PollDataModel(),
+      this.questionFromServer = const PollDataModel(),
+      this.increasePollTimeModel = const IncreasePollTimeModel()})
       : _chatMessages = chatMessages,
         _allPeers = allPeers,
         _leaderBoard = leaderBoard,
@@ -224,10 +253,16 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
   @override
   @JsonKey()
   final PollDataModel pollData;
+  @override
+  @JsonKey()
+  final PollDataModel questionFromServer;
+  @override
+  @JsonKey()
+  final IncreasePollTimeModel increasePollTimeModel;
 
   @override
   String toString() {
-    return 'ChatWidgetAppState(chatMessages: $chatMessages, allPeers: $allPeers, leaderBoard: $leaderBoard, leaderBoardAnswerPercentage: $leaderBoardAnswerPercentage, questionMessages: $questionMessages, pollData: $pollData)';
+    return 'ChatWidgetAppState(chatMessages: $chatMessages, allPeers: $allPeers, leaderBoard: $leaderBoard, leaderBoardAnswerPercentage: $leaderBoardAnswerPercentage, questionMessages: $questionMessages, pollData: $pollData, questionFromServer: $questionFromServer, increasePollTimeModel: $increasePollTimeModel)';
   }
 
   @override
@@ -246,7 +281,11 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
             const DeepCollectionEquality()
                 .equals(other._questionMessages, _questionMessages) &&
             (identical(other.pollData, pollData) ||
-                other.pollData == pollData));
+                other.pollData == pollData) &&
+            (identical(other.questionFromServer, questionFromServer) ||
+                other.questionFromServer == questionFromServer) &&
+            (identical(other.increasePollTimeModel, increasePollTimeModel) ||
+                other.increasePollTimeModel == increasePollTimeModel));
   }
 
   @override
@@ -257,7 +296,9 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
       const DeepCollectionEquality().hash(_leaderBoard),
       const DeepCollectionEquality().hash(_leaderBoardAnswerPercentage),
       const DeepCollectionEquality().hash(_questionMessages),
-      pollData);
+      pollData,
+      questionFromServer,
+      increasePollTimeModel);
 
   @JsonKey(ignore: true)
   @override
@@ -269,12 +310,15 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
 
 abstract class _ChatWidgetAppState implements ChatWidgetAppState {
   const factory _ChatWidgetAppState(
-      {final List<ChatMessageModel> chatMessages,
-      final List<PeersDataModel> allPeers,
-      final List<LeaderboardModel> leaderBoard,
-      final List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
-      final List<QuestionMessageModel> questionMessages,
-      final PollDataModel pollData}) = _$ChatWidgetAppStateImpl;
+          {final List<ChatMessageModel> chatMessages,
+          final List<PeersDataModel> allPeers,
+          final List<LeaderboardModel> leaderBoard,
+          final List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
+          final List<QuestionMessageModel> questionMessages,
+          final PollDataModel pollData,
+          final PollDataModel questionFromServer,
+          final IncreasePollTimeModel increasePollTimeModel}) =
+      _$ChatWidgetAppStateImpl;
 
   @override
   List<ChatMessageModel> get chatMessages;
@@ -288,6 +332,10 @@ abstract class _ChatWidgetAppState implements ChatWidgetAppState {
   List<QuestionMessageModel> get questionMessages;
   @override
   PollDataModel get pollData;
+  @override
+  PollDataModel get questionFromServer;
+  @override
+  IncreasePollTimeModel get increasePollTimeModel;
   @override
   @JsonKey(ignore: true)
   _$$ChatWidgetAppStateImplCopyWith<_$ChatWidgetAppStateImpl> get copyWith =>

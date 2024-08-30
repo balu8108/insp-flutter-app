@@ -17,7 +17,7 @@ class LiveClassPreviewScreen extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(initialSetup(context));
     void navigateToRoomScreen() {
-      store.dispatch(navigateToRoom(context, "rc8LNxmKMT", {}));
+      store.dispatch(navigateToRoom(context, "GvhJqN2RQs", {}));
     }
 
     return Scaffold(

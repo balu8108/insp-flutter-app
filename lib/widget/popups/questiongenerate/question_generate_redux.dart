@@ -153,7 +153,7 @@ ThunkAction<QuestionGenerateAppState> updateDropdownItems(
     BuildContext context, String input) {
   return (Store<QuestionGenerateAppState> store) async {
     try {
-      if (store.state.questionType!.isNotEmpty) {
+      if (store.state.questionType!.isNotEmpty && input.isNotEmpty) {
         if (store.state.questionType == 'mcq' ||
             store.state.questionType == 'poll') {
           final List<String> alphabets = List.generate(

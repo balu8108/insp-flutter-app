@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class TextFieldDefault extends StatelessWidget {
+class TextFieldDefault extends StatefulWidget {
   final String? selectedValue;
   final String? selectedValueError;
   final ValueChanged<String>? onChanged;
   final String hintText;
+  final bool enableText;
 
   const TextFieldDefault({
     Key? key,
@@ -13,30 +14,53 @@ class TextFieldDefault extends StatelessWidget {
     this.selectedValueError,
     this.onChanged,
     this.hintText = "Select",
+    this.enableText = true,
   }) : super(key: key);
 
   @override
+  _TextFieldDefaultState createState() => _TextFieldDefaultState();
+}
+
+class _TextFieldDefaultState extends State<TextFieldDefault> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.selectedValue);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return TextField(
-      enabled: true,
-      onChanged: onChanged,
-      inputFormatters: [
-        FilteringTextInputFormatter
-            .digitsOnly, // Restricts input to digits only
+    return TextFormField(
+      enabled: widget.enableText,
+      onChanged: widget.onChanged,
+      controller: _controller,
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.digitsOnly
       ],
       decoration: InputDecoration(
-        hintText: hintText,
+        hintText: widget.hintText,
         hintStyle: const TextStyle(
           fontSize: 16,
           color: Color(0x613A3541),
         ),
         contentPadding: const EdgeInsets.all(14.0),
-        errorText: selectedValueError!.isNotEmpty ? selectedValueError : null,
+        errorText: widget.selectedValueError?.isNotEmpty == true
+            ? widget.selectedValueError
+            : null,
         errorStyle: const TextStyle(color: Colors.red),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.0),
           borderSide: BorderSide(
-            color: selectedValueError!.isNotEmpty
+            color: widget.selectedValueError?.isNotEmpty == true
                 ? Colors.red
                 : const Color.fromRGBO(58, 53, 65, 0.38),
             width: 1.0,
