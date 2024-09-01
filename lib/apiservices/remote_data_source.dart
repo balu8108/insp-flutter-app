@@ -9,6 +9,7 @@ import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_f
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/generic/generic_open_file_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/liveclass/liveclass_preview_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/device_login_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_topic_response_model.dart';
@@ -122,6 +123,9 @@ abstract class RemoteDataSource {
   Future<HttpResponse<CreateStudentFeedbackResponseModel>>
       createStudentFeedback(CreateStudentFeedbackRequestModel feedbackrequest,
           String secretTokenHeader);
+
+  Future<HttpResponse<LiveClassPreviewResponseModel>> getRoomPreviewData(
+      String roomId, String secretTokenHeader);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -317,5 +321,11 @@ class RemoteDataSourceImpl implements RemoteDataSource {
           String secretTokenHeader) {
     return deviceNetworkService.createStudentFeedback(
         feedbackrequest, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<LiveClassPreviewResponseModel>> getRoomPreviewData(
+      String roomId, String secretTokenHeader) {
+    return deviceNetworkService.getRoomPreviewData(roomId, secretTokenHeader);
   }
 }

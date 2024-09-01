@@ -98,3 +98,9 @@ List<ChapterTopicModel> topicList = [
   ChapterTopicModel(value: "6", label: "WORK POWER & ENERGY"),
   ChapterTopicModel(value: "38", label: "X-RAYS")
 ];
+
+List<ChapterTopicModel> pollList = [
+  ChapterTopicModel(value: "poll", label: "Poll"),
+  ChapterTopicModel(value: "mcq", label: "MCQ"),
+  ChapterTopicModel(value: "tf", label: "True/False"),
+];

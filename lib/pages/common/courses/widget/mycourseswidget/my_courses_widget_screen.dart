@@ -3,6 +3,7 @@ import 'package:inspflutterfrontend/widget/card/insp_card.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/pages/common/courses/widget/mycourseswidget/my_courses_widget_redux.dart';
+import 'package:inspflutterfrontend/widget/popups/questiongenerate/question_generate.dart';
 
 import '../../../../../data/hardcoded/mycourses_subjects.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
+import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 import 'package:inspflutterfrontend/widget/card/insp_upcoming_class_card.dart';
@@ -10,13 +10,17 @@ import 'package:inspflutterfrontend/widget/popups/scheduleLiveclass/schedule_liv
 
 class UpcomingClassesScreen extends StatelessWidget {
   const UpcomingClassesScreen({super.key});
+  static void dispatch(BuildContext context, UpcomingWidgetAction action) {
+    StoreProvider.of<AppState>(context).dispatch(action);
+  }
 
   @override
   Widget build(BuildContext context) {
-    dispatch(context, getAllUpcomingClass(context));
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(getAllUpcomingClass(context));
 
     void getUpcomingClass() {
-      dispatch(context, getAllUpcomingClass(context));
+      store.dispatch(getAllUpcomingClass(context));
     }
 
     return FutureBuilder<bool>(
@@ -28,8 +32,8 @@ class UpcomingClassesScreen extends StatelessWidget {
           return const Center(child: Text('Error loading data'));
         } else {
           bool isTeacher = snapshot.data ?? false;
-          return StoreConnector<UpcomingWidgetAppState, UpcomingWidgetAppState>(
-            converter: (store) => store.state,
+          return StoreConnector<AppState, UpcomingWidgetAppState>(
+            converter: (store) => store.state.upcomingWidgetAppState,
             builder: (context, UpcomingWidgetAppState state) => Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
@@ -142,16 +146,5 @@ class UpcomingClassesScreen extends StatelessWidget {
         }
       },
     );
-  }
-
-  static getScreen() {
-    return getBaseScreen<UpcomingWidgetAppState, UpcomingClassesScreen>(
-        upcomingWidgetReducer,
-        const UpcomingWidgetAppState(),
-        const UpcomingClassesScreen());
-  }
-
-  static dispatch(BuildContext context, dynamic action) {
-    baseDispatch<UpcomingWidgetAppState>(context, action);
   }
 }

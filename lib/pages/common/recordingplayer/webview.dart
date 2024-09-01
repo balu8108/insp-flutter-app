@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> {
       context: context,
       setState: setState,
       uri: Uri.parse(
-          "https://app.tpstreams.com/embed/gcma48/uZfMzhPDJEs/?access_token=e8c04c94-0eda-4464-b6fb-57f870d9a92e"),
+          "https://app.tpstreams.com/embed/gcma48/8tM6dCMAcxD/?access_token=fd38baab-649a-45e9-bad1-7209b4843b0f"),
     );
   }
 

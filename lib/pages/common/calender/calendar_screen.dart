@@ -24,15 +24,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            if (isDesktop) ...[
-              Expanded(
-                flex: 3,
-                child: UpcomingClassesScreen.getScreen(),
-              ),
-              const SizedBox(width: 17),
-            ],
+            const Expanded(
+              flex: 3,
+              child: UpcomingClassesScreen(),
+            ),
+            const SizedBox(width: 17), // Adds spacing between the components
             Expanded(
-              flex: isDesktop ? 9 : 12,
+              flex: 9,
               child: LiveclassCalendar.getScreen(),
             ),
           ],

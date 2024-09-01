@@ -122,6 +122,7 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                                             widget.type == "Completed" ||
                                             isTeacher)
                                           JoinClassBtn(
+                                              roomId: data.roomId,
                                               status: data.classStatus,
                                               isTeacher: isTeacher),
                                       ],

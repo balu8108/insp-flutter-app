@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/preview/liveclass_preview.dart';
 
 class JoinClassBtn extends StatelessWidget {
   final String status;
   final bool isTeacher;
+  final String roomId;
 
-  JoinClassBtn({required this.status, required this.isTeacher});
+  JoinClassBtn(
+      {required this.status, required this.isTeacher, required this.roomId});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,12 @@ class JoinClassBtn extends StatelessWidget {
           onPressed: btnDisabled
               ? null
               : () {
-                  // Add your onClick logic here
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            LiveClassPreviewScreen(roomId: roomId)),
+                  );
                 },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(backColor),
