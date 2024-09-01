@@ -4,6 +4,7 @@ import 'package:inspflutterfrontend/base/base.dart';
 import 'package:inspflutterfrontend/pages/common/calender/calendar_widget_redux.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/popups/timetableUpload/timetable_upload.dart';
+import 'package:inspflutterfrontend/widget/popups/viewTimetable/view_timetable.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:universal_html/js_util.dart';
 
@@ -79,7 +80,11 @@ class LiveclassCalendar extends StatelessWidget {
                                       ),
                                     ),
                                     onPressed: () {
-                                      TimetableUpload();
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return const ViewTimetable();
+                                          });
                                     },
                                     child: const Text(
                                       'View Time Table',
