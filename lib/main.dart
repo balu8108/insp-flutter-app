@@ -12,6 +12,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/redux/app_reducer.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:inspflutterfrontend/widget/navbar/navbar_redux.dart';
 import 'package:inspflutterfrontend/widget/popups/uploadLiveclassFile/upload_liveclass_file_redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
@@ -25,7 +26,8 @@ void main() {
         loginState: LoginAppState(),
         upcomingWidgetAppState: UpcomingWidgetAppState(),
         chatWidgetAppState: ChatWidgetAppState(),
-        uploadLiveclassFileAppState: UploadLiveclassFileAppState()),
+        uploadLiveclassFileAppState: UploadLiveclassFileAppState(),
+        navbarAppState: NavbarAppState()),
     middleware: [thunkMiddleware],
   );
 

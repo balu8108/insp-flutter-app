@@ -12,16 +12,33 @@ class PreviewVideo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Container(
+    return Stack(
+      children: [
+        Container(
           height: 650,
           width: double.infinity,
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: Colors.black,
+            borderRadius: BorderRadius.circular(20),
+            color: const Color.fromRGBO(232, 242, 249, 1),
           ),
-          child: Text("TP Stream content")),
-    ]);
+          child: Container(
+            height: 650,
+            width: double.infinity,
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: Colors.black,
+            ),
+          ),
+        ),
+        const Center(
+          child: Text(
+            "Live Streaming...",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        ),
+      ],
+    );
   }
 }

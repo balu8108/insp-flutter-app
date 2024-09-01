@@ -6,6 +6,7 @@ import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_wid
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/mainsocket.dart';
 import 'package:inspflutterfrontend/widget/popups/questiongenerate/question_generate.dart';
+import 'package:desktop_webview_window/desktop_webview_window.dart';
 
 class TPStreamLiveVideoPlayerWidget extends StatelessWidget {
   TPStreamLiveVideoPlayerWidget();

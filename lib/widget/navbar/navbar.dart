@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
 import 'package:inspflutterfrontend/pages/common/courses/my_courses_screen.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
@@ -7,10 +8,12 @@ import 'package:inspflutterfrontend/pages/student/assignment/mainpage/assignment
 import 'package:inspflutterfrontend/pages/common/calender/calendar_screen.dart';
 import 'package:inspflutterfrontend/pages/teacher/suggestion/main_suggestion_page.dart';
 import 'package:inspflutterfrontend/pages/teacher/uploads/mainpage/myuploads.dart';
+import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/utils/localstorage.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/pages/student/library/mainpage/library_screen.dart';
+import 'package:inspflutterfrontend/widget/navbar/navbar_redux.dart';
 import 'package:inspflutterfrontend/widget/popups/studentSuggestion/student_suggestion.dart';
 
 class Navbar extends StatefulWidget implements PreferredSizeWidget {
@@ -26,8 +29,9 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
 class _NavbarState extends State<Navbar> {
   LoginResponseModelResult userData =
       const LoginResponseModelResult('', '', '', '', '', '', '', '', 0, 0);
-
-  String _selectedButton = 'Home'; // Track the selected button
+  static void dispatch(BuildContext context, NavbarAppState action) {
+    StoreProvider.of<AppState>(context).dispatch(action);
+  }
 
   @override
   void initState() {
@@ -50,6 +54,11 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    void _onButtonPressed(String buttonText) {
+      store.dispatch(UpdateSelectedButton(selectedButton: buttonText));
+    }
+
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: const Color.fromRGBO(232, 242, 249, 1),
@@ -116,12 +125,6 @@ class _NavbarState extends State<Navbar> {
     );
   }
 
-  void _onButtonPressed(String buttonText) {
-    setState(() {
-      _selectedButton = buttonText;
-    });
-  }
-
   void _navigateToScreen(BuildContext context, Widget screen) {
     Navigator.push(
       context,
@@ -130,26 +133,30 @@ class _NavbarState extends State<Navbar> {
   }
 
   Padding _buildTextButton(String text, VoidCallback onPressed) {
-    final isSelected = _selectedButton == text;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: TextButton(
-        onPressed: onPressed,
-        style: TextButton.styleFrom(
-          foregroundColor: Colors.black,
-          textStyle: TextStyle(
-            fontSize: 16,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            decoration:
-                isSelected ? TextDecoration.underline : TextDecoration.none,
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: StoreConnector<AppState, NavbarAppState>(
+          converter: (store) => store.state.navbarAppState,
+          builder: (context, NavbarAppState state) => TextButton(
+            onPressed: onPressed,
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.black,
+              textStyle: TextStyle(
+                fontSize: 16,
+                fontWeight: state.selectedButton == text
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+                decoration: state.selectedButton == text
+                    ? TextDecoration.underline
+                    : TextDecoration.none,
+              ),
+              backgroundColor: Colors.transparent,
+              overlayColor: Colors.transparent,
+              splashFactory: NoSplash.splashFactory,
+            ),
+            child: Text(text),
           ),
-          backgroundColor: Colors.transparent,
-          overlayColor: Colors.transparent,
-          splashFactory: NoSplash.splashFactory,
-        ),
-        child: Text(text),
-      ),
-    );
+        ));
   }
 
   Widget _buildUserMenu() {
@@ -200,13 +207,13 @@ class _NavbarState extends State<Navbar> {
             ),
           ),
         ),
-        PopupMenuItem<String>(
+        const PopupMenuItem<String>(
           value: 'Logout',
           child: Row(
             children: [
-              const Icon(Icons.logout),
-              const SizedBox(width: 10),
-              const Text('Logout'),
+              Icon(Icons.logout),
+              SizedBox(width: 10),
+              Text('Logout'),
             ],
           ),
         ),
