@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/preview/widget/previewpage_detail.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/tpstream_video_player.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/preview/widget/previewvideo.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 
 class LiveClassPreviewScreen extends StatelessWidget {
@@ -25,7 +25,7 @@ class LiveClassPreviewScreen extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(flex: 7, child: TPStreamVideoPlayerWidget()),
+                  Expanded(flex: 7, child: PreviewVideo()),
                   const SizedBox(width: 16),
                   Expanded(
                       flex: 3, child: LiveCLassPreviowlWidget(roomId: roomId))

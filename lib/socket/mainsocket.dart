@@ -1,34 +1,43 @@
+import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/increase_polltime_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_answer_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/socket_events.dart';
+import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:redux/redux.dart';
+import 'package:toastification/toastification.dart';
 
 IO.Socket? socket;
 
-void initializeSocketConnections(Store<AppState> store, String roomId) {
-  final String secretToken = '0c77a0d127f48e550519ea0241b09650';
-
-  if (secretToken.isNotEmpty) {
+void initializeSocketConnections(
+    Store<AppState> store, String roomId, String token) {
+  if (token.isNotEmpty) {
     socket = IO.io(
-        "http://localhost:4000",
+        'https://flutterdev.insp.1labventures.in',
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .enableAutoConnect()
-            .setAuth({'secret_token': '0c77a0d127f48e550519ea0241b09650'})
+            .setAuth({'secret_token': token})
             .build());
 
     socket?.on(
         SOCKET_EVENTS.CONNECT, (_) => socketConnectionHandler(store, roomId));
     socket?.on(SOCKET_EVENTS.NEW_PEER_JOINED,
         (data) => socketNewPeerJoinedHandler(store, data));
+    socket?.on(SOCKET_EVENTS.PEER_LEAVED,
+        (data) => peerLeavedResponseHandler(store, data));
     socket?.on(SOCKET_EVENTS.CHAT_MSG_FROM_SERVER,
         (data) => chatMsgResponseHandler(store, data));
+    socket?.on(SOCKET_EVENTS.UPLOAD_FILE_FROM_SERVER,
+        (data) => uploadFileResponseHandler(store, data));
     socket?.on(SOCKET_EVENTS.QUESTION_MSG_SENT_FROM_SERVER,
         (data) => questionMsgResponseHandler(store, data));
     socket?.on(SOCKET_EVENTS.QUESTION_SENT_FROM_SERVER,
@@ -39,6 +48,10 @@ void initializeSocketConnections(Store<AppState> store, String roomId) {
         (data) => leaderBoardAnswerResponseHandler(store, data));
     socket?.on(SOCKET_EVENTS.POLL_TIME_INCREASE_FROM_SERVER,
         (data) => pollTimeIncreaseResponseHandler(store, data));
+    socket?.on(SOCKET_EVENTS.KICK_OUT_FROM_CLASS_FROM_SERVER,
+        (data) => kickOutResponseHandler(store, data));
+    socket?.on(SOCKET_EVENTS.END_MEET_FROM_SERVER,
+        (data) => kickOutResponseHandler(store, data));
     socket?.on(SOCKET_EVENTS.DISCONNECT, (err) => {});
     socket?.on(SOCKET_EVENTS.CONNECT_ERROR, (err) => {});
   }
@@ -76,13 +89,23 @@ void leaderBoardResponseHandler(Store<AppState> store, dynamic res) {
 }
 
 void leaderBoardAnswerResponseHandler(Store<AppState> store, dynamic res) {
-  List<LeaderBoardAnswerModel> leaderBoardListAnswer =
-      (res['averagePeersOption'] as List)
-          .map((item) => LeaderBoardAnswerModel.fromJson(item))
-          .toList();
+  // Check if the res['averagePeersOption'] is a List and not null
+  if (res['averagePeersOption'] is List) {
+    // Ensure that each item in the list is a Map
+    List<LeaderBoardAnswerModel> leaderBoardListAnswer =
+        (res['averagePeersOption'] as List<dynamic>)
+            .where((item) =>
+                item is Map<String, dynamic>) // Filter to ensure it's a Map
+            .map((item) =>
+                LeaderBoardAnswerModel.fromJson(item as Map<String, dynamic>))
+            .toList();
 
-  store.dispatch(UpdateLeaderboardMessages(
-      leaderBoardAnswerPercentage: leaderBoardListAnswer));
+    store.dispatch(UpdateLeaderboardMessages(
+        leaderBoardAnswerPercentage: leaderBoardListAnswer));
+  } else {
+    // Handle the case where the response is not as expected
+    store.dispatch(UpdateLeaderboardMessages(leaderBoardAnswerPercentage: []));
+  }
 }
 
 void sendQuestionHandler(Store<AppState> store, dynamic data) {
@@ -92,7 +115,7 @@ void sendQuestionHandler(Store<AppState> store, dynamic data) {
   });
 }
 
-void socketConnectionHandler(Store<dynamic> store, String roomId) {
+void socketConnectionHandler(Store<AppState> store, String roomId) {
   socket?.emitWithAck(SOCKET_EVENTS.JOIN_ROOM_PREVIEW, {'roomId': roomId},
       ack: (res) {
     if (res['success'] == true) {
@@ -103,38 +126,49 @@ void socketConnectionHandler(Store<dynamic> store, String roomId) {
   });
 }
 
-void socketNewPeerJoinedHandler(Store<dynamic> store, dynamic res) {
+void socketNewPeerJoinedHandler(Store<AppState> store, dynamic res) {
   final PeersDataModel newPeer = PeersDataModel.fromJson(res['peer']);
-  final List<PeersDataModel> currentPeers = store.state.allPeers;
+  final List<PeersDataModel> currentPeers =
+      store.state.chatWidgetAppState.allPeers;
 
   if (!currentPeers.any((peer) => peer.id == newPeer.id)) {
     store.dispatch(UpdateAllPeers(allPeers: [...currentPeers, newPeer]));
   }
 }
 
-void roomUpdateResponseHandler(Store<dynamic> store, dynamic res) {
+void roomUpdateResponseHandler(Store<AppState> store, dynamic res) {
   final List<PeersDataModel> updatedPeers = List<PeersDataModel>.from(
       (res['peer'] as List<dynamic>).map((e) => PeersDataModel.fromJson(e)));
   store.dispatch(UpdateAllPeers(allPeers: updatedPeers));
 }
 
-void peerLeavedResponseHandler(Store<dynamic> store, dynamic res) {
+void peerLeavedResponseHandler(Store<AppState> store, dynamic res) {
   final PeersDataModel peerLeaved = PeersDataModel.fromJson(res['peerLeaved']);
 
-  final List<PeersDataModel> updatedPeers =
-      store.state.allPeers.where((peer) => peer.id != peerLeaved.id).toList();
+  final List<PeersDataModel> updatedPeers = store
+      .state.chatWidgetAppState.allPeers
+      .where((peer) => peer.id != peerLeaved.id)
+      .toList();
 
   store.dispatch(UpdateAllPeers(allPeers: updatedPeers));
 }
 
-Future<void> joinRoomHandler(
-    Store<dynamic> store, String roomId, dynamic userProfile) async {
+Future<void> joinRoomHandler(Store<AppState> store, String roomId,
+    dynamic userProfile, BuildContext context) async {
   socket?.emitWithAck(
       SOCKET_EVENTS.JOIN_ROOM, {'roomId': roomId, 'peerDetails': userProfile},
       ack: (res) {
-    if (res['success']) {
-      store.dispatch(UpdateLeaderboardMessages(
-          leaderBoardAnswerPercentage: res['leaderBoardData']));
+    if (!res['success']) {
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.error,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: Text(res['errMsg']),
+        alignment: Alignment.topRight,
+      );
+    } else if (res['success']) {
+      store.dispatch(joinRoomResponseData(context, res));
     } else {
       // Handle failure
     }
@@ -145,14 +179,19 @@ Future<void> sendFileHandler(Store<AppState> store, dynamic filesData) async {
   socket?.emitWithAck(SOCKET_EVENTS.UPLOAD_FILE_TO_SERVER, filesData,
       ack: (res) {
     if (res['success']) {
-      print("IOSADA");
-      print(res['data']);
-      // store.dispatch(
-      //     UpdateLeaderboardMessages(leaderBoardAnswerPercentage: res['data']));
+      store.dispatch(addFileToPreviewData(res['data']));
     } else {
       // Handle failure
     }
   });
+}
+
+void uploadFileResponseHandler(Store<AppState> store, dynamic res) {
+  if (res['success']) {
+    store.dispatch(addFileToPreviewData(res['data']));
+  } else {
+    // Handle failure
+  }
 }
 
 void sendAnswerHandler(dynamic data) {
@@ -174,4 +213,36 @@ void pollTimeIncreaseResponseHandler(Store<AppState> store, dynamic res) {
       IncreasePollTimeModel.fromJson(res);
   store.dispatch(UpdateIncreasePollTimeModel(
       increasePollTimeModel: increasePollTimeModel));
+}
+
+void kickOutResponseHandler(Store<AppState> store, dynamic res) {
+  leaveRoomHandler(store);
+}
+
+Future<void> leaveRoomHandler(Store<AppState> store) async {
+  socket?.emitWithAck(SOCKET_EVENTS.LEAVE_ROOM, '', ack: (res) async {
+    var feedBackStatus = res['feedBackStatus'];
+    store.dispatch(UpdateAllPeers(allPeers: []));
+    if (feedBackStatus['success']) {
+      LoginResponseModelResult userDatas = await getUserData();
+      navigatorKey.currentState?.push(
+        MaterialPageRoute(
+            builder: (context) => HomeScreen(userData: userDatas)),
+      );
+      if (userDatas.userType == 0) {
+        if (feedBackStatus['isFeedback']) {
+          print("Need feedback");
+        }
+      }
+    } else {
+      // Handle failure
+    }
+    toastification.show(
+      type: ToastificationType.info,
+      style: ToastificationStyle.fillColored,
+      autoCloseDuration: const Duration(seconds: 3),
+      title: Text('Class Leaved'),
+      alignment: Alignment.topRight,
+    );
+  });
 }

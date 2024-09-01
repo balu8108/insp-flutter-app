@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/liveclass.dart';
@@ -31,6 +33,7 @@ class ChatWidgetAppState with _$ChatWidgetAppState {
   const factory ChatWidgetAppState(
       {@Default(LecturesDetailResponseModelData())
       LecturesDetailResponseModelData previewData,
+      @Default([]) List<LiveClassRoomFile> previewDataFiles,
       @Default([]) List<ChatMessageModel> chatMessages,
       @Default([]) List<PeersDataModel> allPeers,
       @Default([]) List<LeaderboardModel> leaderBoard,
@@ -45,6 +48,11 @@ class ChatWidgetAppState with _$ChatWidgetAppState {
 class UpdatePreviewData extends ChatWidgetAction {
   LecturesDetailResponseModelData previewData;
   UpdatePreviewData({required this.previewData});
+}
+
+class UpdatePreviewDataFiles extends ChatWidgetAction {
+  List<LiveClassRoomFile> previewDataFiles;
+  UpdatePreviewDataFiles({required this.previewDataFiles});
 }
 
 class UpdateAllPeers extends ChatWidgetAction {
@@ -93,6 +101,8 @@ ChatWidgetAppState chatMessageStateReducer(
     ChatWidgetAppState state, dynamic action) {
   if (action is UpdatePreviewData) {
     return state.copyWith(previewData: action.previewData);
+  } else if (action is UpdatePreviewDataFiles) {
+    return state.copyWith(previewDataFiles: action.previewDataFiles);
   } else if (action is UpdateAllPeers) {
     return state.copyWith(allPeers: action.allPeers);
   } else if (action is UpdateChatMessages) {
@@ -117,17 +127,19 @@ ChatWidgetAppState chatMessageStateReducer(
 ThunkAction<AppState> getPreviewClassData(BuildContext context, String roomId) {
   return (Store<AppState> store) async {
     try {
-      String userToken = await getUserToken();
+      LoginResponseModelResult userData = await getUserData();
       final remoteDataSource = RemoteDataSource();
-      final previewData =
-          await remoteDataSource.getRoomPreviewData(roomId, userToken);
+      final previewData = await remoteDataSource.getRoomPreviewData(
+          roomId, 'Token ${userData.token}');
 
       LecturesDetailResponseModelData previewFinalData =
           LecturesDetailResponseModelData.fromJson(
               previewData.response.data['data']);
       if (previewData.response.statusCode == 200) {
         store.dispatch(UpdatePreviewData(previewData: previewFinalData));
-        store.dispatch(initialSetup(context, roomId));
+        store.dispatch(UpdatePreviewDataFiles(
+            previewDataFiles: previewFinalData.liveClassRoomFiles));
+        store.dispatch(initialSetup(context, roomId, userData.token));
       } else {
         toastification.show(
           context: context, // optional if you use ToastificationWrapper
@@ -151,20 +163,17 @@ ThunkAction<AppState> getPreviewClassData(BuildContext context, String roomId) {
   };
 }
 
-ThunkAction<AppState> initialSetup(BuildContext context, String roomId) {
+ThunkAction<AppState> initialSetup(
+    BuildContext context, String roomId, String token) {
   return (Store<AppState> store) async {
-    initializeSocketConnections(store, roomId);
+    initializeSocketConnections(store, roomId, token);
   };
 }
 
 ThunkAction<AppState> navigateToRoom(
     BuildContext context, String roomId, dynamic userProfile) {
   return (Store<AppState> store) async {
-    await joinRoomHandler(store, roomId, userProfile);
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const LiveClassScreen()),
-    );
+    await joinRoomHandler(store, roomId, userProfile, context);
   };
 }
 
@@ -285,9 +294,6 @@ ThunkAction<AppState> addUserQuestionMessage(BuildContext context, String msg) {
 
 ThunkAction<AppState> addQuestion(dynamic res) {
   return (Store<AppState> store) async {
-    print("67686");
-    print(res['leaderBoard']);
-
     List<LeaderboardModel> leaderBoard = (res['leaderBoard'] as List)
         .map((item) => LeaderboardModel(
               combinedResponseTime: item['combinedResponseTime'] as int,
@@ -315,5 +321,67 @@ ThunkAction<AppState> addQuestion(dynamic res) {
 
     // // Dispatch the action to update chat messages in the store
     // store.dispatch(UpdateQuestionMessage(questionMessages: questionMessages));
+  };
+}
+
+ThunkAction<AppState> joinRoomResponseData(BuildContext context, dynamic res) {
+  return (Store<AppState> store) async {
+    if (res['selfDetails'] != null) {
+      PeersDataModel peerdetail = PeersDataModel.fromJson(res['selfDetails']);
+
+      List<PeersDataModel> allPeers = store.state.chatWidgetAppState.allPeers;
+
+      List<PeersDataModel> updatedLiveClassRoomPeer = [
+        ...allPeers,
+        peerdetail // Add all new files to the list
+      ];
+      store.dispatch(UpdateAllPeers(allPeers: updatedLiveClassRoomPeer));
+    }
+    if (res['leaderBoardData'] is List &&
+        res['leaderBoardData'] != null &&
+        res['leaderBoardData'].isNotEmpty) {
+      // Ensure that each item in the list is a Map
+      List<LeaderBoardAnswerModel> leaderBoardListAnswer =
+          (res['leaderBoardData'] as List<dynamic>)
+              .map((item) =>
+                  LeaderBoardAnswerModel.fromJson(item as Map<String, dynamic>))
+              .toList();
+
+      store.dispatch(UpdateLeaderboardMessages(
+          leaderBoardAnswerPercentage: leaderBoardListAnswer));
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const LiveClassScreen()),
+    );
+  };
+}
+
+ThunkAction<AppState> addFileToPreviewData(dynamic res) {
+  return (Store<AppState> store) async {
+    // Check if 'files' exists and is a list
+    if (res.containsKey('files') &&
+        res['files'] != null &&
+        res['files'] is List) {
+      // Map each file in the list to a LiveClassRoomFile instance
+      List<LiveClassRoomFile> fileDetailsList = (res['files'] as List)
+          .map((file) => LiveClassRoomFile.fromJson(file))
+          .toList();
+
+      List<LiveClassRoomFile> previewDataFiles =
+          store.state.chatWidgetAppState.previewDataFiles;
+
+      // Create a new list that includes the existing files and the new file details.
+      List<LiveClassRoomFile> updatedLiveClassRoomFiles = [
+        ...previewDataFiles,
+        ...fileDetailsList // Add all new files to the list
+      ];
+
+      // Dispatch the action to update chat messages in the store
+      store.dispatch(
+          UpdatePreviewDataFiles(previewDataFiles: updatedLiveClassRoomFiles));
+    } else {
+      print("Error: 'files' key not found, is null, or not a list.");
+    }
   };
 }

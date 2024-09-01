@@ -41,6 +41,30 @@ class TPStreamLiveVideoPlayerWidget extends StatelessWidget {
               child: Text("TP Stream content")),
           Positioned(
               bottom: 50,
+              left: 100,
+              child: SizedBox(
+                width: 100,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(
+                        200, 50.0), // Set a fixed size for the button
+                    backgroundColor:
+                        const Color(0xFFF63F4A), // Background color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20), // Border radius
+                    ),
+                  ),
+                  onPressed: () {
+                    leaveRoomHandler(store);
+                  },
+                  child: const Text(
+                    'Leave',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              )),
+          Positioned(
+              bottom: 50,
               left: 10,
               child: Column(
                 children: [

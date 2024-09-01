@@ -73,11 +73,11 @@ class _LiveClassDetailState extends State<LiveClassDetail> {
                                 ),
                               ),
                               const SizedBox(height: 10),
-                              const Row(
+                              Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Files',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w400,
@@ -86,11 +86,12 @@ class _LiveClassDetailState extends State<LiveClassDetail> {
                                         height: 1.25,
                                       ),
                                     ),
-                                    UploadFilePopup()
+                                    UploadFilePopup(
+                                        roomId: state.previewData.roomId)
                                   ]),
                               const SizedBox(height: 10),
                               FileBoxComponent(
-                                data: state.previewData.liveClassRoomFiles,
+                                data: state.previewDataFiles,
                                 type: "live",
                                 scrollDirection: "vertical",
                                 maxHeight: 60,

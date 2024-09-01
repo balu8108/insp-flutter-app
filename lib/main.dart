@@ -16,6 +16,8 @@ import 'package:inspflutterfrontend/widget/popups/uploadLiveclassFile/upload_liv
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() {
   final store = Store<AppState>(
     appStateReducer,
@@ -61,6 +63,7 @@ class _MyAppState extends State<MyApp> {
     return StoreProvider<AppState>(
         store: widget.store,
         child: MaterialApp(
+          navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           home: Builder(
             builder: (context) {

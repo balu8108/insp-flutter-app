@@ -187,9 +187,12 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 8),
                                         PeerList(
-                                          peers: state.allPeers
-                                              .where((peer) => peer.isTeacher)
-                                              .toList(),
+                                          peers: state.allPeers.isNotEmpty
+                                              ? state.allPeers
+                                                  .where(
+                                                      (peer) => peer.isTeacher)
+                                                  .toList()
+                                              : [],
                                           type: "Mentor",
                                           message: 'No mentors joined...',
                                         ),
@@ -205,9 +208,12 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 8),
                                         PeerList(
-                                          peers: state.allPeers
-                                              .where((peer) => !peer.isTeacher)
-                                              .toList(),
+                                          peers: state.allPeers.isNotEmpty
+                                              ? state.allPeers
+                                                  .where(
+                                                      (peer) => !peer.isTeacher)
+                                                  .toList()
+                                              : [],
                                           type: "Mentor",
                                           message: 'No students joined...',
                                         ),

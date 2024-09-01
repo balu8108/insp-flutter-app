@@ -69,12 +69,12 @@ ThunkAction<AppState> pickFilesforliveclass(BuildContext context) {
 }
 
 ThunkAction<AppState> uploadFilesToServer(
-    BuildContext context, List<PlatformFile> pickedFiles) {
+    BuildContext context, List<PlatformFile> pickedFiles, String roomId) {
   return (Store<AppState> store) async {
     try {
       Map<String, dynamic> fileObj = {
         'roomType': 'active',
-        'roomId': 'GvhJqN2RQs',
+        'roomId': roomId,
         'files': [],
       };
 
@@ -89,6 +89,8 @@ ThunkAction<AppState> uploadFilesToServer(
       }
 
       sendFileHandler(store, fileObj);
+      store.dispatch(UpdateLiveClassPickedFiles(pickedFiles: []));
+      store.dispatch(UpdateLiveClassPickedFilesName(pickedFilesName: ''));
       Navigator.of(context).pop();
     } catch (e) {
       print('Error picking file: $e');

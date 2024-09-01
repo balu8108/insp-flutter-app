@@ -6,7 +6,9 @@ import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 import 'package:inspflutterfrontend/widget/popups/uploadLiveclassFile/upload_liveclass_file_redux.dart';
 
 class UploadFilePopup extends StatefulWidget {
-  const UploadFilePopup({super.key});
+  const UploadFilePopup({super.key, required this.roomId});
+
+  final String roomId;
 
   @override
   _UploadFilePopupState createState() => _UploadFilePopupState();
@@ -23,7 +25,7 @@ class _UploadFilePopupState extends State<UploadFilePopup> {
     final store = StoreProvider.of<AppState>(context);
 
     void uploadFile(List<PlatformFile> pickedFiles) {
-      store.dispatch(uploadFilesToServer(context, pickedFiles));
+      store.dispatch(uploadFilesToServer(context, pickedFiles, widget.roomId));
     }
 
     return PopupMenuButton(
