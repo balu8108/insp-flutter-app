@@ -21,7 +21,6 @@ mixin _$ChatWidgetAppState {
   List<LiveClassRoomFile> get previewDataFiles =>
       throw _privateConstructorUsedError;
   List<ChatMessageModel> get chatMessages => throw _privateConstructorUsedError;
-  List<PeersDataModel> get allPeers => throw _privateConstructorUsedError;
   List<LeaderboardModel> get leaderBoard => throw _privateConstructorUsedError;
   List<LeaderBoardAnswerModel> get leaderBoardAnswerPercentage =>
       throw _privateConstructorUsedError;
@@ -47,7 +46,6 @@ abstract class $ChatWidgetAppStateCopyWith<$Res> {
       {LecturesDetailResponseModelData previewData,
       List<LiveClassRoomFile> previewDataFiles,
       List<ChatMessageModel> chatMessages,
-      List<PeersDataModel> allPeers,
       List<LeaderboardModel> leaderBoard,
       List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
       List<QuestionMessageModel> questionMessages,
@@ -72,7 +70,6 @@ class _$ChatWidgetAppStateCopyWithImpl<$Res, $Val extends ChatWidgetAppState>
     Object? previewData = null,
     Object? previewDataFiles = null,
     Object? chatMessages = null,
-    Object? allPeers = null,
     Object? leaderBoard = null,
     Object? leaderBoardAnswerPercentage = null,
     Object? questionMessages = null,
@@ -93,10 +90,6 @@ class _$ChatWidgetAppStateCopyWithImpl<$Res, $Val extends ChatWidgetAppState>
           ? _value.chatMessages
           : chatMessages // ignore: cast_nullable_to_non_nullable
               as List<ChatMessageModel>,
-      allPeers: null == allPeers
-          ? _value.allPeers
-          : allPeers // ignore: cast_nullable_to_non_nullable
-              as List<PeersDataModel>,
       leaderBoard: null == leaderBoard
           ? _value.leaderBoard
           : leaderBoard // ignore: cast_nullable_to_non_nullable
@@ -137,7 +130,6 @@ abstract class _$$ChatWidgetAppStateImplCopyWith<$Res>
       {LecturesDetailResponseModelData previewData,
       List<LiveClassRoomFile> previewDataFiles,
       List<ChatMessageModel> chatMessages,
-      List<PeersDataModel> allPeers,
       List<LeaderboardModel> leaderBoard,
       List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
       List<QuestionMessageModel> questionMessages,
@@ -160,7 +152,6 @@ class __$$ChatWidgetAppStateImplCopyWithImpl<$Res>
     Object? previewData = null,
     Object? previewDataFiles = null,
     Object? chatMessages = null,
-    Object? allPeers = null,
     Object? leaderBoard = null,
     Object? leaderBoardAnswerPercentage = null,
     Object? questionMessages = null,
@@ -181,10 +172,6 @@ class __$$ChatWidgetAppStateImplCopyWithImpl<$Res>
           ? _value._chatMessages
           : chatMessages // ignore: cast_nullable_to_non_nullable
               as List<ChatMessageModel>,
-      allPeers: null == allPeers
-          ? _value._allPeers
-          : allPeers // ignore: cast_nullable_to_non_nullable
-              as List<PeersDataModel>,
       leaderBoard: null == leaderBoard
           ? _value._leaderBoard
           : leaderBoard // ignore: cast_nullable_to_non_nullable
@@ -220,7 +207,6 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
       {this.previewData = const LecturesDetailResponseModelData(),
       final List<LiveClassRoomFile> previewDataFiles = const [],
       final List<ChatMessageModel> chatMessages = const [],
-      final List<PeersDataModel> allPeers = const [],
       final List<LeaderboardModel> leaderBoard = const [],
       final List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage = const [],
       final List<QuestionMessageModel> questionMessages = const [],
@@ -229,7 +215,6 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
       this.increasePollTimeModel = const IncreasePollTimeModel()})
       : _previewDataFiles = previewDataFiles,
         _chatMessages = chatMessages,
-        _allPeers = allPeers,
         _leaderBoard = leaderBoard,
         _leaderBoardAnswerPercentage = leaderBoardAnswerPercentage,
         _questionMessages = questionMessages;
@@ -254,15 +239,6 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
     if (_chatMessages is EqualUnmodifiableListView) return _chatMessages;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_chatMessages);
-  }
-
-  final List<PeersDataModel> _allPeers;
-  @override
-  @JsonKey()
-  List<PeersDataModel> get allPeers {
-    if (_allPeers is EqualUnmodifiableListView) return _allPeers;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_allPeers);
   }
 
   final List<LeaderboardModel> _leaderBoard;
@@ -306,7 +282,7 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
 
   @override
   String toString() {
-    return 'ChatWidgetAppState(previewData: $previewData, previewDataFiles: $previewDataFiles, chatMessages: $chatMessages, allPeers: $allPeers, leaderBoard: $leaderBoard, leaderBoardAnswerPercentage: $leaderBoardAnswerPercentage, questionMessages: $questionMessages, pollData: $pollData, questionFromServer: $questionFromServer, increasePollTimeModel: $increasePollTimeModel)';
+    return 'ChatWidgetAppState(previewData: $previewData, previewDataFiles: $previewDataFiles, chatMessages: $chatMessages, leaderBoard: $leaderBoard, leaderBoardAnswerPercentage: $leaderBoardAnswerPercentage, questionMessages: $questionMessages, pollData: $pollData, questionFromServer: $questionFromServer, increasePollTimeModel: $increasePollTimeModel)';
   }
 
   @override
@@ -320,7 +296,6 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
                 .equals(other._previewDataFiles, _previewDataFiles) &&
             const DeepCollectionEquality()
                 .equals(other._chatMessages, _chatMessages) &&
-            const DeepCollectionEquality().equals(other._allPeers, _allPeers) &&
             const DeepCollectionEquality()
                 .equals(other._leaderBoard, _leaderBoard) &&
             const DeepCollectionEquality().equals(
@@ -342,7 +317,6 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
       previewData,
       const DeepCollectionEquality().hash(_previewDataFiles),
       const DeepCollectionEquality().hash(_chatMessages),
-      const DeepCollectionEquality().hash(_allPeers),
       const DeepCollectionEquality().hash(_leaderBoard),
       const DeepCollectionEquality().hash(_leaderBoardAnswerPercentage),
       const DeepCollectionEquality().hash(_questionMessages),
@@ -363,7 +337,6 @@ abstract class _ChatWidgetAppState implements ChatWidgetAppState {
           {final LecturesDetailResponseModelData previewData,
           final List<LiveClassRoomFile> previewDataFiles,
           final List<ChatMessageModel> chatMessages,
-          final List<PeersDataModel> allPeers,
           final List<LeaderboardModel> leaderBoard,
           final List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
           final List<QuestionMessageModel> questionMessages,
@@ -378,8 +351,6 @@ abstract class _ChatWidgetAppState implements ChatWidgetAppState {
   List<LiveClassRoomFile> get previewDataFiles;
   @override
   List<ChatMessageModel> get chatMessages;
-  @override
-  List<PeersDataModel> get allPeers;
   @override
   List<LeaderboardModel> get leaderBoard;
   @override

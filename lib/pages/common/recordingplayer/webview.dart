@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import "package:webview_universal/webview_universal.dart";
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
+class WebviewUniversal extends StatefulWidget {
   @override
-  State<MyApp> createState() => _MyAppState();
+  _WebviewUniversalState createState() => _WebviewUniversalState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _WebviewUniversalState extends State<WebviewUniversal> {
   WebViewController webViewController = WebViewController();
 
   @override
@@ -17,17 +15,14 @@ class _MyAppState extends State<MyApp> {
     webViewController.init(
       context: context,
       setState: setState,
-      uri: Uri.parse(
-          "https://app.tpstreams.com/embed/gcma48/8tM6dCMAcxD/?access_token=fd38baab-649a-45e9-bad1-7209b4843b0f"),
+      uri: Uri.parse("https://flutter.dev"),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: WebView(
-        controller: webViewController,
-      ),
+    return WebView(
+      controller: webViewController,
     );
   }
 }

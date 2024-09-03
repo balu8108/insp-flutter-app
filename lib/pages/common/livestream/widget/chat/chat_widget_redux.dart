@@ -15,6 +15,7 @@ import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_m
 import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/question_message_model.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/mainsocket.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
@@ -35,7 +36,6 @@ class ChatWidgetAppState with _$ChatWidgetAppState {
       LecturesDetailResponseModelData previewData,
       @Default([]) List<LiveClassRoomFile> previewDataFiles,
       @Default([]) List<ChatMessageModel> chatMessages,
-      @Default([]) List<PeersDataModel> allPeers,
       @Default([]) List<LeaderboardModel> leaderBoard,
       @Default([]) List<LeaderBoardAnswerModel> leaderBoardAnswerPercentage,
       @Default([]) List<QuestionMessageModel> questionMessages,
@@ -53,11 +53,6 @@ class UpdatePreviewData extends ChatWidgetAction {
 class UpdatePreviewDataFiles extends ChatWidgetAction {
   List<LiveClassRoomFile> previewDataFiles;
   UpdatePreviewDataFiles({required this.previewDataFiles});
-}
-
-class UpdateAllPeers extends ChatWidgetAction {
-  List<PeersDataModel> allPeers;
-  UpdateAllPeers({required this.allPeers});
 }
 
 class UpdateChatMessages extends ChatWidgetAction {
@@ -103,8 +98,6 @@ ChatWidgetAppState chatMessageStateReducer(
     return state.copyWith(previewData: action.previewData);
   } else if (action is UpdatePreviewDataFiles) {
     return state.copyWith(previewDataFiles: action.previewDataFiles);
-  } else if (action is UpdateAllPeers) {
-    return state.copyWith(allPeers: action.allPeers);
   } else if (action is UpdateChatMessages) {
     return state.copyWith(chatMessages: action.chatMessages);
   } else if (action is UpdateLeaderBoard) {
@@ -292,50 +285,22 @@ ThunkAction<AppState> addUserQuestionMessage(BuildContext context, String msg) {
   };
 }
 
-ThunkAction<AppState> addQuestion(dynamic res) {
-  return (Store<AppState> store) async {
-    List<LeaderboardModel> leaderBoard = (res['leaderBoard'] as List)
-        .map((item) => LeaderboardModel(
-              combinedResponseTime: item['combinedResponseTime'] as int,
-              correctAnswers: item['correctAnswers'] as int,
-              peerDetails: PeerDetailLeaderboard.fromJson(item['peerDetails']),
-            ))
-        .toList();
-    print(leaderBoard);
-    // // Extracting 'msg' and 'peerDetails' from the response
-    // PeerDetail peerDetails = PeerDetail(id: uuid.v4(), name: 'You');
-
-    // // Assuming 'ChatMessageModel.fromJson' can handle the JSON structure
-    // QuestionMessageModel newMessage = QuestionMessageModel.fromJson(
-    //     {'questionMsg': msg, 'peerDetails': peerDetails.toJson()});
-
-    // // Get the current messages from the store
-    // List<QuestionMessageModel> currentQuestion =
-    //     store.state.chatWidgetAppState.questionMessages;
-
-    // // Create the updated list of messages
-    // List<QuestionMessageModel> questionMessages = [
-    //   ...currentQuestion.sublist(max(0, currentQuestion.length - 50)),
-    //   newMessage
-    // ];
-
-    // // Dispatch the action to update chat messages in the store
-    // store.dispatch(UpdateQuestionMessage(questionMessages: questionMessages));
-  };
-}
-
 ThunkAction<AppState> joinRoomResponseData(BuildContext context, dynamic res) {
   return (Store<AppState> store) async {
     if (res['selfDetails'] != null) {
       PeersDataModel peerdetail = PeersDataModel.fromJson(res['selfDetails']);
 
-      List<PeersDataModel> allPeers = store.state.chatWidgetAppState.allPeers;
+      List<PeersDataModel> allPeers = store.state.peersWidgetAppState.allPeers;
 
-      List<PeersDataModel> updatedLiveClassRoomPeer = [
-        ...allPeers,
-        peerdetail // Add all new files to the list
-      ];
+      // List<PeersDataModel> updatedLiveClassRoomPeer = [
+      //   ...allPeers,
+      //   peerdetail // Add all new files to the list
+      // ];
+      List<PeersDataModel> updatedLiveClassRoomPeer =
+          List.generate(150, (index) => PeersDataModel(name: "Arto $index"));
       store.dispatch(UpdateAllPeers(allPeers: updatedLiveClassRoomPeer));
+      store.dispatch(
+          UpdateFilteredPeers(filteredPeers: updatedLiveClassRoomPeer));
     }
     if (res['leaderBoardData'] is List &&
         res['leaderBoardData'] != null &&
@@ -352,7 +317,7 @@ ThunkAction<AppState> joinRoomResponseData(BuildContext context, dynamic res) {
     }
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const LiveClassScreen()),
+      MaterialPageRoute(builder: (context) => LiveClassScreen()),
     );
   };
 }

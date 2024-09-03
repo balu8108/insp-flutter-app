@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/pages/login/login_redux.dart';
@@ -16,16 +17,21 @@ import 'package:inspflutterfrontend/widget/navbar/navbar_redux.dart';
 import 'package:inspflutterfrontend/widget/popups/uploadLiveclassFile/upload_liveclass_file_redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
+import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
+  // Ensure that the correct platform implementation is used for macOS
+  WebViewPlatform.instance = WebKitWebViewPlatform();
   final store = Store<AppState>(
     appStateReducer,
     initialState: const AppState(
         loginState: LoginAppState(),
         upcomingWidgetAppState: UpcomingWidgetAppState(),
         chatWidgetAppState: ChatWidgetAppState(),
+        peersWidgetAppState: PeersWidgetAppState(),
         uploadLiveclassFileAppState: UploadLiveclassFileAppState(),
         navbarAppState: NavbarAppState()),
     middleware: [thunkMiddleware],

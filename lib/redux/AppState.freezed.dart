@@ -21,6 +21,8 @@ mixin _$AppState {
       throw _privateConstructorUsedError;
   ChatWidgetAppState get chatWidgetAppState =>
       throw _privateConstructorUsedError;
+  PeersWidgetAppState get peersWidgetAppState =>
+      throw _privateConstructorUsedError;
   UploadLiveclassFileAppState get uploadLiveclassFileAppState =>
       throw _privateConstructorUsedError;
   NavbarAppState get navbarAppState => throw _privateConstructorUsedError;
@@ -39,12 +41,14 @@ abstract class $AppStateCopyWith<$Res> {
       {LoginAppState loginState,
       UpcomingWidgetAppState upcomingWidgetAppState,
       ChatWidgetAppState chatWidgetAppState,
+      PeersWidgetAppState peersWidgetAppState,
       UploadLiveclassFileAppState uploadLiveclassFileAppState,
       NavbarAppState navbarAppState});
 
   $LoginAppStateCopyWith<$Res> get loginState;
   $UpcomingWidgetAppStateCopyWith<$Res> get upcomingWidgetAppState;
   $ChatWidgetAppStateCopyWith<$Res> get chatWidgetAppState;
+  $PeersWidgetAppStateCopyWith<$Res> get peersWidgetAppState;
   $UploadLiveclassFileAppStateCopyWith<$Res> get uploadLiveclassFileAppState;
   $NavbarAppStateCopyWith<$Res> get navbarAppState;
 }
@@ -65,6 +69,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? loginState = null,
     Object? upcomingWidgetAppState = null,
     Object? chatWidgetAppState = null,
+    Object? peersWidgetAppState = null,
     Object? uploadLiveclassFileAppState = null,
     Object? navbarAppState = null,
   }) {
@@ -81,6 +86,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.chatWidgetAppState
           : chatWidgetAppState // ignore: cast_nullable_to_non_nullable
               as ChatWidgetAppState,
+      peersWidgetAppState: null == peersWidgetAppState
+          ? _value.peersWidgetAppState
+          : peersWidgetAppState // ignore: cast_nullable_to_non_nullable
+              as PeersWidgetAppState,
       uploadLiveclassFileAppState: null == uploadLiveclassFileAppState
           ? _value.uploadLiveclassFileAppState
           : uploadLiveclassFileAppState // ignore: cast_nullable_to_non_nullable
@@ -120,6 +129,15 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
 
   @override
   @pragma('vm:prefer-inline')
+  $PeersWidgetAppStateCopyWith<$Res> get peersWidgetAppState {
+    return $PeersWidgetAppStateCopyWith<$Res>(_value.peersWidgetAppState,
+        (value) {
+      return _then(_value.copyWith(peersWidgetAppState: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
   $UploadLiveclassFileAppStateCopyWith<$Res> get uploadLiveclassFileAppState {
     return $UploadLiveclassFileAppStateCopyWith<$Res>(
         _value.uploadLiveclassFileAppState, (value) {
@@ -148,6 +166,7 @@ abstract class _$$AppStateImplCopyWith<$Res>
       {LoginAppState loginState,
       UpcomingWidgetAppState upcomingWidgetAppState,
       ChatWidgetAppState chatWidgetAppState,
+      PeersWidgetAppState peersWidgetAppState,
       UploadLiveclassFileAppState uploadLiveclassFileAppState,
       NavbarAppState navbarAppState});
 
@@ -157,6 +176,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
   $UpcomingWidgetAppStateCopyWith<$Res> get upcomingWidgetAppState;
   @override
   $ChatWidgetAppStateCopyWith<$Res> get chatWidgetAppState;
+  @override
+  $PeersWidgetAppStateCopyWith<$Res> get peersWidgetAppState;
   @override
   $UploadLiveclassFileAppStateCopyWith<$Res> get uploadLiveclassFileAppState;
   @override
@@ -177,6 +198,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? loginState = null,
     Object? upcomingWidgetAppState = null,
     Object? chatWidgetAppState = null,
+    Object? peersWidgetAppState = null,
     Object? uploadLiveclassFileAppState = null,
     Object? navbarAppState = null,
   }) {
@@ -193,6 +215,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.chatWidgetAppState
           : chatWidgetAppState // ignore: cast_nullable_to_non_nullable
               as ChatWidgetAppState,
+      peersWidgetAppState: null == peersWidgetAppState
+          ? _value.peersWidgetAppState
+          : peersWidgetAppState // ignore: cast_nullable_to_non_nullable
+              as PeersWidgetAppState,
       uploadLiveclassFileAppState: null == uploadLiveclassFileAppState
           ? _value.uploadLiveclassFileAppState
           : uploadLiveclassFileAppState // ignore: cast_nullable_to_non_nullable
@@ -212,6 +238,7 @@ class _$AppStateImpl implements _AppState {
       {required this.loginState,
       required this.upcomingWidgetAppState,
       required this.chatWidgetAppState,
+      required this.peersWidgetAppState,
       required this.uploadLiveclassFileAppState,
       required this.navbarAppState});
 
@@ -222,13 +249,15 @@ class _$AppStateImpl implements _AppState {
   @override
   final ChatWidgetAppState chatWidgetAppState;
   @override
+  final PeersWidgetAppState peersWidgetAppState;
+  @override
   final UploadLiveclassFileAppState uploadLiveclassFileAppState;
   @override
   final NavbarAppState navbarAppState;
 
   @override
   String toString() {
-    return 'AppState(loginState: $loginState, upcomingWidgetAppState: $upcomingWidgetAppState, chatWidgetAppState: $chatWidgetAppState, uploadLiveclassFileAppState: $uploadLiveclassFileAppState, navbarAppState: $navbarAppState)';
+    return 'AppState(loginState: $loginState, upcomingWidgetAppState: $upcomingWidgetAppState, chatWidgetAppState: $chatWidgetAppState, peersWidgetAppState: $peersWidgetAppState, uploadLiveclassFileAppState: $uploadLiveclassFileAppState, navbarAppState: $navbarAppState)';
   }
 
   @override
@@ -242,6 +271,8 @@ class _$AppStateImpl implements _AppState {
                 other.upcomingWidgetAppState == upcomingWidgetAppState) &&
             (identical(other.chatWidgetAppState, chatWidgetAppState) ||
                 other.chatWidgetAppState == chatWidgetAppState) &&
+            (identical(other.peersWidgetAppState, peersWidgetAppState) ||
+                other.peersWidgetAppState == peersWidgetAppState) &&
             (identical(other.uploadLiveclassFileAppState,
                     uploadLiveclassFileAppState) ||
                 other.uploadLiveclassFileAppState ==
@@ -256,6 +287,7 @@ class _$AppStateImpl implements _AppState {
       loginState,
       upcomingWidgetAppState,
       chatWidgetAppState,
+      peersWidgetAppState,
       uploadLiveclassFileAppState,
       navbarAppState);
 
@@ -271,6 +303,7 @@ abstract class _AppState implements AppState {
       {required final LoginAppState loginState,
       required final UpcomingWidgetAppState upcomingWidgetAppState,
       required final ChatWidgetAppState chatWidgetAppState,
+      required final PeersWidgetAppState peersWidgetAppState,
       required final UploadLiveclassFileAppState uploadLiveclassFileAppState,
       required final NavbarAppState navbarAppState}) = _$AppStateImpl;
 
@@ -280,6 +313,8 @@ abstract class _AppState implements AppState {
   UpcomingWidgetAppState get upcomingWidgetAppState;
   @override
   ChatWidgetAppState get chatWidgetAppState;
+  @override
+  PeersWidgetAppState get peersWidgetAppState;
   @override
   UploadLiveclassFileAppState get uploadLiveclassFileAppState;
   @override

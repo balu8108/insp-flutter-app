@@ -6,13 +6,10 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <desktop_webview_window/desktop_webview_window_plugin.h>
 #include <pdfx/pdfx_plugin.h>
 #include <webview_universal/webview_universal_plugin.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  DesktopWebviewWindowPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("DesktopWebviewWindowPlugin"));
   PdfxPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("PdfxPlugin"));
   WebviewUniversalPluginRegisterWithRegistrar(

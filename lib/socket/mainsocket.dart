@@ -7,6 +7,7 @@ import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_m
 import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/socket_events.dart';
@@ -129,7 +130,7 @@ void socketConnectionHandler(Store<AppState> store, String roomId) {
 void socketNewPeerJoinedHandler(Store<AppState> store, dynamic res) {
   final PeersDataModel newPeer = PeersDataModel.fromJson(res['peer']);
   final List<PeersDataModel> currentPeers =
-      store.state.chatWidgetAppState.allPeers;
+      store.state.peersWidgetAppState.allPeers;
 
   if (!currentPeers.any((peer) => peer.id == newPeer.id)) {
     store.dispatch(UpdateAllPeers(allPeers: [...currentPeers, newPeer]));
@@ -146,7 +147,7 @@ void peerLeavedResponseHandler(Store<AppState> store, dynamic res) {
   final PeersDataModel peerLeaved = PeersDataModel.fromJson(res['peerLeaved']);
 
   final List<PeersDataModel> updatedPeers = store
-      .state.chatWidgetAppState.allPeers
+      .state.peersWidgetAppState.allPeers
       .where((peer) => peer.id != peerLeaved.id)
       .toList();
 

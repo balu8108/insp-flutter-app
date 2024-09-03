@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/preview/widget/peer_list.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/preview/widget/joined_peer_detail.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/utils/capitalize.dart';
@@ -171,55 +171,7 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                                     ),
                               Column(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 24.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        // Mentors Joined Section
-                                        const Text(
-                                          'Mentors Joined',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        PeerList(
-                                          peers: state.allPeers.isNotEmpty
-                                              ? state.allPeers
-                                                  .where(
-                                                      (peer) => peer.isTeacher)
-                                                  .toList()
-                                              : [],
-                                          type: "Mentor",
-                                          message: 'No mentors joined...',
-                                        ),
-                                        const SizedBox(height: 16),
-
-                                        // Students Joined Section
-                                        const Text(
-                                          'Student joined',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        PeerList(
-                                          peers: state.allPeers.isNotEmpty
-                                              ? state.allPeers
-                                                  .where(
-                                                      (peer) => !peer.isTeacher)
-                                                  .toList()
-                                              : [],
-                                          type: "Mentor",
-                                          message: 'No students joined...',
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  const JoinedPeerWidget(),
                                   const SizedBox(height: 24),
                                   SizedBox(
                                     width: double.infinity,
