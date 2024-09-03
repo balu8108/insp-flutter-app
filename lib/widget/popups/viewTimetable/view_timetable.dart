@@ -1,40 +1,11 @@
-// import 'package:flutter/material.dart';
-
-// class ViewTimetable extends StatefulWidget {
-//   const ViewTimetable({super.key});
-
-//   @override
-//   State<ViewTimetable> createState() => _ViewTimetableState();
-// }
-
-// class _ViewTimetableState extends State<ViewTimetable> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return AlertDialog(
-//       title: const Text('INSP Time Table'),
-//       content: SizedBox(
-//         width: 600,
-//         child: Text('Content goes here...'), // Add your content here
-//       ),
-//       shape: RoundedRectangleBorder(
-//         borderRadius: BorderRadius.circular(10),
-//       ),
-//       actions: [
-//         TextButton(
-//           onPressed: () {
-//             Navigator.of(context).pop(); // Close the dialog
-//           },
-//           child: const Text('Close'),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:inspflutterfrontend/widget/popups/pdfviewer/pdfviewer_redux.dart';
+import 'package:internet_file/internet_file.dart';
+import 'package:pdfx/pdfx.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class ViewTimetable extends StatefulWidget {
   const ViewTimetable({super.key});
@@ -45,7 +16,15 @@ class ViewTimetable extends StatefulWidget {
 
 class _ViewTimetableState extends State<ViewTimetable> {
   bool _isLoading = true;
-  String _timetableData = '';
+  PdfController? _pdfControllerWindow;
+  PdfControllerPinch? _pdfController;
+  PDFViewerAppState pdfViewerAppState = const PDFViewerAppState();
+
+  void updateState(PDFViewerAppState pDFViewerAppState) {
+    setState(() {
+      this.pdfViewerAppState = pDFViewerAppState;
+    });
+  }
 
   @override
   void initState() {
@@ -65,21 +44,27 @@ class _ViewTimetableState extends State<ViewTimetable> {
           },
         ),
       );
+
       if (response.statusCode == 200) {
+        var document = response.data[0];
+        final pdfBytes = await InternetFile.get(document["url"]);
+        if (UniversalPlatform.isWindows) {
+          _pdfControllerWindow = PdfController(
+            document: PdfDocument.openData(pdfBytes),
+          );
+        } else {
+          _pdfController = PdfControllerPinch(
+            document: PdfDocument.openData(pdfBytes),
+          );
+        }
+
+        updateState(pdfViewerAppState.copyWith(fileUrl: document["url"]));
         setState(() {
-          _timetableData = response
-              .data['timetable']; // Adjust according to your response structure
-          _isLoading = false;
-        });
-      } else {
-        setState(() {
-          _timetableData = 'Failed to load timetable data';
           _isLoading = false;
         });
       }
     } catch (e) {
       setState(() {
-        _timetableData = 'Error loading timetable data';
         _isLoading = false;
       });
     }
@@ -91,11 +76,17 @@ class _ViewTimetableState extends State<ViewTimetable> {
       title: const Text('INSP Time Table'),
       content: SizedBox(
         width: 600,
-        height: 400, // Adjust the height as needed
+        height: 400,
         child: _isLoading
             ? const Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
-                child: Text(_timetableData), // Display timetable data here
+                child: _pdfController != null || _pdfControllerWindow != null
+                    ? UniversalPlatform.isWindows
+                        ? PdfView(controller: _pdfControllerWindow!)
+                        : PdfViewPinch(
+                            controller: _pdfController!,
+                          )
+                    : Center(child: CircularProgressIndicator()),
               ),
       ),
       shape: RoundedRectangleBorder(
@@ -104,7 +95,7 @@ class _ViewTimetableState extends State<ViewTimetable> {
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(); // Close the dialog
+            Navigator.of(context).pop();
           },
           child: const Text('Close'),
         ),
