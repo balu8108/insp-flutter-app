@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/peer_list.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/livechatsection.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/tpstreamview.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/webview.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 
 class LiveClassScreen extends StatefulWidget {
+  const LiveClassScreen({super.key});
   @override
   _LiveClassScreenState createState() => _LiveClassScreenState();
 }
@@ -28,18 +28,10 @@ class _LiveClassScreenState extends State<LiveClassScreen> {
                 children: [
                   Expanded(flex: 2, child: LiveChatSectionWidget()),
                   const SizedBox(width: 16),
-                  Expanded(
-                      flex: 7,
-                      child: Container(
-                        height: 600,
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: const Color.fromRGBO(232, 242, 249, 1),
-                        ),
-                        child: WebviewUniversal(),
-                      )),
+                  const Expanded(
+                    flex: 7,
+                    child: TPStreamLiveVideoPlayerWidget(),
+                  ),
                   const SizedBox(width: 20),
                   PeerListWidget()
                 ],

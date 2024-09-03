@@ -32,7 +32,7 @@ class RecordingPlayerScreen extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(flex: 7, child: TPStreamLiveVideoPlayerWidget()),
+                      // Expanded(flex: 7, child: TPStreamLiveVideoPlayerWidget()),
                       const SizedBox(width: 16),
                       Expanded(
                           flex: 3,

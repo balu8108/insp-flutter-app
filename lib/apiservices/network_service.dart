@@ -25,6 +25,8 @@ import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/rating_fee
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/tpstream/video_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/tpstream/video_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:retrofit/dio.dart';
@@ -76,6 +78,13 @@ abstract class NetworkService {
   Future<HttpResponse<PhysicsCourseTopicsResponseModel>> getAllTopics(
     @Body() PhysicsCourseTopicsRequestModel allTopicsForRequestModel,
   );
+
+  @POST(
+      'https://app.tpstreams.com/api/v1/gcma48/assets/{videoId}/access_tokens/')
+  Future<HttpResponse<VideoResponseModel>> getVideoPlayUrl(
+      @Path() String videoId,
+      @Body() VideoRequestModel videoRequestModel,
+      @Header('Authorization') String secretTokenHeader);
 
   @GET('/lecture/get-lecture-by-topic-name/{topicId}/{topicType}')
   Future<HttpResponse<AllLecturesForTopicResponseModel>> getAllLectureByTopic(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/preview/widget/joined_peer_detail.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
@@ -22,6 +23,13 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
     store.dispatch(getPreviewClassData(context, roomId));
     void navigateToRoomScreen(String roomId) {
       store.dispatch(navigateToRoom(context, roomId, {}));
+    }
+
+    void copyTextToClipboard(String textToCopy) {
+      Clipboard.setData(ClipboardData(text: textToCopy));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Text copied to clipboard!')),
+      );
     }
 
     return Container(
@@ -90,6 +98,90 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                                   height: 1.75,
                                 ),
                               ),
+                              const SizedBox(height: 40),
+                              if (isTeacher)
+                                Row(
+                                  children: [
+                                    const Icon(Icons.link),
+                                    const SizedBox(width: 5),
+                                    MouseRegion(
+                                        cursor: SystemMouseCursors
+                                            .click, // Change cursor to pointer
+                                        child: GestureDetector(
+                                            onTap: () => copyTextToClipboard(
+                                                state
+                                                        .previewData
+                                                        .liveClassRoomRecordings
+                                                        .isNotEmpty
+                                                    ? state
+                                                        .previewData
+                                                        .liveClassRoomRecordings[
+                                                            0]
+                                                        .rtmpUrl
+                                                    : ''),
+                                            child: Text(
+                                              state
+                                                      .previewData
+                                                      .liveClassRoomRecordings
+                                                      .isNotEmpty
+                                                  ? state
+                                                      .previewData
+                                                      .liveClassRoomRecordings[
+                                                          0]
+                                                      .rtmpUrl
+                                                  : '',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 16,
+                                                color: Color.fromRGBO(
+                                                    44, 51, 41, 0.47),
+                                                height: 1.25,
+                                              ),
+                                            )))
+                                  ],
+                                ),
+                              if (isTeacher) const SizedBox(height: 5),
+                              if (isTeacher)
+                                Row(
+                                  children: [
+                                    const Icon(Icons.key),
+                                    const SizedBox(width: 5),
+                                    MouseRegion(
+                                        cursor: SystemMouseCursors
+                                            .click, // Change cursor to pointer
+                                        child: GestureDetector(
+                                            onTap: () => copyTextToClipboard(
+                                                state
+                                                        .previewData
+                                                        .liveClassRoomRecordings
+                                                        .isNotEmpty
+                                                    ? state
+                                                        .previewData
+                                                        .liveClassRoomRecordings[
+                                                            0]
+                                                        .streamKey
+                                                    : ''),
+                                            child: Text(
+                                              state
+                                                      .previewData
+                                                      .liveClassRoomRecordings
+                                                      .isNotEmpty
+                                                  ? state
+                                                      .previewData
+                                                      .liveClassRoomRecordings[
+                                                          0]
+                                                      .streamKey
+                                                  : '',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 16,
+                                                color: Color.fromRGBO(
+                                                    44, 51, 41, 0.47),
+                                                height: 1.25,
+                                              ),
+                                            )))
+                                  ],
+                                ),
                               const SizedBox(height: 40),
                               const Text(
                                 'Description',

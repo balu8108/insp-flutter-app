@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/tpstream/video_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/tpstream/video_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/liveclass.dart';
@@ -41,6 +43,7 @@ class ChatWidgetAppState with _$ChatWidgetAppState {
       @Default([]) List<QuestionMessageModel> questionMessages,
       @Default(PollDataModel()) PollDataModel pollData,
       @Default(PollDataModel()) PollDataModel questionFromServer,
+      @Default(VideoResponseModel()) VideoResponseModel videoResponse,
       @Default(IncreasePollTimeModel())
       IncreasePollTimeModel increasePollTimeModel}) = _ChatWidgetAppState;
 }
@@ -90,6 +93,11 @@ class UpdateIncreasePollTimeModel extends ChatWidgetAction {
   UpdateIncreasePollTimeModel({required this.increasePollTimeModel});
 }
 
+class UpdateVideoResponse extends ChatWidgetAction {
+  VideoResponseModel videoResponse;
+  UpdateVideoResponse({required this.videoResponse});
+}
+
 sealed class ChatWidgetAction {}
 
 ChatWidgetAppState chatMessageStateReducer(
@@ -113,6 +121,8 @@ ChatWidgetAppState chatMessageStateReducer(
     return state.copyWith(questionFromServer: action.questionFromServer);
   } else if (action is UpdateIncreasePollTimeModel) {
     return state.copyWith(increasePollTimeModel: action.increasePollTimeModel);
+  } else if (action is UpdateVideoResponse) {
+    return state.copyWith(videoResponse: action.videoResponse);
   }
   return state;
 }
@@ -347,6 +357,46 @@ ThunkAction<AppState> addFileToPreviewData(dynamic res) {
           UpdatePreviewDataFiles(previewDataFiles: updatedLiveClassRoomFiles));
     } else {
       print("Error: 'files' key not found, is null, or not a list.");
+    }
+  };
+}
+
+ThunkAction<AppState> getVideoUrlApi(BuildContext context) {
+  return (Store<AppState> store) async {
+    try {
+      final remoteDataSource = RemoteDataSource();
+      final chatState = store.state.chatWidgetAppState;
+
+      // Validate the data before making the API call
+      if (chatState.previewData.liveClassRoomRecordings.isNotEmpty) {
+        final recording = chatState.previewData.liveClassRoomRecordings[0];
+        final tpStreamId = recording.tpStreamId;
+        if (tpStreamId.isNotEmpty) {
+          final previewData = await remoteDataSource.getVideoPlayUrl(
+              tpStreamId,
+              const VideoRequestModel(),
+              'Token cb5ee975c1a2a3cde54bbfe16e0ed5fc4662a8f20d1a9602a46c7229b42a5e52');
+
+          VideoResponseModel videoResponseData =
+              VideoResponseModel.fromJson(previewData.response.data);
+          print(videoResponseData);
+          // Dispatch the action to update chat messages in the store
+          store.dispatch(UpdateVideoResponse(videoResponse: videoResponseData));
+        } else {
+          print("tpstream url null");
+        }
+      } else {
+        print("tpreviewData null");
+      }
+    } catch (error) {
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.error,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: const Text('Some issue, please try again'),
+        alignment: Alignment.topRight,
+      );
     }
   };
 }

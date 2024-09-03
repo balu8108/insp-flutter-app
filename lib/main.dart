@@ -25,6 +25,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() {
   // Ensure that the correct platform implementation is used for macOS
   WebViewPlatform.instance = WebKitWebViewPlatform();
+  WidgetsFlutterBinding.ensureInitialized();
   final store = Store<AppState>(
     appStateReducer,
     initialState: const AppState(

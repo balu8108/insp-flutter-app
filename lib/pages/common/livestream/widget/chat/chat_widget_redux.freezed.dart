@@ -28,6 +28,7 @@ mixin _$ChatWidgetAppState {
       throw _privateConstructorUsedError;
   PollDataModel get pollData => throw _privateConstructorUsedError;
   PollDataModel get questionFromServer => throw _privateConstructorUsedError;
+  VideoResponseModel get videoResponse => throw _privateConstructorUsedError;
   IncreasePollTimeModel get increasePollTimeModel =>
       throw _privateConstructorUsedError;
 
@@ -51,6 +52,7 @@ abstract class $ChatWidgetAppStateCopyWith<$Res> {
       List<QuestionMessageModel> questionMessages,
       PollDataModel pollData,
       PollDataModel questionFromServer,
+      VideoResponseModel videoResponse,
       IncreasePollTimeModel increasePollTimeModel});
 }
 
@@ -75,6 +77,7 @@ class _$ChatWidgetAppStateCopyWithImpl<$Res, $Val extends ChatWidgetAppState>
     Object? questionMessages = null,
     Object? pollData = null,
     Object? questionFromServer = null,
+    Object? videoResponse = null,
     Object? increasePollTimeModel = null,
   }) {
     return _then(_value.copyWith(
@@ -110,6 +113,10 @@ class _$ChatWidgetAppStateCopyWithImpl<$Res, $Val extends ChatWidgetAppState>
           ? _value.questionFromServer
           : questionFromServer // ignore: cast_nullable_to_non_nullable
               as PollDataModel,
+      videoResponse: null == videoResponse
+          ? _value.videoResponse
+          : videoResponse // ignore: cast_nullable_to_non_nullable
+              as VideoResponseModel,
       increasePollTimeModel: null == increasePollTimeModel
           ? _value.increasePollTimeModel
           : increasePollTimeModel // ignore: cast_nullable_to_non_nullable
@@ -135,6 +142,7 @@ abstract class _$$ChatWidgetAppStateImplCopyWith<$Res>
       List<QuestionMessageModel> questionMessages,
       PollDataModel pollData,
       PollDataModel questionFromServer,
+      VideoResponseModel videoResponse,
       IncreasePollTimeModel increasePollTimeModel});
 }
 
@@ -157,6 +165,7 @@ class __$$ChatWidgetAppStateImplCopyWithImpl<$Res>
     Object? questionMessages = null,
     Object? pollData = null,
     Object? questionFromServer = null,
+    Object? videoResponse = null,
     Object? increasePollTimeModel = null,
   }) {
     return _then(_$ChatWidgetAppStateImpl(
@@ -192,6 +201,10 @@ class __$$ChatWidgetAppStateImplCopyWithImpl<$Res>
           ? _value.questionFromServer
           : questionFromServer // ignore: cast_nullable_to_non_nullable
               as PollDataModel,
+      videoResponse: null == videoResponse
+          ? _value.videoResponse
+          : videoResponse // ignore: cast_nullable_to_non_nullable
+              as VideoResponseModel,
       increasePollTimeModel: null == increasePollTimeModel
           ? _value.increasePollTimeModel
           : increasePollTimeModel // ignore: cast_nullable_to_non_nullable
@@ -212,6 +225,7 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
       final List<QuestionMessageModel> questionMessages = const [],
       this.pollData = const PollDataModel(),
       this.questionFromServer = const PollDataModel(),
+      this.videoResponse = const VideoResponseModel(),
       this.increasePollTimeModel = const IncreasePollTimeModel()})
       : _previewDataFiles = previewDataFiles,
         _chatMessages = chatMessages,
@@ -278,11 +292,14 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
   final PollDataModel questionFromServer;
   @override
   @JsonKey()
+  final VideoResponseModel videoResponse;
+  @override
+  @JsonKey()
   final IncreasePollTimeModel increasePollTimeModel;
 
   @override
   String toString() {
-    return 'ChatWidgetAppState(previewData: $previewData, previewDataFiles: $previewDataFiles, chatMessages: $chatMessages, leaderBoard: $leaderBoard, leaderBoardAnswerPercentage: $leaderBoardAnswerPercentage, questionMessages: $questionMessages, pollData: $pollData, questionFromServer: $questionFromServer, increasePollTimeModel: $increasePollTimeModel)';
+    return 'ChatWidgetAppState(previewData: $previewData, previewDataFiles: $previewDataFiles, chatMessages: $chatMessages, leaderBoard: $leaderBoard, leaderBoardAnswerPercentage: $leaderBoardAnswerPercentage, questionMessages: $questionMessages, pollData: $pollData, questionFromServer: $questionFromServer, videoResponse: $videoResponse, increasePollTimeModel: $increasePollTimeModel)';
   }
 
   @override
@@ -307,6 +324,8 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
                 other.pollData == pollData) &&
             (identical(other.questionFromServer, questionFromServer) ||
                 other.questionFromServer == questionFromServer) &&
+            (identical(other.videoResponse, videoResponse) ||
+                other.videoResponse == videoResponse) &&
             (identical(other.increasePollTimeModel, increasePollTimeModel) ||
                 other.increasePollTimeModel == increasePollTimeModel));
   }
@@ -322,6 +341,7 @@ class _$ChatWidgetAppStateImpl implements _ChatWidgetAppState {
       const DeepCollectionEquality().hash(_questionMessages),
       pollData,
       questionFromServer,
+      videoResponse,
       increasePollTimeModel);
 
   @JsonKey(ignore: true)
@@ -342,6 +362,7 @@ abstract class _ChatWidgetAppState implements ChatWidgetAppState {
           final List<QuestionMessageModel> questionMessages,
           final PollDataModel pollData,
           final PollDataModel questionFromServer,
+          final VideoResponseModel videoResponse,
           final IncreasePollTimeModel increasePollTimeModel}) =
       _$ChatWidgetAppStateImpl;
 
@@ -361,6 +382,8 @@ abstract class _ChatWidgetAppState implements ChatWidgetAppState {
   PollDataModel get pollData;
   @override
   PollDataModel get questionFromServer;
+  @override
+  VideoResponseModel get videoResponse;
   @override
   IncreasePollTimeModel get increasePollTimeModel;
   @override

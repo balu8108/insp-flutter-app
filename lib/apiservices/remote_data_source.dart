@@ -22,6 +22,8 @@ import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/rating_fee
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/tpstream/video_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/tpstream/video_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:retrofit/dio.dart';
 
@@ -126,6 +128,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<LiveClassPreviewResponseModel>> getRoomPreviewData(
       String roomId, String secretTokenHeader);
+
+  Future<HttpResponse<VideoResponseModel>> getVideoPlayUrl(String videoId,
+      VideoRequestModel videoRequestModel, String secretTokenHeader);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -327,5 +332,12 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<HttpResponse<LiveClassPreviewResponseModel>> getRoomPreviewData(
       String roomId, String secretTokenHeader) {
     return deviceNetworkService.getRoomPreviewData(roomId, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<VideoResponseModel>> getVideoPlayUrl(String videoId,
+      VideoRequestModel videoRequestModel, String secretTokenHeader) {
+    return deviceNetworkService.getVideoPlayUrl(
+        videoId, videoRequestModel, secretTokenHeader);
   }
 }
