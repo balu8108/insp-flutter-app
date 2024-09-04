@@ -8,6 +8,7 @@ import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.d
 import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/preview_data_redux.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/socket_events.dart';
@@ -134,6 +135,8 @@ void socketNewPeerJoinedHandler(Store<AppState> store, dynamic res) {
 
   if (!currentPeers.any((peer) => peer.id == newPeer.id)) {
     store.dispatch(UpdateAllPeers(allPeers: [...currentPeers, newPeer]));
+    store.dispatch(
+        UpdateFilteredPeers(filteredPeers: [...currentPeers, newPeer]));
   }
 }
 
@@ -141,6 +144,7 @@ void roomUpdateResponseHandler(Store<AppState> store, dynamic res) {
   final List<PeersDataModel> updatedPeers = List<PeersDataModel>.from(
       (res['peer'] as List<dynamic>).map((e) => PeersDataModel.fromJson(e)));
   store.dispatch(UpdateAllPeers(allPeers: updatedPeers));
+  store.dispatch(UpdateFilteredPeers(filteredPeers: updatedPeers));
 }
 
 void peerLeavedResponseHandler(Store<AppState> store, dynamic res) {
@@ -152,6 +156,7 @@ void peerLeavedResponseHandler(Store<AppState> store, dynamic res) {
       .toList();
 
   store.dispatch(UpdateAllPeers(allPeers: updatedPeers));
+  store.dispatch(UpdateFilteredPeers(filteredPeers: updatedPeers));
 }
 
 Future<void> joinRoomHandler(Store<AppState> store, String roomId,
@@ -224,6 +229,7 @@ Future<void> leaveRoomHandler(Store<AppState> store) async {
   socket?.emitWithAck(SOCKET_EVENTS.LEAVE_ROOM, '', ack: (res) async {
     var feedBackStatus = res['feedBackStatus'];
     store.dispatch(UpdateAllPeers(allPeers: []));
+    store.dispatch(UpdateFilteredPeers(filteredPeers: []));
     if (feedBackStatus['success']) {
       LoginResponseModelResult userDatas = await getUserData();
       navigatorKey.currentState?.push(
@@ -242,7 +248,7 @@ Future<void> leaveRoomHandler(Store<AppState> store) async {
       type: ToastificationType.info,
       style: ToastificationStyle.fillColored,
       autoCloseDuration: const Duration(seconds: 3),
-      title: Text('Class Leaved'),
+      title: const Text('Class Leaved'),
       alignment: Alignment.topRight,
     );
   });

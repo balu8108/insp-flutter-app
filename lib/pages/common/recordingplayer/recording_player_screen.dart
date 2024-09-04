@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/tpstreamview.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamview.dart';
 import 'package:inspflutterfrontend/widget/card/model/recording_player_card_model.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_detail_widget.dart';

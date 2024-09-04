@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/peer_list.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/livechatsection.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/tpstreamview.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/livechatsection.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamview.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 
 class LiveClassScreen extends StatefulWidget {

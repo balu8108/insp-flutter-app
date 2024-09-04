@@ -4,6 +4,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/preview_data_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/tpstream_redux.dart';
 import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/pages/login/login_redux.dart';
@@ -34,7 +36,9 @@ void main() {
         chatWidgetAppState: ChatWidgetAppState(),
         peersWidgetAppState: PeersWidgetAppState(),
         uploadLiveclassFileAppState: UploadLiveclassFileAppState(),
-        navbarAppState: NavbarAppState()),
+        navbarAppState: NavbarAppState(),
+        tpStreamAppState: TPStreamAppState(),
+        previewDataAppState: PreviewDataAppState()),
     middleware: [thunkMiddleware],
   );
 

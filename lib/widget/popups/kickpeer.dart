@@ -24,7 +24,6 @@ class KickPeerPopup extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.close),
             onPressed: () {
-              callKickApi();
               Navigator.of(context).pop(); // Close the dialog
             },
           ),
@@ -58,7 +57,10 @@ class KickPeerPopup extends StatelessWidget {
             SizedBox(
               width: 100,
               child: ElevatedButton(
-                onPressed: () async {},
+                onPressed: () {
+                  callKickApi();
+                  Navigator.of(context).pop();
+                },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: const Color.fromRGBO(60, 141, 188, 1),

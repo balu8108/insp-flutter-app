@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/livepeersfulllist.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/livepeerslist.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/peers/livepeersfulllist.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/peers/livepeerslist.dart';
 
 class PeerListWidget extends StatefulWidget {
   @override

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/preview/widget/joined_peer_detail.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/preview_data_redux.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/utils/capitalize.dart';
 import 'package:inspflutterfrontend/utils/format_time.dart';
@@ -47,9 +48,9 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                 return const Center(child: Text('Error loading data'));
               } else {
                 bool isTeacher = snapshot.data ?? false;
-                return StoreConnector<AppState, ChatWidgetAppState>(
-                    converter: (store) => store.state.chatWidgetAppState,
-                    builder: (context, ChatWidgetAppState state) => Column(
+                return StoreConnector<AppState, PreviewDataAppState>(
+                    converter: (store) => store.state.previewDataAppState,
+                    builder: (context, PreviewDataAppState state) => Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(

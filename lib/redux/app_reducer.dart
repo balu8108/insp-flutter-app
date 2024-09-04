@@ -1,5 +1,7 @@
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/preview_data_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/tpstream_redux.dart';
 import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/login/login_redux.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
@@ -17,7 +19,8 @@ AppState appStateReducer(AppState state, dynamic action) {
           peersMessageStateReducer(state.peersWidgetAppState, action),
       uploadLiveclassFileAppState: uploadLiveclassFileStateReducer(
           state.uploadLiveclassFileAppState, action),
-      navbarAppState: navbarStateReducer(state.navbarAppState, action)
-      // assignmentTopicState: assignmentTopicStateReducer(state.assignmentTopicState, action),
-      );
+      navbarAppState: navbarStateReducer(state.navbarAppState, action),
+      tpStreamAppState: tpStreamStateReducer(state.tpStreamAppState, action),
+      previewDataAppState:
+          previewDataReducer(state.previewDataAppState, action));
 }
