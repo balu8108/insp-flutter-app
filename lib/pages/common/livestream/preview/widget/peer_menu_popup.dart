@@ -17,7 +17,6 @@ class KickPeerWidget extends StatefulWidget {
 
 class _KickPeerWidgetState extends State<KickPeerWidget> {
   void kickStudent() {
-    print("CALL");
     kickOutFromClass(widget.socketId, widget.peerId);
   }
 

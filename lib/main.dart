@@ -19,6 +19,7 @@ import 'package:inspflutterfrontend/widget/navbar/navbar_redux.dart';
 import 'package:inspflutterfrontend/widget/popups/uploadLiveclassFile/upload_liveclass_file_redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
+import 'package:toastification/toastification.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
@@ -75,7 +76,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
         store: widget.store,
-        child: MaterialApp(
+        child: ToastificationWrapper(
+            child: MaterialApp(
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           home: Builder(
@@ -95,7 +97,7 @@ class _MyAppState extends State<MyApp> {
               }
             },
           ),
-        ));
+        )));
   }
 
   Widget _buildSplashWidget() {

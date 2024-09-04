@@ -30,6 +30,13 @@ void initializeSocketConnections(
             .setAuth({'secret_token': token})
             .build());
 
+    // Add event listeners
+    socket?.onConnect((_) {
+      print('Connected to socket');
+    });
+    socket?.onDisconnect((_) {
+      print('Disconnected from socket');
+    });
     socket?.on(
         SOCKET_EVENTS.CONNECT, (_) => socketConnectionHandler(store, roomId));
     socket?.on(SOCKET_EVENTS.NEW_PEER_JOINED,
@@ -56,6 +63,8 @@ void initializeSocketConnections(
         (data) => kickOutResponseHandler(store, data));
     socket?.on(SOCKET_EVENTS.DISCONNECT, (err) => {});
     socket?.on(SOCKET_EVENTS.CONNECT_ERROR, (err) => {});
+    // Connect the socket
+    socket?.connect();
   }
 }
 
@@ -226,30 +235,33 @@ void kickOutResponseHandler(Store<AppState> store, dynamic res) {
 }
 
 Future<void> leaveRoomHandler(Store<AppState> store) async {
-  socket?.emitWithAck(SOCKET_EVENTS.LEAVE_ROOM, '', ack: (res) async {
-    var feedBackStatus = res['feedBackStatus'];
-    store.dispatch(UpdateAllPeers(allPeers: []));
-    store.dispatch(UpdateFilteredPeers(filteredPeers: []));
-    if (feedBackStatus['success']) {
-      LoginResponseModelResult userDatas = await getUserData();
-      navigatorKey.currentState?.push(
-        MaterialPageRoute(
-            builder: (context) => HomeScreen(userData: userDatas)),
-      );
-      if (userDatas.userType == 0) {
-        if (feedBackStatus['isFeedback']) {
-          print("Need feedback");
+  if (socket?.connected == true) {
+    socket?.emitWithAck(SOCKET_EVENTS.LEAVE_ROOM, '', ack: (res) async {
+      var feedBackStatus = res['feedBackStatus'];
+      store.dispatch(UpdateAllPeers(allPeers: []));
+      store.dispatch(UpdateFilteredPeers(filteredPeers: []));
+      if (feedBackStatus['success']) {
+        LoginResponseModelResult userDatas = await getUserData();
+        navigatorKey.currentState?.push(
+          MaterialPageRoute(
+              builder: (context) => HomeScreen(userData: userDatas)),
+        );
+        if (userDatas.userType == 0) {
+          if (feedBackStatus['isFeedback']) {
+            print("Need feedback");
+          }
         }
+      } else {
+        // Handle failure
       }
-    } else {
-      // Handle failure
-    }
-    toastification.show(
-      type: ToastificationType.info,
-      style: ToastificationStyle.fillColored,
-      autoCloseDuration: const Duration(seconds: 3),
-      title: const Text('Class Leaved'),
-      alignment: Alignment.topRight,
-    );
-  });
+      socket?.disconnect();
+      toastification.show(
+        type: ToastificationType.info,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: const Text('Class Leaved'),
+        alignment: Alignment.topRight,
+      );
+    });
+  }
 }

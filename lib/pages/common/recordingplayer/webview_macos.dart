@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class WebviewUniversal extends StatefulWidget {
-  const WebviewUniversal({super.key, required this.url});
+class WebviewMacOs extends StatefulWidget {
+  const WebviewMacOs({super.key, required this.url});
 
   final String url;
 
   @override
-  _WebviewUniversalState createState() => _WebviewUniversalState();
+  _WebviewMacOsState createState() => _WebviewMacOsState();
 }
 
-class _WebviewUniversalState extends State<WebviewUniversal> {
+class _WebviewMacOsState extends State<WebviewMacOs> {
   late final WebViewController _controller;
 
   @override
