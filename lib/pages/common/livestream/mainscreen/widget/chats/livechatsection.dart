@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/liveclassdetail.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/liveleftpart.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/liveleftpart.dart';
 
 class LiveChatSectionWidget extends StatelessWidget {
-  // final Function(BuildContext, RecordingPlayerCard) onViewDetailsClicked;
-
   LiveChatSectionWidget();
 
   @override
@@ -15,10 +13,9 @@ class LiveChatSectionWidget extends StatelessWidget {
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
-                LiveClassDetail(),
+                const LiveClassDetail(),
                 const SizedBox(height: 20),
                 LiveLeftPart(),
-                const SizedBox(height: 20),
               ],
             )));
   }

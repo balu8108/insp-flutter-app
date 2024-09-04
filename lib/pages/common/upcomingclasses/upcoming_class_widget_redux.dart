@@ -45,7 +45,6 @@ UpcomingWidgetAppState upcomingWidgetReducer(
 // Thunk action
 ThunkAction<AppState> getAllUpcomingClass(BuildContext context) {
   return (Store<AppState> store) async {
-    print("INSIDE 1");
     try {
       final remoteDataSource = RemoteDataSource();
       String userToken = await getUserToken();

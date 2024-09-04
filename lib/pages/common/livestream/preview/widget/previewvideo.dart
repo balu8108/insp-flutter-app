@@ -30,12 +30,12 @@ class PreviewVideo extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               color: Colors.black,
             ),
-          ),
-        ),
-        const Center(
-          child: Text(
-            "Live Streaming...",
-            style: TextStyle(color: Colors.white, fontSize: 20),
+            child: const Center(
+              child: Text(
+                "Live Streaming...",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ),
           ),
         ),
       ],

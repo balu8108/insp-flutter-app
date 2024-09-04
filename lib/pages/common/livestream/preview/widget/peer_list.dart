@@ -24,44 +24,59 @@ class PeerList extends StatelessWidget {
                     return Row(
                       children: [
                         Container(
+                          width: 50,
+                          height: 50,
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(8),
+                            backgroundBlendMode: BlendMode.multiply,
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor:
-                                    const Color.fromRGBO(60, 141, 188, 1),
-                                radius: 12, // Equivalent to size "sm"
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: const Color.fromRGBO(60, 141, 188, 1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Center(
                                 child: Text(
-                                  peer.name[0]
-                                      .toUpperCase(), // Display the first letter of the name
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ],
+                              peer.name[0].toUpperCase(),
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w500),
+                            )),
                           ),
                         ),
-                        SizedBox(width: 10), // Add space between containers
+                        const SizedBox(
+                            width: 8), // Add space between containers
                       ],
                     );
                   }).toList(),
                   if (peers.length > 3)
                     Container(
+                      width: 50,
+                      height: 50,
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(8),
+                        backgroundBlendMode: BlendMode.multiply,
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      child: CircleAvatar(
-                        backgroundColor: const Color.fromRGBO(60, 141, 188, 1),
-                        radius: 12, // Equivalent to size "sm"
-                        child: Text(
-                          '+${peers.length - 3}', // Display the remaining count
-                          style: const TextStyle(color: Colors.white),
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(60, 141, 188, 1),
+                          borderRadius: BorderRadius.circular(8),
                         ),
+                        child: Center(
+                            child: Text(
+                          '+${peers.length - 3}',
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500),
+                        )),
                       ),
                     ),
                 ],

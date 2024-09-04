@@ -7,6 +7,8 @@ import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_m
 import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/preview_data_redux.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/socket_events.dart';
@@ -28,6 +30,13 @@ void initializeSocketConnections(
             .setAuth({'secret_token': token})
             .build());
 
+    // Add event listeners
+    socket?.onConnect((_) {
+      print('Connected to socket');
+    });
+    socket?.onDisconnect((_) {
+      print('Disconnected from socket');
+    });
     socket?.on(
         SOCKET_EVENTS.CONNECT, (_) => socketConnectionHandler(store, roomId));
     socket?.on(SOCKET_EVENTS.NEW_PEER_JOINED,
@@ -54,6 +63,8 @@ void initializeSocketConnections(
         (data) => kickOutResponseHandler(store, data));
     socket?.on(SOCKET_EVENTS.DISCONNECT, (err) => {});
     socket?.on(SOCKET_EVENTS.CONNECT_ERROR, (err) => {});
+    // Connect the socket
+    socket?.connect();
   }
 }
 
@@ -129,10 +140,12 @@ void socketConnectionHandler(Store<AppState> store, String roomId) {
 void socketNewPeerJoinedHandler(Store<AppState> store, dynamic res) {
   final PeersDataModel newPeer = PeersDataModel.fromJson(res['peer']);
   final List<PeersDataModel> currentPeers =
-      store.state.chatWidgetAppState.allPeers;
+      store.state.peersWidgetAppState.allPeers;
 
   if (!currentPeers.any((peer) => peer.id == newPeer.id)) {
     store.dispatch(UpdateAllPeers(allPeers: [...currentPeers, newPeer]));
+    store.dispatch(
+        UpdateFilteredPeers(filteredPeers: [...currentPeers, newPeer]));
   }
 }
 
@@ -140,17 +153,19 @@ void roomUpdateResponseHandler(Store<AppState> store, dynamic res) {
   final List<PeersDataModel> updatedPeers = List<PeersDataModel>.from(
       (res['peer'] as List<dynamic>).map((e) => PeersDataModel.fromJson(e)));
   store.dispatch(UpdateAllPeers(allPeers: updatedPeers));
+  store.dispatch(UpdateFilteredPeers(filteredPeers: updatedPeers));
 }
 
 void peerLeavedResponseHandler(Store<AppState> store, dynamic res) {
   final PeersDataModel peerLeaved = PeersDataModel.fromJson(res['peerLeaved']);
 
   final List<PeersDataModel> updatedPeers = store
-      .state.chatWidgetAppState.allPeers
+      .state.peersWidgetAppState.allPeers
       .where((peer) => peer.id != peerLeaved.id)
       .toList();
 
   store.dispatch(UpdateAllPeers(allPeers: updatedPeers));
+  store.dispatch(UpdateFilteredPeers(filteredPeers: updatedPeers));
 }
 
 Future<void> joinRoomHandler(Store<AppState> store, String roomId,
@@ -220,29 +235,33 @@ void kickOutResponseHandler(Store<AppState> store, dynamic res) {
 }
 
 Future<void> leaveRoomHandler(Store<AppState> store) async {
-  socket?.emitWithAck(SOCKET_EVENTS.LEAVE_ROOM, '', ack: (res) async {
-    var feedBackStatus = res['feedBackStatus'];
-    store.dispatch(UpdateAllPeers(allPeers: []));
-    if (feedBackStatus['success']) {
-      LoginResponseModelResult userDatas = await getUserData();
-      navigatorKey.currentState?.push(
-        MaterialPageRoute(
-            builder: (context) => HomeScreen(userData: userDatas)),
-      );
-      if (userDatas.userType == 0) {
-        if (feedBackStatus['isFeedback']) {
-          print("Need feedback");
+  if (socket?.connected == true) {
+    socket?.emitWithAck(SOCKET_EVENTS.LEAVE_ROOM, '', ack: (res) async {
+      var feedBackStatus = res['feedBackStatus'];
+      store.dispatch(UpdateAllPeers(allPeers: []));
+      store.dispatch(UpdateFilteredPeers(filteredPeers: []));
+      if (feedBackStatus['success']) {
+        LoginResponseModelResult userDatas = await getUserData();
+        navigatorKey.currentState?.push(
+          MaterialPageRoute(
+              builder: (context) => HomeScreen(userData: userDatas)),
+        );
+        if (userDatas.userType == 0) {
+          if (feedBackStatus['isFeedback']) {
+            print("Need feedback");
+          }
         }
+      } else {
+        // Handle failure
       }
-    } else {
-      // Handle failure
-    }
-    toastification.show(
-      type: ToastificationType.info,
-      style: ToastificationStyle.fillColored,
-      autoCloseDuration: const Duration(seconds: 3),
-      title: Text('Class Leaved'),
-      alignment: Alignment.topRight,
-    );
-  });
+      socket?.disconnect();
+      toastification.show(
+        type: ToastificationType.info,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: const Text('Class Leaved'),
+        alignment: Alignment.topRight,
+      );
+    });
+  }
 }

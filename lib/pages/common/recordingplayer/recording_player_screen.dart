@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamview.dart';
 import 'package:inspflutterfrontend/widget/card/model/recording_player_card_model.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_detail_widget.dart';
 import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_player_redux.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/tpstream_video_player.dart';
 
 import '../../../base/base.dart';
 
@@ -32,7 +32,7 @@ class RecordingPlayerScreen extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(flex: 7, child: TPStreamVideoPlayerWidget()),
+                      // Expanded(flex: 7, child: TPStreamLiveVideoPlayerWidget()),
                       const SizedBox(width: 16),
                       Expanded(
                           flex: 3,

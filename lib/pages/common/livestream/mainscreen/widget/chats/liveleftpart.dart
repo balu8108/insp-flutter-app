@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/liveChat.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/liveleaderboard.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/livepollresult.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/livequestion.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/liveChat.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/liveleaderboard.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/livepollresult.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/livequestion.dart';
 
 class LiveLeftPart extends StatefulWidget {
   @override
@@ -15,8 +15,8 @@ class _LiveLeftPartState extends State<LiveLeftPart> {
   final List<Widget> _leaderboards = [
     LiveLeaderboard(),
     LivePollResult(),
-    LiveQuestion(),
-    LiveChat(),
+    const LiveQuestion(),
+    const LiveChat(),
   ];
 
   void _onIconButtonPressed(int index) {

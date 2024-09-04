@@ -128,7 +128,7 @@ class _PollTimerState extends State<LiveQuestionAnswer> {
       setState(() {
         timer = widget.polldata.time + 5;
       });
-      startTimer();
+      // startTimer();
     });
   }
 
@@ -149,6 +149,11 @@ class _PollTimerState extends State<LiveQuestionAnswer> {
         height: 300,
         padding: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
+          border: Border.all(
+            color: const Color.fromARGB(
+                255, 205, 228, 247), // Set the border color
+            width: 2.0, // Set the border width
+          ),
           borderRadius: BorderRadius.circular(16),
           color: const Color.fromRGBO(232, 242, 249, 1),
         ),

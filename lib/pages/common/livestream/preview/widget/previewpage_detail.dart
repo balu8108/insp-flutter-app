@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/preview/widget/peer_list.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/preview/widget/joined_peer_detail.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/preview_data_redux.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/utils/capitalize.dart';
 import 'package:inspflutterfrontend/utils/format_time.dart';
@@ -24,6 +26,13 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
       store.dispatch(navigateToRoom(context, roomId, {}));
     }
 
+    void copyTextToClipboard(String textToCopy) {
+      Clipboard.setData(ClipboardData(text: textToCopy));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Text copied to clipboard!')),
+      );
+    }
+
     return Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
@@ -39,9 +48,9 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                 return const Center(child: Text('Error loading data'));
               } else {
                 bool isTeacher = snapshot.data ?? false;
-                return StoreConnector<AppState, ChatWidgetAppState>(
-                    converter: (store) => store.state.chatWidgetAppState,
-                    builder: (context, ChatWidgetAppState state) => Column(
+                return StoreConnector<AppState, PreviewDataAppState>(
+                    converter: (store) => store.state.previewDataAppState,
+                    builder: (context, PreviewDataAppState state) => Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
@@ -90,6 +99,93 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                                   height: 1.75,
                                 ),
                               ),
+                              const SizedBox(height: 40),
+                              if (isTeacher)
+                                Row(
+                                  children: [
+                                    const Icon(Icons.link, size: 20),
+                                    const SizedBox(width: 5),
+                                    MouseRegion(
+                                        cursor: SystemMouseCursors
+                                            .click, // Change cursor to pointer
+                                        child: GestureDetector(
+                                            onTap: () => copyTextToClipboard(
+                                                state
+                                                        .previewData
+                                                        .liveClassRoomRecordings
+                                                        .isNotEmpty
+                                                    ? state
+                                                        .previewData
+                                                        .liveClassRoomRecordings[
+                                                            0]
+                                                        .rtmpUrl
+                                                    : ''),
+                                            child: Text(
+                                              state
+                                                      .previewData
+                                                      .liveClassRoomRecordings
+                                                      .isNotEmpty
+                                                  ? state
+                                                      .previewData
+                                                      .liveClassRoomRecordings[
+                                                          0]
+                                                      .rtmpUrl
+                                                  : '',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14,
+                                                color: Color.fromRGBO(
+                                                    44, 51, 41, 0.47),
+                                                height: 1.25,
+                                              ),
+                                            )))
+                                  ],
+                                ),
+                              if (isTeacher) const SizedBox(height: 5),
+                              if (isTeacher)
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.key,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    MouseRegion(
+                                        cursor: SystemMouseCursors
+                                            .click, // Change cursor to pointer
+                                        child: GestureDetector(
+                                            onTap: () => copyTextToClipboard(
+                                                state
+                                                        .previewData
+                                                        .liveClassRoomRecordings
+                                                        .isNotEmpty
+                                                    ? state
+                                                        .previewData
+                                                        .liveClassRoomRecordings[
+                                                            0]
+                                                        .streamKey
+                                                    : ''),
+                                            child: Text(
+                                              state
+                                                      .previewData
+                                                      .liveClassRoomRecordings
+                                                      .isNotEmpty
+                                                  ? state
+                                                      .previewData
+                                                      .liveClassRoomRecordings[
+                                                          0]
+                                                      .streamKey
+                                                  : '',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14,
+                                                color: Color.fromRGBO(
+                                                    44, 51, 41, 0.47),
+                                                height: 1.25,
+                                              ),
+                                            )))
+                                  ],
+                                ),
                               const SizedBox(height: 40),
                               const Text(
                                 'Description',
@@ -171,55 +267,7 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                                     ),
                               Column(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 24.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        // Mentors Joined Section
-                                        const Text(
-                                          'Mentors Joined',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        PeerList(
-                                          peers: state.allPeers.isNotEmpty
-                                              ? state.allPeers
-                                                  .where(
-                                                      (peer) => peer.isTeacher)
-                                                  .toList()
-                                              : [],
-                                          type: "Mentor",
-                                          message: 'No mentors joined...',
-                                        ),
-                                        const SizedBox(height: 16),
-
-                                        // Students Joined Section
-                                        const Text(
-                                          'Student joined',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        PeerList(
-                                          peers: state.allPeers.isNotEmpty
-                                              ? state.allPeers
-                                                  .where(
-                                                      (peer) => !peer.isTeacher)
-                                                  .toList()
-                                              : [],
-                                          type: "Mentor",
-                                          message: 'No students joined...',
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  const JoinedPeerWidget(),
                                   const SizedBox(height: 24),
                                   SizedBox(
                                     width: double.infinity,
