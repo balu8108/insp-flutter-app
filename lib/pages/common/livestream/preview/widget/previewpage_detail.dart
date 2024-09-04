@@ -102,7 +102,7 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                               if (isTeacher)
                                 Row(
                                   children: [
-                                    const Icon(Icons.link),
+                                    const Icon(Icons.link, size: 20),
                                     const SizedBox(width: 5),
                                     MouseRegion(
                                         cursor: SystemMouseCursors
@@ -132,7 +132,7 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                                                   : '',
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w400,
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 color: Color.fromRGBO(
                                                     44, 51, 41, 0.47),
                                                 height: 1.25,
@@ -144,7 +144,10 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                               if (isTeacher)
                                 Row(
                                   children: [
-                                    const Icon(Icons.key),
+                                    const Icon(
+                                      Icons.key,
+                                      size: 20,
+                                    ),
                                     const SizedBox(width: 5),
                                     MouseRegion(
                                         cursor: SystemMouseCursors
@@ -174,7 +177,7 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                                                   : '',
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w400,
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 color: Color.fromRGBO(
                                                     44, 51, 41, 0.47),
                                                 height: 1.25,

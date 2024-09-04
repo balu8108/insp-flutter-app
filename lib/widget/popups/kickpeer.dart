@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class KickPeerPopup extends StatelessWidget {
-  const KickPeerPopup({super.key});
+  const KickPeerPopup({super.key, required this.callKickApi});
+
+  final void Function() callKickApi;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class KickPeerPopup extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.close),
             onPressed: () {
+              callKickApi();
               Navigator.of(context).pop(); // Close the dialog
             },
           ),

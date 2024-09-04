@@ -3,8 +3,6 @@ import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/li
 import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/liveleftpart.dart';
 
 class LiveChatSectionWidget extends StatelessWidget {
-  // final Function(BuildContext, RecordingPlayerCard) onViewDetailsClicked;
-
   LiveChatSectionWidget();
 
   @override

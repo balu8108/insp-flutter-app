@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
+import 'package:inspflutterfrontend/socket/mainsocket.dart';
 import 'package:inspflutterfrontend/widget/popups/kickpeer.dart';
 
 class KickPeerWidget extends StatefulWidget {
-  const KickPeerWidget({super.key, required this.peerId});
+  const KickPeerWidget(
+      {super.key, required this.peerId, required this.socketId});
 
-  final String peerId;
+  final String peerId, socketId;
 
   @override
   _KickPeerWidgetState createState() => _KickPeerWidgetState();
 }
 
 class _KickPeerWidgetState extends State<KickPeerWidget> {
-  static void dispatch(BuildContext context, PeersWidgetAppState action) {
-    StoreProvider.of<AppState>(context).dispatch(action);
+  void kickStudent() {
+    kickOutFromClass(widget.socketId, widget.peerId);
   }
 
   @override
@@ -33,7 +35,7 @@ class _KickPeerWidgetState extends State<KickPeerWidget> {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return KickPeerPopup();
+                      return KickPeerPopup(callKickApi: kickStudent);
                     },
                   );
                 },

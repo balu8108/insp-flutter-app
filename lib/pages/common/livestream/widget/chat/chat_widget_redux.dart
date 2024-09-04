@@ -302,12 +302,10 @@ ThunkAction<AppState> joinRoomResponseData(BuildContext context, dynamic res) {
 
       List<PeersDataModel> allPeers = store.state.peersWidgetAppState.allPeers;
 
-      // List<PeersDataModel> updatedLiveClassRoomPeer = [
-      //   ...allPeers,
-      //   peerdetail // Add all new files to the list
-      // ];
-      List<PeersDataModel> updatedLiveClassRoomPeer =
-          List.generate(150, (index) => PeersDataModel(name: "Arto $index"));
+      List<PeersDataModel> updatedLiveClassRoomPeer = [
+        ...allPeers,
+        peerdetail // Add all new files to the list
+      ];
       store.dispatch(UpdateAllPeers(allPeers: updatedLiveClassRoomPeer));
       store.dispatch(
           UpdateFilteredPeers(filteredPeers: updatedLiveClassRoomPeer));
@@ -379,7 +377,6 @@ ThunkAction<AppState> getVideoUrlApi(BuildContext context) {
 
           VideoResponseModel videoResponseData =
               VideoResponseModel.fromJson(previewData.response.data);
-          print(videoResponseData);
           // Dispatch the action to update chat messages in the store
           store.dispatch(UpdateVideoResponse(videoResponse: videoResponseData));
         } else {

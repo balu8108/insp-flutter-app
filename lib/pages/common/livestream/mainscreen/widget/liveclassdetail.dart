@@ -86,8 +86,9 @@ class _LiveClassDetailState extends State<LiveClassDetail> {
                                         height: 1.25,
                                       ),
                                     ),
-                                    UploadFilePopup(
-                                        roomId: state.previewData.roomId)
+                                    if (isTeacher)
+                                      UploadFilePopup(
+                                          roomId: state.previewData.roomId)
                                   ]),
                               const SizedBox(height: 10),
                               FileBoxComponent(
