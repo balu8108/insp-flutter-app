@@ -174,6 +174,7 @@ class _SoloclassroomDescriptionWidgetsState
                       LectureRecordingCardWidget(
                           liveClassRoomRecordings: widget.soloclasstopicdetail
                               .transformedData.soloClassRoomRecordings,
+                          classId: "",
                           topicName:
                               widget.soloclasstopicdetail.transformedData.topic,
                           mentorName: "Nitin Sachan",

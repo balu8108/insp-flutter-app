@@ -23,6 +23,7 @@ import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_
 import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_topics_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/latest_completed_class_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/rating_feedback_rating_detail_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/recording/view_recording_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
@@ -188,6 +189,12 @@ abstract class NetworkService {
   Future<HttpResponse<GenericOpenFileResponseModel>> getDocumentUrl(
       @Query('docId') String docId,
       @Query('docType') String docType,
+      @Header('Authorization') String secretTokenHeader);
+
+  @GET('/recording/view-recording')
+  Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
+      @Query('type') String type,
+      @Query('id') String id,
       @Header('Authorization') String secretTokenHeader);
 
   @POST('/student-feedback/create-student-feedback')

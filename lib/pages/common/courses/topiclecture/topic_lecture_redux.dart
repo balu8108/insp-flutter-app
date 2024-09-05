@@ -6,7 +6,6 @@ import 'package:inspflutterfrontend/utils/class_constants.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/card/model/lecture_card_model.dart';
-import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:intl/intl.dart';
 import 'package:redux_thunk/redux_thunk.dart';

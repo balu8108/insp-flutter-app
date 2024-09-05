@@ -20,6 +20,7 @@ import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_
 import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/latest_completed_class_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/rating_feedback_rating_detail_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/recording/view_recording_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
@@ -122,6 +123,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<GenericOpenFileResponseModel>> getDocumentUrl(
       String docId, String docType, String secretTokenHeader);
+
+  Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
+      String type, String id, String secretTokenHeader);
 
   Future<HttpResponse<CreateStudentFeedbackResponseModel>>
       createStudentFeedback(CreateStudentFeedbackRequestModel feedbackrequest,
@@ -322,6 +326,12 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       String docId, String docType, String secretTokenHeader) {
     return deviceNetworkService.getDocumentUrl(
         docId, docType, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
+      String type, String id, String secretTokenHeader) {
+    return deviceNetworkService.getRecordingData(type, id, secretTokenHeader);
   }
 
   @override

@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../upcomingclasses/lecture_detail_by_roomid_response_model.dart';
+
 part 'all_lectures_for_course_response_model.g.dart';
 
 @JsonSerializable()
@@ -72,33 +74,6 @@ class AllLecturesForCourseResponseModelData {
   @override
   Map<String, dynamic> toJson() =>
       _$AllLecturesForCourseResponseModelDataToJson(this);
-}
-
-@JsonSerializable()
-class LiveClassRoomDetail {
-  const LiveClassRoomDetail(
-      [this.id = 0,
-      this.chapterId = '',
-      this.chapterName = '',
-      this.topicId = '',
-      this.topicName = '',
-      this.agenda = '',
-      this.description = '',
-      this.classRoomId = 0,
-      this.lectureNo = 0,
-      this.createdAt = '',
-      this.updatedAt = '']);
-
-  final int id;
-  final String chapterId, chapterName, topicId, topicName, agenda, description;
-  final int classRoomId, lectureNo;
-  final String createdAt, updatedAt;
-
-  factory LiveClassRoomDetail.fromJson(Map<String, Object?> json) =>
-      _$LiveClassRoomDetailFromJson(json);
-
-  @override
-  Map<String, dynamic> toJson() => _$LiveClassRoomDetailToJson(this);
 }
 
 @JsonSerializable()

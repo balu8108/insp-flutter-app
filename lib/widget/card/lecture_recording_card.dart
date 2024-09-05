@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/widget/card/model/recording_player_card_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_player_screen.dart';
 
 Widget LectureRecordingCardWidget(
     {required List<LiveClassRoomRecordings> liveClassRoomRecordings,
+    required String classId,
     required String topicName,
     required mentorName,
     required description,
     required files,
     required agenda}) {
   final ScrollController scrollController = ScrollController();
+
+  print(classId);
   return Container(
       height: 100,
       margin: const EdgeInsets.only(right: 16),
@@ -24,20 +26,12 @@ Widget LectureRecordingCardWidget(
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                       onTap: () {
-                        RecordingPlayerCard recordingPlayerDetail =
-                            RecordingPlayerCard(
-                                topicName,
-                                mentorName,
-                                description,
-                                files,
-                                liveClassRoomRecordings,
-                                agenda);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
                                     RecordingPlayerScreen.getScreen(
-                                        recordingPlayerDetail)));
+                                        "live", classId)));
                       },
                       child: MouseRegion(
                           cursor: SystemMouseCursors.click,

@@ -1,28 +1,27 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 
-part 'all_lectures_for_topic_response_model.g.dart';
+part 'view_recording_response_model.g.dart';
 
 @JsonSerializable()
-class AllLecturesForTopicResponseModel {
-  const AllLecturesForTopicResponseModel(
-      [this.message = '', this.data = const []]);
+class ViewRecordingResponseModel {
+  const ViewRecordingResponseModel(
+      {this.status = false, this.data = const RecordVideoResponseModelData()});
 
-  final String message;
-  final List<AllLecturesForTopicResponseModelData> data;
+  final bool status;
+  final RecordVideoResponseModelData data;
 
-  factory AllLecturesForTopicResponseModel.fromJson(
-          Map<String, Object?> json) =>
-      _$AllLecturesForTopicResponseModelFromJson(json);
+  factory ViewRecordingResponseModel.fromJson(Map<String, Object?> json) =>
+      _$ViewRecordingResponseModelFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() =>
-      _$AllLecturesForTopicResponseModelToJson(this);
+  Map<String, dynamic> toJson() => _$ViewRecordingResponseModelToJson(this);
 }
 
 @JsonSerializable()
-class AllLecturesForTopicResponseModelData {
-  const AllLecturesForTopicResponseModelData(
+class RecordVideoResponseModelData {
+  const RecordVideoResponseModelData(
       [this.id = 0,
       this.roomId = '',
       this.scheduledDate = '',
@@ -41,7 +40,9 @@ class AllLecturesForTopicResponseModelData {
       this.classLevel = '',
       this.createdAt = '',
       this.updatedAt = '',
-      this.liveClassRoomDetail = const LiveClassRoomDetail()]);
+      this.liveClassRoomDetail = const LiveClassRoomDetail(),
+      this.liveClassRoomFiles = const [],
+      this.liveClassRoomRecordings = const []]);
 
   final int id;
   final String roomId,
@@ -60,14 +61,16 @@ class AllLecturesForTopicResponseModelData {
       classLevel,
       createdAt,
       updatedAt;
+  @JsonKey(name: 'LiveClassRoomFiles')
+  final List<LiveClassRoomFile> liveClassRoomFiles;
   @JsonKey(name: 'LiveClassRoomDetail')
   final LiveClassRoomDetail liveClassRoomDetail;
+  @JsonKey(name: 'LiveClassRoomRecordings')
+  final List<LiveClassRoomRecordings> liveClassRoomRecordings;
 
-  factory AllLecturesForTopicResponseModelData.fromJson(
-          Map<String, Object?> json) =>
-      _$AllLecturesForTopicResponseModelDataFromJson(json);
+  factory RecordVideoResponseModelData.fromJson(Map<String, Object?> json) =>
+      _$RecordVideoResponseModelDataFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() =>
-      _$AllLecturesForTopicResponseModelDataToJson(this);
+  Map<String, dynamic> toJson() => _$RecordVideoResponseModelDataToJson(this);
 }

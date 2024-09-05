@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/preview/liveclass_preview.dart';
+import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_player_screen.dart';
 import 'package:inspflutterfrontend/utils/file_box_component.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/upcoming_lecture_card_model.dart';
@@ -48,6 +50,15 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
   @override
   Widget build(BuildContext context) {
     upcomingData = _getUpcomingData(widget.type);
+
+    const Map<String, String> classStatus = {
+      'SCHEDULED': 'SCHEDULED',
+      'ONGOING': 'ONGOING',
+      'NOT_STARTED': 'NOT_STARTED',
+      'FINISHED': 'FINISHED',
+      'NOT_CONDUCTED': 'NOT_CONDUCTED',
+    };
+
     return SizedBox(
         child: upcomingData.isNotEmpty
             ? GridView.builder(
@@ -64,6 +75,24 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                       ? "General"
                       : capitalizeFirstLetter(
                           data.liveClassRoomDetail.topicName);
+
+                  void navigateToPreviewScreen() {
+                    if (data.classStatus == classStatus['FINISHED']) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  RecordingPlayerScreen.getScreen(
+                                      "live", data.id.toString())));
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                LiveClassPreviewScreen(roomId: data.roomId)),
+                      );
+                    }
+                  }
 
                   return FutureBuilder<bool>(
                       future: isTeacherLogin(),
@@ -122,9 +151,10 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                                             widget.type == "Completed" ||
                                             isTeacher)
                                           JoinClassBtn(
-                                              roomId: data.roomId,
                                               status: data.classStatus,
-                                              isTeacher: isTeacher),
+                                              isTeacher: isTeacher,
+                                              onPressedViewDetails:
+                                                  navigateToPreviewScreen),
                                       ],
                                     ),
                                   ),

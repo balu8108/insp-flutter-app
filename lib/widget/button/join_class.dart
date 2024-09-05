@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/preview/liveclass_preview.dart';
+import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_player_screen.dart';
+import 'package:inspflutterfrontend/widget/card/model/recording_player_card_model.dart';
 
 class JoinClassBtn extends StatelessWidget {
   final String status;
   final bool isTeacher;
-  final String roomId;
+  final Function() onPressedViewDetails;
 
   JoinClassBtn(
-      {required this.status, required this.isTeacher, required this.roomId});
+      {required this.status,
+      required this.isTeacher,
+      required this.onPressedViewDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -60,16 +64,7 @@ class JoinClassBtn extends StatelessWidget {
     return SizedBox(
         width: double.infinity, // Set width to 100% of the parent container
         child: ElevatedButton(
-          onPressed: btnDisabled
-              ? null
-              : () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            LiveClassPreviewScreen(roomId: roomId)),
-                  );
-                },
+          onPressed: btnDisabled ? null : onPressedViewDetails,
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(backColor),
             foregroundColor: MaterialStateProperty.all(textColor),
