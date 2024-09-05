@@ -10,9 +10,7 @@ CreateStudentFeedbackResponseModel _$CreateStudentFeedbackResponseModelFromJson(
         Map<String, dynamic> json) =>
     CreateStudentFeedbackResponseModel(
       message: json['message'] as String,
-      data: (json['data'] as List<dynamic>)
-          .map((e) => FeedbackModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      data: FeedbackModel.fromJson(json['data'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CreateStudentFeedbackResponseModelToJson(

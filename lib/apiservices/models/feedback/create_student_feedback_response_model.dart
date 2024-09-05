@@ -10,7 +10,7 @@ class CreateStudentFeedbackResponseModel {
 
   final String message;
   @JsonKey(name: 'data')
-  final List<FeedbackModel> data;
+  final FeedbackModel data;
 
   factory CreateStudentFeedbackResponseModel.fromJson(
           Map<String, Object?> json) =>

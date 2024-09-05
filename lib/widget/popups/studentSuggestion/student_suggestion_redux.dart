@@ -45,38 +45,50 @@ ThunkAction<StudentSuggestionAppState> studentSuggestionapi(
     BuildContext context) {
   return (Store<StudentSuggestionAppState> store) async {
     try {
-      LoginResponseModelResult userData = await getUserData();
-      CreateStudentFeedbackRequestModel suggestionRequest =
-          CreateStudentFeedbackRequestModel(
-              feedback: store.state.feedback ?? '',
-              studentEmail: userData.email,
-              studentName: userData.name);
-      final remoteDataSource = RemoteDataSource();
-      final deleteTopicData = await remoteDataSource.createStudentFeedback(
-          suggestionRequest, 'Token ${userData.token}');
+      if (store.state.feedback != '') {
+        LoginResponseModelResult userData = await getUserData();
+        CreateStudentFeedbackRequestModel suggestionRequest =
+            CreateStudentFeedbackRequestModel(
+                feedback: store.state.feedback ?? '',
+                studentEmail: userData.email,
+                studentName: userData.name);
+        final remoteDataSource = RemoteDataSource();
+        final deleteTopicData = await remoteDataSource.createStudentFeedback(
+            suggestionRequest, 'Token ${userData.token}');
 
-      if (deleteTopicData.response.statusCode == 200) {
-        Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.success,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Suggestion submitted Succesfully'),
-          alignment: Alignment.topRight,
-        );
+        if (deleteTopicData.response.statusCode == 200) {
+          Navigator.of(context).pop();
+          toastification.show(
+            context: context, // optional if you use ToastificationWrapper
+            type: ToastificationType.success,
+            style: ToastificationStyle.fillColored,
+            autoCloseDuration: const Duration(seconds: 3),
+            title: const Text('Suggestion submitted Succesfully'),
+            alignment: Alignment.topRight,
+          );
+        } else {
+          Navigator.of(context).pop();
+          toastification.show(
+            context: context, // optional if you use ToastificationWrapper
+            type: ToastificationType.warning,
+            style: ToastificationStyle.fillColored,
+            autoCloseDuration: const Duration(seconds: 3),
+            title: const Text('Some issue, please try again'),
+            alignment: Alignment.topRight,
+          );
+        }
       } else {
-        Navigator.of(context).pop();
         toastification.show(
           context: context, // optional if you use ToastificationWrapper
           type: ToastificationType.warning,
           style: ToastificationStyle.fillColored,
           autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Some issue, please try again'),
+          title: const Text('Please insert suggestion'),
           alignment: Alignment.topRight,
         );
       }
     } catch (error) {
+      print(error);
       Navigator.of(context).pop();
       toastification.show(
         context: context, // optional if you use ToastificationWrapper
