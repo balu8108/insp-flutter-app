@@ -3,6 +3,7 @@ import 'package:inspflutterfrontend/apiservices/models/assignment/all_assignment
 import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/calendar/all_calendar_scheduled_data_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/calendar/timetable_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_request_model.dart';
@@ -100,6 +101,10 @@ abstract class NetworkService {
   Future<HttpResponse<LatestCompletedClassesResponseModel>>
       getLatestCompletedClasses(
           @Header('Authorization') String secretTokenHeader);
+
+  @GET('/generic/get-all-timetable')
+  Future<HttpResponse<TimeTableResponseDataModel>> getAllTimeTable(
+      @Header('Authorization') String secretTokenHeader);
 
   @GET('/generic/topic-feedback-rating-details/{topicId}')
   Future<HttpResponse<RatingFeedbackRatingDetailResponseModel>>

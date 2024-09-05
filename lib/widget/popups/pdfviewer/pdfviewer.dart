@@ -107,7 +107,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
                 : PdfViewPinch(
                     controller: _pdfController!,
                   )
-            : Center(
+            : const Center(
                 child:
                     CircularProgressIndicator()), // Show a loader until the PDF is loaded
       ),

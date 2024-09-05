@@ -1,8 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
+import 'package:inspflutterfrontend/apiservices/models/calendar/timetable_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/popups/pdfviewer/pdfviewer_redux.dart';
 import 'package:internet_file/internet_file.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:universal_platform/universal_platform.dart';
@@ -16,15 +15,9 @@ class ViewTimetable extends StatefulWidget {
 
 class _ViewTimetableState extends State<ViewTimetable> {
   bool _isLoading = true;
-  PdfController? _pdfControllerWindow;
-  PdfControllerPinch? _pdfController;
-  PDFViewerAppState pdfViewerAppState = const PDFViewerAppState();
-
-  void updateState(PDFViewerAppState pDFViewerAppState) {
-    setState(() {
-      this.pdfViewerAppState = pDFViewerAppState;
-    });
-  }
+  final List<PdfController?> _pdfControllers = [];
+  final List<PdfControllerPinch?> _pdfControllersPinch = [];
+  List<String> pdfUrls = [];
 
   @override
   void initState() {
@@ -33,32 +26,30 @@ class _ViewTimetableState extends State<ViewTimetable> {
   }
 
   Future<void> _fetchTimetableData() async {
-    final dio = Dio();
     try {
       String userToken = await getUserToken();
-      Response response = await dio.get(
-        '${api}/generic/get-all-timetable',
-        options: Options(
-          headers: {
-            'Authorization': userToken,
-          },
-        ),
-      );
+      final remoteDataSource = RemoteDataSource();
+      final timetabledata = await remoteDataSource.getAllTimeTable(userToken);
 
-      if (response.statusCode == 200) {
-        var document = response.data[0];
-        final pdfBytes = await InternetFile.get(document["url"]);
-        if (UniversalPlatform.isWindows) {
-          _pdfControllerWindow = PdfController(
-            document: PdfDocument.openData(pdfBytes),
-          );
-        } else {
-          _pdfController = PdfControllerPinch(
-            document: PdfDocument.openData(pdfBytes),
-          );
+      if (timetabledata.response.statusCode == 200) {
+        TimeTableResponseDataModel document = timetabledata.data;
+        pdfUrls =
+            document.data.map((doc) => doc.url).toList(); // Collect all URLs
+
+        // Fetch PDF bytes and create controllers for each PDF
+        for (var url in pdfUrls) {
+          final pdfBytes = await InternetFile.get(url);
+          if (UniversalPlatform.isWindows) {
+            _pdfControllers.add(
+              PdfController(document: PdfDocument.openData(pdfBytes)),
+            );
+          } else {
+            _pdfControllersPinch.add(
+              PdfControllerPinch(document: PdfDocument.openData(pdfBytes)),
+            );
+          }
         }
 
-        updateState(pdfViewerAppState.copyWith(fileUrl: document["url"]));
         setState(() {
           _isLoading = false;
         });
@@ -73,33 +64,68 @@ class _ViewTimetableState extends State<ViewTimetable> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('INSP Time Table'),
-      content: SizedBox(
-        width: 600,
-        height: 400,
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(6.0),
+      ),
+      contentPadding: const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
+      title: Row(
+        children: [
+          const Text("INSP Time Table",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+              )),
+          const Spacer(),
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+            },
+          ),
+        ],
+      ),
+      content: Container(
+        width: 600, // Set desired width
+        height: 800, // Set desired height
         child: _isLoading
             ? const Center(child: CircularProgressIndicator())
-            : SingleChildScrollView(
-                child: _pdfController != null || _pdfControllerWindow != null
-                    ? UniversalPlatform.isWindows
-                        ? PdfView(controller: _pdfControllerWindow!)
-                        : PdfViewPinch(
-                            controller: _pdfController!,
+            : ListView.builder(
+                itemCount: pdfUrls.length,
+                itemBuilder: (context, index) {
+                  if (UniversalPlatform.isWindows) {
+                    return _pdfControllers[index] != null
+                        ? Container(
+                            height: 800, // Set PDF view height
+                            margin: const EdgeInsets.only(bottom: 20),
+                            child: PdfView(controller: _pdfControllers[index]!),
                           )
-                    : Center(child: CircularProgressIndicator()),
+                        : const Center(child: CircularProgressIndicator());
+                  } else {
+                    return _pdfControllersPinch[index] != null
+                        ? Container(
+                            height: 800, // Set PDF view height
+                            margin: const EdgeInsets.only(bottom: 20),
+                            child: PdfViewPinch(
+                              controller: _pdfControllersPinch[index]!,
+                            ),
+                          )
+                        : const Center(child: CircularProgressIndicator());
+                  }
+                },
               ),
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: const Text('Close'),
-        ),
-      ],
     );
+  }
+
+  @override
+  void dispose() {
+    for (var controller in _pdfControllers) {
+      controller?.dispose();
+    }
+    for (var controller in _pdfControllersPinch) {
+      controller?.dispose();
+    }
+    super.dispose();
   }
 }

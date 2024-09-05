@@ -73,7 +73,11 @@ class LiveclassCalendar extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              TimetableUpload();
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return const ViewTimetable();
+                                  });
                             },
                             child: const Text(
                               'View Time Table',

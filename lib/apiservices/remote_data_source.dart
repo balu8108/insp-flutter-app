@@ -3,6 +3,7 @@ import 'package:inspflutterfrontend/apiservices/models/assignment/all_assignment
 import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/calendar/all_calendar_scheduled_data_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/calendar/timetable_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_request_model.dart';
@@ -131,6 +132,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<VideoResponseModel>> getVideoPlayUrl(String videoId,
       VideoRequestModel videoRequestModel, String secretTokenHeader);
+
+  Future<HttpResponse<TimeTableResponseDataModel>> getAllTimeTable(
+      String secretTokenHeader);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -339,5 +343,11 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       VideoRequestModel videoRequestModel, String secretTokenHeader) {
     return deviceNetworkService.getVideoPlayUrl(
         videoId, videoRequestModel, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<TimeTableResponseDataModel>> getAllTimeTable(
+      String secretTokenHeader) {
+    return deviceNetworkService.getAllTimeTable(secretTokenHeader);
   }
 }
