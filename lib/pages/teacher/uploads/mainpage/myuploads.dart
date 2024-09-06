@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:inspflutterfrontend/pages/common/alltopicswidget/all_topics_widget.dart';
 import 'package:inspflutterfrontend/pages/student/assignment/assignmenttopic/assignment_topic_screen.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
@@ -10,6 +13,8 @@ class MyUploads extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop =
+        kIsWeb || Platform.isWindows || Platform.isLinux || Platform.isMacOS;
     void onPressedMyCourse(BuildContext context, INSPCardModel selectedTopic) {
       Navigator.push(
         context,
@@ -41,10 +46,12 @@ class MyUploads extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 17),
-                  Expanded(
-                    flex: 3,
-                    child: const UpcomingClassesScreen(),
-                  ),
+                  if (isDesktop) ...[
+                    Expanded(
+                      flex: 3,
+                      child: const UpcomingClassesScreen(),
+                    ),
+                  ]
                 ],
               ))),
     );

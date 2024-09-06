@@ -4,6 +4,7 @@ import 'dart:io' show Platform;
 import 'package:inspflutterfrontend/pages/common/calender/widget/liveclass_calendar.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
+import 'package:inspflutterfrontend/widget/navigationbar/navigator_mobile_bar.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -19,18 +20,21 @@ class _CalendarScreenState extends State<CalendarScreen> {
         kIsWeb || Platform.isWindows || Platform.isLinux || Platform.isMacOS;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: Navbar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            const Expanded(
-              flex: 3,
-              child: UpcomingClassesScreen(),
-            ),
-            const SizedBox(width: 17), // Adds spacing between the components
+            if (isDesktop) ...[
+              const Expanded(
+                flex: 3,
+                child: UpcomingClassesScreen(),
+              ),
+              const SizedBox(width: 17),
+            ],
             Expanded(
-              flex: 9,
+              flex: isDesktop ? 9 : 12, // Adjust flex for mobile
               child: LiveclassCalendar.getScreen(),
             ),
           ],
