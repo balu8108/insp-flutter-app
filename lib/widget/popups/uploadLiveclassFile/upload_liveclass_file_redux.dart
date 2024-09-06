@@ -1,5 +1,6 @@
 // This file is "main.dart"
-import 'package:dio/dio.dart';
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -77,13 +78,22 @@ ThunkAction<AppState> uploadFilesToServer(
         'roomId': roomId,
         'files': [],
       };
-
       // Loop through picked files and create the necessary objects
       for (PlatformFile file in pickedFiles) {
+        Uint8List? fileBytes;
+
+        // Check if the file is web-based or not
+        if (kIsWeb) {
+          fileBytes = file.bytes; // Web uses bytes directly
+        } else {
+          // For non-web platforms, load the file bytes from the file path if bytes are null
+          fileBytes = file.bytes ?? await File(file.path!).readAsBytes();
+        }
+
         Map<String, dynamic> fileData = {
           'name': file.name,
           'mimetype': lookupMimeType(file.name),
-          'data': file.bytes, // Using the bytes from PlatformFile
+          'data': fileBytes, // Using the bytes from PlatformFile or file path
         };
         fileObj['files'].add(fileData);
       }

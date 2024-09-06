@@ -13,7 +13,7 @@ class _NetworkService implements NetworkService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://flutterdev.insp.1labventures.in/';
+    baseUrl ??= 'http://localhost:4000/';
   }
 
   final Dio _dio;

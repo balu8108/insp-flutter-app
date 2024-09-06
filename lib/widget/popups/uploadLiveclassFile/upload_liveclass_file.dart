@@ -25,6 +25,7 @@ class _UploadFilePopupState extends State<UploadFilePopup> {
     final store = StoreProvider.of<AppState>(context);
 
     void uploadFile(List<PlatformFile> pickedFiles) {
+      print("CALL t");
       store.dispatch(uploadFilesToServer(context, pickedFiles, widget.roomId));
     }
 

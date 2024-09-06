@@ -10,7 +10,7 @@ class LiveLeftPart extends StatefulWidget {
 }
 
 class _LiveLeftPartState extends State<LiveLeftPart> {
-  int _selectedLeaderboardIndex = 0;
+  int _selectedLeaderboardIndex = 3;
 
   final List<Widget> _leaderboards = [
     LiveLeaderboard(),
@@ -37,40 +37,42 @@ class _LiveLeftPartState extends State<LiveLeftPart> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-              height: 350, child: _leaderboards[_selectedLeaderboardIndex]),
+            height: 500,
+            child:
+                _leaderboards[_selectedLeaderboardIndex], // Use other widgets
+          ),
           const SizedBox(height: 10),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Tooltip(
-                message: "Polls", // Adjust as per your utility function
-                child: IconButton(
-                  icon: const Icon(Icons.poll),
-                  iconSize: 16.0,
-                  onPressed: () => _onIconButtonPressed(0),
-                )),
-            Tooltip(
-                message: "Poll Results", // Adjust as per your utility function
-                child: IconButton(
-                  icon: const Icon(Icons.poll),
-                  iconSize: 16.0,
-                  onPressed: () => _onIconButtonPressed(1),
-                )),
-            Tooltip(
-                message:
-                    "Ask a question", // Adjust as per your utility function
-                child: IconButton(
-                  icon: const Icon(Icons.menu_rounded),
-                  iconSize: 16.0,
-                  onPressed: () => _onIconButtonPressed(2),
-                )),
-            Tooltip(
-                message: "Chats", // Adjust as per your utility function
-                child: IconButton(
-                  icon: const Icon(Icons.send),
-                  iconSize: 16.0,
-                  onPressed: () => _onIconButtonPressed(3),
-                ))
+            _buildIconButton(0, Icons.poll, "Polls"),
+            _buildIconButton(1, Icons.poll, "Poll Results"),
+            _buildIconButton(2, Icons.menu_rounded, "Ask a question"),
+            _buildIconButton(3, Icons.send, "Chats"),
           ]),
         ],
+      ),
+    );
+  }
+
+  Widget _buildIconButton(int index, IconData icon, String tooltipMessage) {
+    return Tooltip(
+      message: tooltipMessage,
+      child: GestureDetector(
+        onTap: () => _onIconButtonPressed(index),
+        child: Container(
+          padding: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: _selectedLeaderboardIndex == index
+                ? Colors.blue.withOpacity(0.2)
+                : Colors.transparent,
+          ),
+          child: Icon(
+            icon,
+            color:
+                _selectedLeaderboardIndex == index ? Colors.blue : Colors.black,
+            size: 20.0, // You can adjust the size here
+          ),
+        ),
       ),
     );
   }

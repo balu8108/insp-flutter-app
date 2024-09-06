@@ -4,6 +4,7 @@ import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_wid
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/mainsocket.dart';
 import 'package:inspflutterfrontend/widget/card/live_chat_card.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 
 class LiveChat extends StatefulWidget {
   const LiveChat({super.key});
@@ -15,11 +16,11 @@ class LiveChat extends StatefulWidget {
 class _LiveChatState extends State<LiveChat> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _controller = TextEditingController();
+  bool isEmojiVisible = false;
 
   @override
   void initState() {
     super.initState();
-    // _scrollToLatestMessage();
   }
 
   @override
@@ -29,21 +30,53 @@ class _LiveChatState extends State<LiveChat> {
     super.dispose();
   }
 
+  void toggleEmojiKeyboard() {
+    setState(() {
+      isEmojiVisible = !isEmojiVisible;
+    });
+  }
+
+  void addEmojiToText(Emoji emoji) {
+    _controller
+      ..text += emoji.emoji
+      ..selection = TextSelection.fromPosition(
+        TextPosition(offset: _controller.text.length),
+      );
+  }
+
+  void sendMessage() {
+    String message = _controller.text.trim();
+    if (message.isNotEmpty) {
+      StoreProvider.of<AppState>(context)
+          .dispatch(addUserChatMessage(context, message));
+      sendChatMessage(message);
+      _controller.clear();
+    }
+  }
+
+  // Function to scroll the chat to the bottom
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-
-    void sendMessage() {
-      String message = _controller.text.trim();
-      if (message.isNotEmpty) {
-        store.dispatch(addUserChatMessage(context, message));
-        sendChatMessage(message);
-        _controller.clear(); // Clear the text field
-      }
-    }
-
     return StoreConnector<AppState, ChatWidgetAppState>(
       converter: (store) => store.state.chatWidgetAppState,
+      onDidChange: (previousState, currentState) {
+        if (currentState.chatMessages.length !=
+            previousState?.chatMessages.length) {
+          _scrollToBottom();
+        }
+      },
       builder: (context, state) => Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -75,47 +108,44 @@ class _LiveChatState extends State<LiveChat> {
             const SizedBox(height: 10),
             Expanded(
               flex: 1,
-              child: SizedBox(
-                width: 300,
-                child: TextField(
-                  controller: _controller,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                      borderSide: BorderSide.none,
+              child: Column(
+                children: [
+                  TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: 'Type Something...',
+                      hintStyle: const TextStyle(fontSize: 14),
+                      prefixIcon: IconButton(
+                        icon: const Icon(Icons.emoji_emotions),
+                        iconSize: 24.0,
+                        onPressed: () {},
+                      ),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.send),
+                        iconSize: 24.0,
+                        onPressed: sendMessage,
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 0,
+                        horizontal: 5,
+                      ), // Adjust padding
                     ),
-                    hintText: 'Type Something...',
-                    hintStyle: const TextStyle(fontSize: 14),
-                    prefixIcon: IconButton(
-                      icon: const Icon(Icons.child_care),
-                      iconSize: 16.0,
-                      onPressed: () {
-                        print("click");
-                      },
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF2C3329), // Text color
                     ),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.send),
-                      iconSize: 16.0,
-                      onPressed: () {
-                        sendMessage();
-                      },
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 0,
-                      horizontal: 5,
-                    ), // Adjust padding
+                    onSubmitted: (value) {
+                      sendMessage();
+                    },
                   ),
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF2C3329), // Text color
-                  ),
-                  onSubmitted: (value) {
-                    sendMessage();
-                  },
-                ),
+                ],
               ),
             ),
           ],

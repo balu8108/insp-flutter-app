@@ -23,7 +23,7 @@ void initializeSocketConnections(
     Store<AppState> store, String roomId, String token) {
   if (token.isNotEmpty) {
     socket = IO.io(
-        'https://flutterdev.insp.1labventures.in',
+        'http://localhost:4000',
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .enableAutoConnect()
@@ -193,6 +193,7 @@ Future<void> joinRoomHandler(Store<AppState> store, String roomId,
 Future<void> sendFileHandler(Store<AppState> store, dynamic filesData) async {
   socket?.emitWithAck(SOCKET_EVENTS.UPLOAD_FILE_TO_SERVER, filesData,
       ack: (res) {
+    print(res);
     if (res['success']) {
       store.dispatch(addFileToPreviewData(res['data']));
     } else {

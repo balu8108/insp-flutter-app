@@ -1,6 +1,8 @@
 PODS:
   - device_info_plus (0.0.1):
     - FlutterMacOS
+  - emoji_picker_flutter (0.0.1):
+    - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - path_provider_foundation (0.0.1):
     - Flutter
@@ -16,6 +18,7 @@ PODS:
 
 DEPENDENCIES:
   - device_info_plus (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos`)
+  - emoji_picker_flutter (from `Flutter/ephemeral/.symlinks/plugins/emoji_picker_flutter/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
   - pdfx (from `Flutter/ephemeral/.symlinks/plugins/pdfx/macos`)
@@ -25,6 +28,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   device_info_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos
+  emoji_picker_flutter:
+    :path: Flutter/ephemeral/.symlinks/plugins/emoji_picker_flutter/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   path_provider_foundation:
@@ -38,6 +43,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   device_info_plus: 5401765fde0b8d062a2f8eb65510fb17e77cf07f
+  emoji_picker_flutter: 533634326b1c5de9a181ba14b9758e6dfe967a20
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   pdfx: d1c406047b02acc54fe98495ae24b04fe9b4f024
