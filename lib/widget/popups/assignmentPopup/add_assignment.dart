@@ -24,6 +24,8 @@ class AddAssignment extends StatelessWidget {
       dispatch(context, handleCreate(context, getAssignment));
     }
 
+    void defaultLoaderFunction() {}
+
     void updateAssignment() {
       dispatch(
           context, handleUpdate(context, fetchAssignmentAfterUpdateorDelete));
@@ -179,7 +181,7 @@ class AddAssignment extends StatelessWidget {
                           width: MediaQuery.of(context).size.width * 0.20,
                           child: ElevatedButton(
                               onPressed: state.isAssignmentLoading
-                                  ? null
+                                  ? defaultLoaderFunction
                                   : state.isEditScreen
                                       ? updateAssignment
                                       : createAssignment,
@@ -198,11 +200,16 @@ class AddAssignment extends StatelessWidget {
                                 ),
                               ),
                               child: state.isAssignmentLoading
-                                  ? const Center(
-                                      child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2,
-                                    ))
+                                  ? const SizedBox(
+                                      width: 18,
+                                      height: 18,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 2,
+                                        ),
+                                      ),
+                                    )
                                   : Text(state.isEditScreen
                                       ? "Update Assignment"
                                       : "Send")),

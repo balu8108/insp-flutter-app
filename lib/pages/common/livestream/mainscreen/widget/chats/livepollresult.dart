@@ -45,10 +45,10 @@ class LivePollResult extends StatelessWidget {
                       child: ListView.builder(
                         itemCount: state.leaderBoardAnswerPercentage.length,
                         itemBuilder: (context, index) {
-                          final value = state.leaderBoardAnswerPercentage[index]
-                              .value as double;
-                          final subjectName = state
-                              .leaderBoardAnswerPercentage[index].key as String;
+                          final value =
+                              state.leaderBoardAnswerPercentage[index].value;
+                          final subjectName =
+                              state.leaderBoardAnswerPercentage[index].key;
 
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5.0),

@@ -92,7 +92,7 @@ class __$$NavbarAppStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$NavbarAppStateImpl implements _NavbarAppState {
-  const _$NavbarAppStateImpl({this.selectedButton = ''});
+  const _$NavbarAppStateImpl({this.selectedButton = 'Home'});
 
   @override
   @JsonKey()

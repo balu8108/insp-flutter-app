@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/preview_data_redux.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/utils/capitalize.dart';
 import 'package:inspflutterfrontend/utils/format_time.dart';
@@ -36,9 +36,9 @@ class _LiveClassDetailState extends State<LiveClassDetail> {
                 return const Center(child: Text('Error loading data'));
               } else {
                 bool isTeacher = snapshot.data ?? false;
-                return StoreConnector<AppState, ChatWidgetAppState>(
-                    converter: (store) => store.state.chatWidgetAppState,
-                    builder: (context, ChatWidgetAppState state) => Column(
+                return StoreConnector<AppState, PreviewDataAppState>(
+                    converter: (store) => store.state.previewDataAppState,
+                    builder: (context, PreviewDataAppState state) => Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
@@ -86,8 +86,9 @@ class _LiveClassDetailState extends State<LiveClassDetail> {
                                         height: 1.25,
                                       ),
                                     ),
-                                    UploadFilePopup(
-                                        roomId: state.previewData.roomId)
+                                    if (isTeacher)
+                                      UploadFilePopup(
+                                          roomId: state.previewData.roomId)
                                   ]),
                               const SizedBox(height: 10),
                               FileBoxComponent(

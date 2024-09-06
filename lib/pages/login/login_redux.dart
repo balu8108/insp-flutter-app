@@ -9,7 +9,6 @@ import 'package:toastification/toastification.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
-import 'package:inspflutterfrontend/pages/login/login_screen.dart';
 import 'package:inspflutterfrontend/utils/localstorage.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -107,7 +106,7 @@ ThunkAction<AppState> handleLogin(BuildContext context) {
                     HomeScreen(userData: result.data.loginResponseModelResult),
               ),
             );
-
+            store.dispatch(UpdateIsLoading(isLoading: false));
             toastification.show(
               context: context, // optional if you use ToastificationWrapper
               type: ToastificationType.success,

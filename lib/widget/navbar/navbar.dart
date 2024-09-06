@@ -9,6 +9,7 @@ import 'package:inspflutterfrontend/pages/common/calender/calendar_screen.dart';
 import 'package:inspflutterfrontend/pages/teacher/suggestion/main_suggestion_page.dart';
 import 'package:inspflutterfrontend/pages/teacher/uploads/mainpage/myuploads.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:inspflutterfrontend/socket/mainsocket.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/utils/localstorage.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
@@ -126,6 +127,7 @@ class _NavbarState extends State<Navbar> {
   }
 
   void _navigateToScreen(BuildContext context, Widget screen) {
+    leaveRoomHandler(StoreProvider.of<AppState>(context));
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => screen),
@@ -171,6 +173,7 @@ class _NavbarState extends State<Navbar> {
       ),
       onSelected: (value) async {
         if (value == 'Logout') {
+          leaveRoomHandler(StoreProvider.of<AppState>(context));
           await logoutData("insp_user_profile");
           Navigator.pushAndRemoveUntil(
             context,

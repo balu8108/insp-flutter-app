@@ -31,17 +31,18 @@ class _PollTimerState extends State<LiveQuestionAnswer> {
   bool _isAnswerSubmitted = false;
   bool _showAnswer = false;
 
+  // Update the selected answers
   void updateCorrectAnswerArray(List<String> answer) {
     setState(() {
       answerOption = answer;
     });
   }
 
+  // Handle sending the answer
   void sendAnswer() {
     if (answerOption.isEmpty) {
-      return; // Later on, you can add notification or error handling
+      return; // Add error handling or a notification
     } else {
-      // Create a data map with the required fields
       final data = {
         'answers': answerOption,
         'noOfOptions': widget.polldata.noOfOptions,
@@ -50,15 +51,14 @@ class _PollTimerState extends State<LiveQuestionAnswer> {
         'responseTimeInSeconds': widget.polldata.time - (timer - 5),
       };
 
-      // Call the sendAnswerHandler function with the data
       widget.submitAnswer(data);
-
       setState(() {
         _isAnswerSubmitted = true;
       });
     }
   }
 
+  // Update dropdown items based on poll type
   void updateDropdownItems() {
     try {
       if (widget.polldata.type.isNotEmpty) {
@@ -87,17 +87,19 @@ class _PollTimerState extends State<LiveQuestionAnswer> {
     }
   }
 
+  // Update the timer with the new value
   void updateTimer(int newTime) {
     setState(() {
       timer = newTime;
     });
-    startTimer(); // Restart the timer with the new value
+    startTimer(); // Restart the timer with the updated time
   }
 
+  // Start the countdown timer
   void startTimer() {
     if (_isTimerRunning) return; // Prevent multiple timers
     _isTimerRunning = true;
-    final interval = Duration(seconds: 1);
+    final interval = const Duration(seconds: 1);
 
     Future.doWhile(() async {
       await Future.delayed(interval);
@@ -128,7 +130,7 @@ class _PollTimerState extends State<LiveQuestionAnswer> {
       setState(() {
         timer = widget.polldata.time + 5;
       });
-      startTimer();
+      startTimer(); // Start the timer after initial setup
     });
   }
 
@@ -138,7 +140,7 @@ class _PollTimerState extends State<LiveQuestionAnswer> {
     if (widget.increasePollTimeModel != oldWidget.increasePollTimeModel) {
       updateTimer(timer +
           widget.increasePollTimeModel
-              .timeIncreaseBy); // Assume newTime is the updated time
+              .timeIncreaseBy); // Update timer if poll time is increased
     }
   }
 
@@ -149,6 +151,11 @@ class _PollTimerState extends State<LiveQuestionAnswer> {
         height: 300,
         padding: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
+          border: Border.all(
+            color: const Color.fromARGB(
+                255, 205, 228, 247), // Set the border color
+            width: 2.0, // Set the border width
+          ),
           borderRadius: BorderRadius.circular(16),
           color: const Color.fromRGBO(232, 242, 249, 1),
         ),

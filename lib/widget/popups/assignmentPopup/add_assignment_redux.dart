@@ -168,8 +168,6 @@ ThunkAction<AddAssignmentAppState> handleCreate(
   return (Store<AddAssignmentAppState> store) async {
     List<MultipartFile> files = [];
 
-    store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: true));
-
     if (store.state.selectedSubject == null ||
         store.state.selectedSubject!.isEmpty) {
       store.dispatch(UpdateSelectedSubjectError(
@@ -187,6 +185,8 @@ ThunkAction<AddAssignmentAppState> handleCreate(
           descriptionError: 'Please enter an description'));
       return;
     }
+
+    store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: true));
 
     for (PlatformFile file in store.state.pickedFiles) {
       if (kIsWeb) {

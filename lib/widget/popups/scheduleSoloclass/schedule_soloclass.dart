@@ -30,6 +30,8 @@ class ScheduleSoloClass extends StatelessWidget {
       dispatch(context, pickFilesforSoloclass(context));
     }
 
+    void defaultLoaderFunction() {}
+
     return StoreConnector<ScheduleSoloclassAppState, ScheduleSoloclassAppState>(
         converter: (store) => store.state,
         builder: (context, ScheduleSoloclassAppState state) => AlertDialog(
@@ -215,8 +217,9 @@ class ScheduleSoloClass extends StatelessWidget {
                           width: 200,
                           // width: MediaQuery.of(context).size.width * 0.20,
                           child: ElevatedButton(
-                              onPressed:
-                                  state.isClassLoading ? null : createSoloClass,
+                              onPressed: state.isClassLoading
+                                  ? defaultLoaderFunction
+                                  : createSoloClass,
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
                                 backgroundColor:
@@ -230,11 +233,14 @@ class ScheduleSoloClass extends StatelessWidget {
                                 ),
                               ),
                               child: state.isClassLoading
-                                  ? const Center(
-                                      child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2,
-                                    ))
+                                  ? const SizedBox(
+                                      width: 18,
+                                      height: 18,
+                                      child: Center(
+                                          child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2,
+                                      )))
                                   : Text(
                                       state.isEditScreen ? "Update" : "Start")),
                         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/popups/pdfviewer/pdfviewer_redux.dart';
@@ -26,7 +27,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
     });
   }
 
-  // call an API of get all subjects
+  // call an API to get the PDF URL
   void getPdfUrl() async {
     try {
       final remoteDataSource = RemoteDataSource();
@@ -48,7 +49,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
         updateState(pdfViewerAppState.copyWith(fileUrl: pdfUrl));
       } else {
         // Handle error response
-        print('Error h:');
+        print('Error:');
       }
     } catch (e) {
       // Handle any other errors
@@ -64,11 +65,8 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
 
   @override
   void dispose() {
-    if (UniversalPlatform.isWindows) {
-      _pdfControllerWindow?.dispose();
-    } else {
-      _pdfController?.dispose();
-    }
+    _pdfControllerWindow?.dispose();
+    _pdfController?.dispose();
     super.dispose();
   }
 
@@ -83,7 +81,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
       title: Row(
         children: [
           const Text(
-            "File",
+            "Document Viewer",
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w500,
@@ -98,18 +96,50 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
           ),
         ],
       ),
-      content: Container(
-        width: 600, // Set desired width
-        height: 800, // Set desired height
-        child: _pdfController != null || _pdfControllerWindow != null
-            ? UniversalPlatform.isWindows
-                ? PdfView(controller: _pdfControllerWindow!)
-                : PdfViewPinch(
-                    controller: _pdfController!,
-                  )
-            : Center(
-                child:
-                    CircularProgressIndicator()), // Show a loader until the PDF is loaded
+      content: FutureBuilder<LoginResponseModelResult>(
+        future: getUserData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Error loading data'));
+          } else {
+            String userName = snapshot.data?.name ?? '';
+            String userEmail = snapshot.data?.email ?? '';
+            return Container(
+              width: 600, // Set desired width
+              height: 800, // Set desired height
+              child: _pdfController != null || _pdfControllerWindow != null
+                  ? Stack(children: [
+                      UniversalPlatform.isWindows
+                          ? PdfView(controller: _pdfControllerWindow!)
+                          : PdfViewPinch(controller: _pdfController!),
+                      Positioned.fill(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Opacity(
+                            opacity:
+                                0.4, // Set the transparency level of the watermark
+                            child: Text(
+                              '$userName - $userEmail', // Watermark text
+                              style: const TextStyle(
+                                fontSize: 20, // Adjust size
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromRGBO(60, 141, 188,
+                                    1), // Adjust color of the watermark
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ])
+                  : const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+            );
+          }
+        },
       ),
     );
   }

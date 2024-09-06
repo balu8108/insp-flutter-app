@@ -77,9 +77,9 @@ class ChapterDetailScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 17),
                             if (isWebOrLandScape)
-                              Expanded(
+                              const Expanded(
                                 flex: 3,
-                                child: const UpcomingClassesScreen(),
+                                child: UpcomingClassesScreen(),
                               ),
                           ],
                         ),
