@@ -24,7 +24,7 @@ class _TPStreamLiveVideoPlayerWidgetState
       children: [
         Column(
           children: [
-            // const TPStreamVideoPlayer(),
+            const TPStreamVideoPlayer(),
             Container(
                 height: 50,
                 width: double.infinity,

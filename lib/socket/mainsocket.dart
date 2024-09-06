@@ -23,7 +23,7 @@ void initializeSocketConnections(
     Store<AppState> store, String roomId, String token) {
   if (token.isNotEmpty) {
     socket = IO.io(
-        'http://localhost:4000',
+        'https://flutterdev.insp.1labventures.in',
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .enableAutoConnect()
