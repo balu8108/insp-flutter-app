@@ -6,7 +6,6 @@ import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/popups/timetableUpload/timetable_upload.dart';
 import 'package:inspflutterfrontend/widget/popups/viewTimetable/view_timetable.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:universal_html/js_util.dart';
 
 class LiveclassCalendar extends StatelessWidget {
   const LiveclassCalendar({super.key});
@@ -17,21 +16,25 @@ class LiveclassCalendar extends StatelessWidget {
 
     dispatch(context, getAllCalendarDataDateWise(context));
 
+    final bool isMobile = MediaQuery.of(context).size.width < 600;
+
     return StoreConnector<CalendarWidgetAppState, CalendarWidgetAppState>(
-        converter: (store) => store.state,
-        builder: (context, CalendarWidgetAppState state) => FutureBuilder<bool>(
-            future: isTeacherLogin(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return const Center(child: Text('Error loading data'));
-              } else {
-                bool isTeacher = snapshot.data ?? false;
-                return Container(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+      converter: (store) => store.state,
+      builder: (context, CalendarWidgetAppState state) => FutureBuilder<bool>(
+        future: isTeacherLogin(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Error loading data'));
+          } else {
+            bool isTeacher = snapshot.data ?? false;
+            return SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (!isMobile)
                     Padding(
                       padding: const EdgeInsets.all(
                           8.0), // Padding around the buttons
@@ -87,141 +90,193 @@ class LiveclassCalendar extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 15),
-                    Container(
-                      child: ValueListenableBuilder<DateTime>(
-                        valueListenable: state.selectedDay,
-                        builder: (context, selectedDay, _) {
-                          return TableCalendar(
-                            firstDay: DateTime.utc(2010, 10, 16),
-                            lastDay: DateTime.utc(2030, 3, 14),
-                            focusedDay: state.focusedDay,
-                            calendarFormat: state.calendarFormat,
-                            headerStyle: const HeaderStyle(
-                              formatButtonVisible: false,
-                              titleCentered: true,
-                            ),
-                            eventLoader: (day) {
-                              return state.datewiseData[day] ?? [];
-                            },
-                            calendarBuilders: CalendarBuilders(
-                              markerBuilder: (context, date, events) {
-                                if (events.isNotEmpty) {
-                                  return Positioned(
-                                    right: 1,
-                                    bottom: 1,
-                                    child: _buildEventsMarker(date, events),
-                                  );
-                                }
-                              },
-                            ),
-                            rowHeight: 50,
-                            availableGestures: AvailableGestures.all,
-                            selectedDayPredicate: (day) {
-                              return isSameDay(selectedDay, day);
-                            },
-                            onDaySelected: (selectedDay, focusedDay) {
-                              if (!isSameDay(
-                                  state.selectedDay.value, selectedDay)) {
-                                ValueNotifier<DateTime> selectedDay2 =
-                                    ValueNotifier(selectedDay);
-                                selectedDay2.value = selectedDay;
-                                dispatch(
-                                    context,
-                                    UpdateSelectedDay(
-                                        selectedDay: selectedDay2));
-
-                                dispatch(context,
-                                    UpdateFocusedDay(focusedDay: focusedDay));
-                                dispatch(
-                                    context,
-                                    UpdateCalendarScreenDayWise(
-                                        dataForOneDay:
-                                            state.datewiseData[focusedDay] ??
-                                                []));
+                  const SizedBox(height: 15),
+                  Container(
+                    child: ValueListenableBuilder<DateTime>(
+                      valueListenable: state.selectedDay,
+                      builder: (context, selectedDay, _) {
+                        return TableCalendar(
+                          firstDay: DateTime.utc(2010, 10, 16),
+                          lastDay: DateTime.utc(2030, 3, 14),
+                          focusedDay: state.focusedDay,
+                          calendarFormat: state.calendarFormat,
+                          headerStyle: const HeaderStyle(
+                            formatButtonVisible: false,
+                            titleCentered: true,
+                          ),
+                          eventLoader: (day) {
+                            return state.datewiseData[day] ?? [];
+                          },
+                          calendarBuilders: CalendarBuilders(
+                            markerBuilder: (context, date, events) {
+                              if (events.isNotEmpty) {
+                                return Positioned(
+                                  child: _buildEventsMarker(date, events),
+                                );
                               }
                             },
-                            onFormatChanged: (format) {
-                              if (state.calendarFormat != format) {
-                                dispatch(
-                                    context,
-                                    UpdateCalendarMonthFromat(
-                                        calendarFormat: format));
-                              }
-                            },
-                            onPageChanged: (focusedDay) {
+                          ),
+                          rowHeight: 70,
+                          availableGestures: AvailableGestures.all,
+                          selectedDayPredicate: (day) {
+                            return isSameDay(selectedDay, day);
+                          },
+                          onDaySelected: (selectedDay, focusedDay) {
+                            if (!isSameDay(
+                                state.selectedDay.value, selectedDay)) {
+                              ValueNotifier<DateTime> selectedDay2 =
+                                  ValueNotifier(selectedDay);
+                              selectedDay2.value = selectedDay;
+                              dispatch(context,
+                                  UpdateSelectedDay(selectedDay: selectedDay2));
                               dispatch(context,
                                   UpdateFocusedDay(focusedDay: focusedDay));
-                            },
-                            onDayLongPressed: (day, focusedDay) {
-                              ValueNotifier<DateTime> selectedDay =
-                                  ValueNotifier(day);
-                              selectedDay.value = day;
-                              dispatch(context,
-                                  UpdateSelectedDay(selectedDay: selectedDay));
-                            },
-                          );
-                        },
+                              dispatch(
+                                  context,
+                                  UpdateCalendarScreenDayWise(
+                                      dataForOneDay:
+                                          state.datewiseData[focusedDay] ??
+                                              []));
+                            }
+                          },
+                          onFormatChanged: (format) {
+                            if (state.calendarFormat != format) {
+                              dispatch(
+                                  context,
+                                  UpdateCalendarMonthFromat(
+                                      calendarFormat: format));
+                            }
+                          },
+                          onPageChanged: (focusedDay) {
+                            dispatch(context,
+                                UpdateFocusedDay(focusedDay: focusedDay));
+                            dispatch(context,
+                                UpdateCalendarScreenDayWise(dataForOneDay: []));
+                          },
+                          onDayLongPressed: (day, focusedDay) {
+                            ValueNotifier<DateTime> selectedDay =
+                                ValueNotifier(day);
+                            selectedDay.value = day;
+                            dispatch(context,
+                                UpdateSelectedDay(selectedDay: selectedDay));
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  const Center(
+                    child: Text(
+                      "Scheduled Event",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(58, 53, 65, 0.85),
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    Container(
-                        height: 500,
-                        child: state.calendarScreenAllEventsForADay.isNotEmpty
-                            ? Scrollbar(
-                                controller: _scrollController,
-                                child: ListView.separated(
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: state
-                                      .calendarScreenAllEventsForADay.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            10.0), // Rounded corners
-                                        side: BorderSide(
-                                          color: Colors.blue, // Border color
-                                          width: 2.0, // Border width
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    height: 500,
+                    child: state.calendarScreenAllEventsForADay.isNotEmpty
+                        ? Scrollbar(
+                            controller: _scrollController,
+                            child: ListView.separated(
+                              scrollDirection: Axis.vertical,
+                              itemCount:
+                                  state.calendarScreenAllEventsForADay.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Card(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    side: const BorderSide(
+                                      color: Color.fromRGBO(143, 206, 243, 1),
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Color.fromRGBO(143, 206, 243, 0.3),
+                                      borderRadius: BorderRadius.circular(4.0),
+                                      backgroundBlendMode: BlendMode.multiply,
+                                    ),
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          state
+                                              .calendarScreenAllEventsForADay[
+                                                  index]
+                                              .title,
+                                          style: const TextStyle(
+                                            fontSize: 17,
+                                            color:
+                                                Color.fromRGBO(5, 89, 137, 1),
+                                          ),
                                         ),
-                                      ),
-                                      color:
-                                          Colors.grey[200], // Background color
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          children: [
-                                            Text(state
-                                                .calendarScreenAllEventsForADay[
-                                                    index]
-                                                .title),
-                                          ],
+                                        Text(
+                                          state
+                                              .calendarScreenAllEventsForADay[
+                                                  index]
+                                              .classType,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color:
+                                                Color.fromRGBO(40, 141, 188, 1),
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return const SizedBox(
-                                      width: 16,
-                                    );
-                                  },
-                                ),
-                              )
-                            : null)
-                  ],
-                ));
-              }
-            }));
+                                        Text(
+                                          state
+                                              .calendarScreenAllEventsForADay[
+                                                  index]
+                                              .classLevel,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color:
+                                                Color.fromRGBO(60, 141, 188, 1),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return const SizedBox(width: 16);
+                              },
+                            ),
+                          )
+                        : const Align(
+                            alignment: Alignment.topCenter,
+                            child: Text(
+                              "No classes scheduled !!",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                          ),
+                  ),
+                ],
+              ),
+            );
+          }
+        },
+      ),
+    );
   }
 
   static getScreen() {
     return getBaseScreen<CalendarWidgetAppState, LiveclassCalendar>(
-        calendarWidgetReducer,
-        CalendarWidgetAppState(
-            selectedDay: ValueNotifier<DateTime>(DateTime.now()),
-            focusedDay: DateTime.now()),
-        const LiveclassCalendar());
+      calendarWidgetReducer,
+      CalendarWidgetAppState(
+        selectedDay: ValueNotifier<DateTime>(DateTime.now()),
+        focusedDay: DateTime.now(),
+      ),
+      const LiveclassCalendar(),
+    );
   }
 
   static dispatch(BuildContext context, dynamic action) {
