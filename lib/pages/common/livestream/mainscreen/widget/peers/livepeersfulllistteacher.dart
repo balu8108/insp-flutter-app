@@ -1,21 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/preview/widget/peer_menu_popup.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 
-class LivePeersFullListWidget extends StatelessWidget {
+class LivePeersFullListTeacherWidget extends StatelessWidget {
   static void dispatch(BuildContext context, PeersWidgetAction action) {
     StoreProvider.of<AppState>(context).dispatch(action);
   }
 
   @override
   Widget build(BuildContext context) {
-    print("PEER rebuild");
+    final store = StoreProvider.of<AppState>(context);
     return StoreConnector<AppState, PeersWidgetAppState>(
         converter: (store) => store.state.peersWidgetAppState,
         builder: (context, PeersWidgetAppState state) {
           return Column(
             children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      onChanged: (text) {
+                        if (text.isEmpty) {
+                          store.dispatch(defaultPeers());
+                        }
+                        store
+                            .dispatch(UpdateSearchKeyword(searchKeyword: text));
+                      },
+                      onSubmitted: (value) {
+                        store.dispatch(filteredPeers());
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Search",
+                        hintStyle: const TextStyle(
+                            fontSize: 16, color: Color(0x613A3541)),
+                        contentPadding: const EdgeInsets.all(14.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: const BorderSide(
+                              color: Color.fromRGBO(58, 53, 65, 0.38),
+                              width: 1.0),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.blue, width: 2.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                      icon: const Icon(Icons.search),
+                      iconSize: 16.0,
+                      onPressed: () => {store.dispatch(filteredPeers())})
+                ],
+              ),
+              const SizedBox(height: 10),
               Container(
                 height: MediaQuery.of(context).size.height * 0.85,
                 child: ListView.builder(
@@ -68,6 +108,8 @@ class LivePeersFullListWidget extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            KickPeerWidget(
+                                peerId: peer.id, socketId: peer.socketId)
                           ],
                         ),
                       ),
