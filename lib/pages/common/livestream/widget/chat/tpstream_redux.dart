@@ -15,7 +15,8 @@ part 'tpstream_redux.freezed.dart';
 @freezed
 class TPStreamAppState with _$TPStreamAppState {
   const factory TPStreamAppState(
-          {@Default(VideoResponseModel()) VideoResponseModel videoResponse}) =
+          {@Default('') String streamStatusChangeTo,
+          @Default(VideoResponseModel()) VideoResponseModel videoResponse}) =
       _TPStreamAppState;
 }
 
@@ -24,13 +25,33 @@ class UpdateVideoResponse extends TPStreamAction {
   UpdateVideoResponse({required this.videoResponse});
 }
 
+class UpdateStreamStatusChangeTo extends TPStreamAction {
+  String streamStatusChangeTo;
+  UpdateStreamStatusChangeTo({required this.streamStatusChangeTo});
+}
+
 sealed class TPStreamAction {}
 
 TPStreamAppState tpStreamStateReducer(TPStreamAppState state, dynamic action) {
   if (action is UpdateVideoResponse) {
     return state.copyWith(videoResponse: action.videoResponse);
   }
+  if (action is UpdateStreamStatusChangeTo) {
+    return state.copyWith(streamStatusChangeTo: action.streamStatusChangeTo);
+  }
   return state;
+}
+
+ThunkAction<AppState> getStatus(String message) {
+  return (Store<AppState> store) async {
+    try {
+      store.dispatch(UpdateStreamStatusChangeTo(streamStatusChangeTo: message));
+      store.dispatch(UpdateVideoResponse(
+          videoResponse: store.state.tpStreamAppState.videoResponse));
+    } catch (error) {
+      print("err");
+    }
+  };
 }
 
 ThunkAction<AppState> getVideoUrlApi(BuildContext context) {

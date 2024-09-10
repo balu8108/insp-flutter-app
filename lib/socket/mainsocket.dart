@@ -9,6 +9,7 @@ import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_mode
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/preview_data_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/tpstream_redux.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/socket_events.dart';
@@ -69,6 +70,8 @@ void initializeSocketConnections(
         (data) => kickOutResponseHandler(store, data));
     socket?.on(SOCKET_EVENTS.END_MEET_FROM_SERVER,
         (data) => kickOutResponseHandler(store, data));
+    socket?.on(SOCKET_EVENTS.TPSTREAM_STREAMING_STATUS_FROM_SERVER,
+        (data) => tpStreamLivestreamStatus(store, data));
     socket?.on(SOCKET_EVENTS.DISCONNECT, (err) => {});
     socket?.on(SOCKET_EVENTS.CONNECT_ERROR, (err) => {});
     // Connect the socket
@@ -240,6 +243,12 @@ void pollTimeIncreaseResponseHandler(Store<AppState> store, dynamic res) {
 
 void kickOutResponseHandler(Store<AppState> store, dynamic res) {
   leaveRoomHandler(store);
+}
+
+void tpStreamLivestreamStatus(Store<AppState> store, dynamic res) {
+  print(res);
+  String message = res['msg'] ?? 'Unknown Status';
+  store.dispatch(getStatus(message));
 }
 
 void endMeetHandler() {

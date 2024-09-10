@@ -15,12 +15,15 @@ class TPStreamVideoPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("sdsds");
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(getVideoUrlApi(context));
 
     return StoreConnector<AppState, TPStreamAppState>(
       converter: (store) => store.state.tpStreamAppState,
       builder: (context, TPStreamAppState state) {
+        final streamStatus = state.streamStatusChangeTo;
+
         return Container(
           height: MediaQuery.of(context).size.height - 150 < 600
               ? MediaQuery.of(context).size.height - 150
@@ -41,7 +44,7 @@ class TPStreamVideoPlayer extends StatelessWidget {
                   : UniversalPlatform.isMacOS
                       ? WebviewMacOs(url: state.videoResponse.playback_url)
                       : const Text("Platform not supported")
-              : const Text("Waiting..."),
+              : Text(streamStatus),
         );
       },
     );
