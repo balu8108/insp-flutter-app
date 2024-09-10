@@ -128,14 +128,21 @@ class QuestionGenerate extends StatelessWidget {
                           },
                         ),
                         const SizedBox(height: 16.0),
-                        const Text("Select correct answer"),
+                        if (state.dropdownItem.isNotEmpty)
+                          const Text("Select correct answer"),
                         const SizedBox(height: 5.0),
-                        // Subject Dropdown
-                        QuestionOption(
-                            questionType: state.questionType!,
-                            noOfOption: state.noOfOptions ?? 0,
-                            optionArray: state.dropdownItem,
-                            updateCorrectAnswerArray: updateCorrectAnswerArray),
+                        if (state.correctAnswersError!.isNotEmpty)
+                          Text(
+                            state.correctAnswersError ?? '',
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        if (state.dropdownItem.isNotEmpty)
+                          QuestionOption(
+                              questionType: state.questionType!,
+                              noOfOption: state.noOfOptions ?? 0,
+                              optionArray: state.dropdownItem,
+                              updateCorrectAnswerArray:
+                                  updateCorrectAnswerArray),
                       ],
                     ),
                   ),
