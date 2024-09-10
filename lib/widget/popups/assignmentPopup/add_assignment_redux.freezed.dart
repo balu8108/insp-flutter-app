@@ -26,6 +26,7 @@ mixin _$AddAssignmentAppState {
   String? get descriptionError => throw _privateConstructorUsedError;
   List<LiveClassRoomFile> get previousFiles =>
       throw _privateConstructorUsedError;
+  bool get fileError => throw _privateConstructorUsedError;
   List<int> get deletedFileId => throw _privateConstructorUsedError;
   List<String> get pickedFilesName => throw _privateConstructorUsedError;
   List<PlatformFile> get pickedFiles => throw _privateConstructorUsedError;
@@ -52,6 +53,7 @@ abstract class $AddAssignmentAppStateCopyWith<$Res> {
       String? description,
       String? descriptionError,
       List<LiveClassRoomFile> previousFiles,
+      bool fileError,
       List<int> deletedFileId,
       List<String> pickedFilesName,
       List<PlatformFile> pickedFiles,
@@ -81,6 +83,7 @@ class _$AddAssignmentAppStateCopyWithImpl<$Res,
     Object? description = freezed,
     Object? descriptionError = freezed,
     Object? previousFiles = null,
+    Object? fileError = null,
     Object? deletedFileId = null,
     Object? pickedFilesName = null,
     Object? pickedFiles = null,
@@ -123,6 +126,10 @@ class _$AddAssignmentAppStateCopyWithImpl<$Res,
           ? _value.previousFiles
           : previousFiles // ignore: cast_nullable_to_non_nullable
               as List<LiveClassRoomFile>,
+      fileError: null == fileError
+          ? _value.fileError
+          : fileError // ignore: cast_nullable_to_non_nullable
+              as bool,
       deletedFileId: null == deletedFileId
           ? _value.deletedFileId
           : deletedFileId // ignore: cast_nullable_to_non_nullable
@@ -162,6 +169,7 @@ abstract class _$$AddAssignmentAppStateImplCopyWith<$Res>
       String? description,
       String? descriptionError,
       List<LiveClassRoomFile> previousFiles,
+      bool fileError,
       List<int> deletedFileId,
       List<String> pickedFilesName,
       List<PlatformFile> pickedFiles,
@@ -189,6 +197,7 @@ class __$$AddAssignmentAppStateImplCopyWithImpl<$Res>
     Object? description = freezed,
     Object? descriptionError = freezed,
     Object? previousFiles = null,
+    Object? fileError = null,
     Object? deletedFileId = null,
     Object? pickedFilesName = null,
     Object? pickedFiles = null,
@@ -231,6 +240,10 @@ class __$$AddAssignmentAppStateImplCopyWithImpl<$Res>
           ? _value._previousFiles
           : previousFiles // ignore: cast_nullable_to_non_nullable
               as List<LiveClassRoomFile>,
+      fileError: null == fileError
+          ? _value.fileError
+          : fileError // ignore: cast_nullable_to_non_nullable
+              as bool,
       deletedFileId: null == deletedFileId
           ? _value._deletedFileId
           : deletedFileId // ignore: cast_nullable_to_non_nullable
@@ -266,6 +279,7 @@ class _$AddAssignmentAppStateImpl
       required this.description,
       this.descriptionError = '',
       required final List<LiveClassRoomFile> previousFiles,
+      this.fileError = false,
       final List<int> deletedFileId = const [],
       final List<String> pickedFilesName = const [],
       final List<PlatformFile> pickedFiles = const [],
@@ -302,6 +316,9 @@ class _$AddAssignmentAppStateImpl
     return EqualUnmodifiableListView(_previousFiles);
   }
 
+  @override
+  @JsonKey()
+  final bool fileError;
   final List<int> _deletedFileId;
   @override
   @JsonKey()
@@ -335,7 +352,7 @@ class _$AddAssignmentAppStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AddAssignmentAppState(assignmentId: $assignmentId, isEditScreen: $isEditScreen, selectedSubject: $selectedSubject, selectedSubjectError: $selectedSubjectError, selectedTopic: $selectedTopic, selectedTopicError: $selectedTopicError, description: $description, descriptionError: $descriptionError, previousFiles: $previousFiles, deletedFileId: $deletedFileId, pickedFilesName: $pickedFilesName, pickedFiles: $pickedFiles, isAssignmentLoading: $isAssignmentLoading)';
+    return 'AddAssignmentAppState(assignmentId: $assignmentId, isEditScreen: $isEditScreen, selectedSubject: $selectedSubject, selectedSubjectError: $selectedSubjectError, selectedTopic: $selectedTopic, selectedTopicError: $selectedTopicError, description: $description, descriptionError: $descriptionError, previousFiles: $previousFiles, fileError: $fileError, deletedFileId: $deletedFileId, pickedFilesName: $pickedFilesName, pickedFiles: $pickedFiles, isAssignmentLoading: $isAssignmentLoading)';
   }
 
   @override
@@ -352,6 +369,7 @@ class _$AddAssignmentAppStateImpl
       ..add(DiagnosticsProperty('description', description))
       ..add(DiagnosticsProperty('descriptionError', descriptionError))
       ..add(DiagnosticsProperty('previousFiles', previousFiles))
+      ..add(DiagnosticsProperty('fileError', fileError))
       ..add(DiagnosticsProperty('deletedFileId', deletedFileId))
       ..add(DiagnosticsProperty('pickedFilesName', pickedFilesName))
       ..add(DiagnosticsProperty('pickedFiles', pickedFiles))
@@ -381,6 +399,8 @@ class _$AddAssignmentAppStateImpl
                 other.descriptionError == descriptionError) &&
             const DeepCollectionEquality()
                 .equals(other._previousFiles, _previousFiles) &&
+            (identical(other.fileError, fileError) ||
+                other.fileError == fileError) &&
             const DeepCollectionEquality()
                 .equals(other._deletedFileId, _deletedFileId) &&
             const DeepCollectionEquality()
@@ -403,6 +423,7 @@ class _$AddAssignmentAppStateImpl
       description,
       descriptionError,
       const DeepCollectionEquality().hash(_previousFiles),
+      fileError,
       const DeepCollectionEquality().hash(_deletedFileId),
       const DeepCollectionEquality().hash(_pickedFilesName),
       const DeepCollectionEquality().hash(_pickedFiles),
@@ -427,6 +448,7 @@ abstract class _AddAssignmentAppState implements AddAssignmentAppState {
       required final String? description,
       final String? descriptionError,
       required final List<LiveClassRoomFile> previousFiles,
+      final bool fileError,
       final List<int> deletedFileId,
       final List<String> pickedFilesName,
       final List<PlatformFile> pickedFiles,
@@ -450,6 +472,8 @@ abstract class _AddAssignmentAppState implements AddAssignmentAppState {
   String? get descriptionError;
   @override
   List<LiveClassRoomFile> get previousFiles;
+  @override
+  bool get fileError;
   @override
   List<int> get deletedFileId;
   @override
