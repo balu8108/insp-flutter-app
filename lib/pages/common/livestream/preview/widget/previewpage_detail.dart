@@ -69,16 +69,21 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    capitalizeFirstLetter(state.previewData
-                                        .liveClassRoomDetail.topicName),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 16,
-                                      color: Color(0xFF2C3329),
-                                      height: 1.25,
-                                    ),
-                                  ),
+                                  Expanded(
+                                      flex: 5,
+                                      child: Text(
+                                        capitalizeFirstLetter(state.previewData
+                                            .liveClassRoomDetail.topicName),
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16,
+                                          color: Color(0xFF2C3329),
+                                          height: 1.25,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      )),
+                                  const SizedBox(width: 5),
                                   Text(
                                     '${formatTime(state.previewData.scheduledStartTime)} - ${formatTime(state.previewData.scheduledEndTime)}',
                                     style: const TextStyle(

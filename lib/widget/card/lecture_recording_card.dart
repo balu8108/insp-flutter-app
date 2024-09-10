@@ -12,7 +12,6 @@ Widget LectureRecordingCardWidget(
     required agenda}) {
   final ScrollController scrollController = ScrollController();
 
-  print(classId);
   return Container(
       height: 100,
       margin: const EdgeInsets.only(right: 16),

@@ -13,7 +13,6 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    print("LOGIN rebuild");
     return Scaffold(
       body: Center(
         child: StoreConnector<AppState, LoginAppState>(

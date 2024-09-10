@@ -22,20 +22,20 @@ IO.Socket? socket;
 void initializeSocketConnections(
     Store<AppState> store, String roomId, String token) {
   if (socket != null) {
-    socket?.disconnect(); // Disconnect any existing socket connection
-    socket?.close(); // Close the socket connection
-    socket = null;
+    socket?.disconnect(); // Disconnect the socket
+    socket?.close(); // Close the connection
+    socket = null; // Set the socket to null to ensure fresh initialization
   }
 
   if (token.isNotEmpty) {
-    print("token");
-    print(token);
     socket = IO.io(
-        'http://localhost:4000',
+        'https://flutterdev.insp.1labventures.in',
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .disableAutoConnect()
             .setAuth({'secret_token': token})
+            .disableReconnection()
+            .enableForceNew()
             .build());
 
     // Add event listeners
@@ -201,7 +201,6 @@ Future<void> joinRoomHandler(
 Future<void> sendFileHandler(Store<AppState> store, dynamic filesData) async {
   socket?.emitWithAck(SOCKET_EVENTS.UPLOAD_FILE_TO_SERVER, filesData,
       ack: (res) {
-    print(res);
     if (res['success']) {
       store.dispatch(addFileToPreviewData(res['data']));
     } else {

@@ -90,7 +90,6 @@ class _TimetableUploadState extends State<TimetableUpload> {
 
   @override
   Widget build(BuildContext context) {
-    print(pickedFilesName);
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6),
