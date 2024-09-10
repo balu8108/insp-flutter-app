@@ -36,18 +36,21 @@ class _LiveLeftPartState extends State<LiveLeftPart> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 500,
+          Expanded(
             child:
                 _leaderboards[_selectedLeaderboardIndex], // Use other widgets
           ),
           const SizedBox(height: 10),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            _buildIconButton(0, Icons.poll, "Polls"),
-            _buildIconButton(1, Icons.poll, "Poll Results"),
-            _buildIconButton(2, Icons.menu_rounded, "Ask a question"),
-            _buildIconButton(3, Icons.send, "Chats"),
-          ]),
+          SizedBox(
+              height: 50,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildIconButton(0, Icons.poll, "Polls"),
+                    _buildIconButton(1, Icons.poll, "Poll Results"),
+                    _buildIconButton(2, Icons.menu_rounded, "Ask a question"),
+                    _buildIconButton(3, Icons.send, "Chats"),
+                  ])),
         ],
       ),
     );

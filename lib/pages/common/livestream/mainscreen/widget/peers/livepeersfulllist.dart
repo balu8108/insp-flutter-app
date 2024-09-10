@@ -10,70 +10,66 @@ class LivePeersFullListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("PEER rebuild");
     return StoreConnector<AppState, PeersWidgetAppState>(
         converter: (store) => store.state.peersWidgetAppState,
         builder: (context, PeersWidgetAppState state) {
           return Column(
             children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.85,
-                child: ListView.builder(
-                  itemCount: state.filteredPeers.length,
-                  itemBuilder: (context, index) {
-                    final peer = state.filteredPeers[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                    width: 40,
-                                    height: 40,
-                                    padding: const EdgeInsets.all(6),
+              ListView.builder(
+                itemCount: state.filteredPeers.length,
+                itemBuilder: (context, index) {
+                  final peer = state.filteredPeers[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                  width: 40,
+                                  height: 40,
+                                  padding: const EdgeInsets.all(6),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200],
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(4),
                                     decoration: BoxDecoration(
-                                      color: Colors.grey[200],
+                                      color:
+                                          const Color.fromRGBO(60, 141, 188, 1),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(4),
-                                      decoration: BoxDecoration(
-                                        color: const Color.fromRGBO(
-                                            60, 141, 188, 1),
-                                        borderRadius: BorderRadius.circular(8),
+                                    child: Center(
+                                        child: Text(
+                                      peer.name[0].toUpperCase(),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
                                       ),
-                                      child: Center(
-                                          child: Text(
-                                        peer.name[0].toUpperCase(),
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14,
-                                        ),
-                                      )),
                                     )),
-                                const SizedBox(width: 10),
-                                Text(
-                                  peer.name,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
+                                  )),
+                              const SizedBox(width: 10),
+                              Text(
+                                peer.name,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ],
           );

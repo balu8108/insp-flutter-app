@@ -21,12 +21,20 @@ IO.Socket? socket;
 
 void initializeSocketConnections(
     Store<AppState> store, String roomId, String token) {
+  if (socket != null) {
+    socket?.disconnect(); // Disconnect any existing socket connection
+    socket?.close(); // Close the socket connection
+    socket = null;
+  }
+
   if (token.isNotEmpty) {
+    print("token");
+    print(token);
     socket = IO.io(
-        'https://flutterdev.insp.1labventures.in',
+        'http://localhost:4000',
         IO.OptionBuilder()
             .setTransports(['websocket'])
-            .enableAutoConnect()
+            .disableAutoConnect()
             .setAuth({'secret_token': token})
             .build());
 
@@ -168,11 +176,11 @@ void peerLeavedResponseHandler(Store<AppState> store, dynamic res) {
   store.dispatch(UpdateFilteredPeers(filteredPeers: updatedPeers));
 }
 
-Future<void> joinRoomHandler(Store<AppState> store, String roomId,
-    dynamic userProfile, BuildContext context) async {
-  socket?.emitWithAck(
-      SOCKET_EVENTS.JOIN_ROOM, {'roomId': roomId, 'peerDetails': userProfile},
-      ack: (res) {
+Future<void> joinRoomHandler(
+    Store<AppState> store, String roomId, BuildContext context) async {
+  LoginResponseModelResult userData = await getUserData();
+  socket?.emitWithAck(SOCKET_EVENTS.JOIN_ROOM,
+      {'roomId': roomId, 'peerDetails': userData.toJson()}, ack: (res) {
     if (!res['success']) {
       toastification.show(
         context: context, // optional if you use ToastificationWrapper
@@ -235,6 +243,10 @@ void kickOutResponseHandler(Store<AppState> store, dynamic res) {
   leaveRoomHandler(store);
 }
 
+void endMeetHandler() {
+  socket?.emit(SOCKET_EVENTS.END_MEET_TO_SERVER);
+}
+
 Future<void> leaveRoomHandler(Store<AppState> store) async {
   if (socket?.connected == true) {
     socket?.emitWithAck(SOCKET_EVENTS.LEAVE_ROOM, '', ack: (res) async {
@@ -256,6 +268,7 @@ Future<void> leaveRoomHandler(Store<AppState> store) async {
         // Handle failure
       }
       socket?.disconnect();
+      socket?.close();
       toastification.show(
         type: ToastificationType.info,
         style: ToastificationStyle.fillColored,

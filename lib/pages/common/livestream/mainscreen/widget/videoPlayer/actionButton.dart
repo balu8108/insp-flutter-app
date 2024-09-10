@@ -4,6 +4,7 @@ import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_mode
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/mainsocket.dart';
+import 'package:inspflutterfrontend/widget/popups/leave_or_end_class.dart';
 import 'package:inspflutterfrontend/widget/popups/questiongenerate/question_generate.dart';
 
 class ActionButtonWidget extends StatefulWidget {
@@ -56,46 +57,31 @@ class _ActionButtonWidgetState extends State<ActionButtonWidget> {
                     ],
                   ),
                 const SizedBox(width: 20),
-                if (widget.isTeacher)
-                  SizedBox(
-                    width: 100,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(200, 50.0),
-                        backgroundColor: const Color(0xFFF63F4A),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        leaveRoomHandler(StoreProvider.of<AppState>(context));
-                      },
-                      child: const Text(
-                        'End',
-                        style: TextStyle(color: Colors.white),
+                SizedBox(
+                  width: 100,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(200, 50.0),
+                      backgroundColor: const Color(0xFFF63F4A),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                  ),
-                if (!widget.isTeacher)
-                  SizedBox(
-                    width: 100,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(200, 50.0),
-                        backgroundColor: const Color(0xFFF63F4A),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        leaveRoomHandler(StoreProvider.of<AppState>(context));
-                      },
-                      child: const Text(
-                        'Leave',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return LeaveOrEndClassPopup(
+                              isTeacher: widget.isTeacher);
+                        },
+                      );
+                    },
+                    child: Text(
+                      widget.isTeacher ? 'End' : 'Leave',
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
+                ),
               ],
             ),
           ]);

@@ -18,25 +18,26 @@ class _LiveClassScreenState extends State<LiveClassScreen> {
         body: Container(
             padding: const EdgeInsets.all(10.0),
             color: Colors.white,
-            height: double.infinity,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(flex: 2, child: LiveChatSectionWidget()),
-                    const SizedBox(width: 16),
-                    const Expanded(
-                      flex: 7,
-                      child: TPStreamLiveVideoPlayerWidget(),
-                    ),
-                    const SizedBox(width: 20),
-                    PeerListWidget()
-                  ],
-                ),
-              ),
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                const SizedBox(height: 10.0),
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(flex: 2, child: LiveChatSectionWidget()),
+                      const SizedBox(width: 16),
+                      const Expanded(
+                        flex: 7,
+                        child: TPStreamLiveVideoPlayerWidget(),
+                      ),
+                      const SizedBox(width: 20),
+                      PeerListWidget()
+                    ],
+                  ),
+                )
+              ],
             )));
   }
 }

@@ -106,38 +106,55 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
           } else {
             String userName = snapshot.data?.name ?? '';
             String userEmail = snapshot.data?.email ?? '';
-            return Container(
-              width: 600, // Set desired width
-              height: 800, // Set desired height
-              child: _pdfController != null || _pdfControllerWindow != null
-                  ? Stack(children: [
-                      UniversalPlatform.isWindows
-                          ? PdfView(controller: _pdfControllerWindow!)
-                          : PdfViewPinch(controller: _pdfController!),
-                      Positioned.fill(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Opacity(
-                            opacity:
-                                0.4, // Set the transparency level of the watermark
-                            child: Text(
-                              '$userName - $userEmail', // Watermark text
-                              style: const TextStyle(
-                                fontSize: 20, // Adjust size
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromRGBO(60, 141, 188,
-                                    1), // Adjust color of the watermark
+            return Column(children: [
+              Expanded(
+                  child: Container(
+                width: 600, // Set desired width
+                height: 800, // Set desired height
+                child: _pdfController != null || _pdfControllerWindow != null
+                    ? Stack(children: [
+                        UniversalPlatform.isWindows
+                            ? PdfView(controller: _pdfControllerWindow!)
+                            : PdfViewPinch(controller: _pdfController!),
+                        Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Opacity(
+                              opacity:
+                                  0.4, // Set the transparency level of the watermark
+                              child: Text(
+                                '$userName - $userEmail', // Watermark text
+                                style: const TextStyle(
+                                  fontSize: 20, // Adjust size
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(60, 141, 188,
+                                      1), // Adjust color of the watermark
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),
+                      ])
+                    : const Center(
+                        child: CircularProgressIndicator(),
                       ),
-                    ])
-                  : const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-            );
+              )),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.zoom_out),
+                    onPressed: () => {}, // Custom zoom-out functionality
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.zoom_in),
+                    onPressed: () => {}, // Custom zoom-in functionality
+                  ),
+                ],
+              ),
+            ]);
           }
         },
       ),

@@ -23,7 +23,7 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(getPreviewClassData(context, roomId));
     void navigateToRoomScreen(String roomId) {
-      store.dispatch(navigateToRoom(context, roomId, {}));
+      store.dispatch(navigateToRoom(context, roomId));
     }
 
     void copyTextToClipboard(String textToCopy) {

@@ -57,7 +57,6 @@ class LivePeersFullListTeacherWidget extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Container(
-                height: MediaQuery.of(context).size.height * 0.85,
                 child: ListView.builder(
                   itemCount: state.filteredPeers.length,
                   itemBuilder: (context, index) {

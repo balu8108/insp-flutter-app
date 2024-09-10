@@ -85,7 +85,6 @@ class _LiveChatState extends State<LiveChat> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 9,
               child: state.chatMessages.isNotEmpty
                   ? ListView.separated(
                       scrollDirection: Axis.vertical,
@@ -106,8 +105,8 @@ class _LiveChatState extends State<LiveChat> {
                   : const Center(child: Text('No item')),
             ),
             const SizedBox(height: 10),
-            Expanded(
-              flex: 1,
+            SizedBox(
+              height: 50,
               child: Column(
                 children: [
                   TextField(
