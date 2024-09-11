@@ -31,7 +31,7 @@ void initializeSocketConnections(
 
   if (token.isNotEmpty) {
     socket = IO.io(
-        'http://localhost:4000',
+        'https://flutterdev.insp.1labventures.in',
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .disableAutoConnect()
@@ -247,7 +247,6 @@ void kickOutResponseHandler(Store<AppState> store, dynamic res) {
 }
 
 void tpStreamLivestreamStatus(Store<AppState> store, dynamic res) {
-  print(res);
   String message = res['msg'] ?? 'Unknown Status';
   store.dispatch(getStatus(message));
 }

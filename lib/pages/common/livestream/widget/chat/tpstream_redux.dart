@@ -15,7 +15,7 @@ part 'tpstream_redux.freezed.dart';
 @freezed
 class TPStreamAppState with _$TPStreamAppState {
   const factory TPStreamAppState(
-          {@Default('') String streamStatusChangeTo,
+          {@Default('Not Started') String streamStatusChangeTo,
           @Default(VideoResponseModel()) VideoResponseModel videoResponse}) =
       _TPStreamAppState;
 }
@@ -46,8 +46,6 @@ ThunkAction<AppState> getStatus(String message) {
   return (Store<AppState> store) async {
     try {
       store.dispatch(UpdateStreamStatusChangeTo(streamStatusChangeTo: message));
-      store.dispatch(UpdateVideoResponse(
-          videoResponse: store.state.tpStreamAppState.videoResponse));
     } catch (error) {
       print("err");
     }

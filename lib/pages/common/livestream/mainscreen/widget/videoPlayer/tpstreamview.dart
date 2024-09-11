@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/actionButton.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/pollview.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/streamingStatus.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/tpStreamVideoPlayer.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 
@@ -34,6 +35,18 @@ class _TPStreamLiveVideoPlayerWidgetState
               children: [
                 Column(
                   children: [
+                    Container(
+                        height: 50,
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16),
+                          ),
+                          color: Color.fromRGBO(232, 242, 249, 1),
+                        ),
+                        child: const StreamingStatusWidget()),
                     const TPStreamVideoPlayer(),
                     Container(
                         height: 50,

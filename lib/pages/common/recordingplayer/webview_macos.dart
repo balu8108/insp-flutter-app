@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebviewMacOs extends StatefulWidget {
-  const WebviewMacOs({super.key, required this.url});
+  const WebviewMacOs(
+      {super.key, required this.url, required this.streamStatus});
 
-  final String url;
+  final String url, streamStatus;
 
   @override
   _WebviewMacOsState createState() => _WebviewMacOsState();
@@ -54,6 +55,15 @@ Page resource error:
         ),
       )
       ..loadRequest(Uri.parse(widget.url));
+  }
+
+  @override
+  void didUpdateWidget(covariant WebviewMacOs oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.streamStatus != widget.streamStatus) {
+      // Update the URL in the WebViewController
+      _controller.loadRequest(Uri.parse(widget.url));
+    }
   }
 
   @override
