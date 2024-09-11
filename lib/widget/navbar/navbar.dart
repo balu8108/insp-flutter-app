@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
 import 'package:inspflutterfrontend/pages/common/courses/my_courses_screen.dart';
@@ -38,6 +39,14 @@ class _NavbarState extends State<Navbar> {
   void initState() {
     super.initState();
     _loadUserData();
+  }
+
+  void _launchURL(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   Future<void> _loadUserData() async {
@@ -92,6 +101,8 @@ class _NavbarState extends State<Navbar> {
               }),
               _buildTextButton('INSP Portal', () {
                 _onButtonPressed('INSP Portal');
+                _launchURL(Uri.parse(
+                    'https://www.inspedu.in/')); // Use Uri.parse to convert string to Uri
               }),
               _buildUserMenu()
             ]
@@ -119,7 +130,7 @@ class _NavbarState extends State<Navbar> {
               }),
               _buildTextButton('INSP Portal', () {
                 _onButtonPressed('INSP Portal');
-                // Handle INSP Portal button press
+                _launchURL(Uri.parse('https://www.inspedu.in/'));
               }),
               _buildUserMenu()
             ],
