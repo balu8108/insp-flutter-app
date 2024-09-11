@@ -27,6 +27,10 @@ class TPStreamVideoPlayer extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(16.0),
             decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
               color: Color.fromRGBO(232, 242, 249, 1),
             ),
             child: state.videoResponse.playback_url.isNotEmpty

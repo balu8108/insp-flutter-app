@@ -33,34 +33,25 @@ class _TPStreamLiveVideoPlayerWidgetState
             bool isTeacher = snapshot.data ?? false;
             return Stack(
               children: [
-                Column(
-                  children: [
-                    Container(
-                        height: 50,
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(16),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            topRight: Radius.circular(16),
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      const TPStreamVideoPlayer(),
+                      Container(
+                          height: 50,
+                          width: double.infinity,
+                          padding: const EdgeInsets.only(left: 16),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(16),
+                              bottomRight: Radius.circular(16),
+                            ),
+                            color: Color.fromRGBO(232, 242, 249, 1),
                           ),
-                          color: Color.fromRGBO(232, 242, 249, 1),
-                        ),
-                        child: const StreamingStatusWidget()),
-                    const TPStreamVideoPlayer(),
-                    Container(
-                        height: 50,
-                        width: double.infinity,
-                        padding: const EdgeInsets.only(left: 16),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(16),
-                            bottomRight: Radius.circular(16),
-                          ),
-                          color: Color.fromRGBO(232, 242, 249, 1),
-                        ),
-                        child: ActionButtonWidget(isTeacher: isTeacher))
-                  ],
+                          child: ActionButtonWidget(isTeacher: isTeacher))
+                    ],
+                  ),
                 ),
                 const PollViewWidget()
               ],
