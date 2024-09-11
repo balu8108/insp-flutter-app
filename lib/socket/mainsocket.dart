@@ -14,6 +14,7 @@ import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/socket_events.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:inspflutterfrontend/widget/popups/rating/rating.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:redux/redux.dart';
 import 'package:toastification/toastification.dart';
@@ -30,7 +31,7 @@ void initializeSocketConnections(
 
   if (token.isNotEmpty) {
     socket = IO.io(
-        'https://flutterdev.insp.1labventures.in',
+        'http://localhost:4000',
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .disableAutoConnect()
@@ -261,15 +262,25 @@ Future<void> leaveRoomHandler(Store<AppState> store) async {
       var feedBackStatus = res['feedBackStatus'];
       store.dispatch(UpdateAllPeers(allPeers: []));
       store.dispatch(UpdateFilteredPeers(filteredPeers: []));
+      store.dispatch(UpdateChatMessages(chatMessages: []));
+      store.dispatch(UpdateLeaderBoard(leaderBoard: []));
+      LoginResponseModelResult userDatas = await getUserData();
+      navigatorKey.currentState?.push(
+        MaterialPageRoute(
+            builder: (context) => HomeScreen(userData: userDatas)),
+      );
       if (feedBackStatus['success']) {
-        LoginResponseModelResult userDatas = await getUserData();
-        navigatorKey.currentState?.push(
-          MaterialPageRoute(
-              builder: (context) => HomeScreen(userData: userDatas)),
-        );
         if (userDatas.userType == 0) {
-          if (feedBackStatus['isFeedback']) {
-            print("Need feedback");
+          if (!feedBackStatus['isFeedback']) {
+            final currentContext = navigatorKey.currentState?.context;
+            if (currentContext != null) {
+              showDialog(
+                  context: currentContext,
+                  builder: (BuildContext context) {
+                    return RatingFeedbackPopup.getScreen(
+                        int.parse(feedBackStatus['feedBackTopicId']));
+                  });
+            }
           }
         }
       } else {

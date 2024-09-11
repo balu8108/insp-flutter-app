@@ -8,6 +8,8 @@ import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feed
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/rating_topic_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/rating_topic_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/generic/generic_open_file_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_request_model.dart';
@@ -189,6 +191,11 @@ abstract class NetworkService {
   Future<HttpResponse<GenericOpenFileResponseModel>> getDocumentUrl(
       @Query('docId') String docId,
       @Query('docType') String docType,
+      @Header('Authorization') String secretTokenHeader);
+
+  @POST('/generic/create-feedback')
+  Future<HttpResponse<RatingTopicResponseModel>> postTopicRating(
+      @Body() RatingTopicRequestModel feedbackrequest,
       @Header('Authorization') String secretTokenHeader);
 
   @GET('/recording/view-recording')

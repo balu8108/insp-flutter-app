@@ -365,27 +365,27 @@ class ScheduleLiveClass extends StatelessWidget {
                             );
                           },
                         ),
-                        const SizedBox(height: 16.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Checkbox(
-                              activeColor: Colors.blue,
-                              value: state.isStudentMuted,
-                              onChanged: (bool? value) {
-                                dispatch(
-                                    context,
-                                    UpdateLiveClassIsStudentMuted(
-                                        isStudentMuted: value));
-                              },
-                            ),
-                            const Text('Mute all the participants',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Color(0xFF718096),
-                                )),
-                          ],
-                        ),
+                        // const SizedBox(height: 16.0),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   children: [
+                        //     Checkbox(
+                        //       activeColor: Colors.blue,
+                        //       value: state.isStudentMuted,
+                        //       onChanged: (bool? value) {
+                        //         dispatch(
+                        //             context,
+                        //             UpdateLiveClassIsStudentMuted(
+                        //                 isStudentMuted: value));
+                        //       },
+                        //     ),
+                        //     const Text('Mute all the participants',
+                        //         style: TextStyle(
+                        //           fontSize: 15.0,
+                        //           color: Color(0xFF718096),
+                        //         )),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),

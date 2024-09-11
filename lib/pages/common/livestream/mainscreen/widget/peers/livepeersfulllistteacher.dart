@@ -108,7 +108,9 @@ class LivePeersFullListTeacherWidget extends StatelessWidget {
                             ],
                           ),
                           KickPeerWidget(
-                              peerId: peer.id, socketId: peer.socketId)
+                              peerId: peer.id,
+                              isTeacher: peer.isTeacher,
+                              socketId: peer.socketId)
                         ],
                       ),
                     ),
