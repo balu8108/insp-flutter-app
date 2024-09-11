@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:io' show Platform;
 import 'package:inspflutterfrontend/pages/common/courses/widget/chapterdetail/chapter_widget.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
@@ -14,6 +16,8 @@ class TopicLectureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop =
+        kIsWeb || Platform.isWindows || Platform.isLinux || Platform.isMacOS;
     dispatch(context, initialFetchLecture(context));
 
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
@@ -54,10 +58,12 @@ class TopicLectureScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 17),
-                      const Expanded(
-                        flex: 3,
-                        child: UpcomingClassesScreen(),
-                      ),
+                      if (isDesktop) ...[
+                        const Expanded(
+                          flex: 3,
+                          child: UpcomingClassesScreen(),
+                        ),
+                      ]
                     ],
                   ),
                 ),

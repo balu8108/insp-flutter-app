@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/pages/common/alltopicswidget/all_topics_widget.dart';
@@ -14,6 +17,8 @@ class AssignmentScreen extends StatelessWidget {
   const AssignmentScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    final isDesktop =
+        kIsWeb || Platform.isWindows || Platform.isLinux || Platform.isMacOS;
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
       dispatch(context, showSelectedItem(context, inspCardModel));
     }
@@ -62,10 +67,12 @@ class AssignmentScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 17),
-                              Expanded(
-                                flex: 3,
-                                child: const UpcomingClassesScreen(),
-                              ),
+                              if (isDesktop) ...[
+                                Expanded(
+                                  flex: 3,
+                                  child: const UpcomingClassesScreen(),
+                                ),
+                              ]
                             ]))))));
   }
 

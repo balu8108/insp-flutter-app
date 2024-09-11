@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
@@ -11,6 +14,8 @@ class LibraryLectureScreen extends StatelessWidget {
   const LibraryLectureScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    final isDesktop =
+        kIsWeb || Platform.isWindows || Platform.isLinux || Platform.isMacOS;
     dispatch(context, initialFetchLibraryLecture(context));
     return Scaffold(
         appBar: Navbar(),
@@ -41,10 +46,12 @@ class LibraryLectureScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 17),
-                              Expanded(
-                                flex: 3,
-                                child: const UpcomingClassesScreen(),
-                              ),
+                              if (isDesktop) ...[
+                                Expanded(
+                                  flex: 3,
+                                  child: const UpcomingClassesScreen(),
+                                ),
+                              ]
                             ]))))));
   }
 

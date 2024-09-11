@@ -1,4 +1,7 @@
 // This is the screen where one click see all from  mentor homepage.
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/pages/common/alltopicswidget/all_topics_widget.dart';
 import 'package:inspflutterfrontend/pages/teacher/ratingandfeedback/ratingfeedbackdetailpage/screen/rating_feedback_detail.dart';
@@ -10,6 +13,9 @@ class RatingAndFeedback extends StatelessWidget {
   const RatingAndFeedback({super.key});
   @override
   Widget build(BuildContext context) {
+    final isDesktop =
+        kIsWeb || Platform.isWindows || Platform.isLinux || Platform.isMacOS;
+
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
       Navigator.push(
         context,
@@ -42,10 +48,12 @@ class RatingAndFeedback extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 17),
-                          Expanded(
-                            flex: 3,
-                            child: const UpcomingClassesScreen(),
-                          ),
+                          if (isDesktop) ...[
+                            Expanded(
+                              flex: 3,
+                              child: const UpcomingClassesScreen(),
+                            ),
+                          ]
                         ])))));
   }
 }

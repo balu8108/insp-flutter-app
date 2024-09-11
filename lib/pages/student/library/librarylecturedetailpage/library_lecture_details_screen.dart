@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/widget/card/model/lecture_card_model.dart';
@@ -14,6 +17,8 @@ class LibraryLectureDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop =
+        kIsWeb || Platform.isWindows || Platform.isLinux || Platform.isMacOS;
     dispatch(context, initialFetchLectureDetail(context));
 
     return Scaffold(
@@ -49,10 +54,12 @@ class LibraryLectureDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 17),
-                      Expanded(
-                        flex: 3,
-                        child: const UpcomingClassesScreen(),
-                      ),
+                      if (isDesktop) ...[
+                        Expanded(
+                          flex: 3,
+                          child: const UpcomingClassesScreen(),
+                        ),
+                      ]
                     ],
                   ),
                 ),

@@ -18,41 +18,70 @@ class RecordingPlayerScreen extends StatelessWidget {
     }
 
     return Scaffold(
-        appBar: Navbar(),
-        body: StoreConnector<RecordingPlayerAppState, RecordingPlayerAppState>(
-          converter: (store) => store.state,
-          builder: (context, RecordingPlayerAppState state) => Container(
-              padding: const EdgeInsets.all(10.0),
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          flex: 7,
-                          child: TPStreamRecordedPlayer(
-                              videourl: state.videoResponse.playback_url)),
-                      const SizedBox(width: 16),
-                      Expanded(
-                          flex: 3,
-                          child: RecordingDetailWidget(
+      appBar: Navbar(),
+      body: StoreConnector<RecordingPlayerAppState, RecordingPlayerAppState>(
+        converter: (store) => store.state,
+        builder: (context, RecordingPlayerAppState state) {
+          return Container(
+            padding: const EdgeInsets.all(10.0),
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  if (constraints.maxWidth < 600) {
+                    return SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TPStreamRecordedPlayer(
+                              videourl: state.videoResponse.playback_url),
+                          const SizedBox(height: 16),
+                          RecordingDetailWidget(
+                            recordingPlayerDetail: state.recordedVideoData,
+                            onViewDetailsClicked: onPressedRecording,
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 7,
+                            child: TPStreamRecordedPlayer(
+                                videourl: state.videoResponse.playback_url),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            flex: 3,
+                            child: RecordingDetailWidget(
                               recordingPlayerDetail: state.recordedVideoData,
-                              onViewDetailsClicked: onPressedRecording))
-                    ],
-                  ),
-                ),
-              )),
-        ));
+                              onViewDetailsClicked: onPressedRecording,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 
   static getScreen(String type, String classId) {
     return getBaseScreen<RecordingPlayerAppState, RecordingPlayerScreen>(
-        recordingPlayerReducer,
-        RecordingPlayerAppState(type: type, classId: classId),
-        const RecordingPlayerScreen());
+      recordingPlayerReducer,
+      RecordingPlayerAppState(type: type, classId: classId),
+      const RecordingPlayerScreen(),
+    );
   }
 
   static dispatch(BuildContext context, dynamic action) {

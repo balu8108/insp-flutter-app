@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/base/base.dart';
@@ -13,6 +16,8 @@ class SoloclassTopicDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop =
+        kIsWeb || Platform.isWindows || Platform.isLinux || Platform.isMacOS;
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
       dispatch(
           context, fetchTopicsDetailForSoloClassRoom(context, inspCardModel));
@@ -54,10 +59,12 @@ class SoloclassTopicDetailScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 17),
-                          Expanded(
-                            flex: 3,
-                            child: const UpcomingClassesScreen(),
-                          ),
+                          if (isDesktop) ...[
+                            Expanded(
+                              flex: 3,
+                              child: const UpcomingClassesScreen(),
+                            ),
+                          ]
                         ],
                       ),
                     ),
