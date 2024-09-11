@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
+import 'package:inspflutterfrontend/pages/teacher/soloclassrecording/screen/soloclassroomscreen.dart';
 import 'package:inspflutterfrontend/utils/extractFileNameFromS3URL.dart';
 import 'package:inspflutterfrontend/widget/inputField/picked_file.dart';
 import 'package:inspflutterfrontend/widget/inputField/textfield_withoutsuffix.dart';
@@ -16,6 +17,10 @@ class ScheduleSoloClass extends StatelessWidget {
   Widget build(BuildContext context) {
     void createSoloClass() {
       dispatch(context, handleCreateSoloClass(context));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Soloclassroomscreen()),
+      );
     }
 
     dispatch(context, getLectureNumberAPI(context));
@@ -24,6 +29,8 @@ class ScheduleSoloClass extends StatelessWidget {
     void uploadFile() {
       dispatch(context, pickFilesforSoloclass(context));
     }
+
+    void defaultLoaderFunction() {}
 
     return StoreConnector<ScheduleSoloclassAppState, ScheduleSoloclassAppState>(
         converter: (store) => store.state,
@@ -206,16 +213,17 @@ class ScheduleSoloClass extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.20,
+                          height: 40,
+                          width: 200,
+                          // width: MediaQuery.of(context).size.width * 0.20,
                           child: ElevatedButton(
-                              onPressed:
-                                  state.isClassLoading ? null : createSoloClass,
+                              onPressed: state.isClassLoading
+                                  ? defaultLoaderFunction
+                                  : createSoloClass,
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
                                 backgroundColor:
                                     const Color.fromRGBO(60, 141, 188, 1),
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16.0),
                                 textStyle: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
@@ -225,11 +233,14 @@ class ScheduleSoloClass extends StatelessWidget {
                                 ),
                               ),
                               child: state.isClassLoading
-                                  ? const Center(
-                                      child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2,
-                                    ))
+                                  ? const SizedBox(
+                                      width: 18,
+                                      height: 18,
+                                      child: Center(
+                                          child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2,
+                                      )))
                                   : Text(
                                       state.isEditScreen ? "Update" : "Start")),
                         ),

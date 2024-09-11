@@ -24,6 +24,8 @@ class AddAssignment extends StatelessWidget {
       dispatch(context, handleCreate(context, getAssignment));
     }
 
+    void defaultLoaderFunction() {}
+
     void updateAssignment() {
       dispatch(
           context, handleUpdate(context, fetchAssignmentAfterUpdateorDelete));
@@ -131,6 +133,11 @@ class AddAssignment extends StatelessWidget {
                                         RemoveFileAction(filename: file));
                                   },
                                   pickedFilesName: state.pickedFilesName),
+
+                              Text(
+                                state.fileError ? "Please select file" : "",
+                                style: TextStyle(color: Colors.red),
+                              ),
                               ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: state.previousFiles.length,
@@ -179,7 +186,7 @@ class AddAssignment extends StatelessWidget {
                           width: MediaQuery.of(context).size.width * 0.20,
                           child: ElevatedButton(
                               onPressed: state.isAssignmentLoading
-                                  ? null
+                                  ? defaultLoaderFunction
                                   : state.isEditScreen
                                       ? updateAssignment
                                       : createAssignment,
@@ -188,7 +195,7 @@ class AddAssignment extends StatelessWidget {
                                 backgroundColor:
                                     const Color.fromRGBO(60, 141, 188, 1),
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 16.0),
+                                    const EdgeInsets.symmetric(vertical: 22.0),
                                 textStyle: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
@@ -198,11 +205,16 @@ class AddAssignment extends StatelessWidget {
                                 ),
                               ),
                               child: state.isAssignmentLoading
-                                  ? const Center(
-                                      child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2,
-                                    ))
+                                  ? const SizedBox(
+                                      width: 18,
+                                      height: 18,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 2,
+                                        ),
+                                      ),
+                                    )
                                   : Text(state.isEditScreen
                                       ? "Update Assignment"
                                       : "Send")),

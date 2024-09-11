@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/apiservices/models/recording/view_recording_response_model.dart';
 import 'package:inspflutterfrontend/utils/file_box_component.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 import 'package:inspflutterfrontend/widget/card/lecture_recording_card.dart';
-import 'package:inspflutterfrontend/widget/card/model/recording_player_card_model.dart';
 
 class RecordingDetailWidget extends StatelessWidget {
-  final RecordingPlayerCard recordingPlayerDetail;
-  final Function(BuildContext, RecordingPlayerCard) onViewDetailsClicked;
+  final RecordVideoResponseModelData recordingPlayerDetail;
+  final Function(BuildContext, String) onViewDetailsClicked;
 
   RecordingDetailWidget({
     required this.recordingPlayerDetail,
@@ -45,7 +45,7 @@ class RecordingDetailWidget extends StatelessWidget {
                         height: 40,
                       ),
                       Text(
-                        recordingPlayerDetail.topicName,
+                        recordingPlayerDetail.liveClassRoomDetail.topicName,
                         style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
@@ -74,7 +74,7 @@ class RecordingDetailWidget extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        recordingPlayerDetail.description,
+                        recordingPlayerDetail.liveClassRoomDetail.description,
                         style: const TextStyle(
                           fontSize: 12,
                           color: Color.fromRGBO(44, 51, 41, 0.47),
@@ -91,10 +91,13 @@ class RecordingDetailWidget extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 2),
-                      recordingPlayerDetail.agenda.split("\r\n").isNotEmpty
+                      recordingPlayerDetail.liveClassRoomDetail.agenda
+                              .split("\r\n")
+                              .isNotEmpty
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: recordingPlayerDetail.agenda
+                              children: recordingPlayerDetail
+                                  .liveClassRoomDetail.agenda
                                   .split("\r\n")
                                   .take(4)
                                   .map<Widget>(
@@ -172,11 +175,15 @@ class RecordingDetailWidget extends StatelessWidget {
                       LectureRecordingCardWidget(
                           liveClassRoomRecordings:
                               recordingPlayerDetail.liveClassRoomRecordings,
-                          topicName: recordingPlayerDetail.agenda,
+                          classId: "",
+                          topicName:
+                              recordingPlayerDetail.liveClassRoomDetail.agenda,
                           mentorName: recordingPlayerDetail.mentorName,
-                          description: recordingPlayerDetail.description,
+                          description: recordingPlayerDetail
+                              .liveClassRoomDetail.description,
                           files: recordingPlayerDetail.liveClassRoomFiles,
-                          agenda: recordingPlayerDetail.agenda)
+                          agenda:
+                              recordingPlayerDetail.liveClassRoomDetail.agenda)
                     ]);
               }
             }));

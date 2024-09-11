@@ -5,7 +5,7 @@ Widget searchBox(BuildContext context, Function onChanged) {
   return SizedBox(
     width: context.isWebOrLandScape()
         ? MediaQuery.of(context).size.width / 5
-        : MediaQuery.of(context).size.width * 0.8,
+        : MediaQuery.of(context).size.width * 0.3,
     child: TextField(
       onChanged: (text) {
         onChanged(text);

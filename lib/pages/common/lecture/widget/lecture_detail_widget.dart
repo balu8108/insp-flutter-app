@@ -211,6 +211,7 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
                         LectureRecordingCardWidget(
                             liveClassRoomRecordings:
                                 lec.liveClassRoomRecordings,
+                            classId: lec.id.toString(),
                             topicName: lec.liveClassRoomDetail.topicName,
                             mentorName: lec.mentorName,
                             description: lec.liveClassRoomDetail.description,

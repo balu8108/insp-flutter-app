@@ -3,12 +3,16 @@ import 'package:inspflutterfrontend/apiservices/models/assignment/all_assignment
 import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/calendar/all_calendar_scheduled_data_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/calendar/timetable_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/rating_topic_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/rating_topic_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/generic/generic_open_file_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/liveclass/liveclass_preview_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/device_login_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_topic_response_model.dart';
@@ -18,9 +22,12 @@ import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_
 import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/latest_completed_class_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/rating_feedback_rating_detail_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/recording/view_recording_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/tpstream/video_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/tpstream/video_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:retrofit/dio.dart';
 
@@ -119,9 +126,24 @@ abstract class RemoteDataSource {
   Future<HttpResponse<GenericOpenFileResponseModel>> getDocumentUrl(
       String docId, String docType, String secretTokenHeader);
 
+  Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
+      String type, String id, String secretTokenHeader);
+
   Future<HttpResponse<CreateStudentFeedbackResponseModel>>
       createStudentFeedback(CreateStudentFeedbackRequestModel feedbackrequest,
           String secretTokenHeader);
+
+  Future<HttpResponse<LiveClassPreviewResponseModel>> getRoomPreviewData(
+      String roomId, String secretTokenHeader);
+
+  Future<HttpResponse<VideoResponseModel>> getVideoPlayUrl(String videoId,
+      VideoRequestModel videoRequestModel, String secretTokenHeader);
+
+  Future<HttpResponse<TimeTableResponseDataModel>> getAllTimeTable(
+      String secretTokenHeader);
+
+  Future<HttpResponse<RatingTopicResponseModel>> postTopicRating(
+      RatingTopicRequestModel feedbackrequest, String secretTokenHeader);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -312,10 +334,42 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
+  Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
+      String type, String id, String secretTokenHeader) {
+    return deviceNetworkService.getRecordingData(type, id, secretTokenHeader);
+  }
+
+  @override
   Future<HttpResponse<CreateStudentFeedbackResponseModel>>
       createStudentFeedback(CreateStudentFeedbackRequestModel feedbackrequest,
           String secretTokenHeader) {
     return deviceNetworkService.createStudentFeedback(
+        feedbackrequest, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<LiveClassPreviewResponseModel>> getRoomPreviewData(
+      String roomId, String secretTokenHeader) {
+    return deviceNetworkService.getRoomPreviewData(roomId, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<VideoResponseModel>> getVideoPlayUrl(String videoId,
+      VideoRequestModel videoRequestModel, String secretTokenHeader) {
+    return deviceNetworkService.getVideoPlayUrl(
+        videoId, videoRequestModel, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<TimeTableResponseDataModel>> getAllTimeTable(
+      String secretTokenHeader) {
+    return deviceNetworkService.getAllTimeTable(secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<RatingTopicResponseModel>> postTopicRating(
+      RatingTopicRequestModel feedbackrequest, String secretTokenHeader) {
+    return deviceNetworkService.postTopicRating(
         feedbackrequest, secretTokenHeader);
   }
 }

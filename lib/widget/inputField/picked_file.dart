@@ -66,6 +66,7 @@ class PickedFile extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0),
                 ),
+                minimumSize: Size(100, 54),
               ),
             ),
           ],

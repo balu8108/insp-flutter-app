@@ -73,9 +73,9 @@ class MyCoursesScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 17),
                             if (isWebOrLandScape)
-                              Expanded(
+                              const Expanded(
                                 flex: 3,
-                                child: UpcomingClassesScreen.getScreen(),
+                                child: UpcomingClassesScreen(),
                               ),
                           ],
                         ),

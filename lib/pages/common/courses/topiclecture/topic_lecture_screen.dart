@@ -20,10 +20,6 @@ class TopicLectureScreen extends StatelessWidget {
       dispatch(context, showLecturesForTopic(context, inspCardModel));
     }
 
-    void onPressedTopic(BuildContext context, INSPCardModel inspCardModel) {
-      // dispatch(context, showTopicsForSubject(context, inspCardModel));
-    }
-
     return Scaffold(
         appBar: Navbar(),
         body: StoreConnector<TopicLectureAppState, TopicLectureAppState>(
@@ -58,9 +54,9 @@ class TopicLectureScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 17),
-                      Expanded(
+                      const Expanded(
                         flex: 3,
-                        child: UpcomingClassesScreen.getScreen(),
+                        child: UpcomingClassesScreen(),
                       ),
                     ],
                   ),

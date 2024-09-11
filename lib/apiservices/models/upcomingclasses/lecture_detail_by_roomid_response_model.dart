@@ -127,18 +127,20 @@ class LiveClassRoomRecordings {
   const LiveClassRoomRecordings(
       [this.id = 0,
       this.key = '',
-      this.drmKeyId = '',
-      this.hlsDrmKey = '',
-      this.hlsDrmUrl = '',
       this.tpStreamId = '',
-      this.dRMType = '',
+      this.rtmpUrl = '',
+      this.streamKey = '',
       this.status = '',
       this.createdAt = '',
       this.updatedAt = '']);
 
   final int id;
-  final String key, drmKeyId, hlsDrmKey, hlsDrmUrl, tpStreamId, dRMType, status;
+  final String key, tpStreamId, status;
   final String createdAt, updatedAt;
+  @JsonKey(name: 'rtmp_url')
+  final String rtmpUrl;
+  @JsonKey(name: 'stream_key')
+  final String streamKey;
 
   factory LiveClassRoomRecordings.fromJson(Map<String, Object?> json) =>
       _$LiveClassRoomRecordingsFromJson(json);

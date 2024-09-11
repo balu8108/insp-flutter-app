@@ -48,10 +48,13 @@ class _AttendanceWidgetState extends State<AttendanceWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(flex: 5, child: INSPHeading('Attendance')),
-              const Text(
-                "See All",
-                style: TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis),
-              ),
+              const Spacer(),
+              IconButton(
+                icon: Icon(Icons.more_vert),
+                onPressed: () {
+                  // Handle button press
+                },
+              )
             ],
           ),
           const SizedBox(height: 17),

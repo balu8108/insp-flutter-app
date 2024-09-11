@@ -3,11 +3,9 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  desktop_webview_window
-  flutter_webrtc
+  emoji_picker_flutter
   pdfx
-  url_launcher_windows
-  webview_universal
+  webview_windows
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

@@ -75,6 +75,8 @@ class ScheduleLiveClass extends StatelessWidget {
       }
     }
 
+    void defaultLoaderFunction() {}
+
     return StoreConnector<ScheduleLiveclassAppState, ScheduleLiveclassAppState>(
         converter: (store) => store.state,
         builder: (context, ScheduleLiveclassAppState state) => AlertDialog(
@@ -363,27 +365,27 @@ class ScheduleLiveClass extends StatelessWidget {
                             );
                           },
                         ),
-                        const SizedBox(height: 16.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Checkbox(
-                              activeColor: Colors.blue,
-                              value: state.isStudentMuted,
-                              onChanged: (bool? value) {
-                                dispatch(
-                                    context,
-                                    UpdateLiveClassIsStudentMuted(
-                                        isStudentMuted: value));
-                              },
-                            ),
-                            const Text('Mute all the participants',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Color(0xFF718096),
-                                )),
-                          ],
-                        ),
+                        // const SizedBox(height: 16.0),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   children: [
+                        //     Checkbox(
+                        //       activeColor: Colors.blue,
+                        //       value: state.isStudentMuted,
+                        //       onChanged: (bool? value) {
+                        //         dispatch(
+                        //             context,
+                        //             UpdateLiveClassIsStudentMuted(
+                        //                 isStudentMuted: value));
+                        //       },
+                        //     ),
+                        //     const Text('Mute all the participants',
+                        //         style: TextStyle(
+                        //           fontSize: 15.0,
+                        //           color: Color(0xFF718096),
+                        //         )),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),
@@ -396,7 +398,7 @@ class ScheduleLiveClass extends StatelessWidget {
                           width: MediaQuery.of(context).size.width * 0.20,
                           child: ElevatedButton(
                               onPressed: state.isClassLoading
-                                  ? null
+                                  ? defaultLoaderFunction
                                   : state.isEditScreen
                                       ? updateAssignment
                                       : createAssignment,
@@ -415,11 +417,14 @@ class ScheduleLiveClass extends StatelessWidget {
                                 ),
                               ),
                               child: state.isClassLoading
-                                  ? const Center(
-                                      child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2,
-                                    ))
+                                  ? const SizedBox(
+                                      width: 18,
+                                      height: 18,
+                                      child: Center(
+                                          child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2,
+                                      )))
                                   : Text(state.isEditScreen
                                       ? "Update Class"
                                       : "Schedule Class")),

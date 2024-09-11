@@ -82,37 +82,6 @@ Map<String, dynamic> _$AllLecturesForCourseResponseModelDataToJson(
       'LiveClassRoomDetail': instance.liveClassRoomDetail,
     };
 
-LiveClassRoomDetail _$LiveClassRoomDetailFromJson(Map<String, dynamic> json) =>
-    LiveClassRoomDetail(
-      (json['id'] as num?)?.toInt() ?? 0,
-      json['chapterId'] as String? ?? '',
-      json['chapterName'] as String? ?? '',
-      json['topicId'] as String? ?? '',
-      json['topicName'] as String? ?? '',
-      json['agenda'] as String? ?? '',
-      json['description'] as String? ?? '',
-      (json['classRoomId'] as num?)?.toInt() ?? 0,
-      (json['lectureNo'] as num?)?.toInt() ?? 0,
-      json['createdAt'] as String? ?? '',
-      json['updatedAt'] as String? ?? '',
-    );
-
-Map<String, dynamic> _$LiveClassRoomDetailToJson(
-        LiveClassRoomDetail instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'chapterId': instance.chapterId,
-      'chapterName': instance.chapterName,
-      'topicId': instance.topicId,
-      'topicName': instance.topicName,
-      'agenda': instance.agenda,
-      'description': instance.description,
-      'classRoomId': instance.classRoomId,
-      'lectureNo': instance.lectureNo,
-      'createdAt': instance.createdAt,
-      'updatedAt': instance.updatedAt,
-    };
-
 LiveClassRoomFile _$LiveClassRoomFileFromJson(Map<String, dynamic> json) =>
     LiveClassRoomFile(
       (json['id'] as num?)?.toInt() ?? 0,

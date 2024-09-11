@@ -24,15 +24,26 @@ class ChapterDetailWidget extends StatefulWidget {
 }
 
 class ChapterDetailWidgetState extends State<ChapterDetailWidget> {
+  List<INSPCardModel> filteredTopics = [];
+
   @override
   void initState() {
     super.initState();
+    filteredTopics = widget.allTopics;
   }
 
   void _filterWithQueryText(String query) {
-    final filteredTopics = widget.allTopics
-        .where((it) => it.name.toLowerCase().contains(query.toLowerCase()))
-        .toList();
+    if (query.isNotEmpty) {
+      setState(() {
+        filteredTopics = widget.allTopics
+            .where((it) => it.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      });
+    } else {
+      setState(() {
+        filteredTopics = widget.allTopics;
+      });
+    }
   }
 
   Widget _buildHeading(BuildContext context) {
@@ -51,7 +62,7 @@ class ChapterDetailWidgetState extends State<ChapterDetailWidget> {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    '${widget.selectedChapter.name}',
+                    widget.selectedChapter.name,
                     style: const TextStyle(
                         fontSize: 16, overflow: TextOverflow.ellipsis),
                   ),
@@ -87,15 +98,13 @@ class ChapterDetailWidgetState extends State<ChapterDetailWidget> {
       child: Column(
         children: [
           _buildHeading(context),
-          const SizedBox(
-            height: 16,
-          ),
-          widget.allTopics.isNotEmpty
+          const SizedBox(height: 16),
+          filteredTopics.isNotEmpty
               ? BuildGridView(
                   context: context,
-                  items: widget.allTopics,
+                  items: filteredTopics,
                   itemBuilder: (context, index) {
-                    final cardModel = widget.allTopics[index];
+                    final cardModel = filteredTopics[index];
                     return INSPCard(
                       inspCardModel: cardModel,
                       context: context,

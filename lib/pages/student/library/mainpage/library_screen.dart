@@ -77,7 +77,7 @@ class LibraryScreen extends StatelessWidget {
                   const SizedBox(width: 17),
                   Expanded(
                     flex: 3,
-                    child: UpcomingClassesScreen.getScreen(),
+                    child: const UpcomingClassesScreen(),
                   ),
                 ],
               ),

@@ -4,11 +4,11 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/device_login_request_model.dart';
+import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:toastification/toastification.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
-import 'package:inspflutterfrontend/pages/login/login_screen.dart';
 import 'package:inspflutterfrontend/utils/localstorage.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -55,66 +55,79 @@ class UpdateIsLoading extends LoginAction {
   UpdateIsLoading({required this.isLoading});
 }
 
-LoginAppState _loginStateReducer(LoginAppState state, LoginAction action) {
-  switch (action) {
-    case UpdateEmailId():
-      {
-        return state.copyWith(emailId: action.emailId);
-      }
-    case UpdatePassword():
-      {
-        return state.copyWith(password: action.password);
-      }
-    case UpdatePasswordVisibleStatus():
-      return state.copyWith(isPasswordVisible: action.isPasswordVisible);
-    case UpdateIsLoading():
-      return state.copyWith(isLoading: action.isLoading);
-  }
-}
-
 LoginAppState loginStateReducer(LoginAppState state, dynamic action) {
-  var upState = _loginStateReducer(state, action);
-  return upState;
+  if (action is UpdateEmailId) {
+    return state.copyWith(emailId: action.emailId);
+  } else if (action is UpdatePassword) {
+    return state.copyWith(password: action.password);
+  } else if (action is UpdatePasswordVisibleStatus) {
+    return state.copyWith(isPasswordVisible: action.isPasswordVisible);
+  } else if (action is UpdateIsLoading) {
+    return state.copyWith(isLoading: action.isLoading);
+  }
+  return state;
 }
 
-ThunkAction<LoginAppState> handleLogin(BuildContext context) {
-  return (Store<LoginAppState> store) async {
-    if (store.state.password.isNotEmpty && store.state.emailId.isNotEmpty) {
-      LoginScreen.dispatch(context, UpdateIsLoading(isLoading: true));
-      final loginRemoteDataSource = RemoteDataSource();
-      final loginRequestModel = DeviceLoginRequestModel(
+ThunkAction<AppState> handleLogin(BuildContext context) {
+  return (Store<AppState> store) async {
+    final loginState = store.state.loginState;
+
+    if (loginState.password.isNotEmpty && loginState.emailId.isNotEmpty) {
+      store.dispatch(UpdateIsLoading(isLoading: true));
+
+      try {
+        final loginRemoteDataSource = RemoteDataSource();
+        final loginRequestModel = DeviceLoginRequestModel(
           secret_key: secretKey,
-          email: store.state.emailId,
-          password: store.state.password,
+          email: loginState.emailId,
+          password: loginState.password,
           device_os: 'windows',
           device_width: '136',
           device_height: '768',
           device_manufacturer: 'HP',
           device_id: 'D123d',
-          device_uuid: 'UUID123');
-      final HttpResponse<LoginResponseModel> result =
-          await loginRemoteDataSource.deviceLogin(loginRequestModel);
+          device_uuid: 'UUID123',
+        );
 
-      if (result.response.statusCode == 201) {
-        if (result.data.status == true) {
-          await storeData('insp_user_profile',
-              jsonEncode(result.data.loginResponseModelResult.toJson()));
+        final HttpResponse<LoginResponseModel> result =
+            await loginRemoteDataSource.deviceLogin(loginRequestModel);
 
-          Navigator.push(
+        if (result.response.statusCode == 201) {
+          if (result.data.status == true) {
+            await storeData(
+              'insp_user_profile',
+              jsonEncode(result.data.loginResponseModelResult.toJson()),
+            );
+
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => HomeScreen(
-                      userData: result.data.loginResponseModelResult)));
-          toastification.show(
-            context: context, // optional if you use ToastificationWrapper
-            type: ToastificationType.success,
-            style: ToastificationStyle.fillColored,
-            autoCloseDuration: const Duration(seconds: 3),
-            title: const Text("Loging you in !!"),
-            alignment: Alignment.topRight,
-          );
+                builder: (context) =>
+                    HomeScreen(userData: result.data.loginResponseModelResult),
+              ),
+            );
+            store.dispatch(UpdateIsLoading(isLoading: false));
+            toastification.show(
+              context: context, // optional if you use ToastificationWrapper
+              type: ToastificationType.success,
+              style: ToastificationStyle.fillColored,
+              autoCloseDuration: const Duration(seconds: 3),
+              title: const Text("Logging you in !!"),
+              alignment: Alignment.topRight,
+            );
+          } else if (result.data.status == false) {
+            store.dispatch(UpdateIsLoading(isLoading: false));
+            toastification.show(
+              context: context, // optional if you use ToastificationWrapper
+              type: ToastificationType.warning,
+              style: ToastificationStyle.fillColored,
+              autoCloseDuration: const Duration(seconds: 3),
+              title: const Text("Sorry... Cannot Login More Than 2 Devices..."),
+              alignment: Alignment.topRight,
+            );
+          }
         } else {
-          LoginScreen.dispatch(context, UpdateIsLoading(isLoading: false));
+          store.dispatch(UpdateIsLoading(isLoading: false));
           toastification.show(
             context: context, // optional if you use ToastificationWrapper
             type: ToastificationType.warning,
@@ -124,8 +137,8 @@ ThunkAction<LoginAppState> handleLogin(BuildContext context) {
             alignment: Alignment.topRight,
           );
         }
-      } else {
-        LoginScreen.dispatch(context, UpdateIsLoading(isLoading: false));
+      } catch (error) {
+        store.dispatch(UpdateIsLoading(isLoading: false));
         toastification.show(
           context: context, // optional if you use ToastificationWrapper
           type: ToastificationType.error,

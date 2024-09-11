@@ -137,11 +137,9 @@ LiveClassRoomRecordings _$LiveClassRoomRecordingsFromJson(
     LiveClassRoomRecordings(
       (json['id'] as num?)?.toInt() ?? 0,
       json['key'] as String? ?? '',
-      json['drmKeyId'] as String? ?? '',
-      json['hlsDrmKey'] as String? ?? '',
-      json['hlsDrmUrl'] as String? ?? '',
       json['tpStreamId'] as String? ?? '',
-      json['dRMType'] as String? ?? '',
+      json['rtmp_url'] as String? ?? '',
+      json['stream_key'] as String? ?? '',
       json['status'] as String? ?? '',
       json['createdAt'] as String? ?? '',
       json['updatedAt'] as String? ?? '',
@@ -152,14 +150,12 @@ Map<String, dynamic> _$LiveClassRoomRecordingsToJson(
     <String, dynamic>{
       'id': instance.id,
       'key': instance.key,
-      'drmKeyId': instance.drmKeyId,
-      'hlsDrmKey': instance.hlsDrmKey,
-      'hlsDrmUrl': instance.hlsDrmUrl,
       'tpStreamId': instance.tpStreamId,
-      'dRMType': instance.dRMType,
       'status': instance.status,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
+      'rtmp_url': instance.rtmpUrl,
+      'stream_key': instance.streamKey,
     };
 
 LeaderBoards _$LeaderBoardsFromJson(Map<String, dynamic> json) => LeaderBoards(

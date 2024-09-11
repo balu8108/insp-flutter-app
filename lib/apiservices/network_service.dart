@@ -3,14 +3,18 @@ import 'package:inspflutterfrontend/apiservices/models/assignment/all_assignment
 import 'package:inspflutterfrontend/apiservices/models/assignment/delete_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/assignment/latest_upload_assignment_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/calendar/all_calendar_scheduled_data_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/calendar/timetable_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/rating_topic_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/rating_topic_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/generic/generic_open_file_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topics_for_subject_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/liveclass/liveclass_preview_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/device_login_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_topic_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_subjects_request_model.dart';
@@ -21,9 +25,12 @@ import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_
 import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_topics_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/latest_completed_class_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/ratingfeedback/rating_feedback_rating_detail_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/recording/view_recording_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/tpstream/video_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/tpstream/video_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:retrofit/dio.dart';
@@ -76,6 +83,13 @@ abstract class NetworkService {
     @Body() PhysicsCourseTopicsRequestModel allTopicsForRequestModel,
   );
 
+  @POST(
+      'https://app.tpstreams.com/api/v1/gcma48/assets/{videoId}/access_tokens/')
+  Future<HttpResponse<VideoResponseModel>> getVideoPlayUrl(
+      @Path() String videoId,
+      @Body() VideoRequestModel videoRequestModel,
+      @Header('Authorization') String secretTokenHeader);
+
   @GET('/lecture/get-lecture-by-topic-name/{topicId}/{topicType}')
   Future<HttpResponse<AllLecturesForTopicResponseModel>> getAllLectureByTopic(
       @Path() String topicId,
@@ -90,6 +104,10 @@ abstract class NetworkService {
   Future<HttpResponse<LatestCompletedClassesResponseModel>>
       getLatestCompletedClasses(
           @Header('Authorization') String secretTokenHeader);
+
+  @GET('/generic/get-all-timetable')
+  Future<HttpResponse<TimeTableResponseDataModel>> getAllTimeTable(
+      @Header('Authorization') String secretTokenHeader);
 
   @GET('/generic/topic-feedback-rating-details/{topicId}')
   Future<HttpResponse<RatingFeedbackRatingDetailResponseModel>>
@@ -175,9 +193,24 @@ abstract class NetworkService {
       @Query('docType') String docType,
       @Header('Authorization') String secretTokenHeader);
 
+  @POST('/generic/create-feedback')
+  Future<HttpResponse<RatingTopicResponseModel>> postTopicRating(
+      @Body() RatingTopicRequestModel feedbackrequest,
+      @Header('Authorization') String secretTokenHeader);
+
+  @GET('/recording/view-recording')
+  Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
+      @Query('type') String type,
+      @Query('id') String id,
+      @Header('Authorization') String secretTokenHeader);
+
   @POST('/student-feedback/create-student-feedback')
   Future<HttpResponse<CreateStudentFeedbackResponseModel>>
       createStudentFeedback(
           @Body() CreateStudentFeedbackRequestModel feedbackrequest,
           @Header('Authorization') String secretTokenHeader);
+
+  @GET('/schedule-live-class/get-details/{roomId}')
+  Future<HttpResponse<LiveClassPreviewResponseModel>> getRoomPreviewData(
+      @Path() String roomId, @Header('Authorization') String secretTokenHeader);
 }

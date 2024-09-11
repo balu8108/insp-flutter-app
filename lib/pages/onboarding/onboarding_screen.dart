@@ -32,8 +32,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     },
   ];
   void _onSkipButton() {
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => LoginScreen.getScreen()));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 
   void _onBackwardButton() {
@@ -47,7 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _onNextButton() {
     if (_currentPage == onBoardingData.length - 1) {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => LoginScreen.getScreen()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
           (Route<dynamic> route) => false);
     } else {
       _pageController.nextPage(

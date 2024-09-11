@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/upcoming_lecture_card_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
@@ -24,12 +25,6 @@ class UpcomingWidgetAppState with _$UpcomingWidgetAppState {
   }) = _UpcomingWidgetAppState;
 }
 
-// Reducer
-UpcomingWidgetAppState upcomingWidgetReducer(
-    UpcomingWidgetAppState state, dynamic action) {
-  return _upcomingWidgetReducer(state, action);
-}
-
 // Action
 abstract class UpcomingWidgetAction {}
 
@@ -39,8 +34,8 @@ class UpdateWeeklyData extends UpcomingWidgetAction {
   UpdateWeeklyData({required this.weeklyData});
 }
 
-UpcomingWidgetAppState _upcomingWidgetReducer(
-    UpcomingWidgetAppState state, UpcomingWidgetAction action) {
+UpcomingWidgetAppState upcomingWidgetReducer(
+    UpcomingWidgetAppState state, dynamic action) {
   if (action is UpdateWeeklyData) {
     return state.copyWith(weeklyData: action.weeklyData);
   }
@@ -48,8 +43,8 @@ UpcomingWidgetAppState _upcomingWidgetReducer(
 }
 
 // Thunk action
-ThunkAction<UpcomingWidgetAppState> getAllUpcomingClass(BuildContext context) {
-  return (Store<UpcomingWidgetAppState> store) async {
+ThunkAction<AppState> getAllUpcomingClass(BuildContext context) {
+  return (Store<AppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
       String userToken = await getUserToken();

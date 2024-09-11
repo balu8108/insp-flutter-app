@@ -28,6 +28,7 @@ class AddAssignmentAppState with _$AddAssignmentAppState {
       required String? description,
       @Default('') String? descriptionError,
       required List<LiveClassRoomFile> previousFiles,
+      @Default(false) bool fileError,
       @Default([]) List<int> deletedFileId,
       @Default([]) List<String> pickedFilesName,
       @Default([]) List<PlatformFile> pickedFiles,
@@ -69,6 +70,11 @@ class UpdateDescriptionError extends AddAssignmentAction {
 class UpdatePickedFiles extends AddAssignmentAction {
   List<PlatformFile> pickedFiles;
   UpdatePickedFiles({required this.pickedFiles});
+}
+
+class UpdateFileError extends AddAssignmentAction {
+  bool fileError;
+  UpdateFileError({required this.fileError});
 }
 
 class UpdatePickedFilesName extends AddAssignmentAction {
@@ -115,6 +121,8 @@ AddAssignmentAppState _addAssignmentStateReducer(
       return state.copyWith(pickedFilesName: action.pickedFilesName);
     case UpdateIsAssignmentLoading():
       return state.copyWith(isAssignmentLoading: action.isAssignmentLoading);
+    case UpdateFileError():
+      return state.copyWith(fileError: action.fileError);
     case RemovePreviousAssignmentFile():
       return state.copyWith(
           deletedFileId: [...state.deletedFileId, action.id],
@@ -152,6 +160,7 @@ ThunkAction<AddAssignmentAppState> pickFiles(BuildContext context) {
         List<PlatformFile> pickedFiles = result.files;
         List<String> pickedFilesName =
             pickedFiles.map((item) => item.name).toList();
+        store.dispatch(UpdateFileError(fileError: false));
         store.dispatch(UpdatePickedFiles(pickedFiles: pickedFiles));
         store.dispatch(UpdatePickedFilesName(pickedFilesName: pickedFilesName));
       } else {
@@ -167,8 +176,6 @@ ThunkAction<AddAssignmentAppState> handleCreate(
     BuildContext context, Function() getAssignment) {
   return (Store<AddAssignmentAppState> store) async {
     List<MultipartFile> files = [];
-
-    store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: true));
 
     if (store.state.selectedSubject == null ||
         store.state.selectedSubject!.isEmpty) {
@@ -190,8 +197,10 @@ ThunkAction<AddAssignmentAppState> handleCreate(
 
     for (PlatformFile file in store.state.pickedFiles) {
       if (kIsWeb) {
+        store.dispatch(UpdateFileError(fileError: false));
         files.add(MultipartFile.fromBytes(file.bytes!, filename: file.name));
       } else {
+        store.dispatch(UpdateFileError(fileError: false));
         files
             .add(await MultipartFile.fromFile(file.path!, filename: file.name));
       }
@@ -209,6 +218,13 @@ ThunkAction<AddAssignmentAppState> handleCreate(
           .value,
       'label': store.state.selectedTopic,
     };
+
+    if (files.isEmpty) {
+      store.dispatch(UpdateFileError(fileError: true));
+      return;
+    }
+
+    store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: true));
 
     FormData formData = FormData.fromMap({
       'subject': jsonEncode(jsonObject),
@@ -274,8 +290,6 @@ ThunkAction<AddAssignmentAppState> handleUpdate(
   return (Store<AddAssignmentAppState> store) async {
     List<MultipartFile> files = [];
 
-    store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: true));
-
     if (store.state.selectedSubject == null ||
         store.state.selectedSubject!.isEmpty) {
       store.dispatch(UpdateSelectedSubjectError(
@@ -302,6 +316,13 @@ ThunkAction<AddAssignmentAppState> handleUpdate(
             .add(await MultipartFile.fromFile(file.path!, filename: file.name));
       }
     }
+
+    if (store.state.pickedFilesName.isEmpty &&
+        store.state.previousFiles.isEmpty) {
+      store.dispatch(UpdateFileError(fileError: true));
+      return;
+    }
+    store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: true));
 
     Map<String, dynamic> jsonObject = {
       'value': subjectList

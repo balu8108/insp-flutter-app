@@ -49,13 +49,35 @@ class _TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
   }
 
   void _filterWithQueryText(String query) {
-    final filteredTopics = _lecturesWidgetAppState.allLectureForSelectedCourse
-        .where((it) => it.topicName.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-    _updateState(_lecturesWidgetAppState.copyWith(
-      query: query,
-      filteredLectureForSelectedCourse: filteredTopics,
-    ));
+    if (query.isNotEmpty) {
+      if (widget.heading.contains("Physics")) {
+        final filteredTopics = _lecturesWidgetAppState
+            .allTopicsForSelectedCourse
+            .where((it) => it.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+        _updateState(_lecturesWidgetAppState.copyWith(
+          query: query,
+          allTopicsForSelectedCourse: filteredTopics,
+        ));
+      } else {
+        final filteredTopics = _lecturesWidgetAppState
+            .filteredLectureForSelectedCourse
+            .where((it) =>
+                it.name.toLowerCase().contains(query.toLowerCase()) ||
+                it.topicName.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+        _updateState(_lecturesWidgetAppState.copyWith(
+          query: query,
+          filteredLectureForSelectedCourse: filteredTopics,
+        ));
+      }
+    } else {
+      _updateState(_lecturesWidgetAppState.copyWith(
+        query: query,
+        filteredLectureForSelectedCourse: widget.data,
+        allTopicsForSelectedCourse: widget.allTopicsForSelectedCourse,
+      ));
+    }
   }
 
   void _onPressedMyCourse(
@@ -144,9 +166,10 @@ class _TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
         children: [
           _buildHeading(context),
           const SizedBox(height: 16),
-          if (widget.heading == "Mathematics" || widget.heading == "Chemistry")
+          if (widget.heading.contains("Mathematics") ||
+              widget.heading.contains("Chemistry"))
             _buildComingSoon()
-          else if (widget.heading == 'My Courses (Physics)')
+          else if (widget.heading.contains("Physics"))
             _lecturesWidgetAppState.allTopicsForSelectedCourse.isNotEmpty
                 ? BuildGridView(
                     context: context,

@@ -52,9 +52,6 @@ class FileBoxComponent extends StatelessWidget {
       if (pdfData.data.status == true) {
         final String pdfUrl = pdfData.data.data.getUrl;
         await _downloadFile(pdfUrl, fileName);
-      } else {
-        // Handle error response
-        print('Error h:');
       }
     } catch (e) {
       // Handle any other errors

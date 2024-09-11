@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
+// import 'package:inspflutterfrontend/base/base.dart';
 import 'package:inspflutterfrontend/pages/login/login_redux.dart';
+import 'package:inspflutterfrontend/redux/AppState.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
+  static void dispatch(BuildContext context, LoginAction action) {
+    StoreProvider.of<AppState>(context).dispatch(action);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     return Scaffold(
       body: Center(
-        child: StoreConnector<LoginAppState, LoginAppState>(
-          converter: (store) => store.state,
+        child: StoreConnector<AppState, LoginAppState>(
+          converter: (store) => store.state.loginState,
           builder: (context, LoginAppState state) => Scaffold(
             backgroundColor: const Color.fromRGBO(247, 251, 253, 1),
             body: Center(
@@ -60,8 +65,8 @@ class LoginScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 TextField(
                                   onChanged: (text) {
-                                    dispatch(
-                                        context, UpdateEmailId(emailId: text));
+                                    store
+                                        .dispatch(UpdateEmailId(emailId: text));
                                   },
                                   decoration: const InputDecoration(
                                     hintText: 'Email',
@@ -101,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 TextField(
                                   onChanged: (text) {
-                                    dispatch(context,
+                                    store.dispatch(
                                         UpdatePassword(password: text));
                                   },
                                   obscureText: !state.isPasswordVisible,
@@ -136,8 +141,7 @@ class LoginScreen extends StatelessWidget {
                                             : Icons.visibility_off,
                                       ),
                                       onPressed: () {
-                                        dispatch(
-                                          context,
+                                        store.dispatch(
                                           UpdatePasswordVisibleStatus(
                                             isPasswordVisible:
                                                 !state.isPasswordVisible,
@@ -152,7 +156,7 @@ class LoginScreen extends StatelessWidget {
                                   width: double.infinity,
                                   child: TextButton(
                                     onPressed: () {
-                                      dispatch(context, handleLogin(context));
+                                      store.dispatch(handleLogin(context));
                                     },
                                     style: ButtonStyle(
                                       backgroundColor:
@@ -163,7 +167,7 @@ class LoginScreen extends StatelessWidget {
                                           MaterialStateProperty.all<EdgeInsets>(
                                         const EdgeInsets.symmetric(
                                           horizontal: 15.0,
-                                          vertical: 20.0,
+                                          vertical: 10.0,
                                         ),
                                       ),
                                       shape: MaterialStateProperty.all<
@@ -209,14 +213,5 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  static getScreen() {
-    return getBaseScreen<LoginAppState, LoginScreen>(
-        loginStateReducer, const LoginAppState(), const LoginScreen());
-  }
-
-  static dispatch(BuildContext context, dynamic action) {
-    baseDispatch<LoginAppState>(context, action);
   }
 }

@@ -11,6 +11,7 @@ import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:inspflutterfrontend/data/hardcoded/topic_list.dart';
+import 'package:inspflutterfrontend/pages/teacher/soloclassrecording/screen/soloclassroomscreen.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -330,12 +331,20 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
 
       if (response.statusCode == 201) {
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
+
+        // final soloClassRoomId = response.data['soloClassRoomId'];
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Soloclassroomscreen()),
+        );
+
         Navigator.of(context).pop();
         toastification.show(
           context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.error,
+          type: ToastificationType.success,
           style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
+          autoCloseDuration: const Duration(seconds: 2),
           title: const Text('SoloClass Scheduled successfully'),
           alignment: Alignment.topRight,
         );
@@ -352,6 +361,7 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
         );
       }
     } catch (e) {
+      print(e);
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
       toastification.show(
         context: context, // optional if you use ToastificationWrapper
