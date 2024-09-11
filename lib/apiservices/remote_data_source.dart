@@ -8,6 +8,8 @@ import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feed
 import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/feedback/create_student_feedback_response_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/rating_topic_request_model.dart';
+import 'package:inspflutterfrontend/apiservices/models/feedback/rating_topic_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/generic/generic_open_file_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/liveclass/liveclass_preview_response_model.dart';
@@ -139,6 +141,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<TimeTableResponseDataModel>> getAllTimeTable(
       String secretTokenHeader);
+
+  Future<HttpResponse<RatingTopicResponseModel>> postTopicRating(
+      RatingTopicRequestModel feedbackrequest, String secretTokenHeader);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -359,5 +364,12 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<HttpResponse<TimeTableResponseDataModel>> getAllTimeTable(
       String secretTokenHeader) {
     return deviceNetworkService.getAllTimeTable(secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<RatingTopicResponseModel>> postTopicRating(
+      RatingTopicRequestModel feedbackrequest, String secretTokenHeader) {
+    return deviceNetworkService.postTopicRating(
+        feedbackrequest, secretTokenHeader);
   }
 }

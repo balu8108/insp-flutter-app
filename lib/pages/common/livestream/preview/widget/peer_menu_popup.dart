@@ -7,9 +7,13 @@ import 'package:inspflutterfrontend/widget/popups/kickpeer.dart';
 
 class KickPeerWidget extends StatefulWidget {
   const KickPeerWidget(
-      {super.key, required this.peerId, required this.socketId});
+      {super.key,
+      required this.isTeacher,
+      required this.peerId,
+      required this.socketId});
 
   final String peerId, socketId;
+  final bool isTeacher;
 
   @override
   _KickPeerWidgetState createState() => _KickPeerWidgetState();
@@ -28,16 +32,19 @@ class _KickPeerWidgetState extends State<KickPeerWidget> {
       onSelected: (_) {},
       itemBuilder: (context) => [
         PopupMenuItem(
+          enabled: false,
           child: StoreConnector<AppState, PeersWidgetAppState>(
             converter: (store) => store.state.peersWidgetAppState,
             builder: (context, state) => GestureDetector(
                 onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return KickPeerPopup(callKickApi: kickStudent);
-                    },
-                  );
+                  if (!widget.isTeacher) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return KickPeerPopup(callKickApi: kickStudent);
+                      },
+                    );
+                  }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -48,9 +55,10 @@ class _KickPeerWidgetState extends State<KickPeerWidget> {
                       onPressed: () {},
                     ),
                     const SizedBox(width: 8.0),
-                    const Text(
+                    Text(
                       "Kick from class",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(
+                          color: widget.isTeacher ? Colors.grey : Colors.black),
                     ),
                   ],
                 )),

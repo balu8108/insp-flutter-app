@@ -54,9 +54,9 @@ class AssignmentTopicScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 17),
                                   if (isDesktop) ...[
-                                    Expanded(
+                                    const Expanded(
                                       flex: 3,
-                                      child: const UpcomingClassesScreen(),
+                                      child: UpcomingClassesScreen(),
                                     ),
                                   ]
                                 ]))))));

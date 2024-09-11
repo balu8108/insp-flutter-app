@@ -943,6 +943,39 @@ class _NetworkService implements NetworkService {
   }
 
   @override
+  Future<HttpResponse<RatingTopicResponseModel>> postTopicRating(
+    RatingTopicRequestModel feedbackrequest,
+    String secretTokenHeader,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(feedbackrequest.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<RatingTopicResponseModel>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/generic/create-feedback',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = RatingTopicResponseModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
   Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
     String type,
     String id,

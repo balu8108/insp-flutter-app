@@ -79,9 +79,7 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
 
   @override
   Widget build(BuildContext context) {
-    void temporyFunction() {
-      print("noting");
-    }
+    void temporyFunction() {}
 
     return Container(
       padding: const EdgeInsets.all(16.0),

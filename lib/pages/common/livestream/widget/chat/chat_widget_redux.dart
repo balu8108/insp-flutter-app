@@ -94,10 +94,9 @@ ChatWidgetAppState chatMessageStateReducer(
   return state;
 }
 
-ThunkAction<AppState> navigateToRoom(
-    BuildContext context, String roomId, dynamic userProfile) {
+ThunkAction<AppState> navigateToRoom(BuildContext context, String roomId) {
   return (Store<AppState> store) async {
-    await joinRoomHandler(store, roomId, userProfile, context);
+    await joinRoomHandler(store, roomId, context);
   };
 }
 

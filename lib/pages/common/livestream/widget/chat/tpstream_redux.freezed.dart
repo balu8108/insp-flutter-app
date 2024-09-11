@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TPStreamAppState {
+  String get streamStatusChangeTo => throw _privateConstructorUsedError;
   VideoResponseModel get videoResponse => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -29,7 +30,7 @@ abstract class $TPStreamAppStateCopyWith<$Res> {
           TPStreamAppState value, $Res Function(TPStreamAppState) then) =
       _$TPStreamAppStateCopyWithImpl<$Res, TPStreamAppState>;
   @useResult
-  $Res call({VideoResponseModel videoResponse});
+  $Res call({String streamStatusChangeTo, VideoResponseModel videoResponse});
 }
 
 /// @nodoc
@@ -45,9 +46,14 @@ class _$TPStreamAppStateCopyWithImpl<$Res, $Val extends TPStreamAppState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? streamStatusChangeTo = null,
     Object? videoResponse = null,
   }) {
     return _then(_value.copyWith(
+      streamStatusChangeTo: null == streamStatusChangeTo
+          ? _value.streamStatusChangeTo
+          : streamStatusChangeTo // ignore: cast_nullable_to_non_nullable
+              as String,
       videoResponse: null == videoResponse
           ? _value.videoResponse
           : videoResponse // ignore: cast_nullable_to_non_nullable
@@ -64,7 +70,7 @@ abstract class _$$TPStreamAppStateImplCopyWith<$Res>
       __$$TPStreamAppStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({VideoResponseModel videoResponse});
+  $Res call({String streamStatusChangeTo, VideoResponseModel videoResponse});
 }
 
 /// @nodoc
@@ -78,9 +84,14 @@ class __$$TPStreamAppStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? streamStatusChangeTo = null,
     Object? videoResponse = null,
   }) {
     return _then(_$TPStreamAppStateImpl(
+      streamStatusChangeTo: null == streamStatusChangeTo
+          ? _value.streamStatusChangeTo
+          : streamStatusChangeTo // ignore: cast_nullable_to_non_nullable
+              as String,
       videoResponse: null == videoResponse
           ? _value.videoResponse
           : videoResponse // ignore: cast_nullable_to_non_nullable
@@ -93,15 +104,19 @@ class __$$TPStreamAppStateImplCopyWithImpl<$Res>
 
 class _$TPStreamAppStateImpl implements _TPStreamAppState {
   const _$TPStreamAppStateImpl(
-      {this.videoResponse = const VideoResponseModel()});
+      {this.streamStatusChangeTo = '',
+      this.videoResponse = const VideoResponseModel()});
 
+  @override
+  @JsonKey()
+  final String streamStatusChangeTo;
   @override
   @JsonKey()
   final VideoResponseModel videoResponse;
 
   @override
   String toString() {
-    return 'TPStreamAppState(videoResponse: $videoResponse)';
+    return 'TPStreamAppState(streamStatusChangeTo: $streamStatusChangeTo, videoResponse: $videoResponse)';
   }
 
   @override
@@ -109,12 +124,15 @@ class _$TPStreamAppStateImpl implements _TPStreamAppState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TPStreamAppStateImpl &&
+            (identical(other.streamStatusChangeTo, streamStatusChangeTo) ||
+                other.streamStatusChangeTo == streamStatusChangeTo) &&
             (identical(other.videoResponse, videoResponse) ||
                 other.videoResponse == videoResponse));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, videoResponse);
+  int get hashCode =>
+      Object.hash(runtimeType, streamStatusChangeTo, videoResponse);
 
   @JsonKey(ignore: true)
   @override
@@ -125,9 +143,12 @@ class _$TPStreamAppStateImpl implements _TPStreamAppState {
 }
 
 abstract class _TPStreamAppState implements TPStreamAppState {
-  const factory _TPStreamAppState({final VideoResponseModel videoResponse}) =
-      _$TPStreamAppStateImpl;
+  const factory _TPStreamAppState(
+      {final String streamStatusChangeTo,
+      final VideoResponseModel videoResponse}) = _$TPStreamAppStateImpl;
 
+  @override
+  String get streamStatusChangeTo;
   @override
   VideoResponseModel get videoResponse;
   @override

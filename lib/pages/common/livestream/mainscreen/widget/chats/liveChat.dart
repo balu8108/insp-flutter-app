@@ -4,7 +4,7 @@ import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_wid
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/mainsocket.dart';
 import 'package:inspflutterfrontend/widget/card/live_chat_card.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:inspflutterfrontend/widget/popups/emoji_container.dart';
 
 class LiveChat extends StatefulWidget {
   const LiveChat({super.key});
@@ -17,6 +17,8 @@ class _LiveChatState extends State<LiveChat> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _controller = TextEditingController();
   bool isEmojiVisible = false;
+
+  get i => null;
 
   @override
   void initState() {
@@ -36,12 +38,10 @@ class _LiveChatState extends State<LiveChat> {
     });
   }
 
-  void addEmojiToText(Emoji emoji) {
-    _controller
-      ..text += emoji.emoji
-      ..selection = TextSelection.fromPosition(
-        TextPosition(offset: _controller.text.length),
-      );
+  void addEmojiToText(String emoji) {
+    StoreProvider.of<AppState>(context)
+        .dispatch(addUserChatMessage(context, emoji));
+    sendChatMessage(emoji);
   }
 
   void sendMessage() {
@@ -85,7 +85,6 @@ class _LiveChatState extends State<LiveChat> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 9,
               child: state.chatMessages.isNotEmpty
                   ? ListView.separated(
                       scrollDirection: Axis.vertical,
@@ -106,8 +105,8 @@ class _LiveChatState extends State<LiveChat> {
                   : const Center(child: Text('No item')),
             ),
             const SizedBox(height: 10),
-            Expanded(
-              flex: 1,
+            SizedBox(
+              height: 50,
               child: Column(
                 children: [
                   TextField(
@@ -124,7 +123,13 @@ class _LiveChatState extends State<LiveChat> {
                       prefixIcon: IconButton(
                         icon: const Icon(Icons.emoji_emotions),
                         iconSize: 24.0,
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return EmojiContainer(addEmoji: addEmojiToText);
+                              });
+                        },
                       ),
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.send),

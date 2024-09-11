@@ -30,7 +30,7 @@ Widget LiveChatCard(
         Text(
           feedback,
           style: const TextStyle(
-              fontSize: 12, color: Colors.black, fontWeight: FontWeight.w400),
+              fontSize: 14, color: Colors.black, fontWeight: FontWeight.w400),
         ),
       ],
     ),

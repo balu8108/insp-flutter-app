@@ -522,7 +522,7 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
       'agenda': store.state.agenda,
       'lectureNo': store.state.lectureNo,
       'description': store.state.description,
-      'muteAllStudents': store.state.isStudentMuted,
+      'muteAllStudents': false,
       'blockStudentsCamera': false,
       'files': files,
     });
@@ -565,6 +565,24 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
           alignment: Alignment.topRight,
         );
       }
+    } on DioException catch (e) {
+      // Handle Dio-specific errors
+      String errorMessage;
+      if (e.response != null) {
+        final errorData = e.response?.data;
+        errorMessage = errorData['error'] ?? 'An unexpected error occurred';
+      } else {
+        errorMessage = 'Network error or server not reachable';
+      }
+      store.dispatch(UpdateIsClassLoading(isClassLoading: false));
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.error,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: Text(errorMessage),
+        alignment: Alignment.topRight,
+      );
     } catch (e) {
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
       toastification.show(
@@ -572,7 +590,7 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
         type: ToastificationType.error,
         style: ToastificationStyle.fillColored,
         autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
+        title: const Text('ggh'),
         alignment: Alignment.topRight,
       );
     }
@@ -688,7 +706,7 @@ ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
       'agenda': store.state.agenda,
       'lectureNo': store.state.lectureNo,
       'description': store.state.description,
-      'muteAllStudents': store.state.isStudentMuted,
+      'muteAllStudents': false,
       'blockStudentsCamera': false,
       'files': files,
       if (store.state.deletedFileId.isNotEmpty)
@@ -733,6 +751,24 @@ ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
           alignment: Alignment.topRight,
         );
       }
+    } on DioException catch (e) {
+      // Handle Dio-specific errors
+      String errorMessage;
+      if (e.response != null) {
+        final errorData = e.response?.data;
+        errorMessage = errorData['error'] ?? 'An unexpected error occurred';
+      } else {
+        errorMessage = 'Network error or server not reachable';
+      }
+      store.dispatch(UpdateIsClassLoading(isClassLoading: false));
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.error,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: Text(errorMessage),
+        alignment: Alignment.topRight,
+      );
     } catch (e) {
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
       toastification.show(

@@ -7,16 +7,18 @@ class LiveChatSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: MediaQuery.of(context).size.height * 0.85,
-        child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                const LiveClassDetail(),
-                const SizedBox(height: 20),
-                LiveLeftPart(),
-              ],
-            )));
+    return Column(
+      children: [
+        const SizedBox(
+          height: 200,
+          child: LiveClassDetail(),
+        ),
+        const SizedBox(height: 20),
+        // Expanded widget to take up the remaining space
+        Expanded(
+          child: LiveLeftPart(),
+        ),
+      ],
+    );
   }
 }
