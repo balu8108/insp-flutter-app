@@ -32,7 +32,8 @@ class TPStreamVideoPlayer extends StatelessWidget {
             child: state.videoResponse.playback_url.isNotEmpty
                 ? UniversalPlatform.isWindows
                     ? WebviewUniversalWindow(
-                        url: state.videoResponse.playback_url)
+                        url: state.videoResponse.playback_url,
+                        streamStatus: state.streamStatusChangeTo)
                     : UniversalPlatform.isMacOS
                         ? WebviewMacOs(
                             url: state.videoResponse.playback_url,

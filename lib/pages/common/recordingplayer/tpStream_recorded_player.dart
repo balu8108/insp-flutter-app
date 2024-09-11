@@ -29,7 +29,7 @@ class _TPStreamRecordedPlayerState extends State<TPStreamRecordedPlayer> {
       ),
       child: widget.videourl.isNotEmpty
           ? UniversalPlatform.isWindows
-              ? WebviewUniversalWindow(url: widget.videourl)
+              ? WebviewUniversalWindow(url: widget.videourl, streamStatus: '')
               : UniversalPlatform.isMacOS
                   ? WebviewMacOs(url: widget.videourl, streamStatus: '')
                   : const Text("Platform not supported")

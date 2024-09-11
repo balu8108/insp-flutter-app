@@ -109,7 +109,9 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
             return Column(children: [
               Expanded(
                   child: Container(
-                width: 600, // Set desired width
+                width: MediaQuery.of(context).size.width - 1100 < 500
+                    ? 500
+                    : MediaQuery.of(context).size.width, // Set desired width
                 height: 800, // Set desired height
                 child: _pdfController != null || _pdfControllerWindow != null
                     ? Stack(children: [

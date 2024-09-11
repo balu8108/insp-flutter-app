@@ -3,8 +3,9 @@ import 'package:inspflutterfrontend/main.dart';
 import 'package:webview_windows/webview_windows.dart';
 
 class WebviewUniversalWindow extends StatefulWidget {
-  const WebviewUniversalWindow({super.key, required this.url});
-  final String url;
+  const WebviewUniversalWindow(
+      {super.key, required this.url, required this.streamStatus});
+  final String url, streamStatus;
   @override
   _WebviewUniversalWindowState createState() => _WebviewUniversalWindowState();
 }
@@ -59,6 +60,14 @@ class _WebviewUniversalWindowState extends State<WebviewUniversalWindow> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant WebviewUniversalWindow oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.streamStatus != widget.streamStatus) {
+      _controller.loadUrl(widget.url);
+    }
   }
 
   @override
