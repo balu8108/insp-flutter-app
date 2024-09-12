@@ -34,8 +34,8 @@ class RecordingPlayerScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TPStreamRecordedPlayer(
-                              videourl: state.videoResponse.playback_url),
+                          // TPStreamRecordedPlayer(
+                          //     videourl: state.videoResponse.playback_url),
                           const SizedBox(height: 16),
                           RecordingDetailWidget(
                             recordingPlayerDetail: state.recordedVideoData,
@@ -45,26 +45,24 @@ class RecordingPlayerScreen extends StatelessWidget {
                       ),
                     );
                   } else {
-                    return SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 7,
-                            child: TPStreamRecordedPlayer(
-                                videourl: state.videoResponse.playback_url),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 7,
+                          child: TPStreamRecordedPlayer(
+                              videourl: state.videoResponse.playback_url),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
                             flex: 3,
-                            child: RecordingDetailWidget(
-                              recordingPlayerDetail: state.recordedVideoData,
-                              onViewDetailsClicked: onPressedRecording,
-                            ),
-                          ),
-                        ],
-                      ),
+                            child: SingleChildScrollView(
+                              child: RecordingDetailWidget(
+                                recordingPlayerDetail: state.recordedVideoData,
+                                onViewDetailsClicked: onPressedRecording,
+                              ),
+                            )),
+                      ],
                     );
                   }
                 },

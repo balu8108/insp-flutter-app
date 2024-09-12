@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/preview/liveclass_preview.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_player_screen.dart';
-import 'package:inspflutterfrontend/widget/card/model/recording_player_card_model.dart';
 
 class JoinClassBtn extends StatelessWidget {
   final String status;

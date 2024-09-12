@@ -40,6 +40,7 @@ class CustomPaginatedTable extends StatefulWidget {
 }
 
 class _CustomPaginatedTableState extends State<CustomPaginatedTable> {
+  final ScrollController _scrollController = ScrollController();
   int currentPage = 0;
 
   @override
@@ -48,6 +49,7 @@ class _CustomPaginatedTableState extends State<CustomPaginatedTable> {
       children: [
         Center(
           child: SingleChildScrollView(
+            controller: _scrollController,
             scrollDirection: Axis.horizontal,
             child: Container(
               width: MediaQuery.of(context).size.width, // Full screen width
@@ -62,7 +64,7 @@ class _CustomPaginatedTableState extends State<CustomPaginatedTable> {
                   0: FlexColumnWidth(1), // S.No column
                   1: FlexColumnWidth(2), // Date & time column
                   2: FlexColumnWidth(2), // Student Name column
-                  3: FlexColumnWidth(4), // Feedback column
+                  3: FlexColumnWidth(3), // Feedback column
                   4: FlexColumnWidth(1), // Action column
                 },
                 children: [

@@ -19,7 +19,6 @@ class _TPStreamRecordedPlayerState extends State<TPStreamRecordedPlayer> {
       height: MediaQuery.of(context).size.height - 150 < 600
           ? MediaQuery.of(context).size.height - 150
           : 600,
-      width: double.infinity,
       padding: const EdgeInsets.all(16.0),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(

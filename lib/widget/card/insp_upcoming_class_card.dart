@@ -75,7 +75,9 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                     : capitalizeFirstLetter(data.liveClassRoomDetail.topicName);
 
                 void navigateToPreviewScreen() {
+                  print("Call123445");
                   if (data.classStatus == classStatus['FINISHED']) {
+                    print("Call");
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -86,6 +88,7 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                       ),
                     );
                   } else {
+                    print("C");
                     Navigator.push(
                       context,
                       MaterialPageRoute(
