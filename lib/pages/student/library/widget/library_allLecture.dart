@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 import 'package:inspflutterfrontend/widget/card/insp_lecture_card.dart';
 import 'package:inspflutterfrontend/widget/card/model/lecture_card_model.dart';
@@ -40,8 +41,9 @@ class LibraryAlllectureWidgetState extends State<LibraryAlllectureWidget> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => LibraryLectureDetailsScreen.getScreen(
-                inspCardModel, widget.lectureDetailsForLibrary)));
+            builder: (context) => MainScaffold(
+                content: LibraryLectureDetailsScreen.getScreen(
+                    inspCardModel, widget.lectureDetailsForLibrary))));
   }
 
   @override

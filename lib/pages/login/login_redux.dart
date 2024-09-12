@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/device_login_request_model.dart';
+import 'package:inspflutterfrontend/pages/home/mobile_home_screen.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:toastification/toastification.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -99,13 +100,22 @@ ThunkAction<AppState> handleLogin(BuildContext context) {
               jsonEncode(result.data.loginResponseModelResult.toJson()),
             );
 
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) =>
+            //         HomeScreen(userData: result.data.loginResponseModelResult),
+            //   ),
+            // );
+
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    HomeScreen(userData: result.data.loginResponseModelResult),
+                builder: (context) => MobileHomeScreen(
+                    userData: result.data.loginResponseModelResult),
               ),
             );
+
             store.dispatch(UpdateIsLoading(isLoading: false));
             toastification.show(
               context: context, // optional if you use ToastificationWrapper

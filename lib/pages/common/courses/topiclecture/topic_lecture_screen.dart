@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'dart:io' show Platform;
 import 'package:inspflutterfrontend/pages/common/courses/widget/chapterdetail/chapter_widget.dart';
+import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 import 'package:inspflutterfrontend/pages/common/courses/widget/topicorlectureswidget/topic_or_lecture_widget_screen.dart';
 import 'package:inspflutterfrontend/pages/common/courses/topiclecture/topic_lecture_redux.dart';
 import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
@@ -16,58 +14,54 @@ class TopicLectureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDesktop =
-        kIsWeb || Platform.isWindows || Platform.isLinux || Platform.isMacOS;
+    bool isWebOrLandScape = context.isWebOrLandScape();
     dispatch(context, initialFetchLecture(context));
 
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
       dispatch(context, showLecturesForTopic(context, inspCardModel));
     }
 
-    return Scaffold(
-        appBar: Navbar(),
-        body: StoreConnector<TopicLectureAppState, TopicLectureAppState>(
+    return Container(
+        padding: isWebOrLandScape
+            ? const EdgeInsets.all(10.0)
+            : const EdgeInsets.all(0.0),
+        color: Colors.white,
+        child: StoreConnector<TopicLectureAppState, TopicLectureAppState>(
           converter: (store) => store.state,
-          builder: (context, TopicLectureAppState state) => Container(
-              padding: const EdgeInsets.all(10.0),
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Row(
+          builder: (context, TopicLectureAppState state) =>
+              SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 9,
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        flex: 9,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ChapterWidget(
-                                title: "Physics",
-                                key: UniqueKey(),
-                                allTopicsForSelectedCourse: state.allTopics,
-                                onViewDetailsClicked: onPressedMyCourse),
-                            const SizedBox(height: 16),
-                            TopicOrLectureWidget(
-                                key: UniqueKey(),
-                                heading: 'Topic (${state.selectedTopic.name})',
-                                data: state.allTopicBasedLecture,
-                                allTopicsForSelectedCourse: []),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 17),
-                      if (isDesktop) ...[
-                        const Expanded(
-                          flex: 3,
-                          child: UpcomingClassesScreen(),
-                        ),
-                      ]
+                      ChapterWidget(
+                          title: "Physics",
+                          key: UniqueKey(),
+                          allTopicsForSelectedCourse: state.allTopics,
+                          onViewDetailsClicked: onPressedMyCourse),
+                      const SizedBox(height: 16),
+                      TopicOrLectureWidget(
+                          key: UniqueKey(),
+                          heading: 'Topic (${state.selectedTopic.name})',
+                          data: state.allTopicBasedLecture,
+                          allTopicsForSelectedCourse: []),
                     ],
                   ),
                 ),
-              )),
+                const SizedBox(width: 17),
+                if (isWebOrLandScape)
+                  const Expanded(
+                    flex: 3,
+                    child: UpcomingClassesScreen(),
+                  ),
+              ],
+            ),
+          ),
         ));
   }
 

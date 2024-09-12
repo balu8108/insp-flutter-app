@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
@@ -141,7 +142,7 @@ class _NavbarState extends State<Navbar> {
     leaveRoomHandler(StoreProvider.of<AppState>(context));
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => screen),
+      MaterialPageRoute(builder: (context) => MainScaffold(content: screen)),
     );
   }
 

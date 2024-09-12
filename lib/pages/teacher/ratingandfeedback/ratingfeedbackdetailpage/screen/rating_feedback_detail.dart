@@ -5,7 +5,6 @@ import 'package:inspflutterfrontend/pages/teacher/ratingandfeedback/ratingfeedba
 import 'package:inspflutterfrontend/pages/teacher/ratingandfeedback/ratingfeedbackdetailpage/widget/rating_feedback_bottom_detail.dart';
 import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
 
 import '../../../../../base/base.dart';
@@ -23,18 +22,39 @@ class RatingFeedbackDetail extends StatelessWidget {
       dispatch(context, showRatingFeedbackDetail(context, inspCardModel));
     }
 
-    return Scaffold(
-        appBar: Navbar(),
-        body: StoreConnector<RatingFeedbackDetailAppState,
-                RatingFeedbackDetailAppState>(
-            converter: (store) => store.state,
-            builder: (context, RatingFeedbackDetailAppState state) => Container(
-                  padding: const EdgeInsets.all(10.0),
-                  color: Colors.white,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: !isWebOrLandScape
-                        ? Column(
+    return Container(
+        padding: isWebOrLandScape
+            ? const EdgeInsets.all(10.0)
+            : const EdgeInsets.all(0.0),
+        color: Colors.white,
+        child: StoreConnector<RatingFeedbackDetailAppState,
+            RatingFeedbackDetailAppState>(
+          converter: (store) => store.state,
+          builder: (context, RatingFeedbackDetailAppState state) =>
+              SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: !isWebOrLandScape
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ChapterWidget(
+                          title: "Rating & Feedback",
+                          key: UniqueKey(),
+                          allTopicsForSelectedCourse: state.allTopic,
+                          onViewDetailsClicked: onPressedTopic),
+                      const SizedBox(height: 16),
+                      RatingFeedbackBottomWidgets(
+                          context: context,
+                          heading: state.selectedItem.name,
+                          ratingFeedbackCard: state.ratingFeedbackCard)
+                    ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          flex: 9,
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ChapterWidget(
@@ -48,40 +68,17 @@ class RatingFeedbackDetail extends StatelessWidget {
                                   heading: state.selectedItem.name,
                                   ratingFeedbackCard: state.ratingFeedbackCard)
                             ],
-                          )
-                        : Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  flex: 9,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ChapterWidget(
-                                          title: "Rating & Feedback",
-                                          key: UniqueKey(),
-                                          allTopicsForSelectedCourse:
-                                              state.allTopic,
-                                          onViewDetailsClicked: onPressedTopic),
-                                      const SizedBox(height: 16),
-                                      RatingFeedbackBottomWidgets(
-                                          context: context,
-                                          heading: state.selectedItem.name,
-                                          ratingFeedbackCard:
-                                              state.ratingFeedbackCard)
-                                    ],
-                                  )),
-                              const SizedBox(width: 17),
-                              if (isWebOrLandScape)
-                                Expanded(
-                                  flex: 3,
-                                  child: const UpcomingClassesScreen(),
-                                ),
-                            ],
-                          ),
+                          )),
+                      const SizedBox(width: 17),
+                      if (isWebOrLandScape)
+                        const Expanded(
+                          flex: 3,
+                          child: UpcomingClassesScreen(),
+                        ),
+                    ],
                   ),
-                )));
+          ),
+        ));
   }
 
   static getScreen(INSPCardModel selectedItem) {

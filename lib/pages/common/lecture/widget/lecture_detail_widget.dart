@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/utils/class_constants.dart';
+import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/utils/file_box_component.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
@@ -29,6 +30,7 @@ class LectureDetailWidget extends StatefulWidget {
 class LectureDetailWidgetState extends State<LectureDetailWidget> {
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     final LecturesDetailResponseModelData lec =
         widget.lectureData.liveClassRoom;
     return Container(
@@ -158,38 +160,40 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
                           ),
                         ),
                         const SizedBox(width: 20),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Leader Board',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16,
-                                  color: Color(0xFF2C3329),
-                                  height: 1.25,
-                                ),
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    flex: 4, // 60%
-                                    child: Image.asset(
-                                        'assets/images/leaderboard.png'),
+                        if (!isWebOrLandScape)
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Leader Board',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16,
+                                    color: Color(0xFF2C3329),
+                                    height: 1.25,
                                   ),
-                                  Expanded(
-                                      flex: 6, // 60%
-                                      child: LectureLeaderboardCard(
-                                          leaderboardDetails: lec.leaderBoards,
-                                          questionNo: widget
-                                              .lectureData.questionLogCount))
-                                ],
-                              )
-                            ],
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      flex: 4, // 60%
+                                      child: Image.asset(
+                                          'assets/images/leaderboard.png'),
+                                    ),
+                                    Expanded(
+                                        flex: 6, // 60%
+                                        child: LectureLeaderboardCard(
+                                            leaderboardDetails:
+                                                lec.leaderBoards,
+                                            questionNo: widget
+                                                .lectureData.questionLogCount))
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
                       ],
                     ),
                     const SizedBox(

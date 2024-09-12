@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_player_screen.dart';
 
 Widget LectureRecordingCardWidget(
@@ -28,9 +29,9 @@ Widget LectureRecordingCardWidget(
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    RecordingPlayerScreen.getScreen(
-                                        "live", classId)));
+                                builder: (context) => MainScaffold(
+                                    content: RecordingPlayerScreen.getScreen(
+                                        "live", classId))));
                       },
                       child: MouseRegion(
                           cursor: SystemMouseCursors.click,

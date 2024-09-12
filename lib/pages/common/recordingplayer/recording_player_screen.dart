@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/pages/common/recordingplayer/tpStream_recorded_player.dart';
-import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_detail_widget.dart';
 import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_player_redux.dart';
 
@@ -17,15 +16,13 @@ class RecordingPlayerScreen extends StatelessWidget {
       dispatch(context, getRecordedVideoUrlApi(context, tpStreamId));
     }
 
-    return Scaffold(
-      appBar: Navbar(),
-      body: StoreConnector<RecordingPlayerAppState, RecordingPlayerAppState>(
-        converter: (store) => store.state,
-        builder: (context, RecordingPlayerAppState state) {
-          return Container(
-            padding: const EdgeInsets.all(10.0),
-            color: Colors.white,
-            child: Padding(
+    return Container(
+        padding: const EdgeInsets.all(10.0),
+        color: Colors.white,
+        child: StoreConnector<RecordingPlayerAppState, RecordingPlayerAppState>(
+          converter: (store) => store.state,
+          builder: (context, RecordingPlayerAppState state) {
+            return Padding(
               padding: const EdgeInsets.all(16.0),
               child: LayoutBuilder(
                 builder: (context, constraints) {
@@ -34,8 +31,8 @@ class RecordingPlayerScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // TPStreamRecordedPlayer(
-                          //     videourl: state.videoResponse.playback_url),
+                          TPStreamRecordedPlayer(
+                              videourl: state.videoResponse.playback_url),
                           const SizedBox(height: 16),
                           RecordingDetailWidget(
                             recordingPlayerDetail: state.recordedVideoData,
@@ -67,11 +64,9 @@ class RecordingPlayerScreen extends StatelessWidget {
                   }
                 },
               ),
-            ),
-          );
-        },
-      ),
-    );
+            );
+          },
+        ));
   }
 
   static getScreen(String type, String classId) {

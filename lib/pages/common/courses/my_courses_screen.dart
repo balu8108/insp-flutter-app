@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 import 'package:inspflutterfrontend/pages/common/courses/widget/topicorlectureswidget/topic_or_lecture_widget_screen.dart';
 import 'package:inspflutterfrontend/pages/common/courses/my_courses_redux.dart';
 import 'package:inspflutterfrontend/pages/common/courses/widget/mycourseswidget/my_courses_widget_screen.dart';
@@ -23,19 +22,35 @@ class MyCoursesScreen extends StatelessWidget {
 
     dispatch(context, initialFetchTopics(context));
 
-    return Scaffold(
-      appBar: Navbar(),
-      body: StoreConnector<MyCoursesAppState, MyCoursesAppState>(
+    return Container(
+        padding: isWebOrLandScape
+            ? const EdgeInsets.all(10.0)
+            : const EdgeInsets.all(0.0),
+        color: Colors.white,
+        child: StoreConnector<MyCoursesAppState, MyCoursesAppState>(
           converter: (store) => store.state,
-          builder: (context, MyCoursesAppState state) => Container(
-                padding: isWebOrLandScape
-                    ? const EdgeInsets.all(10.0)
-                    : const EdgeInsets.all(0.0),
-                color: Colors.white,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: !isWebOrLandScape
-                      ? Column(
+          builder: (context, MyCoursesAppState state) => SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: !isWebOrLandScape
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MyCoursesWidget(onViewDetailsClicked: onPressedMyCourse),
+                      const SizedBox(height: 16),
+                      TopicOrLectureWidget(
+                          key: UniqueKey(),
+                          heading: 'My Courss (${state.selectedItem.name})',
+                          data: state.allLectures,
+                          allTopicsForSelectedCourse:
+                              state.allTopicsForSelectedCourse),
+                    ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 9,
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             MyCoursesWidget(
@@ -49,39 +64,18 @@ class MyCoursesScreen extends StatelessWidget {
                                 allTopicsForSelectedCourse:
                                     state.allTopicsForSelectedCourse),
                           ],
-                        )
-                      : Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              flex: 9,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  MyCoursesWidget(
-                                      onViewDetailsClicked: onPressedMyCourse),
-                                  const SizedBox(height: 16),
-                                  TopicOrLectureWidget(
-                                      key: UniqueKey(),
-                                      heading:
-                                          'My Courses (${state.selectedItem.name})',
-                                      data: state.allLectures,
-                                      allTopicsForSelectedCourse:
-                                          state.allTopicsForSelectedCourse),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 17),
-                            if (isWebOrLandScape)
-                              const Expanded(
-                                flex: 3,
-                                child: UpcomingClassesScreen(),
-                              ),
-                          ],
                         ),
-                ),
-              )),
-    );
+                      ),
+                      const SizedBox(width: 17),
+                      if (isWebOrLandScape)
+                        const Expanded(
+                          flex: 3,
+                          child: UpcomingClassesScreen(),
+                        ),
+                    ],
+                  ),
+          ),
+        ));
   }
 
   static getScreen(INSPCardModel selectedItem) {

@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/pages/common/courses/chapterdetail/chapter_detail_screen.dart';
 import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
@@ -99,8 +100,9 @@ ThunkAction<ChapterDetailAppState> sendToTopicLectureScreen(
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => TopicLectureScreen.getScreen(
-              inspCardModel, store.state.allTopics)),
+          builder: (context) => MainScaffold(
+              content: TopicLectureScreen.getScreen(
+                  inspCardModel, store.state.allTopics))),
     );
   };
 }

@@ -2,7 +2,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/pages/student/assignment/assignmenttopic/assignment_topic_screen.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/card/model/topic_assignment_card_model.dart';
@@ -52,16 +51,14 @@ AssignmentTopicScreenAppState assignmentTopicStateReducer(
 ThunkAction<AssignmentTopicScreenAppState> initialFetchAssignment(
     BuildContext context) {
   return (Store<AssignmentTopicScreenAppState> store) async {
-    AssignmentTopicScreen.dispatch(
-        context, showAssignmentForTopic(context, store.state.selectedtopic));
+    store.dispatch(showAssignmentForTopic(context, store.state.selectedtopic));
   };
 }
 
 ThunkAction<AssignmentTopicScreenAppState> showAssignmentForTopic(
     BuildContext context, INSPCardModel inspCardModel) {
   return (Store<AssignmentTopicScreenAppState> store) async {
-    AssignmentTopicScreen.dispatch(
-        context, UpdateSelectedItem(selectedItem: inspCardModel));
+    store.dispatch(UpdateSelectedItem(selectedItem: inspCardModel));
     final remoteDataSource = RemoteDataSource();
     final topicId = inspCardModel.id;
     String userToken = await getUserToken();
@@ -75,11 +72,10 @@ ThunkAction<AssignmentTopicScreenAppState> showAssignmentForTopic(
               .toList() ??
           [];
 
-      AssignmentTopicScreen.dispatch(context,
+      store.dispatch(
           UpdateAssignmentItem(allAssignmentOfTopic: allTopicsForSubject));
     } else {
-      AssignmentTopicScreen.dispatch(
-          context, UpdateAssignmentItem(allAssignmentOfTopic: []));
+      store.dispatch(UpdateAssignmentItem(allAssignmentOfTopic: []));
     }
   };
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/utils/file_box_component.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
@@ -37,46 +36,6 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
     super.dispose();
   }
 
-  Widget _buildHeading(BuildContext context) {
-    return context.isWebOrLandScape()
-        ? Row(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 12,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: const Color(0xFF3C8DBC),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    widget.heading,
-                    style: const TextStyle(
-                        fontSize: 16, overflow: TextOverflow.ellipsis),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              // searchBox(context, _filterWithQueryText),
-            ],
-          )
-        : Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(flex: 9, child: INSPHeading(widget.heading)),
-                ],
-              ),
-              const SizedBox(height: 16),
-              // searchBox(context, _filterWithQueryText),
-            ],
-          );
-  }
-
   @override
   Widget build(BuildContext context) {
     void temporyFunction() {}
@@ -89,7 +48,13 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
       ),
       child: Column(
         children: [
-          _buildHeading(context),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(flex: 5, child: INSPHeading(widget.heading)),
+              // searchBox(context, _filterWithQueryText),
+            ],
+          ),
           const SizedBox(height: 16),
           Container(
               height: widget.allAssignemntofTopic.isNotEmpty

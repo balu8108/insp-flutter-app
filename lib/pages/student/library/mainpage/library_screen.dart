@@ -1,14 +1,12 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/pages/common/alltopicswidget/all_topics_widget.dart';
 import 'package:inspflutterfrontend/pages/student/library/librarylecturepage/library_lecture_screen.dart';
 import 'package:inspflutterfrontend/pages/student/library/librarysoloclass/library_soloclass_screen.dart';
+import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
-import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 import 'package:inspflutterfrontend/pages/student/library/mainpage/library_redux.dart';
 import 'package:inspflutterfrontend/pages/student/library/widget/library_subject.dart';
 import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
@@ -19,8 +17,7 @@ class LibraryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDesktop =
-        kIsWeb || Platform.isWindows || Platform.isLinux || Platform.isMacOS;
+    bool isWebOrLandScape = context.isWebOrLandScape();
     dispatch(context, UpdateLibrarySubjects(inspCardModels: librarySubjects));
 
     void onPressedLibrarySubject(
@@ -32,8 +29,8 @@ class LibraryScreen extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                LibraryLectureScreen.getScreen(inspCardModel)),
+            builder: (context) => MainScaffold(
+                content: LibraryLectureScreen.getScreen(inspCardModel))),
       );
     }
 
@@ -41,53 +38,51 @@ class LibraryScreen extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                LibrarySoloclassScreen.getScreen(inspCardModel)),
+            builder: (context) => MainScaffold(
+                content: LibrarySoloclassScreen.getScreen(inspCardModel))),
       );
     }
 
-    return Scaffold(
-      appBar: Navbar(),
-      body: StoreConnector<LibraryAppState, LibraryAppState>(
+    return Container(
+      padding: isWebOrLandScape
+          ? const EdgeInsets.all(10.0)
+          : const EdgeInsets.all(0.0),
+      color: Colors.white,
+      child: StoreConnector<LibraryAppState, LibraryAppState>(
         converter: (store) => store.state,
         builder: (context, LibraryAppState state) {
-          return Container(
-            padding: const EdgeInsets.all(32.0),
-            color: Colors.white,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        LibrarySubject(
-                          onViewDetailsClicked: onPressedLibrarySubject,
-                        ),
-                        const SizedBox(height: 24),
-                        if (state.selectedItem.name == "Topic Based Recording")
-                          AllTopicWidget.getScreen(
-                              heading: 'Library (${state.selectedItem.name})',
-                              onPressedViewDetails: onPressedSoloClass)
-                        else
-                          AllTopicWidget.getScreen(
-                              heading: 'Library (${state.selectedItem.name})',
-                              onPressedViewDetails: onPressedMyCourse)
-                      ],
-                    ),
+          return SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 9,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      LibrarySubject(
+                        onViewDetailsClicked: onPressedLibrarySubject,
+                      ),
+                      const SizedBox(height: 24),
+                      if (state.selectedItem.name == "Topic Based Recording")
+                        AllTopicWidget.getScreen(
+                            heading: 'Library (${state.selectedItem.name})',
+                            onPressedViewDetails: onPressedSoloClass)
+                      else
+                        AllTopicWidget.getScreen(
+                            heading: 'Library (${state.selectedItem.name})',
+                            onPressedViewDetails: onPressedMyCourse)
+                    ],
                   ),
-                  const SizedBox(width: 17),
-                  if (isDesktop) ...[
-                    Expanded(
-                      flex: 3,
-                      child: const UpcomingClassesScreen(),
-                    ),
-                  ]
-                ],
-              ),
+                ),
+                if (isWebOrLandScape) const SizedBox(width: 17),
+                if (isWebOrLandScape)
+                  const Expanded(
+                    flex: 3,
+                    child: UpcomingClassesScreen(),
+                  ),
+              ],
             ),
           );
         },

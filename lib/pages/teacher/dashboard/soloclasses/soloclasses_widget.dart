@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/base/base.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/pages/teacher/dashboard/soloclasses/soloclasses_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/teacher/soloclasses/soloclass_topic_detail_screen.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
@@ -19,8 +20,8 @@ class Soloclasses extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                SoloclassTopicDetailScreen.getScreen(selectedTopic)),
+            builder: (context) => MainScaffold(
+                content: SoloclassTopicDetailScreen.getScreen(selectedTopic))),
       );
     }
 

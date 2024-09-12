@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/pages/common/courses/chapterdetail/chapter_detail_screen.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/widget/card/insp_card.dart';
 import 'package:inspflutterfrontend/widget/buildgridview/build_grid_view.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
@@ -85,9 +85,9 @@ class _TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => LibraryLectureDetailsScreen.getScreen(
-              lectureCardModel,
-              _lecturesWidgetAppState.filteredLectureForSelectedCourse)),
+          builder: (context) => MainScaffold(
+              content: LibraryLectureDetailsScreen.getScreen(lectureCardModel,
+                  _lecturesWidgetAppState.filteredLectureForSelectedCourse))),
     );
   }
 
@@ -95,49 +95,10 @@ class _TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ChapterDetailScreen.getScreen(selectedchapter,
-              _lecturesWidgetAppState.allTopicsForSelectedCourse)),
+          builder: (context) => MainScaffold(
+              content: ChapterDetailScreen.getScreen(selectedchapter,
+                  _lecturesWidgetAppState.allTopicsForSelectedCourse))),
     );
-  }
-
-  Widget _buildHeading(BuildContext context) {
-    return context.isWebOrLandScape()
-        ? Row(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 12,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: const Color(0xFF3C8DBC),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    widget.heading,
-                    style: const TextStyle(
-                        fontSize: 16, overflow: TextOverflow.ellipsis),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              searchBox(context, _filterWithQueryText),
-            ],
-          )
-        : Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(flex: 9, child: INSPHeading(widget.heading)),
-                ],
-              ),
-              const SizedBox(height: 16),
-              searchBox(context, _filterWithQueryText),
-            ],
-          );
   }
 
   Widget _buildComingSoon() {
@@ -164,7 +125,13 @@ class _TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
       ),
       child: Column(
         children: [
-          _buildHeading(context),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(flex: 5, child: INSPHeading(widget.heading)),
+              searchBox(context, _filterWithQueryText),
+            ],
+          ),
           const SizedBox(height: 16),
           if (widget.heading.contains("Mathematics") ||
               widget.heading.contains("Chemistry"))

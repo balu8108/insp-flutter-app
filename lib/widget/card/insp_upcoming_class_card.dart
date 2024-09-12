@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/preview/liveclass_preview.dart';
 import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_player_screen.dart';
 import 'package:inspflutterfrontend/utils/file_box_component.dart';
@@ -75,25 +76,24 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                     : capitalizeFirstLetter(data.liveClassRoomDetail.topicName);
 
                 void navigateToPreviewScreen() {
-                  print("Call123445");
                   if (data.classStatus == classStatus['FINISHED']) {
-                    print("Call");
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => RecordingPlayerScreen.getScreen(
+                        builder: (context) => MainScaffold(
+                            content: RecordingPlayerScreen.getScreen(
                           "live",
                           data.id.toString(),
-                        ),
+                        )),
                       ),
                     );
                   } else {
-                    print("C");
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            LiveClassPreviewScreen(roomId: data.roomId),
+                        builder: (context) => MainScaffold(
+                            content:
+                                LiveClassPreviewScreen(roomId: data.roomId)),
                       ),
                     );
                   }

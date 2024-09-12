@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/widget/buildgridview/build_grid_view.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
 import 'package:inspflutterfrontend/widget/card/insp_lecture_card.dart';
@@ -28,53 +28,14 @@ class _LibraryLectureWidgetState extends State<LibraryLectureWidget> {
     super.initState();
   }
 
-  Widget _buildHeading(BuildContext context) {
-    return context.isWebOrLandScape()
-        ? Row(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 12,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: const Color(0xFF3C8DBC),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    widget.heading,
-                    style: const TextStyle(
-                        fontSize: 16, overflow: TextOverflow.ellipsis),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              // searchBox(context, _filterWithQueryText),
-            ],
-          )
-        : Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(flex: 9, child: INSPHeading(widget.heading)),
-                ],
-              ),
-              const SizedBox(height: 16),
-              // searchBox(context, _filterWithQueryText),
-            ],
-          );
-  }
-
   void _onPressedMyCourse(
       BuildContext context, LectureCardModel lectureCardModel) {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => LibraryLectureDetailsScreen.getScreen(
-              lectureCardModel, widget.allLectureOfTopic)),
+          builder: (context) => MainScaffold(
+              content: LibraryLectureDetailsScreen.getScreen(
+                  lectureCardModel, widget.allLectureOfTopic))),
     );
   }
 
@@ -88,7 +49,13 @@ class _LibraryLectureWidgetState extends State<LibraryLectureWidget> {
       ),
       child: Column(
         children: [
-          _buildHeading(context),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(flex: 5, child: INSPHeading(widget.heading)),
+              // searchBox(context, _filterWithQueryText),
+            ],
+          ),
           const SizedBox(height: 16),
           widget.allLectureOfTopic.isNotEmpty
               ? BuildGridView(

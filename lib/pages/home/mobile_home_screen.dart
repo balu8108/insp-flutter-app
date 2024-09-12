@@ -5,18 +5,19 @@ import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
 import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
 import 'package:inspflutterfrontend/pages/home/student_home_screen.dart';
 import 'package:inspflutterfrontend/pages/home/teacher_home_screen.dart';
+import 'package:inspflutterfrontend/widget/mobileAppbar/mobileAppbar.dart';
 import 'package:inspflutterfrontend/widget/popups/tokenexpire.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.userData});
+class MobileHomeScreen extends StatefulWidget {
+  const MobileHomeScreen({super.key, required this.userData});
 
   final LoginResponseModelResult userData;
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _MobileHomeScreenState createState() => _MobileHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MobileHomeScreenState extends State<MobileHomeScreen> {
   @override
   void initState() {
     super.initState();

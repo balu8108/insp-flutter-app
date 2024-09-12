@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/pages/teacher/uploads/mainpage/myuploads.dart';
 import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/widget/card/model/latest_assignment_card_model.dart';
@@ -60,7 +61,8 @@ Widget LatestAssignmentCard(
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const MyUploads()),
+                          builder: (context) =>
+                              MainScaffold(content: const MyUploads())),
                     );
                   },
                   child: const Text(

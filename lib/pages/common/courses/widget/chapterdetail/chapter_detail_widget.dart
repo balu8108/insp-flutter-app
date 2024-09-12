@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/widget/card/insp_card.dart';
 import 'package:inspflutterfrontend/widget/buildgridview/build_grid_view.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
@@ -46,47 +45,6 @@ class ChapterDetailWidgetState extends State<ChapterDetailWidget> {
     }
   }
 
-  Widget _buildHeading(BuildContext context) {
-    return context.isWebOrLandScape()
-        ? Row(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 12,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: const Color(0xFF3C8DBC),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    widget.selectedChapter.name,
-                    style: const TextStyle(
-                        fontSize: 16, overflow: TextOverflow.ellipsis),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              searchBox(context, _filterWithQueryText),
-            ],
-          )
-        : Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                      flex: 9, child: INSPHeading(widget.selectedChapter.name)),
-                ],
-              ),
-              const SizedBox(height: 16),
-              searchBox(context, _filterWithQueryText),
-            ],
-          );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -97,7 +55,14 @@ class ChapterDetailWidgetState extends State<ChapterDetailWidget> {
       ),
       child: Column(
         children: [
-          _buildHeading(context),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                  flex: 5, child: INSPHeading(widget.selectedChapter.name)),
+              searchBox(context, _filterWithQueryText),
+            ],
+          ),
           const SizedBox(height: 16),
           filteredTopics.isNotEmpty
               ? BuildGridView(

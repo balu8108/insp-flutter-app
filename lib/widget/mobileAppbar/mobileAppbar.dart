@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
-class Mobileappbar extends StatefulWidget {
+class Mobileappbar extends StatefulWidget implements PreferredSizeWidget {
   const Mobileappbar({super.key});
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   State<Mobileappbar> createState() => _MobileappbarState();
@@ -21,7 +24,7 @@ class _MobileappbarState extends State<Mobileappbar> {
               children: [
                 // INSP logo
                 Image.asset(
-                  'assests/insplogo.png',
+                  'assets/images/insplogo.png',
                   height: 40,
                 ),
 
@@ -31,17 +34,17 @@ class _MobileappbarState extends State<Mobileappbar> {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Search...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-              ),
-            ),
+            // const SizedBox(height: 10),
+            // TextField(
+            //   decoration: InputDecoration(
+            //     hintText: 'Search...',
+            //     prefixIcon: const Icon(Icons.search),
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(8.0),
+            //     ),
+            //     contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+            //   ),
+            // ),
           ],
         ),
       ),

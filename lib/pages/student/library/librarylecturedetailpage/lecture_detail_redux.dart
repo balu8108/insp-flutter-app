@@ -7,7 +7,6 @@ import 'package:inspflutterfrontend/widget/card/model/lecture_assignment_card_mo
 import 'package:inspflutterfrontend/widget/card/model/lecture_card_model.dart';
 import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/pages/common/lecture/lecturedetailpage/lecture_detail_screen.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 
@@ -86,8 +85,7 @@ ThunkAction<LectureDetailAppState> getAllAssignment(
                   it.id.toString(), it.description, it.assignmentFiles))
               .toList());
 
-      LectureDetailScreen.dispatch(
-          context, UpdateAssignmentData(assignments: lecturesDetailResponse));
+      store.dispatch(UpdateAssignmentData(assignments: lecturesDetailResponse));
     } else {}
   };
 }
@@ -102,15 +100,10 @@ ThunkAction<LectureDetailAppState> showLectureDetail(
     if (lectureDetail.response.statusCode == 200) {
       final lecturesDetailResponse = lectureDetail.data.data;
 
-      LectureDetailScreen.dispatch(
-          context,
-          getAllAssignment(
-              context,
-              lecturesDetailResponse
-                  .liveClassRoom.liveClassRoomDetail.topicId));
+      store.dispatch(getAllAssignment(context,
+          lecturesDetailResponse.liveClassRoom.liveClassRoomDetail.topicId));
 
-      LectureDetailScreen.dispatch(
-          context, UpdateLectureData(lectureDataRes: lecturesDetailResponse));
+      store.dispatch(UpdateLectureData(lectureDataRes: lecturesDetailResponse));
     } else {}
   };
 }
@@ -118,7 +111,6 @@ ThunkAction<LectureDetailAppState> showLectureDetail(
 ThunkAction<LectureDetailAppState> initialFetchLectureDetail(
     BuildContext context) {
   return (Store<LectureDetailAppState> store) async {
-    LectureDetailScreen.dispatch(
-        context, showLectureDetail(context, store.state.selectedItem));
+    store.dispatch(showLectureDetail(context, store.state.selectedItem));
   };
 }

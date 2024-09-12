@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/pages/teacher/soloclasses/soloclass_topic_detail_screen.dart';
 import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
@@ -68,9 +69,9 @@ Widget LatestSoloClassCard(
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              SoloclassTopicDetailScreen.getScreen(
-                                  selectedTopic)),
+                          builder: (context) => MainScaffold(
+                              content: SoloclassTopicDetailScreen.getScreen(
+                                  selectedTopic))),
                     );
                     // onPressedViewDetails(context, inspCardModel);
                   },

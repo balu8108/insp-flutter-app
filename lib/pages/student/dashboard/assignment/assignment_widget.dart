@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/base/base.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/pages/student/dashboard/assignment/assignment_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/teacher/uploads/mainpage/myuploads.dart';
 import 'package:inspflutterfrontend/widget/card/latest_assignment_card.dart';
@@ -34,10 +35,11 @@ class AssignmentWidget extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MyUploads()),
+                            builder: (context) =>
+                                MainScaffold(content: const MyUploads())),
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       "See All",
                       style: TextStyle(
                           color: Color.fromRGBO(44, 51, 41, 1), fontSize: 14),

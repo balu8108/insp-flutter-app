@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/pages/student/library/librarysoloclass/library_soloclass_redux.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 import 'package:inspflutterfrontend/pages/student/library/widget/library_lecture.dart';
 import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
 import '../../../../base/base.dart';
@@ -12,41 +11,38 @@ class LibrarySoloclassScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     dispatch(context, initialFetchLibrarySoloClass(context));
-    return Scaffold(
-        appBar: Navbar(),
-        body: StoreConnector<LibrarySoloClassReduxAppState,
+    return Container(
+        padding: const EdgeInsets.all(10.0),
+        color: Colors.white,
+        child: StoreConnector<LibrarySoloClassReduxAppState,
                 LibrarySoloClassReduxAppState>(
             converter: (store) => store.state,
-            builder: (context, LibrarySoloClassReduxAppState state) =>
-                Container(
-                    padding: const EdgeInsets.all(10.0),
-                    color: Colors.white,
-                    child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    flex: 9,
-                                    child: Column(
-                                      children: [
-                                        LibraryLectureWidget(
-                                          heading:
-                                              "Topic (${state.selectedtopic.name})",
-                                          allLectureOfTopic:
-                                              state.allLecturesOfSoloClass,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: 17),
-                                  Expanded(
-                                    flex: 3,
-                                    child: const UpcomingClassesScreen(),
-                                  ),
-                                ]))))));
+            builder: (context, LibrarySoloClassReduxAppState state) => Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 9,
+                            child: Column(
+                              children: [
+                                LibraryLectureWidget(
+                                  heading:
+                                      "Topic (${state.selectedtopic.name})",
+                                  allLectureOfTopic:
+                                      state.allLecturesOfSoloClass,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 17),
+                          Expanded(
+                            flex: 3,
+                            child: const UpcomingClassesScreen(),
+                          ),
+                        ])))));
   }
 
   static getScreen(INSPCardModel selectedtopic) {
