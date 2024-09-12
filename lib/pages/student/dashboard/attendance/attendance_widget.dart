@@ -58,56 +58,108 @@ class _AttendanceWidgetState extends State<AttendanceWidget> {
             ],
           ),
           const SizedBox(height: 17),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                flex: 2,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      height: 200,
-                      child: PieChart(
-                        PieChartData(
-                          sections: _buildPieChartSections(),
-                          borderData: FlBorderData(show: false),
-                          sectionsSpace: 0,
-                          centerSpaceRadius: 50,
-                        ),
-                      ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+          LayoutBuilder(
+            builder: (context, constraints) {
+              bool isMobile = constraints.maxWidth < 600; // Example threshold
+
+              return isMobile
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          '${averagePercentage.toStringAsFixed(1)}%',
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: Color.fromRGBO(44, 51, 41, 1),
+                        Container(
+                          height: 250, // Increased height
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              PieChart(
+                                PieChartData(
+                                  sections: _buildPieChartSections(),
+                                  borderData: FlBorderData(show: false),
+                                  sectionsSpace: 0,
+                                  centerSpaceRadius: 50,
+                                ),
+                              ),
+                              Positioned(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '${averagePercentage.toStringAsFixed(1)}%',
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromRGBO(44, 51, 41, 1),
+                                      ),
+                                    ),
+                                    const Text(
+                                      'Average',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Color.fromRGBO(44, 51, 41, 1),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const Text(
-                          'Average',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color.fromRGBO(44, 51, 41, 1),
+                        const SizedBox(height: 20),
+                        ..._buildProgressBars(),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                height: 200,
+                                child: PieChart(
+                                  PieChartData(
+                                    sections: _buildPieChartSections(),
+                                    borderData: FlBorderData(show: false),
+                                    sectionsSpace: 0,
+                                    centerSpaceRadius: 50,
+                                  ),
+                                ),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '${averagePercentage.toStringAsFixed(1)}%',
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      color: Color.fromRGBO(44, 51, 41, 1),
+                                    ),
+                                  ),
+                                  const Text(
+                                    'Average',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Color.fromRGBO(44, 51, 41, 1),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 36),
+                        Expanded(
+                          flex: 3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: _buildProgressBars(),
                           ),
                         ),
                       ],
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 36),
-              Expanded(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _buildProgressBars(),
-                ),
-              ),
-            ],
+                    );
+            },
           ),
         ],
       ),
@@ -120,13 +172,13 @@ class _AttendanceWidgetState extends State<AttendanceWidget> {
       final color = data['color'] as Color;
       return PieChartSectionData(
         color: color,
-        // value: value,
-        // title: '${data['percentage']}%',
-        // titleStyle: const TextStyle(
-        //   fontSize: 12,
-        //   fontWeight: FontWeight.bold,
-        //   color: Colors.amber,
-        // ),
+        value: value,
+        title: '${value.toStringAsFixed(1)}%',
+        titleStyle: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          color: Colors.amber,
+        ),
       );
     }).toList();
   }
