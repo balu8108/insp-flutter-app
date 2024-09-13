@@ -1,81 +1,164 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:inspflutterfrontend/data/hardcoded/upcoming_classes.dart';
+import 'package:inspflutterfrontend/main.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/preview/liveclass_preview.dart';
+import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_player_screen.dart';
+import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/common/upcomingsession/data/upcoming_session_data.dart';
+import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:inspflutterfrontend/utils/capitalize.dart';
+import 'package:inspflutterfrontend/utils/timeconvert.dart';
+import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:inspflutterfrontend/widget/button/join_class.dart';
+import 'package:inspflutterfrontend/widget/card/insp_upcoming_class_mobilecard.dart';
+import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
+import 'package:inspflutterfrontend/widget/popups/scheduleLiveclass/schedule_liveclass.dart';
 
 class UpcomingSession extends StatelessWidget {
   const UpcomingSession({super.key});
 
+  get classStatus => null;
+  static void dispatch(BuildContext context, UpcomingWidgetAction action) {
+    StoreProvider.of<AppState>(context).dispatch(action);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: const Color.fromRGBO(232, 242, 249, 1),
-      ),
-      child: Column(
-        children: [
-          // Main Title Row
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                width: 12,
-                height: 25,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromRGBO(60, 141, 188, 1),
-                ),
-              ),
-              const SizedBox(width: 10),
-              const Text(
-                'Upcoming Sessions',
-                style: TextStyle(fontSize: 16, color: Colors.black),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16), // Spacing between title and cards
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(getAllUpcomingClass(context));
 
-          // Mapping each session into a card
-          Column(
-            children: upcomingSessions.map((session) {
-              return Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  // Updated color to white for the card background
-                  color: Colors.white,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          session['title'],
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      session['time'],
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black54,
+    void getUpcomingClass() {
+      store.dispatch(getAllUpcomingClass(context));
+    }
+
+    return FutureBuilder<bool>(
+        future: isTeacherLogin(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Error loading data'));
+          } else {
+            bool isTeacher = snapshot.data ?? false;
+            return StoreConnector<AppState, UpcomingWidgetAppState>(
+                converter: (store) => store.state.upcomingWidgetAppState,
+                builder: (context, UpcomingWidgetAppState state) => Container(
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: const Color.fromRGBO(232, 242, 249, 1),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
-        ],
-      ),
-    );
+                      child: Column(
+                        children: [
+                          SizedBox(
+                              height: 300,
+                              child: classMobileCategories.isNotEmpty
+                                  ? ListView.separated(
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: classMobileCategories.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  flex: 9,
+                                                  child: INSPHeading(
+                                                      classMobileCategories[
+                                                              index]
+                                                          .label),
+                                                ),
+                                              ],
+                                            ),
+                                            ScheduleClassMobileBox(
+                                                type:
+                                                    classMobileCategories[index]
+                                                        .category,
+                                                upcomingWidgetAppState:
+                                                    state.weeklyData,
+                                                getUpcomingClass:
+                                                    getUpcomingClass),
+                                          ],
+                                        );
+                                      },
+                                      separatorBuilder:
+                                          (BuildContext context, int index) {
+                                        return const SizedBox(
+                                          height: 20,
+                                        );
+                                      },
+                                    )
+                                  : const Center(
+                                      child: Text(
+                                      'No items',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(44, 51, 41, 0.47)),
+                                    ))),
+                          if (isTeacher)
+                            SizedBox(
+                              width: double.infinity,
+                              height: 39,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color(0xFF3C8DBC)),
+                                  foregroundColor: MaterialStateProperty.all(
+                                      const Color(0xFF3C8DBC)),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          8.0), // Adjust border radius as needed
+                                    ),
+                                  ),
+                                  padding: MaterialStateProperty.all(
+                                      const EdgeInsets.symmetric(
+                                          vertical: 12.0)),
+                                ),
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return ScheduleLiveClass.getScreen(
+                                          0,
+                                          false,
+                                          '',
+                                          '',
+                                          '',
+                                          '',
+                                          '',
+                                          '',
+                                          '',
+                                          '',
+                                          '',
+                                          '',
+                                          '',
+                                          false,
+                                          [],
+                                          getUpcomingClass);
+                                    },
+                                  );
+                                },
+                                child: const Text(
+                                  'Schedule Class',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ));
+          }
+        });
   }
 }

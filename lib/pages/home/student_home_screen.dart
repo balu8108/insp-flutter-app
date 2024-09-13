@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/main.dart';
+import 'package:inspflutterfrontend/pages/common/upcomingsession/upcoming_session.dart';
 import 'package:inspflutterfrontend/pages/student/dashboard/assignment/assignment_widget.dart';
 import 'package:inspflutterfrontend/pages/student/dashboard/attendance/attendance_widget.dart';
 import 'package:inspflutterfrontend/pages/student/library/widget/library_subject.dart';
@@ -52,6 +53,8 @@ class StudentHomeScreen extends StatelessWidget {
                     MyCoursesWidget(
                       onViewDetailsClicked: onPressedMyCourse,
                     ),
+                    const SizedBox(height: 16),
+                    UpcomingSession(),
                     const SizedBox(height: 16),
                     AttendanceWidget(),
                     const SizedBox(height: 16),

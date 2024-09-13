@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
+import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/utils/extractFileNameFromS3URL.dart';
 import 'package:inspflutterfrontend/widget/inputField/picked_file.dart';
 import 'package:inspflutterfrontend/widget/inputField/textfield_suffix.dart';
@@ -18,6 +19,7 @@ class ScheduleLiveClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     void createAssignment() {
       dispatch(context, handleCreateLiveClass(context, deleteFeedback));
     }
@@ -85,7 +87,8 @@ class ScheduleLiveClass extends StatelessWidget {
                   borderRadius: BorderRadius.circular(6.0),
                 ),
                 contentPadding:
-                    const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 28),
+                insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
                 title: Row(
                   children: [
                     Text(
@@ -395,7 +398,9 @@ class ScheduleLiveClass extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.20,
+                          width: isWebOrLandScape
+                              ? MediaQuery.of(context).size.width * 0.20
+                              : MediaQuery.of(context).size.width * 0.50,
                           child: ElevatedButton(
                               onPressed: state.isClassLoading
                                   ? defaultLoaderFunction

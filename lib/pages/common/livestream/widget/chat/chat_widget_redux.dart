@@ -247,7 +247,7 @@ ThunkAction<AppState> joinRoomResponseData(BuildContext context, dynamic res) {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => MainScaffold(content: LiveClassScreen())),
+          builder: (context) => const MainScaffold(content: LiveClassScreen())),
     );
   };
 }

@@ -38,12 +38,11 @@ class TPStreamVideoPlayer extends StatelessWidget {
                     ? WebviewUniversalWindow(
                         url: state.videoResponse.playback_url,
                         streamStatus: state.streamStatusChangeTo)
-                    : UniversalPlatform.isMacOS
-                        ? WebviewMacOs(
-                            url: state.videoResponse.playback_url,
-                            streamStatus: state.streamStatusChangeTo,
-                          )
-                        : const Text("Platform not supported")
+                    : WebviewMacOs(
+                        url: state.videoResponse.playback_url,
+                        streamStatus: state.streamStatusChangeTo,
+                      )
+                // : const Text("Platform not supported")
                 : const Text("waiting..."));
       },
     );

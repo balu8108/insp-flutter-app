@@ -104,7 +104,7 @@ class __$$TPStreamAppStateImplCopyWithImpl<$Res>
 
 class _$TPStreamAppStateImpl implements _TPStreamAppState {
   const _$TPStreamAppStateImpl(
-      {this.streamStatusChangeTo = '',
+      {this.streamStatusChangeTo = 'Not Started',
       this.videoResponse = const VideoResponseModel()});
 
   @override

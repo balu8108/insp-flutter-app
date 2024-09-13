@@ -14,7 +14,7 @@ class LiveChatSectionWidget extends StatelessWidget {
           child: LiveClassDetail(),
         ),
         const SizedBox(height: 20),
-        // Expanded widget to take up the remaining space
+        //Expanded widget to take up the remaining space
         Expanded(
           child: LiveLeftPart(),
         ),
