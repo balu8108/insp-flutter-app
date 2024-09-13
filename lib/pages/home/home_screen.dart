@@ -36,8 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (BuildContext context) {
             return TokenExpired();
           });
-    } else {
-      print("DONE");
     }
   }
 

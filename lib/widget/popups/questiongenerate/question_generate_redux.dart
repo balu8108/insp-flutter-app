@@ -87,23 +87,26 @@ class UpdateCorrectAnswersError extends QuestionGenerateAction {
 QuestionGenerateAppState _questionGenerateStateReducer(
     QuestionGenerateAppState state, QuestionGenerateAction action) {
   if (action is UpdateQuestionType) {
-    return state.copyWith(questionType: action.questionType);
+    return state.copyWith(
+        questionType: action.questionType, questionTypeError: '');
   } else if (action is UpdateQuestionTypeError) {
     return state.copyWith(questionTypeError: action.questionTypeError);
   } else if (action is UpdateQuestionNo) {
-    return state.copyWith(questionNo: action.questionNo);
+    return state.copyWith(questionNo: action.questionNo, questionNoError: '');
   } else if (action is UpdateQuestionNoError) {
     return state.copyWith(questionNoError: action.questionNoError);
   } else if (action is UpdateTime) {
-    return state.copyWith(time: action.time);
+    return state.copyWith(time: action.time, timeError: '');
   } else if (action is UpdateTimeError) {
     return state.copyWith(timeError: action.timeError);
   } else if (action is UpdateNoOfOptions) {
-    return state.copyWith(noOfOptions: action.noOfOptions);
+    return state.copyWith(
+        noOfOptions: action.noOfOptions, noOfOptionsError: '');
   } else if (action is UpdateNoOfOptionsError) {
     return state.copyWith(noOfOptionsError: action.noOfOptionsError);
   } else if (action is UpdateCorrectAnswers) {
-    return state.copyWith(correctAnswers: action.correctAnswers);
+    return state.copyWith(
+        correctAnswers: action.correctAnswers, correctAnswersError: '');
   } else if (action is UpdateCorrectAnswersError) {
     return state.copyWith(correctAnswersError: action.correctAnswersError);
   } else if (action is Updatedropdown) {
@@ -123,22 +126,51 @@ ThunkAction<QuestionGenerateAppState> questionGenerateapi(
   Function(PollDataModel) sendPollToServer,
 ) {
   return (Store<QuestionGenerateAppState> store) async {
+    final state = store.state;
+
+    if ((state.questionType ?? '').isEmpty) {
+      store.dispatch(UpdateQuestionTypeError(
+          questionTypeError: 'Please select question type'));
+      return;
+    }
+
+    if (state.questionNo == null || state.questionNo == 0) {
+      store.dispatch(
+          UpdateQuestionNoError(questionNoError: 'Please enter question no'));
+      return;
+    }
+
+    if (state.noOfOptions == null || state.noOfOptions == 0) {
+      store.dispatch(UpdateNoOfOptionsError(
+          noOfOptionsError: 'Please enter number of options'));
+      return;
+    }
+
+    if (state.time == null || state.time == 0) {
+      store.dispatch(UpdateTimeError(timeError: 'Please enter time'));
+      return;
+    }
+
+    if (state.correctAnswers.isEmpty) {
+      store.dispatch(UpdateCorrectAnswersError(
+          correctAnswersError: 'Please choose correct answer'));
+      return;
+    }
+
     try {
-      // Example of using sendPollToServer
       PollDataModel pollData = PollDataModel(
-        type: store.state.questionType ?? '',
-        questionNo: store.state.questionNo ?? 0,
-        correctAnswers: store.state.correctAnswers,
-        noOfOptions: store.state.noOfOptions ?? 0,
-        time: store.state.time ?? 0,
+        type: state.questionType!,
+        questionNo: state.questionNo!,
+        correctAnswers: state.correctAnswers,
+        noOfOptions: state.noOfOptions!,
+        time: state.time!,
       );
 
       sendPollToServer(pollData);
       Navigator.of(context).pop();
     } catch (error) {
-      Navigator.of(context).pop();
       toastification.show(
-        context: context, // optional if you use ToastificationWrapper
+        context: context,
         type: ToastificationType.error,
         style: ToastificationStyle.fillColored,
         autoCloseDuration: const Duration(seconds: 3),

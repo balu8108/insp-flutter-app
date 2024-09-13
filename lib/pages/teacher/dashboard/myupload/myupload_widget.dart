@@ -13,9 +13,7 @@ class MyUpload extends StatelessWidget {
   Widget build(BuildContext context) {
     final ScrollController scrollController = ScrollController();
 
-    void temporyFunction() {
-      print("noting");
-    }
+    void temporyFunction() {}
 
     void getAssignment() {
       dispatch(context, getLatestAssigmentapi(context));

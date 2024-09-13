@@ -9,10 +9,12 @@ import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_mode
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/preview_data_redux.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/tpstream_redux.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/socket/socket_events.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:inspflutterfrontend/widget/popups/rating/rating.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:redux/redux.dart';
 import 'package:toastification/toastification.dart';
@@ -21,13 +23,21 @@ IO.Socket? socket;
 
 void initializeSocketConnections(
     Store<AppState> store, String roomId, String token) {
+  if (socket != null) {
+    socket?.disconnect(); // Disconnect the socket
+    socket?.close(); // Close the connection
+    socket = null; // Set the socket to null to ensure fresh initialization
+  }
+
   if (token.isNotEmpty) {
     socket = IO.io(
         'https://flutterdev.insp.1labventures.in',
         IO.OptionBuilder()
             .setTransports(['websocket'])
-            .enableAutoConnect()
+            .disableAutoConnect()
             .setAuth({'secret_token': token})
+            .disableReconnection()
+            .enableForceNew()
             .build());
 
     // Add event listeners
@@ -61,6 +71,8 @@ void initializeSocketConnections(
         (data) => kickOutResponseHandler(store, data));
     socket?.on(SOCKET_EVENTS.END_MEET_FROM_SERVER,
         (data) => kickOutResponseHandler(store, data));
+    socket?.on(SOCKET_EVENTS.TPSTREAM_STREAMING_STATUS_FROM_SERVER,
+        (data) => tpStreamLivestreamStatus(store, data));
     socket?.on(SOCKET_EVENTS.DISCONNECT, (err) => {});
     socket?.on(SOCKET_EVENTS.CONNECT_ERROR, (err) => {});
     // Connect the socket
@@ -168,11 +180,11 @@ void peerLeavedResponseHandler(Store<AppState> store, dynamic res) {
   store.dispatch(UpdateFilteredPeers(filteredPeers: updatedPeers));
 }
 
-Future<void> joinRoomHandler(Store<AppState> store, String roomId,
-    dynamic userProfile, BuildContext context) async {
-  socket?.emitWithAck(
-      SOCKET_EVENTS.JOIN_ROOM, {'roomId': roomId, 'peerDetails': userProfile},
-      ack: (res) {
+Future<void> joinRoomHandler(
+    Store<AppState> store, String roomId, BuildContext context) async {
+  LoginResponseModelResult userData = await getUserData();
+  socket?.emitWithAck(SOCKET_EVENTS.JOIN_ROOM,
+      {'roomId': roomId, 'peerDetails': userData.toJson()}, ack: (res) {
     if (!res['success']) {
       toastification.show(
         context: context, // optional if you use ToastificationWrapper
@@ -193,7 +205,6 @@ Future<void> joinRoomHandler(Store<AppState> store, String roomId,
 Future<void> sendFileHandler(Store<AppState> store, dynamic filesData) async {
   socket?.emitWithAck(SOCKET_EVENTS.UPLOAD_FILE_TO_SERVER, filesData,
       ack: (res) {
-    print(res);
     if (res['success']) {
       store.dispatch(addFileToPreviewData(res['data']));
     } else {
@@ -235,27 +246,47 @@ void kickOutResponseHandler(Store<AppState> store, dynamic res) {
   leaveRoomHandler(store);
 }
 
+void tpStreamLivestreamStatus(Store<AppState> store, dynamic res) {
+  String message = res['msg'] ?? 'Unknown Status';
+  store.dispatch(getStatus(message));
+}
+
+void endMeetHandler() {
+  socket?.emit(SOCKET_EVENTS.END_MEET_TO_SERVER);
+}
+
 Future<void> leaveRoomHandler(Store<AppState> store) async {
   if (socket?.connected == true) {
     socket?.emitWithAck(SOCKET_EVENTS.LEAVE_ROOM, '', ack: (res) async {
       var feedBackStatus = res['feedBackStatus'];
       store.dispatch(UpdateAllPeers(allPeers: []));
       store.dispatch(UpdateFilteredPeers(filteredPeers: []));
+      store.dispatch(UpdateChatMessages(chatMessages: []));
+      store.dispatch(UpdateLeaderBoard(leaderBoard: []));
+      LoginResponseModelResult userDatas = await getUserData();
+      navigatorKey.currentState?.push(
+        MaterialPageRoute(
+            builder: (context) => HomeScreen(userData: userDatas)),
+      );
       if (feedBackStatus['success']) {
-        LoginResponseModelResult userDatas = await getUserData();
-        navigatorKey.currentState?.push(
-          MaterialPageRoute(
-              builder: (context) => HomeScreen(userData: userDatas)),
-        );
         if (userDatas.userType == 0) {
-          if (feedBackStatus['isFeedback']) {
-            print("Need feedback");
+          if (!feedBackStatus['isFeedback']) {
+            final currentContext = navigatorKey.currentState?.context;
+            if (currentContext != null) {
+              showDialog(
+                  context: currentContext,
+                  builder: (BuildContext context) {
+                    return RatingFeedbackPopup.getScreen(
+                        int.parse(feedBackStatus['feedBackTopicId']));
+                  });
+            }
           }
         }
       } else {
         // Handle failure
       }
       socket?.disconnect();
+      socket?.close();
       toastification.show(
         type: ToastificationType.info,
         style: ToastificationStyle.fillColored,

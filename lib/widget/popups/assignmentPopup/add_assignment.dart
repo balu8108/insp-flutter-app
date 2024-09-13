@@ -133,6 +133,11 @@ class AddAssignment extends StatelessWidget {
                                         RemoveFileAction(filename: file));
                                   },
                                   pickedFilesName: state.pickedFilesName),
+
+                              Text(
+                                state.fileError ? "Please select file" : "",
+                                style: TextStyle(color: Colors.red),
+                              ),
                               ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: state.previousFiles.length,

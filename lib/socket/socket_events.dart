@@ -51,4 +51,6 @@ class SOCKET_EVENTS {
       "poll_time_increase_to_server";
   static const String POLL_TIME_INCREASE_FROM_SERVER =
       "poll_time_increase_from_server";
+  static const String TPSTREAM_STREAMING_STATUS_FROM_SERVER =
+      "tpstream_streaming_status_from_server";
 }

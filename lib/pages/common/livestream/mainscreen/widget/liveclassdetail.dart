@@ -38,67 +38,70 @@ class _LiveClassDetailState extends State<LiveClassDetail> {
                 bool isTeacher = snapshot.data ?? false;
                 return StoreConnector<AppState, PreviewDataAppState>(
                     converter: (store) => store.state.previewDataAppState,
-                    builder: (context, PreviewDataAppState state) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                    builder: (context, PreviewDataAppState state) =>
+                        SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Expanded(
-                                      flex: 9,
-                                      child: INSPHeading('Live Session')),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                capitalizeFirstLetter(state
-                                    .previewData.liveClassRoomDetail.topicName),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
-                                  color: Color(0xFF2C3329),
-                                  height: 1.25,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                '${formatTime(state.previewData.scheduledStartTime)} - ${formatTime(state.previewData.scheduledEndTime)}',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Color.fromRGBO(44, 51, 41, 0.47),
-                                  height: 1.75,
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text(
-                                      'Files',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14,
-                                        color: Color(0xFF2C3329),
-                                        height: 1.25,
-                                      ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                          flex: 9,
+                                          child: INSPHeading('Live Session')),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    capitalizeFirstLetter(state.previewData
+                                        .liveClassRoomDetail.topicName),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                      color: Color(0xFF2C3329),
+                                      height: 1.25,
                                     ),
-                                    if (isTeacher)
-                                      UploadFilePopup(
-                                          roomId: state.previewData.roomId)
-                                  ]),
-                              const SizedBox(height: 10),
-                              FileBoxComponent(
-                                data: state.previewDataFiles,
-                                type: "live",
-                                scrollDirection: "vertical",
-                                maxHeight: 60,
-                                isTeacher: isTeacher,
-                              )
-                            ]));
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '${formatTime(state.previewData.scheduledStartTime)} - ${formatTime(state.previewData.scheduledEndTime)}',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Color.fromRGBO(44, 51, 41, 0.47),
+                                      height: 1.75,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          'Files',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14,
+                                            color: Color(0xFF2C3329),
+                                            height: 1.25,
+                                          ),
+                                        ),
+                                        if (isTeacher)
+                                          UploadFilePopup(
+                                              roomId: state.previewData.roomId)
+                                      ]),
+                                  const SizedBox(height: 10),
+                                  FileBoxComponent(
+                                    data: state.previewDataFiles,
+                                    type: "live",
+                                    scrollDirection: "vertical",
+                                    maxHeight: 60,
+                                    isTeacher: isTeacher,
+                                  )
+                                ])));
               }
             }));
   }
