@@ -20,13 +20,13 @@ import 'package:inspflutterfrontend/widget/navbar/navbar_redux.dart';
 import 'package:inspflutterfrontend/widget/popups/studentSuggestion/student_suggestion.dart';
 
 class Navbar extends StatefulWidget implements PreferredSizeWidget {
-  Navbar({super.key});
+  const Navbar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
-  _NavbarState createState() => _NavbarState();
+  State<Navbar> createState() => _NavbarState();
 }
 
 class _NavbarState extends State<Navbar> {
@@ -70,72 +70,75 @@ class _NavbarState extends State<Navbar> {
       store.dispatch(UpdateSelectedButton(selectedButton: buttonText));
     }
 
-    return AppBar(
-      automaticallyImplyLeading: false,
-      backgroundColor: const Color.fromRGBO(232, 242, 249, 1),
-      title: Image.asset('assets/images/insplogo.png', height: 34.0),
-      actions: userData.userType == 0
-          ? [
-              _buildTextButton('Home', () {
-                _onButtonPressed('Home');
-                _navigateToScreen(context, HomeScreen(userData: userData));
-              }),
-              _buildTextButton('Calendar', () {
-                _onButtonPressed('Calendar');
-                _navigateToScreen(context, CalendarScreen());
-              }),
-              _buildTextButton('Assignments', () {
-                _onButtonPressed('Assignments');
-                _navigateToScreen(
-                    context, AssignmentScreen.getScreen(inspCardModel));
-              }),
-              _buildTextButton('Library', () {
-                _onButtonPressed('Library');
-                _navigateToScreen(
-                    context, LibraryScreen.getScreen(inspCardModel));
-              }),
-              _buildTextButton('Suggestion', () {
-                _onButtonPressed('Suggestion');
-                showDialog(
-                    context: context,
-                    builder: (BuildContext) => StudentSuggestion.getScreen());
-              }),
-              _buildTextButton('INSP Portal', () {
-                _onButtonPressed('INSP Portal');
-                _launchURL(Uri.parse(
-                    'https://www.inspedu.in/')); // Use Uri.parse to convert string to Uri
-              }),
-              _buildUserMenu()
-            ]
-          : [
-              _buildTextButton('Home', () {
-                _onButtonPressed('Home');
-                _navigateToScreen(context, HomeScreen(userData: userData));
-              }),
-              _buildTextButton('Calendar', () {
-                _onButtonPressed('Calendar');
-                _navigateToScreen(context, CalendarScreen());
-              }),
-              _buildTextButton('Courses', () {
-                _onButtonPressed('Courses');
-                _navigateToScreen(
-                    context, MyCoursesScreen.getScreen(inspCardModel));
-              }),
-              _buildTextButton('Uploads', () {
-                _onButtonPressed('Uploads');
-                _navigateToScreen(context, const MyUploads());
-              }),
-              _buildTextButton('Suggestion', () {
-                _onButtonPressed('Suggestion');
-                _navigateToScreen(context, MainSuggestionPage.getScreen());
-              }),
-              _buildTextButton('INSP Portal', () {
-                _onButtonPressed('INSP Portal');
-                _launchURL(Uri.parse('https://www.inspedu.in/'));
-              }),
-              _buildUserMenu()
-            ],
-    );
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: const Color.fromRGBO(232, 242, 249, 1),
+          title: Image.asset('assets/images/insplogo.png', height: 34.0),
+          actions: userData.userType == 0
+              ? [
+                  _buildTextButton('Home', () {
+                    _onButtonPressed('Home');
+                    _navigateToScreen(context, HomeScreen(userData: userData));
+                  }),
+                  _buildTextButton('Calendar', () {
+                    _onButtonPressed('Calendar');
+                    _navigateToScreen(context, CalendarScreen());
+                  }),
+                  _buildTextButton('Assignments', () {
+                    _onButtonPressed('Assignments');
+                    _navigateToScreen(
+                        context, AssignmentScreen.getScreen(inspCardModel));
+                  }),
+                  _buildTextButton('Library', () {
+                    _onButtonPressed('Library');
+                    _navigateToScreen(
+                        context, LibraryScreen.getScreen(inspCardModel));
+                  }),
+                  _buildTextButton('Suggestion', () {
+                    _onButtonPressed('Suggestion');
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext) =>
+                            StudentSuggestion.getScreen());
+                  }),
+                  _buildTextButton('INSP Portal', () {
+                    _onButtonPressed('INSP Portal');
+                    _launchURL(Uri.parse(
+                        'https://www.inspedu.in/')); // Use Uri.parse to convert string to Uri
+                  }),
+                  _buildUserMenu()
+                ]
+              : [
+                  _buildTextButton('Home', () {
+                    _onButtonPressed('Home');
+                    _navigateToScreen(context, HomeScreen(userData: userData));
+                  }),
+                  _buildTextButton('Calendar', () {
+                    _onButtonPressed('Calendar');
+                    _navigateToScreen(context, CalendarScreen());
+                  }),
+                  _buildTextButton('Courses', () {
+                    _onButtonPressed('Courses');
+                    _navigateToScreen(
+                        context, MyCoursesScreen.getScreen(inspCardModel));
+                  }),
+                  _buildTextButton('Uploads', () {
+                    _onButtonPressed('Uploads');
+                    _navigateToScreen(context, const MyUploads());
+                  }),
+                  _buildTextButton('Suggestion', () {
+                    _onButtonPressed('Suggestion');
+                    _navigateToScreen(context, MainSuggestionPage.getScreen());
+                  }),
+                  _buildTextButton('INSP Portal', () {
+                    _onButtonPressed('INSP Portal');
+                    _launchURL(Uri.parse('https://www.inspedu.in/'));
+                  }),
+                  _buildUserMenu()
+                ],
+        ));
   }
 
   void _navigateToScreen(BuildContext context, Widget screen) {
@@ -196,7 +199,7 @@ class _NavbarState extends State<Navbar> {
           );
         }
       },
-      offset: Offset(-50, kToolbarHeight),
+      offset: const Offset(-50, kToolbarHeight),
       itemBuilder: (context) => [
         PopupMenuItem<String>(
           value: 'Profile',

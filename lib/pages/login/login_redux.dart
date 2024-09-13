@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/device_login_request_model.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/pages/home/mobile_home_screen.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:toastification/toastification.dart';
@@ -111,9 +112,10 @@ ThunkAction<AppState> handleLogin(BuildContext context) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => MobileHomeScreen(
-                    userData: result.data.loginResponseModelResult),
-              ),
+                  builder: (context) => MainScaffold(
+                        content: MobileHomeScreen(
+                            userData: result.data.loginResponseModelResult),
+                      )),
             );
 
             store.dispatch(UpdateIsLoading(isLoading: false));

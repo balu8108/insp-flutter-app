@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
 import 'package:inspflutterfrontend/pages/common/calender/calendar_screen.dart';
@@ -19,9 +20,11 @@ import 'package:inspflutterfrontend/pages/student/assignment/mainpage/assignment
 import 'package:inspflutterfrontend/pages/student/library/mainpage/library_screen.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/redux/app_reducer.dart';
+import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/mobileAppbar/mobileAppbar.dart';
+import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar_redux.dart';
 import 'package:inspflutterfrontend/widget/popups/uploadLiveclassFile/upload_liveclass_file_redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -99,7 +102,7 @@ class _MyAppState extends State<MyApp> {
               if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
                 return userData.token == ""
                     ? const LoginScreen()
-                    : HomeScreen(userData: userData);
+                    : MainScaffold(content: HomeScreen(userData: userData));
               } else {
                 return AnimatedSplashScreen(
                   duration: 3000,
@@ -211,10 +214,16 @@ class MainScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const Mobileappbar(),
-      body: content,
-      bottomNavigationBar: _navbar(context),
-    );
+    bool isWebOrLandScape = context.isWebOrLandScape();
+    return isWebOrLandScape
+        ? Scaffold(
+            appBar: const Navbar(),
+            body: content,
+          )
+        : Scaffold(
+            appBar: const Mobileappbar(),
+            body: content,
+            bottomNavigationBar: _navbar(context),
+          );
   }
 }
