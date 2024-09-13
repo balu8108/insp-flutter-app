@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/pages/common/upcomingsession/upcoming_session.dart';
 import 'package:inspflutterfrontend/pages/teacher/dashboard/myupload/myupload_widget.dart';
 import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
@@ -42,6 +43,8 @@ class TeacherHomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MyCoursesWidget(onViewDetailsClicked: onPressedMyCourse),
+                  const SizedBox(height: 16),
+                  UpcomingSession(),
                   const SizedBox(height: 16),
                   Soloclasses.getScreen(),
                   const SizedBox(height: 16),
