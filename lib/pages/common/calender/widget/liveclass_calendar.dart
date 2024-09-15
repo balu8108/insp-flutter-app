@@ -117,7 +117,7 @@ class LiveclassCalendar extends StatelessWidget {
                             },
                           ),
                           rowHeight: 70,
-                          availableGestures: AvailableGestures.all,
+                          // availableGestures: AvailableGestures.all,
                           selectedDayPredicate: (day) {
                             return isSameDay(selectedDay, day);
                           },
