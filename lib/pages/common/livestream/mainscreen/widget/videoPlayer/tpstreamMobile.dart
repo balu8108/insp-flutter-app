@@ -13,6 +13,8 @@ class TPStreamMobileVideoPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(getVideoUrlApi(context));
     return StoreConnector<AppState, TPStreamAppState>(
       converter: (store) => store.state.tpStreamAppState,
       builder: (context, TPStreamAppState state) {

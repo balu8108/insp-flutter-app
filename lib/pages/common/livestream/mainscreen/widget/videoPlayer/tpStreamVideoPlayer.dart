@@ -34,7 +34,7 @@ class TPStreamVideoPlayer extends StatelessWidget {
               color: Color.fromRGBO(232, 242, 249, 1),
             ),
             child: state.videoResponse.playback_url.isNotEmpty
-                ? UniversalPlatform.isWindows
+                ? UniversalPlatform.isWindows || UniversalPlatform.isAndroid
                     ? WebviewUniversalWindow(
                         url: state.videoResponse.playback_url,
                         streamStatus: state.streamStatusChangeTo)

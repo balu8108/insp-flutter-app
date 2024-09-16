@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/teacher/soloclassrecording/screen/soloclassroomscreen.dart';
 import 'package:inspflutterfrontend/widget/card/insp_card.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
-import 'package:inspflutterfrontend/widget/popups/scheduleLiveclass/schedule_liveclass.dart';
 import 'package:inspflutterfrontend/widget/popups/scheduleSoloclass/schedule_soloclass.dart';
 
 class SoloclassroomTopicsWidgets extends StatefulWidget {
@@ -70,7 +68,7 @@ class _SoloclassroomTopicsWidgetsState
             height: 16,
           ),
           SizedBox(
-            height: 220.0,
+            height: 230.0,
             child: widget.allTopics.isNotEmpty
                 ? Scrollbar(
                     child: ListView.separated(

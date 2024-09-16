@@ -12,8 +12,8 @@ class SoloclassDescription extends StatelessWidget {
             .height, // Take full height of the screen
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Color.fromRGBO(232, 242, 249, 1),
-          boxShadow: [
+          color: const Color.fromRGBO(232, 242, 249, 1),
+          boxShadow: const [
             BoxShadow(
               color: Color.fromRGBO(92, 92, 92, 0.12), // Shadow color
               offset: Offset(2, 2), // x and y offset
@@ -40,7 +40,7 @@ class SoloclassDescription extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Text("Solo Recording",
+                  const Text("Solo Recording",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
@@ -52,7 +52,7 @@ class SoloclassDescription extends StatelessWidget {
               const SizedBox(
                 height: 25,
               ),
-              Text(
+              const Text(
                 "Alternating Current",
                 style: TextStyle(
                   fontSize: 16,
@@ -62,7 +62,7 @@ class SoloclassDescription extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 25),
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -74,7 +74,7 @@ class SoloclassDescription extends StatelessWidget {
                       decoration: TextDecoration.none,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   Text(
                     "This is a description of the solo recording",
                     style: TextStyle(
@@ -90,7 +90,7 @@ class SoloclassDescription extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Agenda",
                     style: TextStyle(
                       fontSize: 16,
@@ -114,7 +114,7 @@ class SoloclassDescription extends StatelessWidget {
                               height: 10,
                               margin: const EdgeInsets.only(
                                   right: 10), // Space between circle and text
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Color.fromRGBO(44, 51, 41, 0.47),
                                 shape: BoxShape.circle,
                               ),
@@ -122,7 +122,7 @@ class SoloclassDescription extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 "This is a description of the agenda item and I will be testing all the information related to it ${index + 1}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
                                   color: Color.fromRGBO(44, 51, 41, 0.47),
@@ -138,7 +138,7 @@ class SoloclassDescription extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 25),
-              Column(
+              const Column(
                 children: [
                   Text(
                     "File",

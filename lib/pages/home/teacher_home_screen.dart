@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/pages/common/upcomingsession/upcoming_session.dart';
 import 'package:inspflutterfrontend/pages/teacher/dashboard/myupload/myupload_widget.dart';
 import 'package:inspflutterfrontend/utils/extensions.dart';
@@ -17,14 +18,16 @@ class TeacherHomeScreen extends StatelessWidget {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => MyCoursesScreen.getScreen(inspCardModel)));
+            builder: (context) => MainScaffold(
+                content: MyCoursesScreen.getScreen(inspCardModel))));
   }
 
   void onPressedLibrary(BuildContext context, INSPCardModel inspCardModel) {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => LibraryScreen.getScreen(inspCardModel)));
+            builder: (context) =>
+                MainScaffold(content: LibraryScreen.getScreen(inspCardModel))));
   }
 
   @override

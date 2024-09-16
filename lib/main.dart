@@ -25,17 +25,20 @@ import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/widget/mobileAppbar/mobileAppbar.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
+import 'package:inspflutterfrontend/widget/navbar/navbar_mobile.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar_redux.dart';
 import 'package:inspflutterfrontend/widget/popups/uploadLiveclassFile/upload_liveclass_file_redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 import 'package:toastification/toastification.dart';
+import 'package:tpstreams_player_sdk/tpstreams_player_sdk.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
+  TPStreamsSDK.initialize(orgCode: "gcma48");
   // Ensure that the correct platform implementation is used for macOS
   WebViewPlatform.instance = WebKitWebViewPlatform();
   WidgetsFlutterBinding.ensureInitialized();
@@ -144,74 +147,6 @@ class MainScaffold extends StatelessWidget {
 
   const MainScaffold({required this.content, Key? key}) : super(key: key);
 
-  // Navbar UI with dynamic icons based on user type
-  Widget _navbar(BuildContext context) {
-    final INSPCardModel inspCardModel = INSPCardModel(
-      '1',
-      'Physics',
-      'In Progress',
-      'Explore the fascinating world of Physics with a collection of resources covering classical mechanics, electromagnetism, thermodynamics, and quantum mechanics. Dive into the fundamental principles that govern the physical universe.',
-    );
-
-    // Define sets of widgets based on user type (in this case, userTypeZero)
-    final List<Map<String, dynamic>> userTypeZeroIcons = [
-      {
-        'widget': StudentHomeScreen(),
-        'icon': Icons.home,
-      },
-      {
-        'widget': const CalendarScreen(),
-        'icon': Icons.calendar_month,
-      },
-      {
-        'widget': AssignmentScreen.getScreen(inspCardModel),
-        'icon': Icons.school,
-      },
-      {
-        'widget': LibraryScreen.getScreen(inspCardModel),
-        'icon': Icons.library_books,
-      },
-      {
-        'widget': StudentHomeScreen(),
-        'icon': Icons.book,
-      }
-    ];
-
-    return Container(
-      height: 70,
-      decoration: BoxDecoration(
-        color: const Color.fromRGBO(60, 141, 188, 1),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(20),
-            blurRadius: 20,
-            spreadRadius: 10,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: userTypeZeroIcons.map((item) {
-          return IconButton(
-            icon: Icon(
-              item['icon'],
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MainScaffold(content: item['widget']),
-                ),
-              );
-            },
-          );
-        }).toList(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     bool isWebOrLandScape = context.isWebOrLandScape();
@@ -223,7 +158,7 @@ class MainScaffold extends StatelessWidget {
         : Scaffold(
             appBar: const Mobileappbar(),
             body: content,
-            bottomNavigationBar: _navbar(context),
+            bottomNavigationBar: const NavbarMobile(),
           );
   }
 }

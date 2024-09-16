@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/liveclass.dart';
+import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamMobile.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/chat_message_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/increase_polltime_model.dart';
 import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_answer_model.dart';
@@ -247,7 +248,8 @@ ThunkAction<AppState> joinRoomResponseData(BuildContext context, dynamic res) {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => const MainScaffold(content: LiveClassScreen())),
+          builder: (context) =>
+              const MainScaffold(content: TPStreamMobileVideoPlayer())),
     );
   };
 }
