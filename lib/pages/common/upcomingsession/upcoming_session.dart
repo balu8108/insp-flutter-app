@@ -18,6 +18,7 @@ class UpcomingSession extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isTeacher = isTeacherLogin(context);
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(getAllUpcomingClass(context));
 
@@ -25,140 +26,118 @@ class UpcomingSession extends StatelessWidget {
       store.dispatch(getAllUpcomingClass(context));
     }
 
-    void onPRess() {
-      print('pressed');
-    }
-
-    return FutureBuilder<bool>(
-        future: isTeacherLogin(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return const Center(child: Text('Error loading data'));
-          } else {
-            bool isTeacher = snapshot.data ?? false;
-            return StoreConnector<AppState, UpcomingWidgetAppState>(
-                converter: (store) => store.state.upcomingWidgetAppState,
-                builder: (context, UpcomingWidgetAppState state) => Container(
-                      height: 500,
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: const Color.fromRGBO(232, 242, 249, 1),
-                      ),
-                      child: Column(
-                        children: [
-                          if (isTeacher)
-                            SizedBox(
-                              width: double.infinity,
-                              height: 39,
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      const Color(0xFF3C8DBC)),
-                                  foregroundColor: MaterialStateProperty.all(
-                                      const Color(0xFF3C8DBC)),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          8.0), // Adjust border radius as needed
-                                    ),
-                                  ),
-                                  padding: MaterialStateProperty.all(
-                                      const EdgeInsets.symmetric(
-                                          vertical: 12.0)),
-                                ),
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return ScheduleLiveClass.getScreen(
-                                          0,
-                                          false,
-                                          '',
-                                          '',
-                                          '',
-                                          '',
-                                          '',
-                                          '',
-                                          '',
-                                          '',
-                                          '',
-                                          '',
-                                          '',
-                                          false,
-                                          [],
-                                          getUpcomingClass);
-                                    },
-                                  );
-                                },
-                                child: const Text(
-                                  'Schedule Class',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14.0,
-                                  ),
-                                ),
-                              ),
+    return StoreConnector<AppState, UpcomingWidgetAppState>(
+        converter: (store) => store.state.upcomingWidgetAppState,
+        builder: (context, UpcomingWidgetAppState state) => Container(
+              height: 500,
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: const Color.fromRGBO(232, 242, 249, 1),
+              ),
+              child: Column(
+                children: [
+                  if (isTeacher)
+                    SizedBox(
+                      width: double.infinity,
+                      height: 39,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              const Color(0xFF3C8DBC)),
+                          foregroundColor: MaterialStateProperty.all(
+                              const Color(0xFF3C8DBC)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  8.0), // Adjust border radius as needed
                             ),
-                          new SizedBox(
-                            height: 20,
                           ),
-                          Expanded(
-                              child: classMobileCategories.isNotEmpty
-                                  ? ListView.separated(
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: classMobileCategories.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Expanded(
-                                                  flex: 9,
-                                                  child: INSPHeading(
-                                                      classMobileCategories[
-                                                              index]
-                                                          .label),
-                                                ),
-                                              ],
-                                            ),
-                                            ScheduleClassMobileBox(
-                                                type:
-                                                    classMobileCategories[index]
-                                                        .category,
-                                                upcomingWidgetAppState:
-                                                    state.weeklyData,
-                                                getUpcomingClass:
-                                                    getUpcomingClass),
-                                          ],
-                                        );
-                                      },
-                                      separatorBuilder:
-                                          (BuildContext context, int index) {
-                                        return const SizedBox(
-                                          height: 20,
-                                        );
-                                      },
-                                    )
-                                  : const Center(
-                                      child: Text(
-                                      'No items',
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromRGBO(44, 51, 41, 0.47)),
-                                    ))),
-                        ],
+                          padding: MaterialStateProperty.all(
+                              const EdgeInsets.symmetric(vertical: 12.0)),
+                        ),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return ScheduleLiveClass.getScreen(
+                                  0,
+                                  false,
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  '',
+                                  false,
+                                  [],
+                                  getUpcomingClass);
+                            },
+                          );
+                        },
+                        child: const Text(
+                          'Schedule Class',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.0,
+                          ),
+                        ),
                       ),
-                    ));
-          }
-        });
+                    ),
+                  new SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                      child: classMobileCategories.isNotEmpty
+                          ? ListView.separated(
+                              scrollDirection: Axis.vertical,
+                              itemCount: classMobileCategories.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 9,
+                                          child: INSPHeading(
+                                              classMobileCategories[index]
+                                                  .label),
+                                        ),
+                                      ],
+                                    ),
+                                    ScheduleClassMobileBox(
+                                        type: classMobileCategories[index]
+                                            .category,
+                                        upcomingWidgetAppState:
+                                            state.weeklyData,
+                                        getUpcomingClass: getUpcomingClass),
+                                  ],
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return const SizedBox(
+                                  height: 20,
+                                );
+                              },
+                            )
+                          : const Center(
+                              child: Text(
+                              'No items',
+                              style: TextStyle(
+                                  color: Color.fromRGBO(44, 51, 41, 0.47)),
+                            ))),
+                ],
+              ),
+            ));
   }
 }

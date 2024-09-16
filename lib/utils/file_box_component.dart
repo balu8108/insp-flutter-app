@@ -43,24 +43,24 @@ class FileBoxComponent extends StatelessWidget {
     }
   }
 
-  void getPdfUrl(String fileName, String pdfId) async {
-    try {
-      final remoteDataSource = RemoteDataSource();
-      String userToken = await getUserToken();
-      final pdfData =
-          await remoteDataSource.getDocumentUrl(pdfId, "live", userToken);
-      if (pdfData.data.status == true) {
-        final String pdfUrl = pdfData.data.data.getUrl;
-        await _downloadFile(pdfUrl, fileName);
-      }
-    } catch (e) {
-      // Handle any other errors
-      print('Error: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    void getPdfUrl(String fileName, String pdfId) async {
+      try {
+        final remoteDataSource = RemoteDataSource();
+        String userToken = getUserToken(context);
+        final pdfData =
+            await remoteDataSource.getDocumentUrl(pdfId, "live", userToken);
+        if (pdfData.data.status == true) {
+          final String pdfUrl = pdfData.data.data.getUrl;
+          await _downloadFile(pdfUrl, fileName);
+        }
+      } catch (e) {
+        // Handle any other errors
+        print('Error: $e');
+      }
+    }
+
     return Container(
         constraints:
             BoxConstraints(maxHeight: maxHeight, maxWidth: double.infinity),

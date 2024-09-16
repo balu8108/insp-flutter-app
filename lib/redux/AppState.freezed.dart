@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AppState {
+  UserDataAppState get userDataAppState => throw _privateConstructorUsedError;
   LoginAppState get loginState => throw _privateConstructorUsedError;
   UpcomingWidgetAppState get upcomingWidgetAppState =>
       throw _privateConstructorUsedError;
@@ -41,7 +42,8 @@ abstract class $AppStateCopyWith<$Res> {
       _$AppStateCopyWithImpl<$Res, AppState>;
   @useResult
   $Res call(
-      {LoginAppState loginState,
+      {UserDataAppState userDataAppState,
+      LoginAppState loginState,
       UpcomingWidgetAppState upcomingWidgetAppState,
       ChatWidgetAppState chatWidgetAppState,
       PeersWidgetAppState peersWidgetAppState,
@@ -50,6 +52,7 @@ abstract class $AppStateCopyWith<$Res> {
       TPStreamAppState tpStreamAppState,
       PreviewDataAppState previewDataAppState});
 
+  $UserDataAppStateCopyWith<$Res> get userDataAppState;
   $LoginAppStateCopyWith<$Res> get loginState;
   $UpcomingWidgetAppStateCopyWith<$Res> get upcomingWidgetAppState;
   $ChatWidgetAppStateCopyWith<$Res> get chatWidgetAppState;
@@ -73,6 +76,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userDataAppState = null,
     Object? loginState = null,
     Object? upcomingWidgetAppState = null,
     Object? chatWidgetAppState = null,
@@ -83,6 +87,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? previewDataAppState = null,
   }) {
     return _then(_value.copyWith(
+      userDataAppState: null == userDataAppState
+          ? _value.userDataAppState
+          : userDataAppState // ignore: cast_nullable_to_non_nullable
+              as UserDataAppState,
       loginState: null == loginState
           ? _value.loginState
           : loginState // ignore: cast_nullable_to_non_nullable
@@ -116,6 +124,14 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           : previewDataAppState // ignore: cast_nullable_to_non_nullable
               as PreviewDataAppState,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserDataAppStateCopyWith<$Res> get userDataAppState {
+    return $UserDataAppStateCopyWith<$Res>(_value.userDataAppState, (value) {
+      return _then(_value.copyWith(userDataAppState: value) as $Val);
+    });
   }
 
   @override
@@ -197,7 +213,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {LoginAppState loginState,
+      {UserDataAppState userDataAppState,
+      LoginAppState loginState,
       UpcomingWidgetAppState upcomingWidgetAppState,
       ChatWidgetAppState chatWidgetAppState,
       PeersWidgetAppState peersWidgetAppState,
@@ -206,6 +223,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
       TPStreamAppState tpStreamAppState,
       PreviewDataAppState previewDataAppState});
 
+  @override
+  $UserDataAppStateCopyWith<$Res> get userDataAppState;
   @override
   $LoginAppStateCopyWith<$Res> get loginState;
   @override
@@ -235,6 +254,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userDataAppState = null,
     Object? loginState = null,
     Object? upcomingWidgetAppState = null,
     Object? chatWidgetAppState = null,
@@ -245,6 +265,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? previewDataAppState = null,
   }) {
     return _then(_$AppStateImpl(
+      userDataAppState: null == userDataAppState
+          ? _value.userDataAppState
+          : userDataAppState // ignore: cast_nullable_to_non_nullable
+              as UserDataAppState,
       loginState: null == loginState
           ? _value.loginState
           : loginState // ignore: cast_nullable_to_non_nullable
@@ -285,7 +309,8 @@ class __$$AppStateImplCopyWithImpl<$Res>
 
 class _$AppStateImpl implements _AppState {
   const _$AppStateImpl(
-      {required this.loginState,
+      {required this.userDataAppState,
+      required this.loginState,
       required this.upcomingWidgetAppState,
       required this.chatWidgetAppState,
       required this.peersWidgetAppState,
@@ -294,6 +319,8 @@ class _$AppStateImpl implements _AppState {
       required this.tpStreamAppState,
       required this.previewDataAppState});
 
+  @override
+  final UserDataAppState userDataAppState;
   @override
   final LoginAppState loginState;
   @override
@@ -313,7 +340,7 @@ class _$AppStateImpl implements _AppState {
 
   @override
   String toString() {
-    return 'AppState(loginState: $loginState, upcomingWidgetAppState: $upcomingWidgetAppState, chatWidgetAppState: $chatWidgetAppState, peersWidgetAppState: $peersWidgetAppState, uploadLiveclassFileAppState: $uploadLiveclassFileAppState, navbarAppState: $navbarAppState, tpStreamAppState: $tpStreamAppState, previewDataAppState: $previewDataAppState)';
+    return 'AppState(userDataAppState: $userDataAppState, loginState: $loginState, upcomingWidgetAppState: $upcomingWidgetAppState, chatWidgetAppState: $chatWidgetAppState, peersWidgetAppState: $peersWidgetAppState, uploadLiveclassFileAppState: $uploadLiveclassFileAppState, navbarAppState: $navbarAppState, tpStreamAppState: $tpStreamAppState, previewDataAppState: $previewDataAppState)';
   }
 
   @override
@@ -321,6 +348,8 @@ class _$AppStateImpl implements _AppState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AppStateImpl &&
+            (identical(other.userDataAppState, userDataAppState) ||
+                other.userDataAppState == userDataAppState) &&
             (identical(other.loginState, loginState) ||
                 other.loginState == loginState) &&
             (identical(other.upcomingWidgetAppState, upcomingWidgetAppState) ||
@@ -344,6 +373,7 @@ class _$AppStateImpl implements _AppState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      userDataAppState,
       loginState,
       upcomingWidgetAppState,
       chatWidgetAppState,
@@ -362,7 +392,8 @@ class _$AppStateImpl implements _AppState {
 
 abstract class _AppState implements AppState {
   const factory _AppState(
-      {required final LoginAppState loginState,
+      {required final UserDataAppState userDataAppState,
+      required final LoginAppState loginState,
       required final UpcomingWidgetAppState upcomingWidgetAppState,
       required final ChatWidgetAppState chatWidgetAppState,
       required final PeersWidgetAppState peersWidgetAppState,
@@ -371,6 +402,8 @@ abstract class _AppState implements AppState {
       required final TPStreamAppState tpStreamAppState,
       required final PreviewDataAppState previewDataAppState}) = _$AppStateImpl;
 
+  @override
+  UserDataAppState get userDataAppState;
   @override
   LoginAppState get loginState;
   @override

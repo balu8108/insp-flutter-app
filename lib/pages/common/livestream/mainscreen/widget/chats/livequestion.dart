@@ -45,6 +45,7 @@ class _LiveQuestionState extends State<LiveQuestion> {
 
   @override
   Widget build(BuildContext context) {
+    bool isTeacher = isTeacherLogin(context);
     final store = StoreProvider.of<AppState>(context);
 
     void sendMessage() {
@@ -64,89 +65,77 @@ class _LiveQuestionState extends State<LiveQuestion> {
             _scrollToBottom();
           }
         },
-        builder: (context, state) => FutureBuilder<bool>(
-            future: isTeacherLogin(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return const Center(child: Text('Error loading data'));
-              } else {
-                bool isTeacher = snapshot.data ?? false;
-                return Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
+        builder: (context, state) => Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 9,
+                    child: state.questionMessages.isNotEmpty
+                        ? ListView.separated(
+                            scrollDirection: Axis.vertical,
+                            controller: _scrollController,
+                            itemCount: state.questionMessages.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final cardModel = state.questionMessages[index];
+                              return LiveChatCard(
+                                context: context,
+                                username: cardModel.peerDetails.name,
+                                feedback: cardModel.questionMsg,
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return const SizedBox(height: 20);
+                            },
+                          )
+                        : const Center(child: Text('No Questions')),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 9,
-                        child: state.questionMessages.isNotEmpty
-                            ? ListView.separated(
-                                scrollDirection: Axis.vertical,
-                                controller: _scrollController,
-                                itemCount: state.questionMessages.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  final cardModel =
-                                      state.questionMessages[index];
-                                  return LiveChatCard(
-                                    context: context,
-                                    username: cardModel.peerDetails.name,
-                                    feedback: cardModel.questionMsg,
-                                  );
-                                },
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return const SizedBox(height: 20);
-                                },
-                              )
-                            : const Center(child: Text('No Questions')),
-                      ),
-                      const SizedBox(height: 10),
-                      if (!isTeacher)
-                        Expanded(
-                          flex: 1,
-                          child: SizedBox(
-                            width: 300,
-                            child: TextField(
-                              controller: _controller,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                  borderSide: BorderSide.none,
-                                ),
-                                hintText: 'Ask Something...',
-                                hintStyle: const TextStyle(fontSize: 14),
-                                suffixIcon: IconButton(
-                                  icon: const Icon(Icons.send),
-                                  iconSize: 16.0,
-                                  onPressed: () {
-                                    sendMessage();
-                                  },
-                                ),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 0,
-                                  horizontal: 5,
-                                ), // Adjust padding
-                              ),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFF2C3329), // Text color
-                              ),
-                              onSubmitted: (value) {
+                  const SizedBox(height: 10),
+                  if (!isTeacher)
+                    Expanded(
+                      flex: 1,
+                      child: SizedBox(
+                        width: 300,
+                        child: TextField(
+                          controller: _controller,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: BorderSide.none,
+                            ),
+                            hintText: 'Ask Something...',
+                            hintStyle: const TextStyle(fontSize: 14),
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.send),
+                              iconSize: 16.0,
+                              onPressed: () {
                                 sendMessage();
                               },
                             ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 0,
+                              horizontal: 5,
+                            ), // Adjust padding
                           ),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF2C3329), // Text color
+                          ),
+                          onSubmitted: (value) {
+                            sendMessage();
+                          },
                         ),
-                    ],
-                  ),
-                );
-              }
-            }));
+                      ),
+                    ),
+                ],
+              ),
+            ));
   }
 }

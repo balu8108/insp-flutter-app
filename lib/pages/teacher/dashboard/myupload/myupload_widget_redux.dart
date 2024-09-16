@@ -45,7 +45,7 @@ ThunkAction<MyUploadWidgetAppState> getLatestAssigmentapi(
     BuildContext context) {
   return (Store<MyUploadWidgetAppState> store) async {
     final remoteDataSource = RemoteDataSource();
-    String userToken = await getUserToken();
+    String userToken = getUserToken(context);
     final latestAssignment =
         await remoteDataSource.getLatestAssignment(userToken);
     if (latestAssignment.data.data.isNotEmpty) {

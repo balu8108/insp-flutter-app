@@ -46,7 +46,7 @@ ThunkAction<StudentSuggestionAppState> studentSuggestionapi(
   return (Store<StudentSuggestionAppState> store) async {
     try {
       if (store.state.feedback != '') {
-        LoginResponseModelResult userData = await getUserData();
+        LoginResponseModelResult userData = getUserDataFromStore(context);
         CreateStudentFeedbackRequestModel suggestionRequest =
             CreateStudentFeedbackRequestModel(
                 feedback: store.state.feedback ?? '',

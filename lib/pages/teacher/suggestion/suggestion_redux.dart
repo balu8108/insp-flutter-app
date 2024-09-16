@@ -62,7 +62,7 @@ ThunkAction<SuggestionAppState> getAllFeedback(BuildContext context, int page) {
   return (Store<SuggestionAppState> store) async {
     final remoteDataSource = RemoteDataSource();
 
-    String userToken = await getUserToken();
+    String userToken = getUserToken(context);
     final HttpResponse<AllStudentFeedbackResponseModel> allFeedback =
         await remoteDataSource.getAllStudentFeedback(
             AllStudentFeedbackRequestModel(limit: 10, page: page, search: ''),
@@ -80,7 +80,7 @@ ThunkAction<SuggestionAppState> deleteAssignment(
     BuildContext context, int feedbackId) {
   return (Store<SuggestionAppState> store) async {
     try {
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final remoteDataSource = RemoteDataSource();
       final deleteTopicData =
           await remoteDataSource.deleteStudentFeedback(feedbackId, userToken);

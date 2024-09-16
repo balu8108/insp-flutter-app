@@ -69,7 +69,7 @@ ThunkAction<RatingFeedbackDetailAppState> showRatingFeedbackDetail(
       store.dispatch(UpdateSelectedItem(selectedItem: inspCardModel));
       final remoteDataSource = RemoteDataSource();
       final topicId = inspCardModel.id;
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final allTopics = await remoteDataSource.getTopicFeedbackRatingDetail(
           topicId, userToken);
       if (allTopics.response.statusCode == 200) {

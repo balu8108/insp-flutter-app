@@ -103,7 +103,7 @@ ThunkAction<SoloclassTopicDetailReduxAppState> showSoloclassTopicwiseDetails(
     store.dispatch(UpdateSelectedTopic(selectedTopics: inspCardModel));
 
     final remoteDataSource = RemoteDataSource();
-    String userToken = await getUserToken();
+    String userToken = getUserToken(context);
     try {
       final allTopics = await remoteDataSource.getSoloClassTopicWiseDetails(
           inspCardModel.id, userToken);

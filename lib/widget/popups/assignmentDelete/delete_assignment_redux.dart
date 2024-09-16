@@ -42,7 +42,7 @@ ThunkAction<DeleteAssignmentAppState> deleteAssignment(BuildContext context,
     int assignmentId, Function() fetchAssignmentAfterUpdateorDelete) {
   return (Store<DeleteAssignmentAppState> store) async {
     try {
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final remoteDataSource = RemoteDataSource();
       final deleteTopicData =
           await remoteDataSource.deleteAssignment(assignmentId, userToken);

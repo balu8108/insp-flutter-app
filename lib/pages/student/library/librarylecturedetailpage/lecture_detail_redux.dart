@@ -74,7 +74,7 @@ ThunkAction<LectureDetailAppState> getAllAssignment(
     BuildContext context, String topicId) {
   return (Store<LectureDetailAppState> store) async {
     final remoteDataSource = RemoteDataSource();
-    String userToken = await getUserToken();
+    String userToken = getUserToken(context);
     final allAssignment =
         await remoteDataSource.getAssigmentByTopicId(topicId, userToken);
     if (allAssignment.response.statusCode == 200) {
@@ -94,7 +94,7 @@ ThunkAction<LectureDetailAppState> showLectureDetail(
     BuildContext context, LectureCardModel lecture) {
   return (Store<LectureDetailAppState> store) async {
     final remoteDataSource = RemoteDataSource();
-    String userToken = await getUserToken();
+    String userToken = getUserToken(context);
     final lectureDetail = await remoteDataSource.getLecturesDetailByRoomId(
         lecture.roomId, userToken);
     if (lectureDetail.response.statusCode == 200) {

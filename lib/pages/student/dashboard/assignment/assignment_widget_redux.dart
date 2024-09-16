@@ -45,7 +45,7 @@ ThunkAction<AssignmentWidgetAppState> showRecentAssignment(
   return (Store<AssignmentWidgetAppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final allTopics = await remoteDataSource.getRecentAssignment(userToken);
 
       if (allTopics.response.statusCode == 200) {

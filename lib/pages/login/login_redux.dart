@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/device_login_request_model.dart';
 import 'package:inspflutterfrontend/main.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:inspflutterfrontend/redux/userData/userdata_redux.dart';
 import 'package:toastification/toastification.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inspflutterfrontend/pages/home/home_screen.dart';
@@ -99,6 +100,9 @@ ThunkAction<AppState> handleLogin(BuildContext context) {
               'insp_user_profile',
               jsonEncode(result.data.loginResponseModelResult.toJson()),
             );
+
+            store.dispatch(
+                UpdateUserData(userData: result.data.loginResponseModelResult));
 
             Navigator.pushReplacement(
               context,

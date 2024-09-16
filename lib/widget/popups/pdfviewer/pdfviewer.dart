@@ -31,7 +31,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
   void getPdfUrl() async {
     try {
       final remoteDataSource = RemoteDataSource();
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final pdfData = await remoteDataSource.getDocumentUrl(
           widget.pdfId, widget.type, userToken);
       if (pdfData.data.status == true) {
@@ -72,6 +72,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
 
   @override
   Widget build(BuildContext context) {
+    LoginResponseModelResult userData = getUserDataFromStore(context);
     return AlertDialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
@@ -96,70 +97,57 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
           ),
         ],
       ),
-      content: FutureBuilder<LoginResponseModelResult>(
-        future: getUserData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return const Center(child: Text('Error loading data'));
-          } else {
-            String userName = snapshot.data?.name ?? '';
-            String userEmail = snapshot.data?.email ?? '';
-            return Column(children: [
-              Expanded(
-                  child: Container(
-                width: MediaQuery.of(context).size.width - 1100 < 500
-                    ? 500
-                    : MediaQuery.of(context).size.width, // Set desired width
-                height: 800, // Set desired height
-                child: _pdfController != null || _pdfControllerWindow != null
-                    ? Stack(children: [
-                        UniversalPlatform.isWindows
-                            ? PdfView(controller: _pdfControllerWindow!)
-                            : PdfViewPinch(controller: _pdfController!),
-                        Positioned.fill(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Opacity(
-                              opacity:
-                                  0.4, // Set the transparency level of the watermark
-                              child: Text(
-                                '$userName - $userEmail', // Watermark text
-                                style: const TextStyle(
-                                  fontSize: 20, // Adjust size
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromRGBO(60, 141, 188,
-                                      1), // Adjust color of the watermark
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
+      content: Column(children: [
+        Expanded(
+            child: Container(
+          width: MediaQuery.of(context).size.width - 1100 < 500
+              ? 500
+              : MediaQuery.of(context).size.width, // Set desired width
+          height: 800, // Set desired height
+          child: _pdfController != null || _pdfControllerWindow != null
+              ? Stack(children: [
+                  UniversalPlatform.isWindows
+                      ? PdfView(controller: _pdfControllerWindow!)
+                      : PdfViewPinch(controller: _pdfController!),
+                  Positioned.fill(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Opacity(
+                        opacity:
+                            0.4, // Set the transparency level of the watermark
+                        child: Text(
+                          '${userData.name} - ${userData.email}', // Watermark text
+                          style: const TextStyle(
+                            fontSize: 20, // Adjust size
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(60, 141, 188,
+                                1), // Adjust color of the watermark
                           ),
+                          textAlign: TextAlign.center,
                         ),
-                      ])
-                    : const Center(
-                        child: CircularProgressIndicator(),
                       ),
-              )),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.zoom_out),
-                    onPressed: () => {}, // Custom zoom-out functionality
+                    ),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.zoom_in),
-                    onPressed: () => {}, // Custom zoom-in functionality
-                  ),
-                ],
-              ),
-            ]);
-          }
-        },
-      ),
+                ])
+              : const Center(
+                  child: CircularProgressIndicator(),
+                ),
+        )),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.zoom_out),
+              onPressed: () => {}, // Custom zoom-out functionality
+            ),
+            IconButton(
+              icon: const Icon(Icons.zoom_in),
+              onPressed: () => {}, // Custom zoom-in functionality
+            ),
+          ],
+        ),
+      ]),
     );
   }
 }

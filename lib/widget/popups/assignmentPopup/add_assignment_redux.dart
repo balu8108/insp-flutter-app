@@ -235,7 +235,7 @@ ThunkAction<AddAssignmentAppState> handleCreate(
 
     final dio = Dio();
     try {
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       Response response = await dio.post(
         '${api}/assignment/upload-assignments',
         data: formData,
@@ -350,7 +350,7 @@ ThunkAction<AddAssignmentAppState> handleUpdate(
 
     final dio = Dio();
     try {
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       Response response = await dio.post(
         '${api}/assignment/update-assignments',
         data: formData,

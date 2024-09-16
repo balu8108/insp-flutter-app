@@ -182,7 +182,7 @@ void peerLeavedResponseHandler(Store<AppState> store, dynamic res) {
 
 Future<void> joinRoomHandler(
     Store<AppState> store, String roomId, BuildContext context) async {
-  LoginResponseModelResult userData = await getUserData();
+  LoginResponseModelResult userData = getUserDataFromStore(context);
   socket?.emitWithAck(SOCKET_EVENTS.JOIN_ROOM,
       {'roomId': roomId, 'peerDetails': userData.toJson()}, ack: (res) {
     if (!res['success']) {

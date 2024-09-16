@@ -222,7 +222,7 @@ ThunkAction<ScheduleSoloclassAppState> getLectureNumberAPI(
               classType: '',
               isSoloClass: true,
               subjectName: '');
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final remoteDataSource = RemoteDataSource();
       final allTopics = await remoteDataSource.getLectureNumber(
           lectureRequestData, userToken);
@@ -317,7 +317,7 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
 
     final dio = Dio();
     try {
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       Response response = await dio.post(
         '${api}/solo-lecture/create-room',
         data: formData,
@@ -440,7 +440,7 @@ ThunkAction<ScheduleSoloclassAppState> handleUpdateSoloClass(
 
     final dio = Dio();
     try {
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       Response response = await dio.post(
         '${api}/schedule-live-class/update-schedule-data',
         data: formData,

@@ -49,7 +49,7 @@ SoloClassesWidgetAppState soloClassWidgetReducer(
 ThunkAction<SoloClassesWidgetAppState> getSoloClass(BuildContext context) {
   return (Store<SoloClassesWidgetAppState> store) async {
     final remoteDataSource = RemoteDataSource();
-    String userToken = await getUserToken();
+    String userToken = getUserToken(context);
     final latestSoloClass =
         await remoteDataSource.getLatestSoloClasses(userToken);
     if (latestSoloClass.data.data.isNotEmpty) {

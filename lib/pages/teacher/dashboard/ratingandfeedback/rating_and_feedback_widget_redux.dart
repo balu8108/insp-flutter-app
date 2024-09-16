@@ -50,7 +50,7 @@ ThunkAction<RatingFeedbackWidgetAppState> getLatestCompletedClass(
     BuildContext context) {
   return (Store<RatingFeedbackWidgetAppState> store) async {
     final remoteDataSource = RemoteDataSource();
-    String userToken = await getUserToken();
+    String userToken = getUserToken(context);
     final latestCompletedClass =
         await remoteDataSource.getLatestCompletedClasses(userToken);
     if (latestCompletedClass.data.data.isNotEmpty) {

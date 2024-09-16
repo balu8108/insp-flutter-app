@@ -89,7 +89,7 @@ ThunkAction<CalendarWidgetAppState> getAllCalendarDataDateWise(
   return (Store<CalendarWidgetAppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final allDateData = await remoteDataSource.getAllCalendarData(userToken);
       final List<CalendarModel> allCalendarDateResults =
           allDateData.data.data; // api response

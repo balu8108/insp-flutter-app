@@ -24,6 +24,7 @@ class _SoloclassroomDescriptionWidgetsState
     extends State<SoloclassroomDescriptionWidgets> {
   @override
   Widget build(BuildContext context) {
+    bool isTeacher = isTeacherLogin(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final isMobile = screenWidth < 600; // Adjust this threshold as necessary
 
@@ -33,52 +34,39 @@ class _SoloclassroomDescriptionWidgetsState
         borderRadius: BorderRadius.circular(16),
         color: const Color.fromRGBO(232, 242, 249, 1),
       ),
-      child: FutureBuilder<bool>(
-          future: isTeacherLogin(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return const Center(child: Text('Error loading data'));
-            } else {
-              bool isTeacher = snapshot.data ?? false;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                          flex: 9,
-                          child: INSPHeading(widget.selectedTopic.name)),
-                    ],
-                  ),
-                  const SizedBox(height: 40),
-                  isMobile
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            buildDescriptionSection(),
-                            const SizedBox(height: 20),
-                            buildAgendaSection(),
-                          ],
-                        )
-                      : Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(child: buildDescriptionSection()),
-                            const SizedBox(width: 20),
-                            Expanded(child: buildAgendaSection()),
-                          ],
-                        ),
-                  const SizedBox(height: 40),
-                  buildRecordingsSection(),
-                  const SizedBox(height: 40),
-                  buildFilesSection(isTeacher),
-                ],
-              );
-            }
-          }),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(flex: 9, child: INSPHeading(widget.selectedTopic.name)),
+            ],
+          ),
+          const SizedBox(height: 40),
+          isMobile
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildDescriptionSection(),
+                    const SizedBox(height: 20),
+                    buildAgendaSection(),
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: buildDescriptionSection()),
+                    const SizedBox(width: 20),
+                    Expanded(child: buildAgendaSection()),
+                  ],
+                ),
+          const SizedBox(height: 40),
+          buildRecordingsSection(),
+          const SizedBox(height: 40),
+          buildFilesSection(isTeacher),
+        ],
+      ),
     );
   }
 

@@ -20,6 +20,7 @@ import 'package:inspflutterfrontend/pages/student/assignment/mainpage/assignment
 import 'package:inspflutterfrontend/pages/student/library/mainpage/library_screen.dart';
 import 'package:inspflutterfrontend/redux/AppState.dart';
 import 'package:inspflutterfrontend/redux/app_reducer.dart';
+import 'package:inspflutterfrontend/redux/userData/userdata_redux.dart';
 import 'package:inspflutterfrontend/utils/extensions.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
@@ -42,9 +43,11 @@ void main() {
   // Ensure that the correct platform implementation is used for macOS
   WebViewPlatform.instance = WebKitWebViewPlatform();
   WidgetsFlutterBinding.ensureInitialized();
+
   final store = Store<AppState>(
     appStateReducer,
     initialState: const AppState(
+        userDataAppState: UserDataAppState(),
         loginState: LoginAppState(),
         upcomingWidgetAppState: UpcomingWidgetAppState(),
         chatWidgetAppState: ChatWidgetAppState(),
@@ -56,7 +59,10 @@ void main() {
     middleware: [thunkMiddleware],
   );
 
-  runApp(MyApp(store: store));
+  runApp(StoreProvider<AppState>(
+    store: store,
+    child: MyApp(store: store),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -83,44 +89,44 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       userData = userDatas; // Store the fetched data
     });
+    widget.store.dispatch(UpdateUserData(userData: userData));
   }
 
   @override
   Widget build(BuildContext context) {
-    return StoreProvider<AppState>(
-        store: widget.store,
-        child: ToastificationWrapper(
-            child: MaterialApp(
-          navigatorKey: navigatorKey,
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            scaffoldBackgroundColor: Colors.white,
-            appBarTheme: const AppBarTheme(
-              backgroundColor: Colors.white, // Set AppBar background to white
-              elevation: 0, // Optional: Remove shadow under AppBar
-            ),
+    return ToastificationWrapper(
+      child: MaterialApp(
+        navigatorKey: navigatorKey,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white, // Set AppBar background to white
+            elevation: 0, // Optional: Remove shadow under AppBar
           ),
-          home: Builder(
-            builder: (context) {
-              if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
-                return userData.token == ""
-                    ? const LoginScreen()
-                    : MainScaffold(content: HomeScreen(userData: userData));
-              } else {
-                return AnimatedSplashScreen(
-                  duration: 3000,
-                  splash: _buildSplashWidget(),
-                  splashTransition: SplashTransition.sizeTransition,
-                  nextScreen: userData.token == ""
-                      ? const OnboardingScreen()
-                      : MainScaffold(
-                          content: MobileHomeScreen(userData: userData)),
-                  backgroundColor: Colors.white,
-                );
-              }
-            },
-          ),
-        )));
+        ),
+        home: Builder(
+          builder: (context) {
+            if (kIsWeb || MediaQuery.of(context).size.width >= 600) {
+              return userData.token == ""
+                  ? const LoginScreen()
+                  : MainScaffold(content: HomeScreen(userData: userData));
+            } else {
+              return AnimatedSplashScreen(
+                duration: 3000,
+                splash: _buildSplashWidget(),
+                splashTransition: SplashTransition.sizeTransition,
+                nextScreen: userData.token == ""
+                    ? const OnboardingScreen()
+                    : MainScaffold(
+                        content: MobileHomeScreen(userData: userData)),
+                backgroundColor: Colors.white,
+              );
+            }
+          },
+        ),
+      ),
+    );
   }
 
   Widget _buildSplashWidget() {

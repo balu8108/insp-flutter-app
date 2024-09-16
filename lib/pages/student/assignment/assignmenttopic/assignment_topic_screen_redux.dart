@@ -61,7 +61,7 @@ ThunkAction<AssignmentTopicScreenAppState> showAssignmentForTopic(
     store.dispatch(UpdateSelectedItem(selectedItem: inspCardModel));
     final remoteDataSource = RemoteDataSource();
     final topicId = inspCardModel.id;
-    String userToken = await getUserToken();
+    String userToken = getUserToken(context);
     final allAssignment =
         await remoteDataSource.getAllAssignmentForTopic(topicId, userToken);
     if (allAssignment.response.statusCode == 200) {

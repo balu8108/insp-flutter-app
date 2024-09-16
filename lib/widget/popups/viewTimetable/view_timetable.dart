@@ -27,7 +27,7 @@ class _ViewTimetableState extends State<ViewTimetable> {
 
   Future<void> _fetchTimetableData() async {
     try {
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final remoteDataSource = RemoteDataSource();
       final timetabledata = await remoteDataSource.getAllTimeTable(userToken);
 

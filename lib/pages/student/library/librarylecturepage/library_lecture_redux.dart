@@ -68,7 +68,7 @@ ThunkAction<LibraryLectureReduxAppState> showLecturesForTopic(
 
       final remoteDataSource = RemoteDataSource();
       final topicId = inspCardModel.id;
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final allTopics = await remoteDataSource.getAllLectureByTopic(
           topicId, "both", userToken);
 

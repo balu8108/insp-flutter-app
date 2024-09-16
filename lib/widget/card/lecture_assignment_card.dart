@@ -10,6 +10,7 @@ class LectureAssignmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isTeacher = isTeacherLogin(context);
     final ScrollController scrollController = ScrollController();
     return Container(
         height:
@@ -18,66 +19,54 @@ class LectureAssignmentCard extends StatelessWidget {
         child: assignmentDetails.isNotEmpty
             ? Scrollbar(
                 controller: scrollController,
-                child: FutureBuilder<bool>(
-                    future: isTeacherLogin(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return const Center(child: Text('Error loading data'));
-                      } else {
-                        bool isTeacher = snapshot.data ?? false;
-                        return ListView.separated(
-                          scrollDirection: Axis.vertical,
-                          controller: scrollController,
-                          itemCount: assignmentDetails.length,
-                          itemBuilder: (context, index) {
-                            final assignment = assignmentDetails[index];
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                              color: Colors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      'Description',
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      assignment.description,
-                                      style: const TextStyle(
-                                          fontSize: 12,
-                                          color:
-                                              Color.fromRGBO(44, 51, 41, 0.47)),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 16),
-                                    FileBoxComponent(
-                                      data: assignment.assignmentFiles,
-                                      type: "assignment",
-                                      scrollDirection: "horizontal",
-                                      maxHeight: 60,
-                                      isTeacher: isTeacher,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return const SizedBox(
-                              width: 10,
-                            );
-                          },
-                        );
-                      }
-                    }))
+                child: ListView.separated(
+                  scrollDirection: Axis.vertical,
+                  controller: scrollController,
+                  itemCount: assignmentDetails.length,
+                  itemBuilder: (context, index) {
+                    final assignment = assignmentDetails[index];
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Description',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              assignment.description,
+                              style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Color.fromRGBO(44, 51, 41, 0.47)),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 16),
+                            FileBoxComponent(
+                              data: assignment.assignmentFiles,
+                              type: "assignment",
+                              scrollDirection: "horizontal",
+                              maxHeight: 60,
+                              isTeacher: isTeacher,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(
+                      width: 10,
+                    );
+                  },
+                ))
             : const Padding(
                 padding: EdgeInsets.only(top: 16),
                 child: Text(

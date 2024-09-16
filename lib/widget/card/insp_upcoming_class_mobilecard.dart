@@ -48,6 +48,7 @@ class ScheduleClassMobileBoxWidgetState extends State<ScheduleClassMobileBox> {
   @override
   Widget build(BuildContext context) {
     upcomingData = _getUpcomingData(widget.type);
+    bool isTeacher = isTeacherLogin(context);
 
     const Map<String, String> classStatus = {
       'SCHEDULED': 'SCHEDULED',
@@ -96,115 +97,97 @@ class ScheduleClassMobileBoxWidgetState extends State<ScheduleClassMobileBox> {
                   }
                 }
 
-                return FutureBuilder<bool>(
-                  future: isTeacherLogin(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return const Center(child: Text('Error loading data'));
-                    } else {
-                      bool isTeacher = snapshot.data ?? false;
-                      return Column(
+                return Column(
+                  children: [
+                    Card(
+                      key: UniqueKey(),
+                      color: Colors.white,
+                      child: Stack(
                         children: [
-                          Card(
-                            key: UniqueKey(),
-                            color: Colors.white,
-                            child: Stack(
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      _buildRow(
-                                        context,
-                                        topicName,
-                                        '$scheduledStartTime - $scheduledEndTime',
-                                      ),
-                                      const SizedBox(height: 2),
-                                      _buildSecondRow(
-                                        context,
-                                        data.mentorName,
-                                        scheduledDate,
-                                      ),
-                                      const SizedBox(height: 2),
-                                      Text(
-                                        data.classLevel,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 10,
-                                          color:
-                                              Color.fromRGBO(44, 51, 41, 0.47),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 16),
-                                      if (widget.type == "Ongoing" ||
-                                          widget.type == "Completed" ||
-                                          isTeacher)
-                                        SizedBox(
-                                            height: 25,
-                                            child: JoinClassBtn(
-                                              status: data.classStatus,
-                                              isTeacher: isTeacher,
-                                              onPressedViewDetails:
-                                                  navigateToPreviewScreen,
-                                            )),
-                                    ],
+                                _buildRow(
+                                  context,
+                                  topicName,
+                                  '$scheduledStartTime - $scheduledEndTime',
+                                ),
+                                const SizedBox(height: 2),
+                                _buildSecondRow(
+                                  context,
+                                  data.mentorName,
+                                  scheduledDate,
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  data.classLevel,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 10,
+                                    color: Color.fromRGBO(44, 51, 41, 0.47),
                                   ),
                                 ),
-                                if (isTeacher &&
-                                    widget.type != 'Ongoing' &&
-                                    widget.type != 'Completed')
-                                  Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: IconButton(
-                                      icon: const Icon(Icons.edit,
-                                          color: Colors.black),
-                                      iconSize: 16.0,
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return ScheduleLiveClass.getScreen(
-                                              data.id,
-                                              true,
-                                              data.subjectName,
-                                              data.scheduledDate,
-                                              data.scheduledStartTime,
-                                              data.scheduledEndTime,
-                                              data.liveClassRoomDetail
-                                                  .chapterName,
-                                              data.liveClassRoomDetail
-                                                  .topicName,
-                                              data.classLevel,
-                                              data.classType,
-                                              data.liveClassRoomDetail.lectureNo
-                                                  .toString(),
-                                              data.liveClassRoomDetail.agenda,
-                                              data.liveClassRoomDetail
-                                                  .description,
-                                              data.muteAllStudents,
-                                              data.liveClassRoomFiles,
-                                              widget.getUpcomingClass,
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
+                                const SizedBox(height: 16),
+                                if (widget.type == "Ongoing" ||
+                                    widget.type == "Completed" ||
+                                    isTeacher)
+                                  SizedBox(
+                                      height: 25,
+                                      child: JoinClassBtn(
+                                        status: data.classStatus,
+                                        isTeacher: isTeacher,
+                                        onPressedViewDetails:
+                                            navigateToPreviewScreen,
+                                      )),
                               ],
                             ),
                           ),
+                          if (isTeacher &&
+                              widget.type != 'Ongoing' &&
+                              widget.type != 'Completed')
+                            Positioned(
+                              right: 0,
+                              top: 0,
+                              child: IconButton(
+                                icon:
+                                    const Icon(Icons.edit, color: Colors.black),
+                                iconSize: 16.0,
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return ScheduleLiveClass.getScreen(
+                                        data.id,
+                                        true,
+                                        data.subjectName,
+                                        data.scheduledDate,
+                                        data.scheduledStartTime,
+                                        data.scheduledEndTime,
+                                        data.liveClassRoomDetail.chapterName,
+                                        data.liveClassRoomDetail.topicName,
+                                        data.classLevel,
+                                        data.classType,
+                                        data.liveClassRoomDetail.lectureNo
+                                            .toString(),
+                                        data.liveClassRoomDetail.agenda,
+                                        data.liveClassRoomDetail.description,
+                                        data.muteAllStudents,
+                                        data.liveClassRoomFiles,
+                                        widget.getUpcomingClass,
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
                         ],
-                      );
-                    }
-                  },
+                      ),
+                    ),
+                  ],
                 );
-              },
-            )
+              })
           : const Column(children: [
               Center(
                   child: Text(

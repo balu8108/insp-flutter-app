@@ -64,7 +64,7 @@ ThunkAction<LibrarySoloClassReduxAppState> showLecturesForTopic(
 
       final remoteDataSource = RemoteDataSource();
       final topicId = inspCardModel.id;
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final allSoloClass =
           await remoteDataSource.getAllSoloClassForTopic(topicId, userToken);
       if (allSoloClass.response.statusCode == 200) {

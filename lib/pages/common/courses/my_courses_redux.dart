@@ -129,7 +129,7 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
       classLevel = ClassLevel.General_Discussion.name;
     }
 
-    String userToken = await getUserToken();
+    String userToken = getUserToken(context);
 
     if (classLevel != null && classType != null) {
       final response = await remoteDataSource.getAllLecturesForCourse(

@@ -70,7 +70,7 @@ ThunkAction<RecordingPlayerAppState> getRecordedVideoData(
     try {
       final remoteDataSource = RemoteDataSource();
       if (store.state.type.isNotEmpty && store.state.classId.isNotEmpty) {
-        String userToken = await getUserToken();
+        String userToken = getUserToken(context);
         final previewData = await remoteDataSource.getRecordingData(
             store.state.type, store.state.classId, userToken);
 

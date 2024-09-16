@@ -49,7 +49,7 @@ PreviewDataAppState previewDataReducer(
 ThunkAction<AppState> getPreviewClassData(BuildContext context, String roomId) {
   return (Store<AppState> store) async {
     try {
-      LoginResponseModelResult userData = await getUserData();
+      LoginResponseModelResult userData = getUserDataFromStore(context);
       final remoteDataSource = RemoteDataSource();
       final previewData = await remoteDataSource.getRoomPreviewData(
           roomId, 'Token ${userData.token}');

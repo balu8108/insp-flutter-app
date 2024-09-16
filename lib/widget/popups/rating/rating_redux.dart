@@ -71,7 +71,7 @@ ThunkAction<RatingAppState> rateClass(BuildContext context) {
           topicId: store.state.feedbackId,
           feedback: store.state.feedback);
 
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final remoteDataSource = RemoteDataSource();
       final ratingresponse =
           await remoteDataSource.postTopicRating(ratingData, userToken);

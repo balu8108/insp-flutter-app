@@ -56,7 +56,7 @@ ThunkAction<AppState> getAllUpcomingClass(BuildContext context) {
   return (Store<AppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final allLecture =
           await remoteDataSource.getAllUpcomingClasses(userToken);
       final UpcomingLectureCardModel allSubjectsResults =

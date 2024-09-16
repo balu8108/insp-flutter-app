@@ -90,78 +90,64 @@ class _NavbarMobileState extends State<NavbarMobile> {
       }
     ];
 
+    bool isTeacher = isTeacherLogin(context);
+    final icons = isTeacher ? teacherTypeZeroIcons : userTypeZeroIcons;
+
     return Container(
-      height: 70,
-      decoration: BoxDecoration(
-        color: const Color.fromRGBO(60, 141, 188, 1),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(20),
-            blurRadius: 20,
-            spreadRadius: 10,
-          ),
-        ],
-      ),
-      child: StoreConnector<AppState, NavbarAppState>(
-        converter: (store) => store.state.navbarAppState,
-        builder: (context, NavbarAppState state) => FutureBuilder<bool>(
-          future: isTeacherLogin(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return const Center(child: Text('Error loading data'));
-            } else {
-              bool isTeacher = snapshot.data ?? false;
-              final icons =
-                  isTeacher ? teacherTypeZeroIcons : userTypeZeroIcons;
-
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: icons.map((item) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: state.selectedButton == item['name']
-                          ? Colors.white
-                          : const Color.fromRGBO(60, 141, 188, 1),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        item['icon'],
-                        color: state.selectedButton == item['name']
-                            ? const Color.fromRGBO(60, 141, 188, 1)
-                            : Colors.white,
-                      ),
-                      onPressed: () {
-                        _onButtonPressed(item['name']);
-
-                        if (item['name'] == 'StudentSuggestion') {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                StudentSuggestion.getScreen(),
-                          );
-                        } else {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  MainScaffold(content: item['widget']),
-                            ),
-                            (route) => false,
-                          );
-                        }
-                      },
-                    ),
-                  );
-                }).toList(),
-              );
-            }
-          },
+        height: 70,
+        decoration: BoxDecoration(
+          color: const Color.fromRGBO(60, 141, 188, 1),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(20),
+              blurRadius: 20,
+              spreadRadius: 10,
+            ),
+          ],
         ),
-      ),
-    );
+        child: StoreConnector<AppState, NavbarAppState>(
+            converter: (store) => store.state.navbarAppState,
+            builder: (context, NavbarAppState state) => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: icons.map((item) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: state.selectedButton == item['name']
+                            ? Colors.white
+                            : const Color.fromRGBO(60, 141, 188, 1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          item['icon'],
+                          color: state.selectedButton == item['name']
+                              ? const Color.fromRGBO(60, 141, 188, 1)
+                              : Colors.white,
+                        ),
+                        onPressed: () {
+                          _onButtonPressed(item['name']);
+
+                          if (item['name'] == 'StudentSuggestion') {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  StudentSuggestion.getScreen(),
+                            );
+                          } else {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    MainScaffold(content: item['widget']),
+                              ),
+                              (route) => false,
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  }).toList(),
+                )));
   }
 }

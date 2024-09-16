@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
 import 'package:inspflutterfrontend/pages/login/login_screen.dart';
+import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:inspflutterfrontend/socket/mainsocket.dart';
+import 'package:inspflutterfrontend/utils/localstorage.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 
 class Mobileappbar extends StatefulWidget implements PreferredSizeWidget {
@@ -14,26 +18,14 @@ class Mobileappbar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _MobileappbarState extends State<Mobileappbar> {
-  // User data initialized here
-  LoginResponseModelResult userData =
-      const LoginResponseModelResult('', '', '', '', '', '', '', '', 0, 0);
-
   @override
   void initState() {
     super.initState();
-    _loadUserData(); // Load user data
-  }
-
-  Future<void> _loadUserData() async {
-    // Fetch user data using a mock or actual API call
-    LoginResponseModelResult userDatas = await getUserData();
-    setState(() {
-      userData = userDatas; // Update state with fetched user data
-    });
   }
 
   // Function to show the profile modal with logout button
-  void _showProfileModal(BuildContext context) {
+  void _showProfileModal(
+      BuildContext context, LoginResponseModelResult userData) {
     // Display modal bottom sheet for user profile
     showModalBottomSheet(
       context: context,
@@ -56,12 +48,15 @@ class _MobileappbarState extends State<Mobileappbar> {
               ),
               const Spacer(),
               ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.pop(context); // Close the modal
-                  Navigator.pushReplacement(
+                onPressed: () async {
+                  leaveRoomHandler(StoreProvider.of<AppState>(context));
+                  await logoutData("insp_user_profile");
+                  Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const LoginScreen()),
+                      builder: (context) => const LoginScreen(),
+                    ),
+                    (route) => false, // This removes all the previous routes
                   );
                 },
                 // icon: const Icon(Icons.logout),
@@ -82,6 +77,7 @@ class _MobileappbarState extends State<Mobileappbar> {
 
   @override
   Widget build(BuildContext context) {
+    LoginResponseModelResult userDatas = getUserDataFromStore(context);
     return AppBar(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,11 +87,14 @@ class _MobileappbarState extends State<Mobileappbar> {
             icon: CircleAvatar(
               backgroundColor: Colors.blue,
               child: Text(
-                userData.name.isNotEmpty ? userData.name[0].toUpperCase() : '',
+                userDatas.name.isNotEmpty
+                    ? userDatas.name[0].toUpperCase()
+                    : '',
                 style: const TextStyle(color: Colors.white, fontSize: 18),
               ),
             ),
-            onPressed: () => _showProfileModal(context), // Show profile modal
+            onPressed: () =>
+                _showProfileModal(context, userDatas), // Show profile modal
           ),
         ],
       ),
