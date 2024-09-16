@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/apiservices/models/calendar/timetable_response_model.dart';
-import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:insp/apiservices/models/calendar/timetable_response_model.dart';
+import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:internet_file/internet_file.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:universal_platform/universal_platform.dart';

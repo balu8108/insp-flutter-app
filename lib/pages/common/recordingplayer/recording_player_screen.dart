@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/tpStream_recorded_player.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_detail_widget.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_player_redux.dart';
+import 'package:insp/pages/common/recordingplayer/tpStream_recorded_player.dart';
+import 'package:insp/pages/common/recordingplayer/recording_detail_widget.dart';
+import 'package:insp/pages/common/recordingplayer/recording_player_redux.dart';
 
 import '../../../base/base.dart';
 

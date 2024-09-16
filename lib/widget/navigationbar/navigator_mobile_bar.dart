@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart'; // For Redux integration
-import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/widget/navbar/navbar_redux.dart';
+import 'package:insp/apiservices/models/login/login_response_model.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/widget/navbar/navbar_redux.dart';
 
 class NavigatorMobileBar extends StatefulWidget implements PreferredSizeWidget {
   const NavigatorMobileBar({Key? key}) : super(key: key);

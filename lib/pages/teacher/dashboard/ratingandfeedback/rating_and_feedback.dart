@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/teacher/ratingandfeedback/mainpage/rating_and_feedback.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
-import 'package:inspflutterfrontend/widget/card/latest_completed_class_card.dart';
-import 'package:inspflutterfrontend/pages/teacher/dashboard/ratingandfeedback/rating_and_feedback_widget_redux.dart';
+import 'package:insp/base/base.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/teacher/ratingandfeedback/mainpage/rating_and_feedback.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
+import 'package:insp/widget/card/latest_completed_class_card.dart';
+import 'package:insp/pages/teacher/dashboard/ratingandfeedback/rating_and_feedback_widget_redux.dart';
 
 class RatingFeedback extends StatelessWidget {
   const RatingFeedback({super.key});

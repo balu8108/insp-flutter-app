@@ -2,33 +2,32 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
-import 'package:inspflutterfrontend/pages/common/calender/calendar_screen.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/preview_data_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/tpstream_redux.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
-import 'package:inspflutterfrontend/pages/home/home_screen.dart';
-import 'package:inspflutterfrontend/pages/home/mobile_home_screen.dart';
-import 'package:inspflutterfrontend/pages/home/student_home_screen.dart';
-import 'package:inspflutterfrontend/pages/login/login_redux.dart';
-import 'package:inspflutterfrontend/pages/login/login_screen.dart';
-import 'package:inspflutterfrontend/pages/onboarding/onboarding_screen.dart';
+import 'package:insp/apiservices/models/login/login_response_model.dart';
+import 'package:insp/pages/common/calender/calendar_screen.dart';
+import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:insp/pages/common/livestream/widget/chat/peers_widget_redux.dart';
+import 'package:insp/pages/common/livestream/widget/chat/preview_data_redux.dart';
+import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
+import 'package:insp/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
+import 'package:insp/pages/home/home_screen.dart';
+import 'package:insp/pages/home/student_home_screen.dart';
+import 'package:insp/pages/login/login_redux.dart';
+import 'package:insp/pages/login/login_screen.dart';
+import 'package:insp/pages/onboarding/onboarding_screen.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:inspflutterfrontend/pages/student/assignment/mainpage/assignmentScreen.dart';
-import 'package:inspflutterfrontend/pages/student/library/mainpage/library_screen.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/redux/app_reducer.dart';
-import 'package:inspflutterfrontend/redux/userData/userdata_redux.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/widget/mobileAppbar/mobileAppbar.dart';
-import 'package:inspflutterfrontend/widget/navbar/navbar.dart';
-import 'package:inspflutterfrontend/widget/navbar/navbar_mobile.dart';
-import 'package:inspflutterfrontend/widget/navbar/navbar_redux.dart';
-import 'package:inspflutterfrontend/widget/popups/uploadLiveclassFile/upload_liveclass_file_redux.dart';
+import 'package:insp/pages/student/assignment/mainpage/assignmentScreen.dart';
+import 'package:insp/pages/student/library/mainpage/library_screen.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/redux/app_reducer.dart';
+import 'package:insp/redux/userData/userdata_redux.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/widget/mobileAppbar/mobileAppbar.dart';
+import 'package:insp/widget/navbar/navbar.dart';
+import 'package:insp/widget/navbar/navbar_mobile.dart';
+import 'package:insp/widget/navbar/navbar_redux.dart';
+import 'package:insp/widget/popups/uploadLiveclassFile/upload_liveclass_file_redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 import 'package:toastification/toastification.dart';
@@ -118,8 +117,7 @@ class _MyAppState extends State<MyApp> {
                 splashTransition: SplashTransition.sizeTransition,
                 nextScreen: userData.token == ""
                     ? const OnboardingScreen()
-                    : MainScaffold(
-                        content: MobileHomeScreen(userData: userData)),
+                    : MainScaffold(content: HomeScreen(userData: userData)),
                 backgroundColor: Colors.white,
               );
             }

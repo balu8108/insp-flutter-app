@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/widget/popups/assignmentDelete/delete_assignment_redux.dart';
+import 'package:insp/base/base.dart';
+import 'package:insp/widget/popups/assignmentDelete/delete_assignment_redux.dart';
 
 class DeleteAssignemnt extends StatelessWidget {
   const DeleteAssignemnt(

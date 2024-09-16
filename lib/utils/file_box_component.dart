@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
-import 'package:inspflutterfrontend/utils/extractFileNameFromS3URL.dart';
-import 'package:inspflutterfrontend/widget/popups/pdfviewer/pdfviewer.dart';
+import 'package:insp/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
+import 'package:insp/utils/extractFileNameFromS3URL.dart';
+import 'package:insp/widget/popups/pdfviewer/pdfviewer.dart';
 import 'package:universal_html/html.dart' as html;
 
 class FileBoxComponent extends StatelessWidget {

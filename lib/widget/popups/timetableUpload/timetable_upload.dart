@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/inputField/picked_file.dart';
+import 'package:insp/data/hardcoded/secret_key.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/inputField/picked_file.dart';
 import 'package:toastification/toastification.dart';
 
 class TimetableUpload extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/preview/widget/previewpage_detail.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/preview/widget/previewvideo.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
+import 'package:insp/pages/common/livestream/preview/widget/previewpage_detail.dart';
+import 'package:insp/pages/common/livestream/preview/widget/previewvideo.dart';
+import 'package:insp/utils/extensions.dart';
 
 class LiveClassPreviewScreen extends StatelessWidget {
   final String roomId;

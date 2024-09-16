@@ -1,4 +1,4 @@
-package com.example.inspflutterfrontend
+package com.example.insp
 
 import io.flutter.embedding.android.FlutterActivity
 

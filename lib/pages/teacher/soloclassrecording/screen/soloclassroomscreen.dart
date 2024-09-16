@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/teacher/soloclassrecording/widgets/soloclassdescription/soloclass_description.dart';
-import 'package:inspflutterfrontend/pages/teacher/soloclassrecording/widgets/solorecording/soloclass_recording.dart';
+import 'package:insp/pages/teacher/soloclassrecording/widgets/soloclassdescription/soloclass_description.dart';
+import 'package:insp/pages/teacher/soloclassrecording/widgets/solorecording/soloclass_recording.dart';
 
 class Soloclassroomscreen extends StatelessWidget {
   const Soloclassroomscreen({super.key});

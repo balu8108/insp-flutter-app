@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/student/assignment/assignmenttopic/assignment_topic_screen_redux.dart';
-import 'package:inspflutterfrontend/pages/student/assignment/widget/assignment_topic_widget.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
+import 'package:insp/pages/student/assignment/assignmenttopic/assignment_topic_screen_redux.dart';
+import 'package:insp/pages/student/assignment/widget/assignment_topic_widget.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/pages/common/upcomingclasses/upcoming_class_screen.dart';
 import '../../../../base/base.dart';
 
 class AssignmentTopicScreen extends StatelessWidget {

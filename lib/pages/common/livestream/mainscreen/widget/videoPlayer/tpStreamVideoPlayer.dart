@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/tpstream_redux.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/webview_macos.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/webview_window.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
+import 'package:insp/pages/common/recordingplayer/webview_macos.dart';
+import 'package:insp/pages/common/recordingplayer/webview_window.dart';
+import 'package:insp/redux/AppState.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class TPStreamVideoPlayer extends StatelessWidget {

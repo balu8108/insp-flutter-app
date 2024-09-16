@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/utils/file_box_component.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
-import 'package:inspflutterfrontend/widget/card/model/topic_assignment_card_model.dart';
-import 'package:inspflutterfrontend/widget/popups/assignmentDelete/delete_assignment.dart';
-import 'package:inspflutterfrontend/widget/popups/assignmentPopup/add_assignment.dart';
+import 'package:insp/utils/file_box_component.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
+import 'package:insp/widget/card/model/topic_assignment_card_model.dart';
+import 'package:insp/widget/popups/assignmentDelete/delete_assignment.dart';
+import 'package:insp/widget/popups/assignmentPopup/add_assignment.dart';
 
 class AssignmentTopicWidget extends StatefulWidget {
   const AssignmentTopicWidget(

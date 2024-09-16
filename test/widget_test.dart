@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:inspflutterfrontend/pages/common/recordingplayer/webview.dart';
+import 'package:insp/pages/common/recordingplayer/webview.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
-import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
-import 'package:inspflutterfrontend/utils/file_box_component.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/card/lecture_recording_card.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
+import 'package:insp/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
+import 'package:insp/data/hardcoded/library_subjects.dart';
+import 'package:insp/utils/file_box_component.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/card/lecture_recording_card.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
 
 class SoloclassroomDescriptionWidgets extends StatefulWidget {
   const SoloclassroomDescriptionWidgets(

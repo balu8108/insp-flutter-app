@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/main.dart';
+import 'package:insp/main.dart';
 import 'package:webview_windows/webview_windows.dart';
 
 class WebviewUniversalWindow extends StatefulWidget {

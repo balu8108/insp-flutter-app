@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/liveleaderboard.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/livequestionpoll.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/chats/liveleaderboard.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/livequestionpoll.dart';
+import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:insp/redux/AppState.dart';
 
 class MiddleWidget extends StatefulWidget {
   MiddleWidget();

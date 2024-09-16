@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/widget/card/insp_card.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/widget/buildgridview/build_grid_view.dart';
+import 'package:insp/widget/card/insp_card.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/widget/buildgridview/build_grid_view.dart';
 
 class AssignmentSubjectTopic extends StatefulWidget {
   const AssignmentSubjectTopic(

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/home/student_home_screen.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/home/student_home_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/home/teacher_home_screen.dart';
-import 'package:inspflutterfrontend/pages/student/assignment/mainpage/assignmentScreen.dart';
-import 'package:inspflutterfrontend/pages/common/calender/calendar_screen.dart';
-import 'package:inspflutterfrontend/pages/teacher/suggestion/main_suggestion_page.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/pages/student/library/mainpage/library_screen.dart';
-import 'package:inspflutterfrontend/widget/navbar/navbar_redux.dart';
-import 'package:inspflutterfrontend/widget/popups/studentSuggestion/student_suggestion.dart';
+import 'package:insp/pages/home/teacher_home_screen.dart';
+import 'package:insp/pages/student/assignment/mainpage/assignmentScreen.dart';
+import 'package:insp/pages/common/calender/calendar_screen.dart';
+import 'package:insp/pages/teacher/suggestion/main_suggestion_page.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/pages/student/library/mainpage/library_screen.dart';
+import 'package:insp/widget/navbar/navbar_redux.dart';
+import 'package:insp/widget/popups/studentSuggestion/student_suggestion.dart';
 
 class NavbarMobile extends StatefulWidget implements PreferredSizeWidget {
   const NavbarMobile({super.key});

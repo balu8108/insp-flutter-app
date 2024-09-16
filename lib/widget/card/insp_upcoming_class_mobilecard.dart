@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/preview/liveclass_preview.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_player_screen.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/card/model/upcoming_lecture_card_model.dart';
-import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
-import 'package:inspflutterfrontend/utils/capitalize.dart';
-import 'package:inspflutterfrontend/utils/timeconvert.dart';
-import 'package:inspflutterfrontend/widget/popups/scheduleLiveclass/schedule_liveclass.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/common/livestream/preview/liveclass_preview.dart';
+import 'package:insp/pages/common/recordingplayer/recording_player_screen.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/card/model/upcoming_lecture_card_model.dart';
+import 'package:insp/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
+import 'package:insp/utils/capitalize.dart';
+import 'package:insp/utils/timeconvert.dart';
+import 'package:insp/widget/popups/scheduleLiveclass/schedule_liveclass.dart';
 import '../button/join_class.dart';
 
 class ScheduleClassMobileBox extends StatefulWidget {

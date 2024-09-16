@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/actionButton.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/pollview.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/tpStreamVideoPlayer.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/actionButton.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/pollview.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/tpStreamVideoPlayer.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
 
 class TPStreamLiveVideoPlayerWidget extends StatefulWidget {
   const TPStreamLiveVideoPlayerWidget({super.key});

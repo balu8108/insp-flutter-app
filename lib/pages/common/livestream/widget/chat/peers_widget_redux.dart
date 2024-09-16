@@ -1,7 +1,7 @@
 // This file is "main.dart"
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:insp/pages/common/livestream/models/peers_model.dart';
+import 'package:insp/redux/AppState.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 

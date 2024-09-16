@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/teacher/soloclasses/soloclass_topic_detail_screen.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/widget/card/model/latest_solo_class_card_model.dart';
+import 'package:insp/data/hardcoded/library_subjects.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/teacher/soloclasses/soloclass_topic_detail_screen.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/widget/card/model/latest_solo_class_card_model.dart';
 
 Widget LatestSoloClassCard(
     {required LatestSoloClassCardModel soloCardModel,

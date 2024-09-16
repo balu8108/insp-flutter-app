@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/utils/localstorage.dart';
+import 'package:insp/apiservices/models/login/login_response_model.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/utils/localstorage.dart';
 
 Future<LoginResponseModelResult> getUserData() async {
   String? data = await getData('insp_user_profile');

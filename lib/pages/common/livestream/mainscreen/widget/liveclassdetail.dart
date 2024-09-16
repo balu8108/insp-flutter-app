@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/preview_data_redux.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/utils/capitalize.dart';
-import 'package:inspflutterfrontend/utils/format_time.dart';
-import 'package:inspflutterfrontend/widget/popups/uploadLiveclassFile/upload_liveclass_file.dart';
-import 'package:inspflutterfrontend/utils/file_box_component.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
+import 'package:insp/pages/common/livestream/widget/chat/preview_data_redux.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/utils/capitalize.dart';
+import 'package:insp/utils/format_time.dart';
+import 'package:insp/widget/popups/uploadLiveclassFile/upload_liveclass_file.dart';
+import 'package:insp/utils/file_box_component.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
 
 class LiveClassDetail extends StatefulWidget {
   const LiveClassDetail({super.key});

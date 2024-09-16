@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
-import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/data/hardcoded/topic_list.dart';
-import 'package:inspflutterfrontend/utils/extractFileNameFromS3URL.dart';
-import 'package:inspflutterfrontend/widget/inputField/dropdown.dart';
-import 'package:inspflutterfrontend/widget/inputField/picked_file.dart';
-import 'package:inspflutterfrontend/widget/inputField/textfield_withoutsuffix.dart';
-import 'package:inspflutterfrontend/widget/popups/assignmentPopup/add_assignment_redux.dart';
+import 'package:insp/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
+import 'package:insp/base/base.dart';
+import 'package:insp/data/hardcoded/topic_list.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/utils/extractFileNameFromS3URL.dart';
+import 'package:insp/widget/inputField/dropdown.dart';
+import 'package:insp/widget/inputField/picked_file.dart';
+import 'package:insp/widget/inputField/textfield_withoutsuffix.dart';
+import 'package:insp/widget/popups/assignmentPopup/add_assignment_redux.dart';
 
 class AddAssignment extends StatelessWidget {
   const AddAssignment(
@@ -20,6 +21,7 @@ class AddAssignment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     void createAssignment() {
       dispatch(context, handleCreate(context, getAssignment));
     }
@@ -46,6 +48,7 @@ class AddAssignment extends StatelessWidget {
                     ),
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 26, horizontal: 28),
+                    insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
                     title: Row(
                       children: [
                         const Text("Assignment",
@@ -183,7 +186,9 @@ class AddAssignment extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.20,
+                          width: isWebOrLandScape
+                              ? MediaQuery.of(context).size.width * 0.20
+                              : MediaQuery.of(context).size.width * 0.50,
                           child: ElevatedButton(
                               onPressed: state.isAssignmentLoading
                                   ? defaultLoaderFunction

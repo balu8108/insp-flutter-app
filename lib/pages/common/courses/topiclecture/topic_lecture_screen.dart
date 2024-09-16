@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/courses/widget/chapterdetail/chapter_widget.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/pages/common/courses/widget/topicorlectureswidget/topic_or_lecture_widget_screen.dart';
-import 'package:inspflutterfrontend/pages/common/courses/topiclecture/topic_lecture_redux.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
+import 'package:insp/pages/common/courses/widget/chapterdetail/chapter_widget.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/pages/common/courses/widget/topicorlectureswidget/topic_or_lecture_widget_screen.dart';
+import 'package:insp/pages/common/courses/topiclecture/topic_lecture_redux.dart';
+import 'package:insp/pages/common/upcomingclasses/upcoming_class_screen.dart';
 
 import '../../../../base/base.dart';
 

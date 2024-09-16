@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/teacher/ratingandfeedback/ratingfeedbackdetailpage/widget/donutchart.dart';
-import 'package:inspflutterfrontend/widget/card/model/rating_feedback_card_model.dart';
-import 'package:inspflutterfrontend/widget/card/rating_feedback_card.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
+import 'package:insp/pages/teacher/ratingandfeedback/ratingfeedbackdetailpage/widget/donutchart.dart';
+import 'package:insp/widget/card/model/rating_feedback_card_model.dart';
+import 'package:insp/widget/card/rating_feedback_card.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
 
 Widget RatingFeedbackBottomWidgets(
     {required BuildContext context,

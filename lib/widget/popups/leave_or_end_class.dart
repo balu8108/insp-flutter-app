@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/socket/mainsocket.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/socket/mainsocket.dart';
 
 class LeaveOrEndClassPopup extends StatelessWidget {
   const LeaveOrEndClassPopup({super.key, required this.isTeacher});

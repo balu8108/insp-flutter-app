@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/peer_list.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/livechatsection.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/liveleftpart.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/liveclassdetail.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/actionButton.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/tpStreamVideoPlayer.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamMobile.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamMobileView.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamview.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
+import 'package:insp/pages/common/livestream/mainscreen/peer_list.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/chats/livechatsection.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/chats/liveleftpart.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/liveclassdetail.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/actionButton.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/tpStreamVideoPlayer.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamMobile.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamMobileView.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamview.dart';
+import 'package:insp/utils/extensions.dart';
 
 class LiveClassScreen extends StatefulWidget {
   const LiveClassScreen({super.key});

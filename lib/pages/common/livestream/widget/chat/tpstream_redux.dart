@@ -1,10 +1,10 @@
 // This file is "main.dart"
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/apiservices/models/tpstream/video_request_model.dart';
-import 'package:inspflutterfrontend/apiservices/models/tpstream/video_response_model.dart';
-import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:insp/apiservices/models/tpstream/video_request_model.dart';
+import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
+import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/redux/AppState.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 import 'package:toastification/toastification.dart';

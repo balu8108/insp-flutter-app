@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/apiservices/models/login/login_request_model.dart';
-import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
-import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
-import 'package:inspflutterfrontend/pages/home/student_home_screen.dart';
-import 'package:inspflutterfrontend/pages/home/teacher_home_screen.dart';
-import 'package:inspflutterfrontend/widget/popups/tokenexpire.dart';
+import 'package:insp/apiservices/models/login/login_request_model.dart';
+import 'package:insp/apiservices/models/login/login_response_model.dart';
+import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/data/hardcoded/secret_key.dart';
+import 'package:insp/pages/home/student_home_screen.dart';
+import 'package:insp/pages/home/teacher_home_screen.dart';
+import 'package:insp/widget/popups/tokenexpire.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.userData});

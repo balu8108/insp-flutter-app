@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
+import 'package:insp/utils/extensions.dart';
 
 Widget BuildGridView({
   required List<dynamic> items,

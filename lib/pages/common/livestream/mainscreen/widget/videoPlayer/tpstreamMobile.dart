@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tpstreams_player_sdk/tpstreams_player_sdk.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/tpstream_redux.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
+import 'package:insp/redux/AppState.dart';
 
 class TPStreamMobileVideoPlayer extends StatelessWidget {
   const TPStreamMobileVideoPlayer({super.key});

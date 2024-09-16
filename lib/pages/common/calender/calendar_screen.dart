@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/common/calender/widget/liveclass_calendar.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
+import 'package:insp/pages/common/calender/widget/liveclass_calendar.dart';
+import 'package:insp/pages/common/upcomingclasses/upcoming_class_screen.dart';
+import 'package:insp/utils/extensions.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/liveChat.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/liveleaderboard.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/livepollresult.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/livequestion.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/chats/liveChat.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/chats/liveleaderboard.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/chats/livepollresult.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/chats/livequestion.dart';
 
 class LiveLeftPart extends StatefulWidget {
   @override

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/widget/inputField/textfield_withoutsuffix.dart';
-import 'package:inspflutterfrontend/widget/popups/studentSuggestion/student_suggestion_redux.dart';
+import 'package:insp/base/base.dart';
+import 'package:insp/widget/inputField/textfield_withoutsuffix.dart';
+import 'package:insp/widget/popups/studentSuggestion/student_suggestion_redux.dart';
 
 class StudentSuggestion extends StatelessWidget {
   const StudentSuggestion({Key? key}) : super(key: key);

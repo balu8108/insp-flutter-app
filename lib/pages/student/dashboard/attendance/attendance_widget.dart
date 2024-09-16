@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
 
 class AttendanceWidget extends StatefulWidget {
   const AttendanceWidget({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/apiservices/models/recording/view_recording_response_model.dart';
-import 'package:inspflutterfrontend/utils/file_box_component.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
-import 'package:inspflutterfrontend/widget/card/lecture_recording_card.dart';
+import 'package:insp/apiservices/models/recording/view_recording_response_model.dart';
+import 'package:insp/utils/file_box_component.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
+import 'package:insp/widget/card/lecture_recording_card.dart';
 
 class RecordingDetailWidget extends StatelessWidget {
   final RecordVideoResponseModelData recordingPlayerDetail;

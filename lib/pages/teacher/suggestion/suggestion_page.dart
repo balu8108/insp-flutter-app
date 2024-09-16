@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/apiservices/models/feedback/all_student_feedback_response_model.dart';
-import 'package:inspflutterfrontend/pages/teacher/suggestion/widget/CustomPaginatedTable.dart';
+import 'package:insp/apiservices/models/feedback/all_student_feedback_response_model.dart';
+import 'package:insp/pages/teacher/suggestion/widget/CustomPaginatedTable.dart';
 
 class DataTableExampleApp extends StatefulWidget {
   const DataTableExampleApp(

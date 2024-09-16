@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
+import 'package:insp/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 
 part 'all_lectures_for_topic_response_model.g.dart';
 

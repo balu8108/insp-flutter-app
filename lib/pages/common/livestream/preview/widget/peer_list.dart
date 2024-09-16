@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
+import 'package:insp/pages/common/livestream/models/peers_model.dart';
 
 class PeerList extends StatelessWidget {
   List<PeersDataModel> peers;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
-import 'package:inspflutterfrontend/widget/card/insp_upcoming_class_card.dart';
-import 'package:inspflutterfrontend/data/hardcoded/upcoming_classes.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
-import 'package:inspflutterfrontend/widget/popups/scheduleLiveclass/schedule_liveclass.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
+import 'package:insp/widget/card/insp_upcoming_class_card.dart';
+import 'package:insp/data/hardcoded/upcoming_classes.dart';
+import 'package:insp/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
+import 'package:insp/widget/popups/scheduleLiveclass/schedule_liveclass.dart';
 
 class UpcomingClassesScreen extends StatelessWidget {
   const UpcomingClassesScreen({super.key});

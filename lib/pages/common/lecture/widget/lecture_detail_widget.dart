@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/utils/class_constants.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/utils/file_box_component.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
-import 'package:inspflutterfrontend/widget/card/lecture_assignment_card.dart';
-import 'package:inspflutterfrontend/widget/card/lecture_leaderboard_card.dart';
-import 'package:inspflutterfrontend/widget/card/lecture_recording_card.dart';
-import 'package:inspflutterfrontend/widget/card/model/lecture_assignment_card_model.dart';
-import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
+import 'package:insp/utils/class_constants.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/utils/file_box_component.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
+import 'package:insp/widget/card/lecture_assignment_card.dart';
+import 'package:insp/widget/card/lecture_leaderboard_card.dart';
+import 'package:insp/widget/card/lecture_recording_card.dart';
+import 'package:insp/widget/card/model/lecture_assignment_card_model.dart';
+import 'package:insp/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 
 class LectureDetailWidget extends StatefulWidget {
   const LectureDetailWidget(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
-import 'package:inspflutterfrontend/pages/login/login_screen.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/socket/mainsocket.dart';
-import 'package:inspflutterfrontend/utils/localstorage.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:insp/apiservices/models/login/login_response_model.dart';
+import 'package:insp/pages/login/login_screen.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/socket/mainsocket.dart';
+import 'package:insp/utils/localstorage.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
 
 class Mobileappbar extends StatefulWidget implements PreferredSizeWidget {
   const Mobileappbar({super.key});
