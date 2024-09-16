@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
+import 'package:inspflutterfrontend/pages/login/login_screen.dart';
 import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 
 class Mobileappbar extends StatefulWidget implements PreferredSizeWidget {
@@ -57,11 +58,20 @@ class _MobileappbarState extends State<Mobileappbar> {
               ElevatedButton.icon(
                 onPressed: () {
                   Navigator.pop(context); // Close the modal
-                  // Add logout logic here
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                  );
                 },
-                icon: const Icon(Icons.logout),
-                label: const Text('Logout'),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                // icon: const Icon(Icons.logout),
+                label: const Text(
+                  'Logout',
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(60, 141, 188, 1),
+                ),
               ),
             ],
           ),
