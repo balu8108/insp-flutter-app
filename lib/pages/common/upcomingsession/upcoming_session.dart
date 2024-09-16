@@ -32,6 +32,10 @@ class UpcomingSession extends StatelessWidget {
       store.dispatch(getAllUpcomingClass(context));
     }
 
+    void onPRess() {
+      print('pressed');
+    }
+
     return FutureBuilder<bool>(
         future: isTeacherLogin(),
         builder: (context, snapshot) {
@@ -51,55 +55,6 @@ class UpcomingSession extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
-                          SizedBox(
-                              height: 300,
-                              child: classMobileCategories.isNotEmpty
-                                  ? ListView.separated(
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: classMobileCategories.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Expanded(
-                                                  flex: 9,
-                                                  child: INSPHeading(
-                                                      classMobileCategories[
-                                                              index]
-                                                          .label),
-                                                ),
-                                              ],
-                                            ),
-                                            ScheduleClassMobileBox(
-                                                type:
-                                                    classMobileCategories[index]
-                                                        .category,
-                                                upcomingWidgetAppState:
-                                                    state.weeklyData,
-                                                getUpcomingClass:
-                                                    getUpcomingClass),
-                                          ],
-                                        );
-                                      },
-                                      separatorBuilder:
-                                          (BuildContext context, int index) {
-                                        return const SizedBox(
-                                          height: 20,
-                                        );
-                                      },
-                                    )
-                                  : const Center(
-                                      child: Text(
-                                      'No items',
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromRGBO(44, 51, 41, 0.47)),
-                                    ))),
                           if (isTeacher)
                             SizedBox(
                               width: double.infinity,
@@ -155,6 +110,56 @@ class UpcomingSession extends StatelessWidget {
                                 ),
                               ),
                             ),
+                          const SizedBox(height: 20),
+                          Container(
+                              height: 250,
+                              child: classMobileCategories.isNotEmpty
+                                  ? ListView.separated(
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: classMobileCategories.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  flex: 9,
+                                                  child: INSPHeading(
+                                                      classMobileCategories[
+                                                              index]
+                                                          .label),
+                                                ),
+                                              ],
+                                            ),
+                                            ScheduleClassMobileBox(
+                                                type:
+                                                    classMobileCategories[index]
+                                                        .category,
+                                                upcomingWidgetAppState:
+                                                    state.weeklyData,
+                                                getUpcomingClass:
+                                                    getUpcomingClass),
+                                          ],
+                                        );
+                                      },
+                                      separatorBuilder:
+                                          (BuildContext context, int index) {
+                                        return const SizedBox(
+                                          height: 20,
+                                        );
+                                      },
+                                    )
+                                  : const Center(
+                                      child: Text(
+                                      'No items',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(44, 51, 41, 0.47)),
+                                    ))),
                         ],
                       ),
                     ));

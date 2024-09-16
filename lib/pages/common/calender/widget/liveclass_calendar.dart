@@ -13,10 +13,12 @@ class LiveclassCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ScrollController _scrollController = ScrollController();
-
     dispatch(context, getAllCalendarDataDateWise(context));
 
     final bool isMobile = MediaQuery.of(context).size.width < 600;
+
+    // Define button sizes based on device type
+    final Size buttonSize = isMobile ? Size(150, 40) : Size(200, 50);
 
     return StoreConnector<CalendarWidgetAppState, CalendarWidgetAppState>(
       converter: (store) => store.state,
@@ -34,41 +36,14 @@ class LiveclassCalendar extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (!isMobile)
-                    Padding(
-                      padding: const EdgeInsets.all(
-                          8.0), // Padding around the buttons
-                      child: Row(
-                        children: [
-                          if (isTeacher)
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: const Size(200,
-                                    50.0), // Set a fixed size for the button
-                                backgroundColor: const Color.fromRGBO(
-                                    60, 141, 188, 1), // Background color
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(5), // Border radius
-                                ),
-                              ),
-                              onPressed: () {
-                                // Handle "View Time Table" button press
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return const TimetableUpload();
-                                    });
-                              },
-                              child: const Text(
-                                'Upload Time Table',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          const SizedBox(width: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        if (isTeacher)
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(200, 50.0),
+                              minimumSize: buttonSize,
                               backgroundColor:
                                   const Color.fromRGBO(60, 141, 188, 1),
                               shape: RoundedRectangleBorder(
@@ -77,19 +52,43 @@ class LiveclassCalendar extends StatelessWidget {
                             ),
                             onPressed: () {
                               showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return const ViewTimetable();
-                                  });
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return const TimetableUpload();
+                                },
+                              );
                             },
                             child: const Text(
-                              'View Time Table',
+                              'Upload Time Table',
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
-                        ],
-                      ),
+                        const SizedBox(width: 10),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: buttonSize,
+                            backgroundColor:
+                                const Color.fromRGBO(60, 141, 188, 1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const ViewTimetable();
+                              },
+                            );
+                          },
+                          child: const Text(
+                            'View Time Table',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
                     ),
+                  ),
                   const SizedBox(height: 15),
                   Container(
                     child: ValueListenableBuilder<DateTime>(
@@ -117,7 +116,6 @@ class LiveclassCalendar extends StatelessWidget {
                             },
                           ),
                           rowHeight: 70,
-                          // availableGestures: AvailableGestures.all,
                           selectedDayPredicate: (day) {
                             return isSameDay(selectedDay, day);
                           },
