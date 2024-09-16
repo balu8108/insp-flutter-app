@@ -11,6 +11,7 @@ import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
 import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
 import 'package:inspflutterfrontend/pages/student/library/mainpage/library_screen.dart';
 import 'package:inspflutterfrontend/widget/navbar/navbar_redux.dart';
+import 'package:inspflutterfrontend/widget/popups/studentSuggestion/student_suggestion.dart';
 
 class NavbarMobile extends StatefulWidget implements PreferredSizeWidget {
   const NavbarMobile({super.key});
@@ -58,11 +59,7 @@ class _NavbarMobileState extends State<NavbarMobile> {
         'icon': Icons.library_books,
         'name': 'Library'
       },
-      {
-        'widget': StudentHomeScreen(),
-        'icon': Icons.lightbulb,
-        'name': 'Suggestion'
-      }
+      {'widget': null, 'icon': Icons.lightbulb, 'name': 'StudentSuggestion'}
     ];
 
     final List<Map<String, dynamic>> teacherTypeZeroIcons = [
@@ -139,14 +136,23 @@ class _NavbarMobileState extends State<NavbarMobile> {
                       ),
                       onPressed: () {
                         _onButtonPressed(item['name']);
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                MainScaffold(content: item['widget']),
-                          ),
-                          (route) => false,
-                        );
+
+                        if (item['name'] == 'StudentSuggestion') {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                StudentSuggestion.getScreen(),
+                          );
+                        } else {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  MainScaffold(content: item['widget']),
+                            ),
+                            (route) => false,
+                          );
+                        }
                       },
                     ),
                   );
