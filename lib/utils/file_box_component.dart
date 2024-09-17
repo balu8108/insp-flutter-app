@@ -1,13 +1,11 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/utils/downloadFile.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:insp/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:insp/utils/extractFileNameFromS3URL.dart';
 import 'package:insp/widget/popups/pdfviewer/pdfviewer.dart';
-import 'package:universal_html/html.dart' as html;
 
 class FileBoxComponent extends StatelessWidget {
   final List<LiveClassRoomFile> data;
@@ -24,25 +22,6 @@ class FileBoxComponent extends StatelessWidget {
 
   static var httpClient = HttpClient();
 
-  _downloadFile(String url, String filename) async {
-    try {
-      if (kIsWeb) {
-        html.AnchorElement(href: url)
-          ..setAttribute("download", filename)
-          ..click();
-      } else {
-        var request = await httpClient.getUrl(Uri.parse(url));
-        var response = await request.close();
-        var bytes = await consolidateHttpClientResponseBytes(response);
-        String dir = (await getApplicationDocumentsDirectory()).path;
-        File file = File('$dir/$filename');
-        await file.writeAsBytes(bytes);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     void getPdfUrl(String fileName, String pdfId) async {
@@ -53,7 +32,7 @@ class FileBoxComponent extends StatelessWidget {
             await remoteDataSource.getDocumentUrl(pdfId, "live", userToken);
         if (pdfData.data.status == true) {
           final String pdfUrl = pdfData.data.data.getUrl;
-          await _downloadFile(pdfUrl, fileName);
+          await downloadPdfWithDioToDownloads(context, pdfUrl, fileName);
         }
       } catch (e) {
         // Handle any other errors
