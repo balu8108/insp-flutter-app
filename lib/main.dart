@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
 import 'package:inspflutterfrontend/pages/common/calender/calendar_screen.dart';
@@ -30,6 +31,7 @@ import 'package:inspflutterfrontend/widget/popups/uploadLiveclassFile/upload_liv
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 import 'package:toastification/toastification.dart';
+import 'package:tpstreams_player_sdk/tpstreams_player_sdk.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
@@ -52,7 +54,7 @@ void main() {
         previewDataAppState: PreviewDataAppState()),
     middleware: [thunkMiddleware],
   );
-
+  TPStreamsSDK.initialize(orgCode: "6eafqn");
   runApp(MyApp(store: store));
 }
 
@@ -73,6 +75,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _loadUserData();
+    secureScreen(); // Secure the screen on init
   }
 
   Future<void> _loadUserData() async {
@@ -80,6 +83,21 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       userData = userDatas; // Store the fetched data
     });
+  }
+
+  Future<void> secureScreen() async {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  }
+
+  // Function to clear secure screen flag
+  Future<void> clearSecureScreen() async {
+    await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
+  }
+
+  @override
+  void dispose() {
+    clearSecureScreen(); // Clear the secure flag on dispose
+    super.dispose();
   }
 
   @override

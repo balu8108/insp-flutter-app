@@ -110,9 +110,9 @@ class UpcomingSession extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 16),
                           Container(
-                              height: 250,
+                              height: 300,
                               child: classMobileCategories.isNotEmpty
                                   ? ListView.separated(
                                       scrollDirection: Axis.vertical,
