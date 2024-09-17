@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/actionButton.dart';
-import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/pollview.dart';
-import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamMobile.dart';
+import 'package:tpstreams_player_sdk/tpstreams_player_sdk.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 
 class TPStreamMobileView extends StatefulWidget {
@@ -20,29 +19,23 @@ class _TPStreamMobileViewState extends State<TPStreamMobileView> {
   @override
   Widget build(BuildContext context) {
     bool isTeacher = isTeacherLogin(context);
-    return Stack(
+    return Column(
       children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              const TPStreamMobileVideoPlayer(),
-              Container(
-                  height: 50,
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(left: 16),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(16),
-                      bottomRight: Radius.circular(16),
-                    ),
-                    color: Color.fromRGBO(232, 242, 249, 1),
-                  ),
-                  child: ActionButtonWidget(isTeacher: isTeacher))
-            ],
-          ),
-        ),
-        const PollViewWidget()
+        const TPStreamPlayer(
+            assetId: "BCNarYX6j93",
+            accessToken: "4d701dd8-500f-4cfc-ae86-3ce1fef6b140"),
+        Container(
+            height: 50,
+            width: double.infinity,
+            padding: const EdgeInsets.only(left: 16),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16),
+              ),
+              color: Color.fromRGBO(232, 242, 249, 1),
+            ),
+            child: ActionButtonWidget(isTeacher: isTeacher))
       ],
     );
   }

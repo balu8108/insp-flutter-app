@@ -31,7 +31,7 @@ class TPStreamMobileVideoPlayer extends StatelessWidget {
             ),
             child: state.videoResponse.playback_url.isNotEmpty
                 ? TPStreamPlayer(
-                    assetId: 'BCNarYX6j93',
+                    assetId: 'TaJqzc7Ta9Y',
                     accessToken: state.videoResponse.code)
                 : const Text("waiting..."));
         ;
