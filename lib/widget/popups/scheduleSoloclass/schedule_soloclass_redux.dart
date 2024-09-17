@@ -11,6 +11,7 @@ import 'package:insp/apiservices/models/mycourses/physics_course_topics_request_
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/data/hardcoded/topic_list.dart';
+import 'package:insp/main.dart';
 import 'package:insp/pages/teacher/soloclassrecording/screen/soloclassroomscreen.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:redux/redux.dart';
@@ -336,7 +337,9 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const Soloclassroomscreen()),
+          MaterialPageRoute(
+              builder: (context) =>
+                  const MainScaffold(content: Soloclassroomscreen())),
         );
 
         Navigator.of(context).pop();

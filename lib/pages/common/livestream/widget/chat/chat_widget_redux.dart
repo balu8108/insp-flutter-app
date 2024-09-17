@@ -13,7 +13,6 @@ import 'package:insp/pages/common/livestream/models/peers_model.dart';
 import 'package:insp/pages/common/livestream/models/polldata_model.dart';
 import 'package:insp/pages/common/livestream/models/question_message_model.dart';
 import 'package:insp/pages/common/livestream/widget/chat/peers_widget_redux.dart';
-import 'package:insp/player_widget.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/socket/mainsocket.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -245,15 +244,6 @@ ThunkAction<AppState> joinRoomResponseData(BuildContext context, dynamic res) {
       store.dispatch(UpdateLeaderboardMessages(
           leaderBoardAnswerPercentage: leaderBoardListAnswer));
     }
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //       builder: (context) => const MainScaffold(
-    //               content: PlayerWidget(
-    //             assetId: "BCNarYX6j93",
-    //             accessToken: "4d701dd8-500f-4cfc-ae86-3ce1fef6b140",
-    //           ))),
-    // );
     Navigator.push(
       context,
       MaterialPageRoute(

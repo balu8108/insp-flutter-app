@@ -62,7 +62,7 @@ Widget LatestAssignmentCard(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              MainScaffold(content: const MyUploads())),
+                              const MainScaffold(content: MyUploads())),
                     );
                   },
                   child: const Text(

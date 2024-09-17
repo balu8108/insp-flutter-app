@@ -4,6 +4,7 @@ import 'package:insp/pages/common/livestream/models/increase_polltime_model.dart
 import 'package:insp/pages/common/livestream/models/polldata_model.dart';
 import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:insp/redux/AppState.dart';
+import 'package:insp/socket/mainsocket.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
 import 'package:insp/widget/inputField/question_dropdown.dart';
 
@@ -12,12 +13,12 @@ class LiveQuestionAnswer extends StatefulWidget {
       {Key? key,
       required this.polldata,
       required this.increasePollTimeModel,
-      required this.submitAnswer})
+      required this.closedDialog})
       : super(key: key);
 
   final PollDataModel polldata;
   final IncreasePollTimeModel increasePollTimeModel;
-  final Function(dynamic data) submitAnswer;
+  final Function() closedDialog;
 
   @override
   _PollTimerState createState() => _PollTimerState();
@@ -51,7 +52,7 @@ class _PollTimerState extends State<LiveQuestionAnswer> {
         'responseTimeInSeconds': widget.polldata.time - (timer - 5),
       };
 
-      widget.submitAnswer(data);
+      sendAnswerHandler(data);
       setState(() {
         _isAnswerSubmitted = true;
       });
@@ -112,6 +113,7 @@ class _PollTimerState extends State<LiveQuestionAnswer> {
         StoreProvider.of<AppState>(context)
             .dispatch(cleanQuestionState()); // Redux action
         _isTimerRunning = false;
+        widget.closedDialog();
         return false;
       } else {
         setState(() {

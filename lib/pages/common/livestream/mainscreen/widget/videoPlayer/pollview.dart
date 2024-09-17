@@ -23,20 +23,14 @@ class _PollViewWidgetState extends State<PollViewWidget> {
     return StoreConnector<AppState, ChatWidgetAppState>(
       converter: (store) => store.state.chatWidgetAppState,
       builder: (context, state) {
-        // Function to handle answer submission
-        void submitAnswer(dynamic data) {
-          sendAnswerHandler(data);
-        }
-
         if (state.questionFromServer.correctAnswers.isNotEmpty) {
           return Positioned(
             bottom: 10,
             right: 10,
             child: LiveQuestionAnswer(
-              polldata: state.questionFromServer,
-              increasePollTimeModel: state.increasePollTimeModel,
-              submitAnswer: submitAnswer,
-            ),
+                polldata: state.questionFromServer,
+                increasePollTimeModel: state.increasePollTimeModel,
+                closedDialog: () => {}),
           );
         } else {
           return const SizedBox

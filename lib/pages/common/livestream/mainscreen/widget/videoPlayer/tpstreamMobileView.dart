@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/actionButton.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/pollMobileView.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamMobile.dart';
 import 'package:tpstreams_player_sdk/tpstreams_player_sdk.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 
@@ -21,11 +23,8 @@ class _TPStreamMobileViewState extends State<TPStreamMobileView> {
     bool isTeacher = isTeacherLogin(context);
     return Column(
       children: [
-        const TPStreamPlayer(
-            assetId: "BCNarYX6j93",
-            accessToken: "4d701dd8-500f-4cfc-ae86-3ce1fef6b140"),
+        const TPStreamMobileVideoPlayer(),
         Container(
-            height: 50,
             width: double.infinity,
             padding: const EdgeInsets.only(left: 16),
             decoration: const BoxDecoration(
@@ -35,7 +34,10 @@ class _TPStreamMobileViewState extends State<TPStreamMobileView> {
               ),
               color: Color.fromRGBO(232, 242, 249, 1),
             ),
-            child: ActionButtonWidget(isTeacher: isTeacher))
+            child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: ActionButtonWidget(isTeacher: isTeacher))),
+        const PollMobileViewWidget()
       ],
     );
   }

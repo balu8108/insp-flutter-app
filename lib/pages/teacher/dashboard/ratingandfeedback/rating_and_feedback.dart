@@ -19,7 +19,8 @@ class RatingFeedback extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => MainScaffold(content: RatingAndFeedback())),
+            builder: (context) =>
+                const MainScaffold(content: RatingAndFeedback())),
       );
     }
 

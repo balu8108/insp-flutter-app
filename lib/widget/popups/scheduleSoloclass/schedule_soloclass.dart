@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insp/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
+import 'package:insp/main.dart';
 import 'package:insp/pages/teacher/soloclassrecording/screen/soloclassroomscreen.dart';
 import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/extractFileNameFromS3URL.dart';
@@ -21,7 +22,9 @@ class ScheduleSoloClass extends StatelessWidget {
       dispatch(context, handleCreateSoloClass(context));
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const Soloclassroomscreen()),
+        MaterialPageRoute(
+            builder: (context) =>
+                const MainScaffold(content: Soloclassroomscreen())),
       );
     }
 

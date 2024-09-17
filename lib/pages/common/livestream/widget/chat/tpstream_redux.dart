@@ -16,6 +16,7 @@ part 'tpstream_redux.freezed.dart';
 class TPStreamAppState with _$TPStreamAppState {
   const factory TPStreamAppState(
           {@Default('Not Started') String streamStatusChangeTo,
+          @Default('') String accestId,
           @Default(VideoResponseModel()) VideoResponseModel videoResponse}) =
       _TPStreamAppState;
 }
@@ -23,6 +24,11 @@ class TPStreamAppState with _$TPStreamAppState {
 class UpdateVideoResponse extends TPStreamAction {
   VideoResponseModel videoResponse;
   UpdateVideoResponse({required this.videoResponse});
+}
+
+class UpdateAccestId extends TPStreamAction {
+  String accestId;
+  UpdateAccestId({required this.accestId});
 }
 
 class UpdateStreamStatusChangeTo extends TPStreamAction {
@@ -35,9 +41,10 @@ sealed class TPStreamAction {}
 TPStreamAppState tpStreamStateReducer(TPStreamAppState state, dynamic action) {
   if (action is UpdateVideoResponse) {
     return state.copyWith(videoResponse: action.videoResponse);
-  }
-  if (action is UpdateStreamStatusChangeTo) {
+  } else if (action is UpdateStreamStatusChangeTo) {
     return state.copyWith(streamStatusChangeTo: action.streamStatusChangeTo);
+  } else if (action is UpdateAccestId) {
+    return state.copyWith(accestId: action.accestId);
   }
   return state;
 }
@@ -68,13 +75,11 @@ ThunkAction<AppState> getVideoUrlApi(BuildContext context) {
               const VideoRequestModel(),
               'Token 74aba046d30c440659f486db92691fe30b9df689bd123ae9446760093ac0bbe7');
 
-          print("YESSSS");
-          print(tpStreamId);
-
           VideoResponseModel videoResponseData =
               VideoResponseModel.fromJson(previewData.response.data);
           // Dispatch the action to update chat messages in the store
           store.dispatch(UpdateVideoResponse(videoResponse: videoResponseData));
+          store.dispatch(UpdateAccestId(accestId: tpStreamId));
         } else {
           print("tpstream url null");
         }

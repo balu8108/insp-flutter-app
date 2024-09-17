@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:insp/apiservices/models/login/login_response_model.dart';
 import 'package:insp/main.dart';
-import 'package:insp/pages/home/student_home_screen.dart';
+import 'package:insp/pages/home/home_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:insp/pages/home/teacher_home_screen.dart';
 import 'package:insp/pages/student/assignment/mainpage/assignmentScreen.dart';
 import 'package:insp/pages/common/calender/calendar_screen.dart';
 import 'package:insp/pages/teacher/suggestion/main_suggestion_page.dart';
@@ -37,13 +37,18 @@ class _NavbarMobileState extends State<NavbarMobile> {
 
   @override
   Widget build(BuildContext context) {
+    LoginResponseModelResult userData = getUserDataFromStore(context);
     void _onButtonPressed(String buttonText) {
       StoreProvider.of<AppState>(context)
           .dispatch(UpdateSelectedButton(selectedButton: buttonText));
     }
 
     final List<Map<String, dynamic>> userTypeZeroIcons = [
-      {'widget': StudentHomeScreen(), 'icon': Icons.home, 'name': 'Home'},
+      {
+        'widget': HomeScreen(userData: userData),
+        'icon': Icons.home,
+        'name': 'Home'
+      },
       {
         'widget': const CalendarScreen(),
         'icon': Icons.calendar_month,
@@ -64,7 +69,7 @@ class _NavbarMobileState extends State<NavbarMobile> {
 
     final List<Map<String, dynamic>> teacherTypeZeroIcons = [
       {
-        'widget': TeacherHomeScreen(),
+        'widget': HomeScreen(userData: userData),
         'icon': Icons.home_rounded,
         'name': 'Home'
       },

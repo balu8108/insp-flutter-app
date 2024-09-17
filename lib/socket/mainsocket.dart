@@ -266,7 +266,8 @@ Future<void> leaveRoomHandler(Store<AppState> store) async {
       LoginResponseModelResult userDatas = await getUserData();
       navigatorKey.currentState?.push(
         MaterialPageRoute(
-            builder: (context) => HomeScreen(userData: userDatas)),
+            builder: (context) =>
+                MainScaffold(content: HomeScreen(userData: userDatas))),
       );
       if (feedBackStatus['success']) {
         if (userDatas.userType == 0) {

@@ -61,7 +61,7 @@ class _ActionButtonWidgetState extends State<ActionButtonWidget> {
                   width: 100,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(200, 50.0),
+                      minimumSize: const Size(200, 30.0),
                       backgroundColor: const Color(0xFFF63F4A),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),

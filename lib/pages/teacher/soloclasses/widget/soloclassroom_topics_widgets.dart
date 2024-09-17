@@ -41,12 +41,6 @@ class _SoloclassroomTopicsWidgetsState
                             return ScheduleSoloClass.getScreen(
                                 0, false, '', '', '', '', '', []);
                           });
-
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => const Soloclassroomscreen()),
-                      // );
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
