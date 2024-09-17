@@ -66,7 +66,10 @@ ThunkAction<AppState> getVideoUrlApi(BuildContext context) {
           final previewData = await remoteDataSource.getVideoPlayUrl(
               tpStreamId,
               const VideoRequestModel(),
-              'Token cb5ee975c1a2a3cde54bbfe16e0ed5fc4662a8f20d1a9602a46c7229b42a5e52');
+              'Token 74aba046d30c440659f486db92691fe30b9df689bd123ae9446760093ac0bbe7');
+
+          print("YESSSS");
+          print(tpStreamId);
 
           VideoResponseModel videoResponseData =
               VideoResponseModel.fromJson(previewData.response.data);

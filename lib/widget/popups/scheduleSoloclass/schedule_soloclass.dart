@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insp/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:insp/pages/teacher/soloclassrecording/screen/soloclassroomscreen.dart';
+import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/extractFileNameFromS3URL.dart';
 import 'package:insp/widget/inputField/picked_file.dart';
 import 'package:insp/widget/inputField/textfield_withoutsuffix.dart';
@@ -15,6 +16,7 @@ class ScheduleSoloClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     void createSoloClass() {
       dispatch(context, handleCreateSoloClass(context));
       Navigator.push(
@@ -41,6 +43,7 @@ class ScheduleSoloClass extends StatelessWidget {
                 ),
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
+                insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
                 title: Row(
                   children: [
                     Text(state.isEditScreen ? "Update record" : "Solo record",
@@ -213,9 +216,9 @@ class ScheduleSoloClass extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          height: 40,
-                          width: 200,
-                          // width: MediaQuery.of(context).size.width * 0.20,
+                          width: isWebOrLandScape
+                              ? MediaQuery.of(context).size.width * 0.20
+                              : MediaQuery.of(context).size.width * 0.50,
                           child: ElevatedButton(
                               onPressed: state.isClassLoading
                                   ? defaultLoaderFunction

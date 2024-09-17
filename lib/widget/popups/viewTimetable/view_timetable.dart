@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insp/apiservices/models/calendar/timetable_response_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:internet_file/internet_file.dart';
 import 'package:pdfx/pdfx.dart';
@@ -63,12 +64,14 @@ class _ViewTimetableState extends State<ViewTimetable> {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     return AlertDialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6.0),
       ),
       contentPadding: const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
+      insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
       title: Row(
         children: [
           const Text("INSP Time Table",

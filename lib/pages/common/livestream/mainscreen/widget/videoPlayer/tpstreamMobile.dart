@@ -19,7 +19,7 @@ class TPStreamMobileVideoPlayer extends StatelessWidget {
       converter: (store) => store.state.tpStreamAppState,
       builder: (context, TPStreamAppState state) {
         return Container(
-            height: 500,
+            height: 300,
             width: double.infinity,
             padding: const EdgeInsets.all(16.0),
             decoration: const BoxDecoration(
@@ -29,9 +29,12 @@ class TPStreamMobileVideoPlayer extends StatelessWidget {
               ),
               color: Color.fromRGBO(232, 242, 249, 1),
             ),
-            child: TPStreamPlayer(
-                assetId: '3NPP8bqGnQD',
-                accessToken: '9015e71f-8597-4c09-9120-f9a1c07fd299'));
+            child: state.videoResponse.playback_url.isNotEmpty
+                ? TPStreamPlayer(
+                    assetId: 'BCNarYX6j93',
+                    accessToken: state.videoResponse.code)
+                : const Text("waiting..."));
+        ;
       },
     );
   }

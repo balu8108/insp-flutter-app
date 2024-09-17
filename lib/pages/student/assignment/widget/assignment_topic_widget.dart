@@ -58,10 +58,7 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
           ),
           const SizedBox(height: 16),
           Container(
-              height: widget.allAssignemntofTopic.isNotEmpty
-                  ? widget.allAssignemntofTopic.length * 200
-                  : 100,
-              margin: const EdgeInsets.only(right: 16),
+              height: MediaQuery.of(context).size.height,
               child: widget.allAssignemntofTopic.isNotEmpty
                   ? Scrollbar(
                       controller: _scrollController,

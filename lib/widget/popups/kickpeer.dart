@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insp/utils/extensions.dart';
 
 class KickPeerPopup extends StatelessWidget {
   const KickPeerPopup({super.key, required this.callKickApi});
@@ -7,12 +8,14 @@ class KickPeerPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     return AlertDialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6.0),
       ),
       contentPadding: const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
+      insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
       title: Row(
         children: [
           const Text("Kick Student",

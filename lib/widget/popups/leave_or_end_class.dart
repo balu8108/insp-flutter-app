@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/socket/mainsocket.dart';
+import 'package:insp/utils/extensions.dart';
 
 class LeaveOrEndClassPopup extends StatelessWidget {
   const LeaveOrEndClassPopup({super.key, required this.isTeacher});
@@ -10,6 +11,7 @@ class LeaveOrEndClassPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     void leaveOrEnd() {
       if (isTeacher) {
         endMeetHandler();
@@ -24,6 +26,7 @@ class LeaveOrEndClassPopup extends StatelessWidget {
         borderRadius: BorderRadius.circular(6.0),
       ),
       contentPadding: const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
+      insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
       title: Row(
         children: [
           const Text("",

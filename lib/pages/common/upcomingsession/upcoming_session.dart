@@ -91,7 +91,7 @@ class UpcomingSession extends StatelessWidget {
                         ),
                       ),
                     ),
-                  new SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Expanded(

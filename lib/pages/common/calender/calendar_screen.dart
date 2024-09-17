@@ -25,7 +25,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               flex: 3,
               child: UpcomingClassesScreen(),
             ),
-          const SizedBox(width: 17),
+          if (isWebOrLandScape) const SizedBox(width: 17),
           Expanded(
             flex: isWebOrLandScape ? 9 : 12, // Adjust flex for mobile
             child: LiveclassCalendar.getScreen(),

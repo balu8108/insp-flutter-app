@@ -79,6 +79,7 @@ ThunkAction<RecordingPlayerAppState> getRecordedVideoData(
               ViewRecordingResponseModel.fromJson(previewData.response.data);
           store.dispatch(UpdateRecordVideoData(
               recordedVideoData: recordedVideoDatas.data));
+
           store.dispatch(getRecordedVideoUrlApi(context,
               recordedVideoDatas.data.liveClassRoomRecordings[0].tpStreamId));
         }
@@ -102,6 +103,8 @@ ThunkAction<RecordingPlayerAppState> getRecordedVideoData(
 ThunkAction<RecordingPlayerAppState> getRecordedVideoUrlApi(
     BuildContext context, String tpStreamId) {
   return (Store<RecordingPlayerAppState> store) async {
+    print("OOOUIUI");
+    print(tpStreamId);
     try {
       final remoteDataSource = RemoteDataSource();
       // Validate the data before making the API call
@@ -109,11 +112,13 @@ ThunkAction<RecordingPlayerAppState> getRecordedVideoUrlApi(
         final previewData = await remoteDataSource.getVideoPlayUrl(
             tpStreamId,
             const VideoRequestModel(),
-            'Token cb5ee975c1a2a3cde54bbfe16e0ed5fc4662a8f20d1a9602a46c7229b42a5e52');
+            'Token 74aba046d30c440659f486db92691fe30b9df689bd123ae9446760093ac0bbe7');
 
         VideoResponseModel videoResponseData =
             VideoResponseModel.fromJson(previewData.response.data);
         // Dispatch the action to update chat messages in the store
+        print(videoResponseData.code);
+        print(videoResponseData.playback_url);
         store.dispatch(UpdateVideosResponse(videoResponse: videoResponseData));
       } else {
         print("tpstream url null");

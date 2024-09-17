@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insp/apiservices/models/login/login_response_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/popups/pdfviewer/pdfviewer_redux.dart';
 import 'package:pdfx/pdfx.dart';
@@ -72,6 +73,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     LoginResponseModelResult userData = getUserDataFromStore(context);
     return AlertDialog(
       backgroundColor: Colors.white,
@@ -79,6 +81,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
         borderRadius: BorderRadius.circular(6.0),
       ),
       contentPadding: const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
+      insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
       title: Row(
         children: [
           const Text(
