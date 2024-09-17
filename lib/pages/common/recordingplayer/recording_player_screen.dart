@@ -36,12 +36,9 @@ class RecordingPlayerScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (state.recordedVideoData.liveClassRoomRecordings
-                              .isNotEmpty)
-                            TPStreamRecordedMobilePlayer(
-                                accestID: state.recordedVideoData
-                                    .liveClassRoomRecordings[0].tpStreamId,
-                                accessToken: state.videoResponse.code),
+                          TPStreamRecordedMobilePlayer(
+                              accestID: state.accestId,
+                              accessToken: state.videoResponse.code),
                           const SizedBox(height: 16),
                           RecordingDetailWidget(
                             recordingPlayerDetail: state.recordedVideoData,

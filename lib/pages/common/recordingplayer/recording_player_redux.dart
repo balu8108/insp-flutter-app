@@ -24,6 +24,7 @@ class RecordingPlayerAppState with _$RecordingPlayerAppState {
           RecordVideoResponseModelData recordedVideoData,
           @Default(RecordingPlayerCard('', '', '', [], [], ''))
           RecordingPlayerCard selectedItem,
+          @Default('') String accestId,
           @Default(VideoResponseModel()) VideoResponseModel videoResponse}) =
       _RecordingPlayerAppState;
 }
@@ -41,6 +42,11 @@ class UpdateSelectedItem extends RecordingPlayerAction {
 class UpdateVideosResponse extends RecordingPlayerAction {
   VideoResponseModel videoResponse;
   UpdateVideosResponse({required this.videoResponse});
+}
+
+class UpdateAccestId extends RecordingPlayerAction {
+  String accestId;
+  UpdateAccestId({required this.accestId});
 }
 
 RecordingPlayerAppState recordingPlayerReducer(
@@ -61,6 +67,8 @@ RecordingPlayerAppState _recordingPlayerReducer(
       return state.copyWith(recordedVideoData: action.recordedVideoData);
     case UpdateVideosResponse():
       return state.copyWith(videoResponse: action.videoResponse);
+    case UpdateAccestId():
+      return state.copyWith(accestId: action.accestId);
   }
 }
 
@@ -103,8 +111,6 @@ ThunkAction<RecordingPlayerAppState> getRecordedVideoData(
 ThunkAction<RecordingPlayerAppState> getRecordedVideoUrlApi(
     BuildContext context, String tpStreamId) {
   return (Store<RecordingPlayerAppState> store) async {
-    print("OOOUIUI");
-    print(tpStreamId);
     try {
       final remoteDataSource = RemoteDataSource();
       // Validate the data before making the API call
@@ -117,14 +123,12 @@ ThunkAction<RecordingPlayerAppState> getRecordedVideoUrlApi(
         VideoResponseModel videoResponseData =
             VideoResponseModel.fromJson(previewData.response.data);
         // Dispatch the action to update chat messages in the store
-        print(videoResponseData.code);
-        print(videoResponseData.playback_url);
         store.dispatch(UpdateVideosResponse(videoResponse: videoResponseData));
+        store.dispatch(UpdateAccestId(accestId: tpStreamId));
       } else {
         print("tpstream url null");
       }
     } catch (error) {
-      print(error);
       toastification.show(
         context: context, // optional if you use ToastificationWrapper
         type: ToastificationType.error,

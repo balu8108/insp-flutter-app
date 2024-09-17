@@ -16,21 +16,9 @@ class _TPStreamRecordedMobilePlayerState
     extends State<TPStreamRecordedMobilePlayer> {
   @override
   Widget build(BuildContext context) {
-    print(widget.accestID);
-    print(widget.accessToken);
-    return Container(
-        height: 300,
-        width: double.infinity,
-        padding: const EdgeInsets.all(16.0),
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(16),
-          ),
-          color: Color.fromRGBO(232, 242, 249, 1),
-        ),
-        child: widget.accessToken.isNotEmpty && widget.accestID.isNotEmpty
-            ? TPStreamPlayer(
-                assetId: widget.accestID, accessToken: widget.accessToken)
-            : const Text("waiting..."));
+    return widget.accessToken.isNotEmpty && widget.accestID.isNotEmpty
+        ? TPStreamPlayer(
+            assetId: widget.accestID, accessToken: widget.accessToken)
+        : const Text("waiting...");
   }
 }
