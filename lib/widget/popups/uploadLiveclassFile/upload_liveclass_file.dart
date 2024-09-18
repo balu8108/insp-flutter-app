@@ -1,9 +1,9 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
-import 'package:inspflutterfrontend/widget/popups/uploadLiveclassFile/upload_liveclass_file_redux.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
+import 'package:insp/widget/popups/uploadLiveclassFile/upload_liveclass_file_redux.dart';
 
 class UploadFilePopup extends StatefulWidget {
   const UploadFilePopup({super.key, required this.roomId});

@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/widget/card/model/rating_feedback_card_model.dart';
+import 'package:insp/widget/card/model/rating_feedback_card_model.dart';
 
 class DonutChart extends StatelessWidget {
   final List<RatingFeedbackCardModal> ratingFeedbackCard;

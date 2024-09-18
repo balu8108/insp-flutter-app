@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/webview_macos.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/webview_window.dart';
+import 'package:insp/pages/common/recordingplayer/webview_macos.dart';
+import 'package:insp/pages/common/recordingplayer/webview_window.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class TPStreamRecordedPlayer extends StatefulWidget {

@@ -3,14 +3,14 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/utils/class_constants.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/widget/card/model/lecture_card_model.dart';
-import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
-import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_topics_request_model.dart';
-import 'package:inspflutterfrontend/pages/common/courses/my_courses_screen.dart';
+import 'package:insp/utils/class_constants.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/widget/card/model/lecture_card_model.dart';
+import 'package:insp/data/hardcoded/secret_key.dart';
+import 'package:insp/apiservices/models/mycourses/physics_course_topics_request_model.dart';
+import 'package:insp/pages/common/courses/my_courses_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -129,7 +129,7 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
       classLevel = ClassLevel.General_Discussion.name;
     }
 
-    String userToken = await getUserToken();
+    String userToken = getUserToken(context);
 
     if (classLevel != null && classType != null) {
       final response = await remoteDataSource.getAllLecturesForCourse(

@@ -2,7 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_model.dart';
+import 'package:insp/pages/common/livestream/models/polldata_model.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:toastification/toastification.dart';

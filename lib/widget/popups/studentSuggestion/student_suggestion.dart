@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/widget/inputField/textfield_withoutsuffix.dart';
-import 'package:inspflutterfrontend/widget/popups/studentSuggestion/student_suggestion_redux.dart';
+import 'package:insp/base/base.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/inputField/textfield_withoutsuffix.dart';
+import 'package:insp/widget/popups/studentSuggestion/student_suggestion_redux.dart';
 
 class StudentSuggestion extends StatelessWidget {
   const StudentSuggestion({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     void createSuggestion() {
       dispatch(context, studentSuggestionapi(context));
     }
@@ -23,6 +25,7 @@ class StudentSuggestion extends StatelessWidget {
                     BorderRadius.circular(6.0), // Set border radius here
               ),
               contentPadding: const EdgeInsets.all(16.0),
+              insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

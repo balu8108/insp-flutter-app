@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:insp/pages/common/livestream/widget/chat/peers_widget_redux.dart';
+import 'package:insp/redux/AppState.dart';
 
 class LivePeersListWidget extends StatelessWidget {
   LivePeersListWidget();

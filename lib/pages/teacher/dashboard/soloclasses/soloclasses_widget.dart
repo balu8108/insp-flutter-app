@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/teacher/dashboard/soloclasses/soloclasses_widget_redux.dart';
-import 'package:inspflutterfrontend/pages/teacher/soloclasses/soloclass_topic_detail_screen.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
-import 'package:inspflutterfrontend/widget/card/latest_solo_class_card.dart';
+import 'package:insp/base/base.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/teacher/dashboard/soloclasses/soloclasses_widget_redux.dart';
+import 'package:insp/pages/teacher/soloclasses/soloclass_topic_detail_screen.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
+import 'package:insp/widget/card/latest_solo_class_card.dart';
 
 class Soloclasses extends StatelessWidget {
   const Soloclasses({super.key});

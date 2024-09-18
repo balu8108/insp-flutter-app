@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/tpstream_redux.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/webview_macos.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/webview_window.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
+import 'package:insp/pages/common/recordingplayer/webview_macos.dart';
+import 'package:insp/pages/common/recordingplayer/webview_window.dart';
+import 'package:insp/redux/AppState.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class TPStreamVideoPlayer extends StatelessWidget {
@@ -34,7 +34,7 @@ class TPStreamVideoPlayer extends StatelessWidget {
               color: Color.fromRGBO(232, 242, 249, 1),
             ),
             child: state.videoResponse.playback_url.isNotEmpty
-                ? UniversalPlatform.isWindows
+                ? UniversalPlatform.isWindows || UniversalPlatform.isAndroid
                     ? WebviewUniversalWindow(
                         url: state.videoResponse.playback_url,
                         streamStatus: state.streamStatusChangeTo)

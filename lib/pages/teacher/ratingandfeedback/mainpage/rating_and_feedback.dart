@@ -1,11 +1,11 @@
 // This is the screen where one click see all from  mentor homepage.
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/common/alltopicswidget/all_topics_widget.dart';
-import 'package:inspflutterfrontend/pages/teacher/ratingandfeedback/ratingfeedbackdetailpage/screen/rating_feedback_detail.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/common/alltopicswidget/all_topics_widget.dart';
+import 'package:insp/pages/teacher/ratingandfeedback/ratingfeedbackdetailpage/screen/rating_feedback_detail.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/pages/common/upcomingclasses/upcoming_class_screen.dart';
 
 class RatingAndFeedback extends StatelessWidget {
   const RatingAndFeedback({super.key});
@@ -40,7 +40,7 @@ class RatingAndFeedback extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 17),
+              if (isWebOrLandScape) const SizedBox(width: 17),
               if (isWebOrLandScape)
                 const Expanded(
                   flex: 3,

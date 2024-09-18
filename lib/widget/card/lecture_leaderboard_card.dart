@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
+import 'package:insp/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 
 Widget LectureLeaderboardCard(
     {required List<LeaderBoards> leaderboardDetails, required int questionNo}) {

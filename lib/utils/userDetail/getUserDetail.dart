@@ -1,7 +1,10 @@
 import 'dart:convert';
 
-import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
-import 'package:inspflutterfrontend/utils/localstorage.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:insp/apiservices/models/login/login_response_model.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/utils/localstorage.dart';
 
 Future<LoginResponseModelResult> getUserData() async {
   String? data = await getData('insp_user_profile');
@@ -14,22 +17,30 @@ Future<LoginResponseModelResult> getUserData() async {
   }
 }
 
-Future<String> getUserToken() async {
-  String? data = await getData('insp_user_profile');
-  if (data != null && data.isNotEmpty) {
-    final LoginResponseModelResult userData =
-        LoginResponseModelResult.fromJson(jsonDecode(data));
+LoginResponseModelResult getUserDataFromStore(BuildContext context) {
+  final LoginResponseModelResult userData =
+      StoreProvider.of<AppState>(context).state.userDataAppState.userData;
+  if (userData.id.isNotEmpty) {
+    return userData;
+  } else {
+    return LoginResponseModelResult('', '', '', '', '', '', '', '', 0, 0);
+  }
+}
+
+String getUserToken(BuildContext context) {
+  final LoginResponseModelResult userData =
+      StoreProvider.of<AppState>(context).state.userDataAppState.userData;
+  if (userData.id.isNotEmpty) {
     return 'Token ${userData.token}';
   } else {
     return "";
   }
 }
 
-Future<bool> isTeacherLogin() async {
-  String? data = await getData('insp_user_profile');
-  if (data != null && data.isNotEmpty) {
-    final LoginResponseModelResult userData =
-        LoginResponseModelResult.fromJson(jsonDecode(data));
+bool isTeacherLogin(BuildContext context) {
+  final LoginResponseModelResult userData =
+      StoreProvider.of<AppState>(context).state.userDataAppState.userData;
+  if (userData.id.isNotEmpty) {
     if (userData.userType == 1) {
       return true;
     }

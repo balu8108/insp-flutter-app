@@ -1,10 +1,10 @@
 // This file is "main.dart"
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/apiservices/models/tpstream/video_request_model.dart';
-import 'package:inspflutterfrontend/apiservices/models/tpstream/video_response_model.dart';
-import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:insp/apiservices/models/tpstream/video_request_model.dart';
+import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
+import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/redux/AppState.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 import 'package:toastification/toastification.dart';
@@ -16,6 +16,7 @@ part 'tpstream_redux.freezed.dart';
 class TPStreamAppState with _$TPStreamAppState {
   const factory TPStreamAppState(
           {@Default('Not Started') String streamStatusChangeTo,
+          @Default('') String accestId,
           @Default(VideoResponseModel()) VideoResponseModel videoResponse}) =
       _TPStreamAppState;
 }
@@ -23,6 +24,11 @@ class TPStreamAppState with _$TPStreamAppState {
 class UpdateVideoResponse extends TPStreamAction {
   VideoResponseModel videoResponse;
   UpdateVideoResponse({required this.videoResponse});
+}
+
+class UpdateAccestId extends TPStreamAction {
+  String accestId;
+  UpdateAccestId({required this.accestId});
 }
 
 class UpdateStreamStatusChangeTo extends TPStreamAction {
@@ -35,9 +41,10 @@ sealed class TPStreamAction {}
 TPStreamAppState tpStreamStateReducer(TPStreamAppState state, dynamic action) {
   if (action is UpdateVideoResponse) {
     return state.copyWith(videoResponse: action.videoResponse);
-  }
-  if (action is UpdateStreamStatusChangeTo) {
+  } else if (action is UpdateStreamStatusChangeTo) {
     return state.copyWith(streamStatusChangeTo: action.streamStatusChangeTo);
+  } else if (action is UpdateAccestId) {
+    return state.copyWith(accestId: action.accestId);
   }
   return state;
 }
@@ -66,12 +73,13 @@ ThunkAction<AppState> getVideoUrlApi(BuildContext context) {
           final previewData = await remoteDataSource.getVideoPlayUrl(
               tpStreamId,
               const VideoRequestModel(),
-              'Token cb5ee975c1a2a3cde54bbfe16e0ed5fc4662a8f20d1a9602a46c7229b42a5e52');
+              'Token 74aba046d30c440659f486db92691fe30b9df689bd123ae9446760093ac0bbe7');
 
           VideoResponseModel videoResponseData =
               VideoResponseModel.fromJson(previewData.response.data);
           // Dispatch the action to update chat messages in the store
           store.dispatch(UpdateVideoResponse(videoResponse: videoResponseData));
+          store.dispatch(UpdateAccestId(accestId: tpStreamId));
         } else {
           print("tpstream url null");
         }

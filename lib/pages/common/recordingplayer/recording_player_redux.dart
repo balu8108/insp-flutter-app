@@ -2,12 +2,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/apiservices/models/recording/view_recording_response_model.dart';
-import 'package:inspflutterfrontend/apiservices/models/tpstream/video_request_model.dart';
-import 'package:inspflutterfrontend/apiservices/models/tpstream/video_response_model.dart';
-import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/card/model/recording_player_card_model.dart';
+import 'package:insp/apiservices/models/recording/view_recording_response_model.dart';
+import 'package:insp/apiservices/models/tpstream/video_request_model.dart';
+import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
+import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/card/model/recording_player_card_model.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 import 'package:toastification/toastification.dart';
@@ -24,6 +24,7 @@ class RecordingPlayerAppState with _$RecordingPlayerAppState {
           RecordVideoResponseModelData recordedVideoData,
           @Default(RecordingPlayerCard('', '', '', [], [], ''))
           RecordingPlayerCard selectedItem,
+          @Default('') String accestId,
           @Default(VideoResponseModel()) VideoResponseModel videoResponse}) =
       _RecordingPlayerAppState;
 }
@@ -41,6 +42,11 @@ class UpdateSelectedItem extends RecordingPlayerAction {
 class UpdateVideosResponse extends RecordingPlayerAction {
   VideoResponseModel videoResponse;
   UpdateVideosResponse({required this.videoResponse});
+}
+
+class UpdateAccestId extends RecordingPlayerAction {
+  String accestId;
+  UpdateAccestId({required this.accestId});
 }
 
 RecordingPlayerAppState recordingPlayerReducer(
@@ -61,6 +67,8 @@ RecordingPlayerAppState _recordingPlayerReducer(
       return state.copyWith(recordedVideoData: action.recordedVideoData);
     case UpdateVideosResponse():
       return state.copyWith(videoResponse: action.videoResponse);
+    case UpdateAccestId():
+      return state.copyWith(accestId: action.accestId);
   }
 }
 
@@ -70,7 +78,7 @@ ThunkAction<RecordingPlayerAppState> getRecordedVideoData(
     try {
       final remoteDataSource = RemoteDataSource();
       if (store.state.type.isNotEmpty && store.state.classId.isNotEmpty) {
-        String userToken = await getUserToken();
+        String userToken = getUserToken(context);
         final previewData = await remoteDataSource.getRecordingData(
             store.state.type, store.state.classId, userToken);
 
@@ -79,6 +87,7 @@ ThunkAction<RecordingPlayerAppState> getRecordedVideoData(
               ViewRecordingResponseModel.fromJson(previewData.response.data);
           store.dispatch(UpdateRecordVideoData(
               recordedVideoData: recordedVideoDatas.data));
+
           store.dispatch(getRecordedVideoUrlApi(context,
               recordedVideoDatas.data.liveClassRoomRecordings[0].tpStreamId));
         }
@@ -109,17 +118,17 @@ ThunkAction<RecordingPlayerAppState> getRecordedVideoUrlApi(
         final previewData = await remoteDataSource.getVideoPlayUrl(
             tpStreamId,
             const VideoRequestModel(),
-            'Token cb5ee975c1a2a3cde54bbfe16e0ed5fc4662a8f20d1a9602a46c7229b42a5e52');
+            'Token 74aba046d30c440659f486db92691fe30b9df689bd123ae9446760093ac0bbe7');
 
         VideoResponseModel videoResponseData =
             VideoResponseModel.fromJson(previewData.response.data);
         // Dispatch the action to update chat messages in the store
         store.dispatch(UpdateVideosResponse(videoResponse: videoResponseData));
+        store.dispatch(UpdateAccestId(accestId: tpStreamId));
       } else {
         print("tpstream url null");
       }
     } catch (error) {
-      print(error);
       toastification.show(
         context: context, // optional if you use ToastificationWrapper
         type: ToastificationType.error,

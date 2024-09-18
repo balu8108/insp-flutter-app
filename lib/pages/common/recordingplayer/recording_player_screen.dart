@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/tpStream_recorded_player.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_detail_widget.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_player_redux.dart';
+import 'package:insp/pages/common/recordingplayer/tpStream_recorded_mobile_player.dart';
+import 'package:insp/pages/common/recordingplayer/tpStream_recorded_player.dart';
+import 'package:insp/pages/common/recordingplayer/recording_detail_widget.dart';
+import 'package:insp/pages/common/recordingplayer/recording_player_redux.dart';
+import 'package:insp/utils/extensions.dart';
 
 import '../../../base/base.dart';
 
@@ -11,6 +13,7 @@ class RecordingPlayerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     dispatch(context, getRecordedVideoData(context));
     void onPressedRecording(BuildContext context, String tpStreamId) {
       dispatch(context, getRecordedVideoUrlApi(context, tpStreamId));
@@ -23,7 +26,9 @@ class RecordingPlayerScreen extends StatelessWidget {
           converter: (store) => store.state,
           builder: (context, RecordingPlayerAppState state) {
             return Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: isWebOrLandScape
+                  ? const EdgeInsets.all(16.0)
+                  : const EdgeInsets.all(0.0),
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   if (constraints.maxWidth < 600) {
@@ -31,8 +36,9 @@ class RecordingPlayerScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TPStreamRecordedPlayer(
-                              videourl: state.videoResponse.playback_url),
+                          TPStreamRecordedMobilePlayer(
+                              accestID: state.accestId,
+                              accessToken: state.videoResponse.code),
                           const SizedBox(height: 16),
                           RecordingDetailWidget(
                             recordingPlayerDetail: state.recordedVideoData,

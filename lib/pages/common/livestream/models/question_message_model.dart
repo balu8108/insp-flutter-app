@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/chat_message_model.dart';
+import 'package:insp/pages/common/livestream/models/chat_message_model.dart';
 
 part 'question_message_model.g.dart';
 

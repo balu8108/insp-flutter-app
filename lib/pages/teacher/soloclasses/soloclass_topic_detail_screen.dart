@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
-import 'package:inspflutterfrontend/pages/teacher/soloclasses/soloclass_topic_detail_redux.dart';
-import 'package:inspflutterfrontend/pages/teacher/soloclasses/widget/soloclassroom_description_widgets.dart';
-import 'package:inspflutterfrontend/pages/teacher/soloclasses/widget/soloclassroom_topics_widgets.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
+import 'package:insp/base/base.dart';
+import 'package:insp/pages/common/upcomingclasses/upcoming_class_screen.dart';
+import 'package:insp/pages/teacher/soloclasses/soloclass_topic_detail_redux.dart';
+import 'package:insp/pages/teacher/soloclasses/widget/soloclassroom_description_widgets.dart';
+import 'package:insp/pages/teacher/soloclasses/widget/soloclassroom_topics_widgets.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
 
 class SoloclassTopicDetailScreen extends StatelessWidget {
   const SoloclassTopicDetailScreen({super.key});
@@ -51,7 +51,7 @@ class SoloclassTopicDetailScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 17),
+              if (isWebOrLandScape) const SizedBox(width: 17),
               if (isWebOrLandScape)
                 const Expanded(
                   flex: 3,

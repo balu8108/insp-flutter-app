@@ -5,14 +5,15 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
-import 'package:inspflutterfrontend/apiservices/models/mycourses/get_lecture_no_request_model.dart';
-import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_topics_request_model.dart';
-import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
-import 'package:inspflutterfrontend/data/hardcoded/topic_list.dart';
-import 'package:inspflutterfrontend/pages/teacher/soloclassrecording/screen/soloclassroomscreen.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:insp/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
+import 'package:insp/apiservices/models/mycourses/get_lecture_no_request_model.dart';
+import 'package:insp/apiservices/models/mycourses/physics_course_topics_request_model.dart';
+import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/data/hardcoded/secret_key.dart';
+import 'package:insp/data/hardcoded/topic_list.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/teacher/soloclassrecording/screen/soloclassroomscreen.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:toastification/toastification.dart';
@@ -222,7 +223,7 @@ ThunkAction<ScheduleSoloclassAppState> getLectureNumberAPI(
               classType: '',
               isSoloClass: true,
               subjectName: '');
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final remoteDataSource = RemoteDataSource();
       final allTopics = await remoteDataSource.getLectureNumber(
           lectureRequestData, userToken);
@@ -317,7 +318,7 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
 
     final dio = Dio();
     try {
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       Response response = await dio.post(
         '${api}/solo-lecture/create-room',
         data: formData,
@@ -336,7 +337,9 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const Soloclassroomscreen()),
+          MaterialPageRoute(
+              builder: (context) =>
+                  const MainScaffold(content: Soloclassroomscreen())),
         );
 
         Navigator.of(context).pop();
@@ -440,7 +443,7 @@ ThunkAction<ScheduleSoloclassAppState> handleUpdateSoloClass(
 
     final dio = Dio();
     try {
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       Response response = await dio.post(
         '${api}/schedule-live-class/update-schedule-data',
         data: formData,

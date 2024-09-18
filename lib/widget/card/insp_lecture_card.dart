@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/widget/card/model/lecture_card_model.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/card/model/lecture_card_model.dart';
 
 Widget INSPLectureCard(
     {required LectureCardModel lectureCardModel,

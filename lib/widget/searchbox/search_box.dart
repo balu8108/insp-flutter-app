@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
+import 'package:insp/utils/extensions.dart';
 
 Widget searchBox(BuildContext context, Function onChanged) {
   return SizedBox(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_model.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/socket/mainsocket.dart';
-import 'package:inspflutterfrontend/widget/popups/leave_or_end_class.dart';
-import 'package:inspflutterfrontend/widget/popups/questiongenerate/question_generate.dart';
+import 'package:insp/pages/common/livestream/models/polldata_model.dart';
+import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/socket/mainsocket.dart';
+import 'package:insp/widget/popups/leave_or_end_class.dart';
+import 'package:insp/widget/popups/questiongenerate/question_generate.dart';
 
 class ActionButtonWidget extends StatefulWidget {
   const ActionButtonWidget({super.key, required this.isTeacher});
@@ -61,7 +61,7 @@ class _ActionButtonWidgetState extends State<ActionButtonWidget> {
                   width: 100,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(200, 50.0),
+                      minimumSize: const Size(200, 30.0),
                       backgroundColor: const Color(0xFFF63F4A),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),

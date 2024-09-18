@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/student/dashboard/assignment/assignment_widget_redux.dart';
-import 'package:inspflutterfrontend/pages/teacher/uploads/mainpage/myuploads.dart';
-import 'package:inspflutterfrontend/widget/card/latest_assignment_card.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
+import 'package:insp/base/base.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/student/dashboard/assignment/assignment_widget_redux.dart';
+import 'package:insp/pages/teacher/uploads/mainpage/myuploads.dart';
+import 'package:insp/widget/card/latest_assignment_card.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
 
 class AssignmentWidget extends StatelessWidget {
   const AssignmentWidget({super.key});
@@ -36,7 +36,7 @@ class AssignmentWidget extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                MainScaffold(content: const MyUploads())),
+                                const MainScaffold(content: MyUploads())),
                       );
                     },
                     child: const Text(

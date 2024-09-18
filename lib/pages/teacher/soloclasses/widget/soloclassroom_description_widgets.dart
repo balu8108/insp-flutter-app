@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
-import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
-import 'package:inspflutterfrontend/utils/file_box_component.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/card/lecture_recording_card.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
+import 'package:insp/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
+import 'package:insp/data/hardcoded/library_subjects.dart';
+import 'package:insp/utils/file_box_component.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/card/lecture_recording_card.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
 
 class SoloclassroomDescriptionWidgets extends StatefulWidget {
   const SoloclassroomDescriptionWidgets(
@@ -24,6 +24,7 @@ class _SoloclassroomDescriptionWidgetsState
     extends State<SoloclassroomDescriptionWidgets> {
   @override
   Widget build(BuildContext context) {
+    bool isTeacher = isTeacherLogin(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final isMobile = screenWidth < 600; // Adjust this threshold as necessary
 
@@ -33,52 +34,39 @@ class _SoloclassroomDescriptionWidgetsState
         borderRadius: BorderRadius.circular(16),
         color: const Color.fromRGBO(232, 242, 249, 1),
       ),
-      child: FutureBuilder<bool>(
-          future: isTeacherLogin(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return const Center(child: Text('Error loading data'));
-            } else {
-              bool isTeacher = snapshot.data ?? false;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                          flex: 9,
-                          child: INSPHeading(widget.selectedTopic.name)),
-                    ],
-                  ),
-                  const SizedBox(height: 40),
-                  isMobile
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            buildDescriptionSection(),
-                            const SizedBox(height: 20),
-                            buildAgendaSection(),
-                          ],
-                        )
-                      : Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(child: buildDescriptionSection()),
-                            const SizedBox(width: 20),
-                            Expanded(child: buildAgendaSection()),
-                          ],
-                        ),
-                  const SizedBox(height: 40),
-                  buildRecordingsSection(),
-                  const SizedBox(height: 40),
-                  buildFilesSection(isTeacher),
-                ],
-              );
-            }
-          }),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(flex: 9, child: INSPHeading(widget.selectedTopic.name)),
+            ],
+          ),
+          const SizedBox(height: 40),
+          isMobile
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildDescriptionSection(),
+                    const SizedBox(height: 20),
+                    buildAgendaSection(),
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: buildDescriptionSection()),
+                    const SizedBox(width: 20),
+                    Expanded(child: buildAgendaSection()),
+                  ],
+                ),
+          const SizedBox(height: 40),
+          buildRecordingsSection(),
+          const SizedBox(height: 40),
+          buildFilesSection(isTeacher),
+        ],
+      ),
     );
   }
 

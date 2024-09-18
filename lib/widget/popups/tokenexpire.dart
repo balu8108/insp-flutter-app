@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/login/login_screen.dart';
-import 'package:inspflutterfrontend/utils/localstorage.dart';
+import 'package:insp/pages/login/login_screen.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/utils/localstorage.dart';
 
 class TokenExpired extends StatelessWidget {
   const TokenExpired({super.key});
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     return AlertDialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6.0),
       ),
       contentPadding: const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
+      insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
       title: const Row(
         children: [
           Text(

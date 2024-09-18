@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/teacher/suggestion/suggestion_page.dart';
-import 'package:inspflutterfrontend/pages/teacher/suggestion/suggestion_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
+import 'package:insp/pages/teacher/suggestion/suggestion_page.dart';
+import 'package:insp/pages/teacher/suggestion/suggestion_redux.dart';
+import 'package:insp/base/base.dart';
 
 class MainSuggestionPage extends StatelessWidget {
   const MainSuggestionPage({super.key});

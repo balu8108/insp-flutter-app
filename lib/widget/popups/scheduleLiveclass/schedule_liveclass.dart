@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/utils/extractFileNameFromS3URL.dart';
-import 'package:inspflutterfrontend/widget/inputField/picked_file.dart';
-import 'package:inspflutterfrontend/widget/inputField/textfield_suffix.dart';
-import 'package:inspflutterfrontend/widget/inputField/textfield_withoutsuffix.dart';
+import 'package:insp/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/utils/extractFileNameFromS3URL.dart';
+import 'package:insp/widget/inputField/picked_file.dart';
+import 'package:insp/widget/inputField/textfield_suffix.dart';
+import 'package:insp/widget/inputField/textfield_withoutsuffix.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/data/hardcoded/topic_list.dart';
-import 'package:inspflutterfrontend/widget/inputField/dropdown.dart';
-import 'package:inspflutterfrontend/widget/popups/scheduleLiveclass/schedule_liveclass_redux.dart';
+import 'package:insp/base/base.dart';
+import 'package:insp/data/hardcoded/topic_list.dart';
+import 'package:insp/widget/inputField/dropdown.dart';
+import 'package:insp/widget/popups/scheduleLiveclass/schedule_liveclass_redux.dart';
 
 class ScheduleLiveClass extends StatelessWidget {
   const ScheduleLiveClass({super.key, required this.deleteFeedback});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/common/calender/widget/liveclass_calendar.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
+import 'package:insp/pages/common/calender/widget/liveclass_calendar.dart';
+import 'package:insp/pages/common/upcomingclasses/upcoming_class_screen.dart';
+import 'package:insp/utils/extensions.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -25,7 +25,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               flex: 3,
               child: UpcomingClassesScreen(),
             ),
-          const SizedBox(width: 17),
+          if (isWebOrLandScape) const SizedBox(width: 17),
           Expanded(
             flex: isWebOrLandScape ? 9 : 12, // Adjust flex for mobile
             child: LiveclassCalendar.getScreen(),

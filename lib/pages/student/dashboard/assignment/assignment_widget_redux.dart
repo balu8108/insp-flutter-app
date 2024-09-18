@@ -2,10 +2,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/widget/card/model/latest_assignment_card_model.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/widget/card/model/latest_assignment_card_model.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 
@@ -45,7 +45,7 @@ ThunkAction<AssignmentWidgetAppState> showRecentAssignment(
   return (Store<AssignmentWidgetAppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final allTopics = await remoteDataSource.getRecentAssignment(userToken);
 
       if (allTopics.response.statusCode == 200) {

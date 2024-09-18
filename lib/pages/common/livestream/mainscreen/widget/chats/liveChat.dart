@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/socket/mainsocket.dart';
-import 'package:inspflutterfrontend/widget/card/live_chat_card.dart';
-import 'package:inspflutterfrontend/widget/popups/emoji_container.dart';
+import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/socket/mainsocket.dart';
+import 'package:insp/widget/card/live_chat_card.dart';
+import 'package:insp/widget/popups/emoji_container.dart';
 
 class LiveChat extends StatefulWidget {
   const LiveChat({super.key});

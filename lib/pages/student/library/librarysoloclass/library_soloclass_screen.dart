@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/student/library/librarysoloclass/library_soloclass_redux.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/pages/student/library/widget/library_lecture.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
+import 'package:insp/pages/student/library/librarysoloclass/library_soloclass_redux.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/pages/student/library/widget/library_lecture.dart';
+import 'package:insp/pages/common/upcomingclasses/upcoming_class_screen.dart';
 import '../../../../base/base.dart';
 
 class LibrarySoloclassScreen extends StatelessWidget {

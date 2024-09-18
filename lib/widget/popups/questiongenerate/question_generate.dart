@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_model.dart';
-import 'package:inspflutterfrontend/widget/inputField/question_dropdown.dart';
-import 'package:inspflutterfrontend/widget/inputField/textfield.dart';
+import 'package:insp/base/base.dart';
+import 'package:insp/pages/common/livestream/models/polldata_model.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/inputField/question_dropdown.dart';
+import 'package:insp/widget/inputField/textfield.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/data/hardcoded/topic_list.dart';
-import 'package:inspflutterfrontend/widget/inputField/dropdown.dart';
-import 'package:inspflutterfrontend/widget/popups/questiongenerate/question_generate_redux.dart';
+import 'package:insp/data/hardcoded/topic_list.dart';
+import 'package:insp/widget/inputField/dropdown.dart';
+import 'package:insp/widget/popups/questiongenerate/question_generate_redux.dart';
 
 class QuestionGenerate extends StatelessWidget {
   const QuestionGenerate({
@@ -18,6 +19,7 @@ class QuestionGenerate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     void createAssignment() {
       dispatch(context, questionGenerateapi(context, sendPollToServer));
     }
@@ -35,6 +37,7 @@ class QuestionGenerate extends StatelessWidget {
                 ),
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
                 title: Row(
                   children: [
                     const Text("Polls/MCQ/TF",

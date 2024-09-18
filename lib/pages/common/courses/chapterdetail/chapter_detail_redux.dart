@@ -2,14 +2,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/common/courses/chapterdetail/chapter_detail_screen.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
-import 'package:inspflutterfrontend/apiservices/models/library/all_topic_for_chapter_request_model.dart';
-import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/pages/common/courses/topiclecture/topic_lecture_screen.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/common/courses/chapterdetail/chapter_detail_screen.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/data/hardcoded/library_subjects.dart';
+import 'package:insp/apiservices/models/library/all_topic_for_chapter_request_model.dart';
+import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/pages/common/courses/topiclecture/topic_lecture_screen.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/common/alltopicswidget/all_topics_widget.dart';
-import 'package:inspflutterfrontend/pages/student/library/librarylecturepage/library_lecture_screen.dart';
-import 'package:inspflutterfrontend/pages/student/library/librarysoloclass/library_soloclass_screen.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
-import 'package:inspflutterfrontend/pages/student/library/mainpage/library_redux.dart';
-import 'package:inspflutterfrontend/pages/student/library/widget/library_subject.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/common/alltopicswidget/all_topics_widget.dart';
+import 'package:insp/pages/student/library/librarylecturepage/library_lecture_screen.dart';
+import 'package:insp/pages/student/library/librarysoloclass/library_soloclass_screen.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/data/hardcoded/library_subjects.dart';
+import 'package:insp/pages/student/library/mainpage/library_redux.dart';
+import 'package:insp/pages/student/library/widget/library_subject.dart';
+import 'package:insp/pages/common/upcomingclasses/upcoming_class_screen.dart';
 import '../../../../base/base.dart';
 
 class LibraryScreen extends StatelessWidget {

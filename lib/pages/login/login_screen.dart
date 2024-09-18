@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-// import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/pages/login/login_redux.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
+// import 'package:insp/base/base.dart';
+import 'package:insp/pages/login/login_redux.dart';
+import 'package:insp/redux/AppState.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

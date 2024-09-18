@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/teacher/uploads/mainpage/myuploads.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/widget/card/model/latest_assignment_card_model.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/teacher/uploads/mainpage/myuploads.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/card/model/latest_assignment_card_model.dart';
 
 Widget LatestAssignmentCard(
     {required LatestAssignmentCardModel assignmentCardModel,
@@ -62,7 +62,7 @@ Widget LatestAssignmentCard(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              MainScaffold(content: const MyUploads())),
+                              const MainScaffold(content: MyUploads())),
                     );
                   },
                   child: const Text(

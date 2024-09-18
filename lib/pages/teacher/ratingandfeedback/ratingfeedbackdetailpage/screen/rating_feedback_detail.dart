@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/pages/common/courses/widget/chapterdetail/chapter_widget.dart';
-import 'package:inspflutterfrontend/pages/teacher/ratingandfeedback/ratingfeedbackdetailpage/screen/rating_feedback_detail_redux.dart';
-import 'package:inspflutterfrontend/pages/teacher/ratingandfeedback/ratingfeedbackdetailpage/widget/rating_feedback_bottom_detail.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
+import 'package:insp/pages/common/courses/widget/chapterdetail/chapter_widget.dart';
+import 'package:insp/pages/teacher/ratingandfeedback/ratingfeedbackdetailpage/screen/rating_feedback_detail_redux.dart';
+import 'package:insp/pages/teacher/ratingandfeedback/ratingfeedbackdetailpage/widget/rating_feedback_bottom_detail.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/pages/common/upcomingclasses/upcoming_class_screen.dart';
 
 import '../../../../../base/base.dart';
 

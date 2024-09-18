@@ -1,4 +1,4 @@
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
 
 import '../../apiservices/models/mycourses/all_subjects_response_model.dart';
 

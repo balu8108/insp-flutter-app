@@ -3,15 +3,15 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/apiservices/models/login/device_login_request_model.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/home/mobile_home_screen.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
+import 'package:insp/apiservices/models/login/device_login_request_model.dart';
+import 'package:insp/main.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/redux/userData/userdata_redux.dart';
 import 'package:toastification/toastification.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/pages/home/home_screen.dart';
-import 'package:inspflutterfrontend/data/hardcoded/secret_key.dart';
-import 'package:inspflutterfrontend/utils/localstorage.dart';
+import 'package:insp/pages/home/home_screen.dart';
+import 'package:insp/data/hardcoded/secret_key.dart';
+import 'package:insp/utils/localstorage.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:retrofit/dio.dart';
@@ -101,21 +101,16 @@ ThunkAction<AppState> handleLogin(BuildContext context) {
               jsonEncode(result.data.loginResponseModelResult.toJson()),
             );
 
-            // Navigator.pushReplacement(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) =>
-            //         HomeScreen(userData: result.data.loginResponseModelResult),
-            //   ),
-            // );
+            store.dispatch(
+                UpdateUserData(userData: result.data.loginResponseModelResult));
 
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => MainScaffold(
-                        content: MobileHomeScreen(
-                            userData: result.data.loginResponseModelResult),
-                      )),
+                builder: (context) => MainScaffold(
+                    content: HomeScreen(
+                        userData: result.data.loginResponseModelResult)),
+              ),
             );
 
             store.dispatch(UpdateIsLoading(isLoading: false));
@@ -134,7 +129,7 @@ ThunkAction<AppState> handleLogin(BuildContext context) {
               type: ToastificationType.warning,
               style: ToastificationStyle.fillColored,
               autoCloseDuration: const Duration(seconds: 3),
-              title: const Text("Sorry... Cannot Login More Than 2 Devices..."),
+              title: Text(result.data.responseMessage),
               alignment: Alignment.topRight,
             );
           }

@@ -18,16 +18,18 @@ class Dropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ClipRect(
+        // Clips the overflowing content
+        child: Container(
       width: double.infinity, // Full width
       child: DropdownButtonFormField<String>(
         dropdownColor: Colors.white,
         hint: Text(
           hintText,
           style: const TextStyle(
-            color: Color(0x613A3541),
-            fontSize: 16,
-          ),
+              color: Color(0x613A3541),
+              fontSize: 16,
+              overflow: TextOverflow.ellipsis),
         ),
         value: selectedValue,
         items: items,
@@ -62,6 +64,6 @@ class Dropdown extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }

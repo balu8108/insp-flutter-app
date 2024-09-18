@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/increase_polltime_model.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_answer_model.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_model.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_model.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/chat_widget_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/preview_data_redux.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/tpstream_redux.dart';
-import 'package:inspflutterfrontend/pages/home/home_screen.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/socket/socket_events.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/popups/rating/rating.dart';
+import 'package:insp/apiservices/models/login/login_response_model.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/common/livestream/models/increase_polltime_model.dart';
+import 'package:insp/pages/common/livestream/models/leaderboard_answer_model.dart';
+import 'package:insp/pages/common/livestream/models/leaderboard_model.dart';
+import 'package:insp/pages/common/livestream/models/peers_model.dart';
+import 'package:insp/pages/common/livestream/models/polldata_model.dart';
+import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
+import 'package:insp/pages/common/livestream/widget/chat/peers_widget_redux.dart';
+import 'package:insp/pages/common/livestream/widget/chat/preview_data_redux.dart';
+import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
+import 'package:insp/pages/home/home_screen.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/socket/socket_events.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/popups/rating/rating.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:redux/redux.dart';
 import 'package:toastification/toastification.dart';
@@ -182,7 +182,7 @@ void peerLeavedResponseHandler(Store<AppState> store, dynamic res) {
 
 Future<void> joinRoomHandler(
     Store<AppState> store, String roomId, BuildContext context) async {
-  LoginResponseModelResult userData = await getUserData();
+  LoginResponseModelResult userData = getUserDataFromStore(context);
   socket?.emitWithAck(SOCKET_EVENTS.JOIN_ROOM,
       {'roomId': roomId, 'peerDetails': userData.toJson()}, ack: (res) {
     if (!res['success']) {
@@ -266,7 +266,8 @@ Future<void> leaveRoomHandler(Store<AppState> store) async {
       LoginResponseModelResult userDatas = await getUserData();
       navigatorKey.currentState?.push(
         MaterialPageRoute(
-            builder: (context) => HomeScreen(userData: userDatas)),
+            builder: (context) =>
+                MainScaffold(content: HomeScreen(userData: userDatas))),
       );
       if (feedBackStatus['success']) {
         if (userDatas.userType == 0) {

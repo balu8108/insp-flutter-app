@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/common/recordingplayer/recording_player_screen.dart';
+import 'package:insp/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/common/recordingplayer/recording_player_screen.dart';
 
 Widget LectureRecordingCardWidget(
     {required List<LiveClassRoomRecordings> liveClassRoomRecordings,

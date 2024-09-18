@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
 
 Widget INSPCard(
     {required INSPCardModel inspCardModel,

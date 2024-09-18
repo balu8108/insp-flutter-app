@@ -3,18 +3,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/main.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/liveclass.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/chat_message_model.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/increase_polltime_model.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_answer_model.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/leaderboard_model.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/peers_model.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/polldata_model.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/models/question_message_model.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/widget/chat/peers_widget_redux.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/socket/mainsocket.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/common/livestream/mainscreen/liveclass.dart';
+import 'package:insp/pages/common/livestream/models/chat_message_model.dart';
+import 'package:insp/pages/common/livestream/models/increase_polltime_model.dart';
+import 'package:insp/pages/common/livestream/models/leaderboard_answer_model.dart';
+import 'package:insp/pages/common/livestream/models/leaderboard_model.dart';
+import 'package:insp/pages/common/livestream/models/peers_model.dart';
+import 'package:insp/pages/common/livestream/models/polldata_model.dart';
+import 'package:insp/pages/common/livestream/models/question_message_model.dart';
+import 'package:insp/pages/common/livestream/widget/chat/peers_widget_redux.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/socket/mainsocket.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 import 'package:uuid/uuid.dart';
@@ -170,7 +170,7 @@ ThunkAction<AppState> addUserChatMessage(BuildContext context, String msg) {
 ThunkAction<AppState> addServerQuestionMessage(dynamic res) {
   return (Store<AppState> store) async {
     // Extracting 'msg' and 'peerDetails' from the response
-    String msg = res['msg'];
+    String msg = res['questionMsg'];
     PeerDetail peerDetails = PeerDetail.fromJson(res['peerDetails']);
 
     // Assuming 'ChatMessageModel.fromJson' can handle the JSON structure

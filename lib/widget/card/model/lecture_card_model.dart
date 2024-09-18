@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
 
 part 'lecture_card_model.g.dart';
 

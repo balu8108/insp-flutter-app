@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
-import 'package:inspflutterfrontend/widget/card/latest_assignment_card.dart';
-import 'package:inspflutterfrontend/pages/teacher/dashboard/myupload/myupload_widget_redux.dart';
-import 'package:inspflutterfrontend/widget/popups/assignmentPopup/add_assignment.dart';
+import 'package:insp/base/base.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
+import 'package:insp/widget/card/latest_assignment_card.dart';
+import 'package:insp/pages/teacher/dashboard/myupload/myupload_widget_redux.dart';
+import 'package:insp/widget/popups/assignmentPopup/add_assignment.dart';
 
 class MyUpload extends StatelessWidget {
   const MyUpload({super.key});

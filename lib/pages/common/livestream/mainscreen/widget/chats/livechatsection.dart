@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/liveclassdetail.dart';
-import 'package:inspflutterfrontend/pages/common/livestream/mainscreen/widget/chats/liveleftpart.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/liveclassdetail.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/chats/liveleftpart.dart';
 
 class LiveChatSectionWidget extends StatelessWidget {
   LiveChatSectionWidget();

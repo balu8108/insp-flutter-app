@@ -1,13 +1,13 @@
 // This file is "main.dart"
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/apiservices/models/login/login_response_model.dart';
-import 'package:inspflutterfrontend/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
-import 'package:inspflutterfrontend/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
-import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/redux/AppState.dart';
-import 'package:inspflutterfrontend/socket/mainsocket.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:insp/apiservices/models/login/login_response_model.dart';
+import 'package:insp/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
+import 'package:insp/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
+import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/redux/AppState.dart';
+import 'package:insp/socket/mainsocket.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 import 'package:toastification/toastification.dart';
@@ -49,7 +49,7 @@ PreviewDataAppState previewDataReducer(
 ThunkAction<AppState> getPreviewClassData(BuildContext context, String roomId) {
   return (Store<AppState> store) async {
     try {
-      LoginResponseModelResult userData = await getUserData();
+      LoginResponseModelResult userData = getUserDataFromStore(context);
       final remoteDataSource = RemoteDataSource();
       final previewData = await remoteDataSource.getRoomPreviewData(
           roomId, 'Token ${userData.token}');

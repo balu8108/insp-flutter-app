@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/pages/common/alltopicswidget/all_topics_widget_redux.dart';
-import 'package:inspflutterfrontend/pages/student/assignment/widget/assignment_subject_topic.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
-import 'package:inspflutterfrontend/widget/heading/insp_heading.dart';
-import 'package:inspflutterfrontend/widget/searchbox/search_box.dart';
+import 'package:insp/base/base.dart';
+import 'package:insp/pages/common/alltopicswidget/all_topics_widget_redux.dart';
+import 'package:insp/pages/student/assignment/widget/assignment_subject_topic.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/widget/heading/insp_heading.dart';
+import 'package:insp/widget/searchbox/search_box.dart';
 
 class AllTopicWidget extends StatelessWidget {
   final String heading;

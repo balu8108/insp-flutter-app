@@ -3,13 +3,13 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/apiservices/models/mycourses/physics_course_topics_request_model.dart';
-import 'package:inspflutterfrontend/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
-import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/data/hardcoded/library_subjects.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
-import 'package:inspflutterfrontend/widget/card/model/insp_card_model.dart';
+import 'package:insp/apiservices/models/mycourses/physics_course_topics_request_model.dart';
+import 'package:insp/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
+import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/data/hardcoded/library_subjects.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 
@@ -103,7 +103,7 @@ ThunkAction<SoloclassTopicDetailReduxAppState> showSoloclassTopicwiseDetails(
     store.dispatch(UpdateSelectedTopic(selectedTopics: inspCardModel));
 
     final remoteDataSource = RemoteDataSource();
-    String userToken = await getUserToken();
+    String userToken = getUserToken(context);
     try {
       final allTopics = await remoteDataSource.getSoloClassTopicWiseDetails(
           inspCardModel.id, userToken);

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/base/base.dart';
-import 'package:inspflutterfrontend/widget/popups/assignmentDelete/delete_assignment_redux.dart';
+import 'package:insp/base/base.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/popups/assignmentDelete/delete_assignment_redux.dart';
 
 class DeleteAssignemnt extends StatelessWidget {
   const DeleteAssignemnt(
@@ -11,6 +12,7 @@ class DeleteAssignemnt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     return StoreConnector<DeleteAssignmentAppState, DeleteAssignmentAppState>(
         converter: (store) => store.state,
         builder: (context, DeleteAssignmentAppState state) =>
@@ -22,6 +24,7 @@ class DeleteAssignemnt extends StatelessWidget {
                     ),
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 26, horizontal: 28),
+                    insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
                     title: Row(
                       children: [
                         const Text("Delete Assignment",

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/utils/extensions.dart';
-import 'package:inspflutterfrontend/widget/card/model/lecture_card_model.dart';
-import 'package:inspflutterfrontend/pages/student/library/librarylecturedetailpage/lecture_detail_redux.dart';
-import 'package:inspflutterfrontend/pages/common/lecture/widget/lecture_detail_widget.dart';
-import 'package:inspflutterfrontend/pages/student/library/widget/library_allLecture.dart';
-import 'package:inspflutterfrontend/pages/common/upcomingclasses/upcoming_class_screen.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/card/model/lecture_card_model.dart';
+import 'package:insp/pages/student/library/librarylecturedetailpage/lecture_detail_redux.dart';
+import 'package:insp/pages/common/lecture/widget/lecture_detail_widget.dart';
+import 'package:insp/pages/student/library/widget/library_allLecture.dart';
+import 'package:insp/pages/common/upcomingclasses/upcoming_class_screen.dart';
 
 import '../../../../base/base.dart';
 
@@ -48,7 +48,7 @@ class LibraryLectureDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 17),
+              if (isWebOrLandScape) const SizedBox(width: 17),
               if (isWebOrLandScape)
                 const Expanded(
                   flex: 3,

@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:inspflutterfrontend/apiservices/remote_data_source.dart';
-import 'package:inspflutterfrontend/utils/userDetail/getUserDetail.dart';
+import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
@@ -42,7 +42,7 @@ ThunkAction<DeleteAssignmentAppState> deleteAssignment(BuildContext context,
     int assignmentId, Function() fetchAssignmentAfterUpdateorDelete) {
   return (Store<DeleteAssignmentAppState> store) async {
     try {
-      String userToken = await getUserToken();
+      String userToken = getUserToken(context);
       final remoteDataSource = RemoteDataSource();
       final deleteTopicData =
           await remoteDataSource.deleteAssignment(assignmentId, userToken);

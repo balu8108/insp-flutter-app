@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:inspflutterfrontend/base/base.dart';
+import 'package:insp/base/base.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inspflutterfrontend/widget/inputField/textfield_withoutsuffix.dart';
-import 'package:inspflutterfrontend/widget/popups/rating/rating_redux.dart';
+import 'package:insp/utils/extensions.dart';
+import 'package:insp/widget/inputField/textfield_withoutsuffix.dart';
+import 'package:insp/widget/popups/rating/rating_redux.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class RatingFeedbackPopup extends StatelessWidget {
@@ -10,6 +11,7 @@ class RatingFeedbackPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     void createAssignment() {
       dispatch(context, rateClass(context));
     }
@@ -23,6 +25,7 @@ class RatingFeedbackPopup extends StatelessWidget {
                 ),
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
                 title: const Row(
                   children: [
                     Text("Rating",
