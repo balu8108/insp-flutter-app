@@ -170,7 +170,7 @@ ThunkAction<AppState> addUserChatMessage(BuildContext context, String msg) {
 ThunkAction<AppState> addServerQuestionMessage(dynamic res) {
   return (Store<AppState> store) async {
     // Extracting 'msg' and 'peerDetails' from the response
-    String msg = res['msg'];
+    String msg = res['questionMsg'];
     PeerDetail peerDetails = PeerDetail.fromJson(res['peerDetails']);
 
     // Assuming 'ChatMessageModel.fromJson' can handle the JSON structure
