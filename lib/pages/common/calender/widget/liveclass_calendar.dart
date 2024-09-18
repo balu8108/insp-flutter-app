@@ -193,23 +193,25 @@ class LiveclassCalendar extends StatelessWidget {
                                     state.calendarScreenAllEventsForADay[index]
                                         .title,
                                     style: const TextStyle(
-                                      fontSize: 17,
+                                      fontSize: 14,
                                       color: Color.fromRGBO(5, 89, 137, 1),
                                     ),
                                   ),
+                                  const SizedBox(height: 5),
                                   Text(
                                     state.calendarScreenAllEventsForADay[index]
                                         .classType,
                                     style: const TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 11,
                                       color: Color.fromRGBO(40, 141, 188, 1),
                                     ),
                                   ),
+                                  const SizedBox(height: 5),
                                   Text(
                                     state.calendarScreenAllEventsForADay[index]
                                         .classLevel,
                                     style: const TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 11,
                                       color: Color.fromRGBO(60, 141, 188, 1),
                                     ),
                                   ),
