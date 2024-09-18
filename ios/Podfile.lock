@@ -1,35 +1,146 @@
 PODS:
-  - Flutter (1.0.0)
-  - fluttertoast (0.0.2):
+  - Alamofire (5.9.1)
+  - device_info_plus (0.0.1):
     - Flutter
-    - Toast
+  - DKImagePickerController/Core (4.3.9):
+    - DKImagePickerController/ImageDataManager
+    - DKImagePickerController/Resource
+  - DKImagePickerController/ImageDataManager (4.3.9)
+  - DKImagePickerController/PhotoGallery (4.3.9):
+    - DKImagePickerController/Core
+    - DKPhotoGallery
+  - DKImagePickerController/Resource (4.3.9)
+  - DKPhotoGallery (0.0.19):
+    - DKPhotoGallery/Core (= 0.0.19)
+    - DKPhotoGallery/Model (= 0.0.19)
+    - DKPhotoGallery/Preview (= 0.0.19)
+    - DKPhotoGallery/Resource (= 0.0.19)
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Core (0.0.19):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Preview
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Model (0.0.19):
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Preview (0.0.19):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Resource
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Resource (0.0.19):
+    - SDWebImage
+    - SwiftyGif
+  - emoji_picker_flutter (0.0.1):
+    - Flutter
+  - file_picker (0.0.1):
+    - DKImagePickerController/PhotoGallery
+    - Flutter
+  - Flutter (1.0.0)
+  - M3U8Kit (1.1.0)
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - pdfx (1.0.0):
+    - Flutter
+  - ReachabilitySwift (5.2.3)
+  - SDWebImage (5.19.7):
+    - SDWebImage/Core (= 5.19.7)
+  - SDWebImage/Core (5.19.7)
+  - Sentry (8.0.0):
+    - Sentry/Core (= 8.0.0)
+    - SentryPrivate (= 8.0.0)
+  - Sentry/Core (8.0.0):
+    - SentryPrivate (= 8.0.0)
+  - SentryPrivate (8.0.0)
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - Toast (4.1.1)
+  - SwiftyGif (5.4.5)
+  - tpstreams_player_sdk (0.0.2):
+    - Flutter
+    - TPStreamsSDK (= 1.1.7)
+  - TPStreamsSDK (1.1.7):
+    - Alamofire (~> 5.9.0)
+    - M3U8Kit (~> 1.1.0)
+    - ReachabilitySwift (~> 5.2.2)
+    - Sentry (~> 8.0.0)
+  - url_launcher_ios (0.0.1):
+    - Flutter
+  - webview_flutter_wkwebview (0.0.1):
+    - Flutter
+    - FlutterMacOS
 
 DEPENDENCIES:
+  - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
+  - emoji_picker_flutter (from `.symlinks/plugins/emoji_picker_flutter/ios`)
+  - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
-  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - pdfx (from `.symlinks/plugins/pdfx/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - tpstreams_player_sdk (from `.symlinks/plugins/tpstreams_player_sdk/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/darwin`)
 
 SPEC REPOS:
   trunk:
-    - Toast
+    - Alamofire
+    - DKImagePickerController
+    - DKPhotoGallery
+    - M3U8Kit
+    - ReachabilitySwift
+    - SDWebImage
+    - Sentry
+    - SentryPrivate
+    - SwiftyGif
+    - TPStreamsSDK
 
 EXTERNAL SOURCES:
+  device_info_plus:
+    :path: ".symlinks/plugins/device_info_plus/ios"
+  emoji_picker_flutter:
+    :path: ".symlinks/plugins/emoji_picker_flutter/ios"
+  file_picker:
+    :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
     :path: Flutter
-  fluttertoast:
-    :path: ".symlinks/plugins/fluttertoast/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  pdfx:
+    :path: ".symlinks/plugins/pdfx/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  tpstreams_player_sdk:
+    :path: ".symlinks/plugins/tpstreams_player_sdk/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
+  webview_flutter_wkwebview:
+    :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
 
 SPEC CHECKSUMS:
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
+  DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
+  DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
+  emoji_picker_flutter: fe2e6151c5b548e975d546e6eeb567daf0962a58
+  file_picker: 09aa5ec1ab24135ccd7a1621c46c84134bfd6655
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  fluttertoast: 9f2f8e81bb5ce18facb9748d7855bf5a756fe3db
-  shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
-  Toast: 1f5ea13423a1e6674c4abdac5be53587ae481c4e
+  M3U8Kit: d0f2dae9736a35fc44b54bea10aeebcaa75215b3
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  pdfx: 7b876b09de8b7a0bf444a4f82b439ffcff4ee1ec
+  ReachabilitySwift: 7f151ff156cea1481a8411701195ac6a984f4979
+  SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
+  Sentry: 2158a4621096dcd0a3a4f7c80b84b04dde261035
+  SentryPrivate: 1e3acf96ee818a8d0d95b8e922d39ab6be338ea0
+  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
+  SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
+  tpstreams_player_sdk: dd7107d8ff4ac6f9bd49ab0761dd3ec0f255b7c6
+  TPStreamsSDK: 7c29164d977795cc0875c13bc5eb7547a005dae2
+  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
+  webview_flutter_wkwebview: 0982481e3d9c78fd5c6f62a002fcd24fc791f1e4
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 
