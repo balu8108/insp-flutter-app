@@ -14,9 +14,9 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
   final String roomId;
 
   const LiveCLassPreviowlWidget({
-    Key? key,
+    super.key,
     required this.roomId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -241,18 +241,18 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                         height: 39,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
+                            backgroundColor: WidgetStateProperty.all(
                                 const Color(0xFF3C8DBC)),
-                            foregroundColor: MaterialStateProperty.all(
+                            foregroundColor: WidgetStateProperty.all(
                                 const Color(0xFF3C8DBC)),
-                            shape: MaterialStateProperty.all<
+                            shape: WidgetStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
                                     8.0), // Adjust border radius as needed
                               ),
                             ),
-                            padding: MaterialStateProperty.all(
+                            padding: WidgetStateProperty.all(
                                 const EdgeInsets.symmetric(vertical: 12.0)),
                           ),
                           onPressed: () {

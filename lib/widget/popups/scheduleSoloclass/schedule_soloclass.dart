@@ -63,7 +63,7 @@ class ScheduleSoloClass extends StatelessWidget {
                     ),
                   ],
                 ),
-                content: Container(
+                content: SizedBox(
                   height: 700,
                   width: 500, // Set your desired width here
                   child: SingleChildScrollView(
@@ -218,7 +218,7 @@ class ScheduleSoloClass extends StatelessWidget {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Container(
+                        SizedBox(
                           width: isWebOrLandScape
                               ? MediaQuery.of(context).size.width * 0.20
                               : MediaQuery.of(context).size.width * 0.50,

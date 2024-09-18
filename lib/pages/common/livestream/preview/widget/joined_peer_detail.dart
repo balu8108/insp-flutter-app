@@ -6,8 +6,8 @@ import 'package:insp/redux/AppState.dart';
 
 class JoinedPeerWidget extends StatelessWidget {
   const JoinedPeerWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

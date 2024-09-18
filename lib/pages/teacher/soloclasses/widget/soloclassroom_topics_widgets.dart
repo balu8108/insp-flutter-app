@@ -31,7 +31,7 @@ class _SoloclassroomTopicsWidgetsState
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(flex: 5, child: INSPHeading('Solo Recording')),
-              Container(
+              SizedBox(
                 width: 100,
                 child: ElevatedButton(
                     onPressed: () {

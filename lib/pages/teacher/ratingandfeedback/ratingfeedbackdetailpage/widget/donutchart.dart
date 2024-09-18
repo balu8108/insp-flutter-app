@@ -5,8 +5,7 @@ import 'package:insp/widget/card/model/rating_feedback_card_model.dart';
 class DonutChart extends StatelessWidget {
   final List<RatingFeedbackCardModal> ratingFeedbackCard;
 
-  const DonutChart({Key? key, required this.ratingFeedbackCard})
-      : super(key: key);
+  const DonutChart({super.key, required this.ratingFeedbackCard});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,7 @@ class DonutChart extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             height: 300,
             child: Stack(
               children: [
@@ -60,7 +59,7 @@ class DonutChart extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          '${averageRating.toStringAsFixed(1)}',
+                          averageRating.toStringAsFixed(1),
                           style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w400,
@@ -151,15 +150,15 @@ class DonutChart extends StatelessWidget {
   Color _getColorForRating(int rating) {
     switch (rating) {
       case 1:
-        return Color.fromRGBO(149, 211, 224, 1);
+        return const Color.fromRGBO(149, 211, 224, 1);
       case 2:
-        return Color.fromRGBO(149, 170, 224, 1);
+        return const Color.fromRGBO(149, 170, 224, 1);
       case 3:
-        return Color.fromRGBO(121, 214, 121, 1);
+        return const Color.fromRGBO(121, 214, 121, 1);
       case 4:
-        return Color.fromRGBO(239, 219, 111, 1);
+        return const Color.fromRGBO(239, 219, 111, 1);
       case 5:
-        return Color.fromRGBO(227, 141, 141, 1);
+        return const Color.fromRGBO(227, 141, 141, 1);
       default:
         return Colors.grey;
     }

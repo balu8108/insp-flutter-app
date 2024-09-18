@@ -11,9 +11,9 @@ import 'package:insp/widget/popups/questiongenerate/question_generate_redux.dart
 
 class QuestionGenerate extends StatelessWidget {
   const QuestionGenerate({
-    Key? key,
+    super.key,
     required this.sendPollToServer,
-  }) : super(key: key);
+  });
 
   final Function(PollDataModel) sendPollToServer;
 
@@ -54,7 +54,7 @@ class QuestionGenerate extends StatelessWidget {
                     ),
                   ],
                 ),
-                content: Container(
+                content: SizedBox(
                   height: 350,
                   width: 200, // Set your desired width here
                   child: SingleChildScrollView(
@@ -154,7 +154,7 @@ class QuestionGenerate extends StatelessWidget {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width * 0.20,
                           child: ElevatedButton(
                               onPressed: createAssignment,

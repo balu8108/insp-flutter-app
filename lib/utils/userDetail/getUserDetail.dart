@@ -13,7 +13,7 @@ Future<LoginResponseModelResult> getUserData() async {
         LoginResponseModelResult.fromJson(jsonDecode(data));
     return userData;
   } else {
-    return LoginResponseModelResult('', '', '', '', '', '', '', '', 0, 0);
+    return const LoginResponseModelResult('', '', '', '', '', '', '', '', 0, 0);
   }
 }
 
@@ -23,7 +23,7 @@ LoginResponseModelResult getUserDataFromStore(BuildContext context) {
   if (userData.id.isNotEmpty) {
     return userData;
   } else {
-    return LoginResponseModelResult('', '', '', '', '', '', '', '', 0, 0);
+    return const LoginResponseModelResult('', '', '', '', '', '', '', '', 0, 0);
   }
 }
 

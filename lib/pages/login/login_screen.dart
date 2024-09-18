@@ -49,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 40.0),
-                          Container(
+                          SizedBox(
                             width: formWidth,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,17 +160,17 @@ class LoginScreen extends StatelessWidget {
                                     },
                                     style: ButtonStyle(
                                       backgroundColor:
-                                          MaterialStateProperty.all<Color>(
+                                          WidgetStateProperty.all<Color>(
                                         const Color(0xFF3C8DBC),
                                       ),
                                       padding:
-                                          MaterialStateProperty.all<EdgeInsets>(
+                                          WidgetStateProperty.all<EdgeInsets>(
                                         const EdgeInsets.symmetric(
                                           horizontal: 15.0,
                                           vertical: 10.0,
                                         ),
                                       ),
-                                      shape: MaterialStateProperty.all<
+                                      shape: WidgetStateProperty.all<
                                           RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
                                           borderRadius:

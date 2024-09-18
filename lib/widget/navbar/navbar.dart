@@ -66,7 +66,7 @@ class _NavbarState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    void _onButtonPressed(String buttonText) {
+    void onButtonPressed(String buttonText) {
       store.dispatch(UpdateSelectedButton(selectedButton: buttonText));
     }
 
@@ -79,32 +79,32 @@ class _NavbarState extends State<Navbar> {
           actions: userData.userType == 0
               ? [
                   _buildTextButton('Home', () {
-                    _onButtonPressed('Home');
+                    onButtonPressed('Home');
                     _navigateToScreen(context, HomeScreen(userData: userData));
                   }),
                   _buildTextButton('Calendar', () {
-                    _onButtonPressed('Calendar');
-                    _navigateToScreen(context, CalendarScreen());
+                    onButtonPressed('Calendar');
+                    _navigateToScreen(context, const CalendarScreen());
                   }),
                   _buildTextButton('Assignments', () {
-                    _onButtonPressed('Assignments');
+                    onButtonPressed('Assignments');
                     _navigateToScreen(
                         context, AssignmentScreen.getScreen(inspCardModel));
                   }),
                   _buildTextButton('Library', () {
-                    _onButtonPressed('Library');
+                    onButtonPressed('Library');
                     _navigateToScreen(
                         context, LibraryScreen.getScreen(inspCardModel));
                   }),
                   _buildTextButton('Suggestion', () {
-                    _onButtonPressed('Suggestion');
+                    onButtonPressed('Suggestion');
                     showDialog(
                         context: context,
                         builder: (BuildContext) =>
                             StudentSuggestion.getScreen());
                   }),
                   _buildTextButton('INSP Portal', () {
-                    _onButtonPressed('INSP Portal');
+                    onButtonPressed('INSP Portal');
                     _launchURL(Uri.parse(
                         'https://www.inspedu.in/')); // Use Uri.parse to convert string to Uri
                   }),
@@ -112,28 +112,28 @@ class _NavbarState extends State<Navbar> {
                 ]
               : [
                   _buildTextButton('Home', () {
-                    _onButtonPressed('Home');
+                    onButtonPressed('Home');
                     _navigateToScreen(context, HomeScreen(userData: userData));
                   }),
                   _buildTextButton('Calendar', () {
-                    _onButtonPressed('Calendar');
-                    _navigateToScreen(context, CalendarScreen());
+                    onButtonPressed('Calendar');
+                    _navigateToScreen(context, const CalendarScreen());
                   }),
                   _buildTextButton('Courses', () {
-                    _onButtonPressed('Courses');
+                    onButtonPressed('Courses');
                     _navigateToScreen(
                         context, MyCoursesScreen.getScreen(inspCardModel));
                   }),
                   _buildTextButton('Uploads', () {
-                    _onButtonPressed('Uploads');
+                    onButtonPressed('Uploads');
                     _navigateToScreen(context, const MyUploads());
                   }),
                   _buildTextButton('Suggestion', () {
-                    _onButtonPressed('Suggestion');
+                    onButtonPressed('Suggestion');
                     _navigateToScreen(context, MainSuggestionPage.getScreen());
                   }),
                   _buildTextButton('INSP Portal', () {
-                    _onButtonPressed('INSP Portal');
+                    onButtonPressed('INSP Portal');
                     _launchURL(Uri.parse('https://www.inspedu.in/'));
                   }),
                   _buildUserMenu()

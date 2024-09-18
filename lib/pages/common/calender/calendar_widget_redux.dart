@@ -75,11 +75,13 @@ CalendarWidgetAppState _calendarWidgetReducer(
   if (action is UpdateFocusedDay) {
     return state.copyWith(focusedDay: action.focusedDay);
   }
-  if (action is UpdateCalendarMonthFromat)
+  if (action is UpdateCalendarMonthFromat) {
     return state.copyWith(calendarFormat: action.calendarFormat);
+  }
 
-  if (action is UpdateCalendarScreenDayWise)
+  if (action is UpdateCalendarScreenDayWise) {
     return state.copyWith(calendarScreenAllEventsForADay: action.dataForOneDay);
+  }
   return state;
 }
 
@@ -120,11 +122,11 @@ ThunkAction<CalendarWidgetAppState> getAllCalendarDataDateWise(
 
 Map<DateTime, List<Event>> _groupEvents(List<Event> events) {
   Map<DateTime, List<Event>> data = {};
-  events.forEach((event) {
+  for (var event in events) {
     DateTime date =
         DateTime.utc(event.start.year, event.start.month, event.start.day);
     if (data[date] == null) data[date] = [];
     data[date]!.add(event);
-  });
+  }
   return data;
 }

@@ -4,6 +4,8 @@ import 'package:insp/pages/common/livestream/widget/chat/peers_widget_redux.dart
 import 'package:insp/redux/AppState.dart';
 
 class LivePeersFullListWidget extends StatelessWidget {
+  const LivePeersFullListWidget({super.key});
+
   static void dispatch(BuildContext context, PeersWidgetAction action) {
     StoreProvider.of<AppState>(context).dispatch(action);
   }

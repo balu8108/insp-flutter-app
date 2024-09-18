@@ -117,8 +117,7 @@ void leaderBoardAnswerResponseHandler(Store<AppState> store, dynamic res) {
     // Ensure that each item in the list is a Map
     List<LeaderBoardAnswerModel> leaderBoardListAnswer =
         (res['averagePeersOption'] as List<dynamic>)
-            .where((item) =>
-                item is Map<String, dynamic>) // Filter to ensure it's a Map
+            .whereType<Map<String, dynamic>>() // Filter to ensure it's a Map
             .map((item) =>
                 LeaderBoardAnswerModel.fromJson(item as Map<String, dynamic>))
             .toList();

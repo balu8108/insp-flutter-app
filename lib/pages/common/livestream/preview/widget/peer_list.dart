@@ -5,7 +5,7 @@ class PeerList extends StatelessWidget {
   List<PeersDataModel> peers;
   final String type, message;
 
-  PeerList({required this.peers, required this.type, required this.message});
+  PeerList({super.key, required this.peers, required this.type, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class PeerList extends StatelessWidget {
                             width: 8), // Add space between containers
                       ],
                     );
-                  }).toList(),
+                  }),
                   if (peers.length > 3)
                     Container(
                       width: 50,

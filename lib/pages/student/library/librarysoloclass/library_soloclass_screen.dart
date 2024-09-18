@@ -38,9 +38,9 @@ class LibrarySoloclassScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 17),
-                          Expanded(
+                          const Expanded(
                             flex: 3,
-                            child: const UpcomingClassesScreen(),
+                            child: UpcomingClassesScreen(),
                           ),
                         ])))));
   }

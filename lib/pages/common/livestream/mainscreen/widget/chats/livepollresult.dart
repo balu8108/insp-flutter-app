@@ -5,7 +5,7 @@ import 'package:insp/redux/AppState.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
 
 class LivePollResult extends StatelessWidget {
-  LivePollResult();
+  const LivePollResult({super.key});
   static void dispatch(BuildContext context, ChatWidgetAppState action) {
     StoreProvider.of<AppState>(context).dispatch(action);
   }

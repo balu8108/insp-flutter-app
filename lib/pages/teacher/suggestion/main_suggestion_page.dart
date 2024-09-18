@@ -39,7 +39,7 @@ class MainSuggestionPage extends StatelessWidget {
   static getScreen() {
     return getBaseScreen<SuggestionAppState, MainSuggestionPage>(
         suggestionStateReducer,
-        SuggestionAppState(),
+        const SuggestionAppState(),
         const MainSuggestionPage());
   }
 

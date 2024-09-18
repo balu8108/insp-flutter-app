@@ -7,7 +7,7 @@ import 'package:insp/widget/card/model/insp_card_model.dart';
 import 'package:insp/widget/navbar/navbar_redux.dart';
 
 class NavigatorMobileBar extends StatefulWidget implements PreferredSizeWidget {
-  const NavigatorMobileBar({Key? key}) : super(key: key);
+  const NavigatorMobileBar({super.key});
 
   @override
   _NavigatorMobileBarState createState() => _NavigatorMobileBarState();

@@ -4,7 +4,7 @@ import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart'
 import 'package:insp/redux/AppState.dart';
 
 class PreviewVideo extends StatelessWidget {
-  PreviewVideo();
+  const PreviewVideo({super.key});
 
   static void dispatch(BuildContext context, ChatWidgetAppState action) {
     StoreProvider.of<AppState>(context).dispatch(action);

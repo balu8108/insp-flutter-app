@@ -28,7 +28,7 @@ class _NavbarMobileState extends State<NavbarMobile> {
     StoreProvider.of<AppState>(context).dispatch(action);
   }
 
-  final INSPCardModel inspCardModel = INSPCardModel(
+  final INSPCardModel inspCardModel = const INSPCardModel(
     '1',
     'Physics',
     'In Progress',
@@ -38,7 +38,7 @@ class _NavbarMobileState extends State<NavbarMobile> {
   @override
   Widget build(BuildContext context) {
     LoginResponseModelResult userData = getUserDataFromStore(context);
-    void _onButtonPressed(String buttonText) {
+    void onButtonPressed(String buttonText) {
       StoreProvider.of<AppState>(context)
           .dispatch(UpdateSelectedButton(selectedButton: buttonText));
     }
@@ -131,7 +131,7 @@ class _NavbarMobileState extends State<NavbarMobile> {
                               : Colors.white,
                         ),
                         onPressed: () {
-                          _onButtonPressed(item['name']);
+                          onButtonPressed(item['name']);
 
                           if (item['name'] == 'StudentSuggestion') {
                             showDialog(

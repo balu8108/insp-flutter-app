@@ -531,7 +531,7 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
     try {
       String userToken = getUserToken(context);
       Response response = await dio.post(
-        '${api}/schedule-live-class/create',
+        '$api/schedule-live-class/create',
         data: formData,
         options: Options(
           headers: {
@@ -717,7 +717,7 @@ ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
     try {
       String userToken = getUserToken(context);
       Response response = await dio.post(
-        '${api}/schedule-live-class/update-schedule-data',
+        '$api/schedule-live-class/update-schedule-data',
         data: formData,
         options: Options(
           headers: {

@@ -88,7 +88,7 @@ class _ViewTimetableState extends State<ViewTimetable> {
           ),
         ],
       ),
-      content: Container(
+      content: SizedBox(
         width: 600, // Set desired width
         height: 800, // Set desired height
         child: _isLoading

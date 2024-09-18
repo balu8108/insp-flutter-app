@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/actionButton.dart';
 import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/pollMobileView.dart';
 import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamMobile.dart';
-import 'package:tpstreams_player_sdk/tpstreams_player_sdk.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 
 class TPStreamMobileView extends StatefulWidget {

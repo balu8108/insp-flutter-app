@@ -3,7 +3,7 @@ import 'package:insp/pages/common/livestream/mainscreen/widget/liveclassdetail.d
 import 'package:insp/pages/common/livestream/mainscreen/widget/chats/liveleftpart.dart';
 
 class LiveChatSectionWidget extends StatelessWidget {
-  LiveChatSectionWidget();
+  const LiveChatSectionWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

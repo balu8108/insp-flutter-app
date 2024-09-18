@@ -7,9 +7,9 @@ class LiveClassPreviewScreen extends StatelessWidget {
   final String roomId;
 
   const LiveClassPreviewScreen({
-    Key? key,
+    super.key,
     required this.roomId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

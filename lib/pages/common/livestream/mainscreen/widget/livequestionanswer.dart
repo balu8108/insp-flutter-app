@@ -10,11 +10,10 @@ import 'package:insp/widget/inputField/question_dropdown.dart';
 
 class LiveQuestionAnswer extends StatefulWidget {
   const LiveQuestionAnswer(
-      {Key? key,
+      {super.key,
       required this.polldata,
       required this.increasePollTimeModel,
-      required this.closedDialog})
-      : super(key: key);
+      required this.closedDialog});
 
   final PollDataModel polldata;
   final IncreasePollTimeModel increasePollTimeModel;
@@ -100,7 +99,7 @@ class _PollTimerState extends State<LiveQuestionAnswer> {
   void startTimer() {
     if (_isTimerRunning) return; // Prevent multiple timers
     _isTimerRunning = true;
-    final interval = const Duration(seconds: 1);
+    const interval = Duration(seconds: 1);
 
     Future.doWhile(() async {
       await Future.delayed(interval);
@@ -213,19 +212,19 @@ class _PollTimerState extends State<LiveQuestionAnswer> {
                                   child: ElevatedButton(
                                     style: ButtonStyle(
                                       backgroundColor:
-                                          MaterialStateProperty.all(
+                                          WidgetStateProperty.all(
                                               const Color(0xFF3C8DBC)),
                                       foregroundColor:
-                                          MaterialStateProperty.all(
+                                          WidgetStateProperty.all(
                                               const Color(0xFF3C8DBC)),
-                                      shape: MaterialStateProperty.all<
+                                      shape: WidgetStateProperty.all<
                                           RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
                                               8.0), // Adjust border radius as needed
                                         ),
                                       ),
-                                      padding: MaterialStateProperty.all(
+                                      padding: WidgetStateProperty.all(
                                           const EdgeInsets.symmetric(
                                               vertical: 12.0)),
                                     ),

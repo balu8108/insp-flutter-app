@@ -9,7 +9,7 @@ class RecordingDetailWidget extends StatelessWidget {
   final RecordVideoResponseModelData recordingPlayerDetail;
   final Function(BuildContext, String) onViewDetailsClicked;
 
-  RecordingDetailWidget({
+  const RecordingDetailWidget({super.key, 
     required this.recordingPlayerDetail,
     required this.onViewDetailsClicked,
   });

@@ -6,7 +6,7 @@ import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart'
 import 'package:insp/redux/AppState.dart';
 
 class MiddleWidget extends StatefulWidget {
-  MiddleWidget();
+  const MiddleWidget({super.key});
 
   @override
   _MiddleWidgetState createState() => _MiddleWidgetState();

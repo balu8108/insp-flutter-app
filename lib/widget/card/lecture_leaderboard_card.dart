@@ -29,7 +29,7 @@ Widget LectureLeaderboardCard(
                                 color: Color.fromRGBO(44, 51, 41, 0.47),
                               )),
                           Text(
-                              '${leaderboardDetails[index].correctAnswers} / ${questionNo}',
+                              '${leaderboardDetails[index].correctAnswers} / $questionNo',
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12,

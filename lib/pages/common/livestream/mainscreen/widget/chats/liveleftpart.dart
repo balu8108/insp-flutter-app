@@ -5,6 +5,8 @@ import 'package:insp/pages/common/livestream/mainscreen/widget/chats/livepollres
 import 'package:insp/pages/common/livestream/mainscreen/widget/chats/livequestion.dart';
 
 class LiveLeftPart extends StatefulWidget {
+  const LiveLeftPart({super.key});
+
   @override
   _LiveLeftPartState createState() => _LiveLeftPartState();
 }

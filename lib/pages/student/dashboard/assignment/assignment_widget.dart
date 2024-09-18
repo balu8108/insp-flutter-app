@@ -77,7 +77,7 @@ class AssignmentWidget extends StatelessWidget {
   static getScreen() {
     return getBaseScreen<AssignmentWidgetAppState, AssignmentWidget>(
       assignmentWidgetReducer,
-      AssignmentWidgetAppState(),
+      const AssignmentWidgetAppState(),
       const AssignmentWidget(),
     );
   }

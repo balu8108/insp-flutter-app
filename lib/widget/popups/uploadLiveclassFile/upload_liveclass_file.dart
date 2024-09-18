@@ -38,7 +38,7 @@ class _UploadFilePopupState extends State<UploadFilePopup> {
             child: StoreConnector<AppState, UploadLiveclassFileAppState>(
               converter: (store) => store.state.uploadLiveclassFileAppState,
               builder: (context, UploadLiveclassFileAppState state) =>
-                  Container(
+                  SizedBox(
                 width: 250, // Set the width of the popup menu
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +48,7 @@ class _UploadFilePopupState extends State<UploadFilePopup> {
                       children: [
                         Expanded(flex: 9, child: INSPHeading("Upload File")),
                         IconButton(
-                          icon: Icon(Icons.close, size: 20),
+                          icon: const Icon(Icons.close, size: 20),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
@@ -107,19 +107,19 @@ class _UploadFilePopupState extends State<UploadFilePopup> {
                       height: 39,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
+                          backgroundColor: WidgetStateProperty.all(
                             const Color(0xFF3C8DBC),
                           ),
-                          foregroundColor: MaterialStateProperty.all(
+                          foregroundColor: WidgetStateProperty.all(
                             const Color(0xFF3C8DBC),
                           ),
                           shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                              WidgetStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
-                          padding: MaterialStateProperty.all(
+                          padding: WidgetStateProperty.all(
                             const EdgeInsets.symmetric(vertical: 12.0),
                           ),
                         ),

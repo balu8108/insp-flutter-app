@@ -105,6 +105,7 @@ class LiveclassCalendar extends StatelessWidget {
                             child: _buildEventsMarker(date, events),
                           );
                         }
+                        return null;
                       },
                     ),
                     rowHeight: 70,
@@ -161,7 +162,7 @@ class LiveclassCalendar extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Container(
+            SizedBox(
               height: 500,
               child: state.calendarScreenAllEventsForADay.isNotEmpty
                   ? Scrollbar(
@@ -181,7 +182,7 @@ class LiveclassCalendar extends StatelessWidget {
                             ),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Color.fromRGBO(143, 206, 243, 0.3),
+                                color: const Color.fromRGBO(143, 206, 243, 0.3),
                                 borderRadius: BorderRadius.circular(4.0),
                                 backgroundBlendMode: BlendMode.multiply,
                               ),
@@ -265,7 +266,7 @@ Widget _buildEventsMarker(DateTime date, List events) {
     child: Center(
       child: Text(
         '${events.length}',
-        style: TextStyle().copyWith(
+        style: const TextStyle().copyWith(
           color: Colors.white,
           fontSize: 12.0,
         ),

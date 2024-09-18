@@ -93,7 +93,7 @@ ThunkAction<RatingFeedbackDetailAppState> showTopicsForSubject(
     BuildContext context) {
   return (Store<RatingFeedbackDetailAppState> store) async {
     final remoteDataSource = RemoteDataSource();
-    final subjectId =
+    const subjectId =
         "1"; // baad mai dynamic karenge jab math or chemistry ke topic aa jaaye
     final allTopics = await remoteDataSource.getAllTopicsForSubject(
         AllTopicsForSubjectRequestModel(

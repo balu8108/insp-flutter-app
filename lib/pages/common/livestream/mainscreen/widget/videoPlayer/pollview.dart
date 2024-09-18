@@ -3,7 +3,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:insp/pages/common/livestream/mainscreen/widget/livequestionanswer.dart';
 import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:insp/redux/AppState.dart';
-import 'package:insp/socket/mainsocket.dart';
 
 class PollViewWidget extends StatefulWidget {
   const PollViewWidget({super.key});

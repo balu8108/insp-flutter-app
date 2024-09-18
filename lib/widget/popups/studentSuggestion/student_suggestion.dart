@@ -6,7 +6,7 @@ import 'package:insp/widget/inputField/textfield_withoutsuffix.dart';
 import 'package:insp/widget/popups/studentSuggestion/student_suggestion_redux.dart';
 
 class StudentSuggestion extends StatelessWidget {
-  const StudentSuggestion({Key? key}) : super(key: key);
+  const StudentSuggestion({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class StudentSuggestion extends StatelessWidget {
                   ),
                 ],
               ),
-              content: Container(
+              content: SizedBox(
                 width: 500, // Set your desired width here
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

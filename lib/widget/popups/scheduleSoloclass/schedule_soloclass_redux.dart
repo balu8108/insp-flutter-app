@@ -320,7 +320,7 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
     try {
       String userToken = getUserToken(context);
       Response response = await dio.post(
-        '${api}/solo-lecture/create-room',
+        '$api/solo-lecture/create-room',
         data: formData,
         options: Options(
           headers: {
@@ -445,7 +445,7 @@ ThunkAction<ScheduleSoloclassAppState> handleUpdateSoloClass(
     try {
       String userToken = getUserToken(context);
       Response response = await dio.post(
-        '${api}/schedule-live-class/update-schedule-data',
+        '$api/schedule-live-class/update-schedule-data',
         data: formData,
         options: Options(
           headers: {

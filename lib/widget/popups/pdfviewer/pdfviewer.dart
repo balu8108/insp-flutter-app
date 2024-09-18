@@ -24,7 +24,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
 
   void updateState(PDFViewerAppState pDFViewerAppState) {
     setState(() {
-      this.pdfViewerAppState = pDFViewerAppState;
+      pdfViewerAppState = pDFViewerAppState;
     });
   }
 
@@ -102,7 +102,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
       ),
       content: Column(children: [
         Expanded(
-            child: Container(
+            child: SizedBox(
           width: MediaQuery.of(context).size.width - 1100 < 500
               ? 500
               : MediaQuery.of(context).size.width, // Set desired width

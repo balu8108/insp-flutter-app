@@ -5,6 +5,8 @@ import 'package:insp/pages/common/livestream/mainscreen/widget/peers/livepeersli
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 
 class PeerListWidget extends StatefulWidget {
+  const PeerListWidget({super.key});
+
   @override
   _PeerListWidgetState createState() => _PeerListWidgetState();
 }

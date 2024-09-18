@@ -15,19 +15,19 @@ class _AttendanceWidgetState extends State<AttendanceWidget> {
       "id": 1,
       "name": "Physics",
       "percentage": 70.0,
-      "color": Color.fromRGBO(227, 141, 141, 1)
+      "color": const Color.fromRGBO(227, 141, 141, 1)
     },
     {
       "id": 2,
       "name": "Chemistry",
       "percentage": 80.0,
-      "color": Color.fromRGBO(149, 171, 224, 1)
+      "color": const Color.fromRGBO(149, 171, 224, 1)
     },
     {
       "id": 3,
       "name": "Mathematics",
       "percentage": 90.0,
-      "color": Color.fromRGBO(239, 219, 111, 1)
+      "color": const Color.fromRGBO(239, 219, 111, 1)
     },
   ];
 
@@ -50,7 +50,7 @@ class _AttendanceWidgetState extends State<AttendanceWidget> {
               Expanded(flex: 5, child: INSPHeading('Attendance')),
               const Spacer(),
               IconButton(
-                icon: Icon(Icons.more_vert),
+                icon: const Icon(Icons.more_vert),
                 onPressed: () {
                   // Handle button press
                 },
@@ -66,7 +66,7 @@ class _AttendanceWidgetState extends State<AttendanceWidget> {
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
+                        SizedBox(
                           height: 250, // Increased height
                           child: Stack(
                             alignment: Alignment.center,
@@ -116,7 +116,7 @@ class _AttendanceWidgetState extends State<AttendanceWidget> {
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
-                              Container(
+                              SizedBox(
                                 height: 200,
                                 child: PieChart(
                                   PieChartData(

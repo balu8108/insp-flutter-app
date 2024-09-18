@@ -36,7 +36,7 @@ class SoloclassDescription extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(20),
-                      color: Color.fromRGBO(60, 141, 188, 1),
+                      color: const Color.fromRGBO(60, 141, 188, 1),
                     ),
                   ),
                   const SizedBox(width: 10),

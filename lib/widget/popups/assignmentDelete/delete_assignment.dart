@@ -64,14 +64,14 @@ class DeleteAssignemnt extends StatelessWidget {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        Container(
+                        SizedBox(
                           width: 100,
                           child: ElevatedButton(
                               onPressed: () => Navigator.of(context).pop(),
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.black,
                                 backgroundColor:
-                                    Color.fromARGB(255, 244, 238, 238),
+                                    const Color.fromARGB(255, 244, 238, 238),
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 16.0),
                                 textStyle: const TextStyle(
@@ -85,7 +85,7 @@ class DeleteAssignemnt extends StatelessWidget {
                               child: const Text("Cancel")),
                         ),
                         const SizedBox(width: 10),
-                        Container(
+                        SizedBox(
                           width: 100,
                           child: ElevatedButton(
                               onPressed: () => dispatch(

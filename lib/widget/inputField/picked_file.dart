@@ -6,11 +6,10 @@ class PickedFile extends StatelessWidget {
   final List<String> pickedFilesName;
 
   const PickedFile(
-      {Key? key,
+      {super.key,
       this.uploadFile,
       required this.pickedFilesName,
-      this.removeFile})
-      : super(key: key);
+      this.removeFile});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +54,6 @@ class PickedFile extends StatelessWidget {
             const SizedBox(width: 16.0),
             ElevatedButton(
               onPressed: uploadFile,
-              child: const Text("Select Files"),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: const Color.fromRGBO(60, 141, 188, 1),
@@ -66,8 +64,9 @@ class PickedFile extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0),
                 ),
-                minimumSize: Size(100, 54),
+                minimumSize: const Size(100, 54),
               ),
+              child: const Text("Select Files"),
             ),
           ],
         ),

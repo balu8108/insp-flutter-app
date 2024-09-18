@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:insp/apiservices/models/login/login_response_model.dart';
 import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
@@ -84,7 +83,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _loadUserData();
-    secureScreen(); // Secure the screen on init
   }
 
   Future<void> _loadUserData() async {
@@ -95,20 +93,20 @@ class _MyAppState extends State<MyApp> {
     widget.store.dispatch(UpdateUserData(userData: userData));
   }
 
-  Future<void> secureScreen() async {
-    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-  }
+  // Future<void> secureScreen() async {
+  //   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  // }
 
-  // Function to clear secure screen flag
-  Future<void> clearSecureScreen() async {
-    await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
-  }
+  // // Function to clear secure screen flag
+  // Future<void> clearSecureScreen() async {
+  //   await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
+  // }
 
-  @override
-  void dispose() {
-    clearSecureScreen(); // Clear the secure flag on dispose
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   clearSecureScreen(); // Clear the secure flag on dispose
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +166,7 @@ class _MyAppState extends State<MyApp> {
 class MainScaffold extends StatelessWidget {
   final Widget content;
 
-  const MainScaffold({required this.content, Key? key}) : super(key: key);
+  const MainScaffold({required this.content, super.key});
 
   @override
   Widget build(BuildContext context) {

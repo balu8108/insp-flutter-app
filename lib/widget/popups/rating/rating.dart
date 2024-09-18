@@ -7,7 +7,7 @@ import 'package:insp/widget/popups/rating/rating_redux.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class RatingFeedbackPopup extends StatelessWidget {
-  const RatingFeedbackPopup();
+  const RatingFeedbackPopup({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class RatingFeedbackPopup extends StatelessWidget {
                     Spacer(),
                   ],
                 ),
-                content: Container(
+                content: SizedBox(
                   height: 250,
                   width: 200, // Set your desired width here
                   child: SingleChildScrollView(
@@ -77,7 +77,7 @@ class RatingFeedbackPopup extends StatelessWidget {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width * 0.20,
                           child: ElevatedButton(
                               onPressed: createAssignment,
@@ -105,7 +105,7 @@ class RatingFeedbackPopup extends StatelessWidget {
     return getBaseScreen<RatingAppState, RatingFeedbackPopup>(
       ratingStateReducer,
       RatingAppState(feedbackId: feedbackId),
-      RatingFeedbackPopup(),
+      const RatingFeedbackPopup(),
     );
   }
 

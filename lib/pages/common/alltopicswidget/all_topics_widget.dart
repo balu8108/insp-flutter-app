@@ -12,10 +12,10 @@ class AllTopicWidget extends StatelessWidget {
   final Function(BuildContext, INSPCardModel) onPressedViewDetails;
 
   const AllTopicWidget({
-    Key? key,
+    super.key,
     required this.heading,
     required this.onPressedViewDetails,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TextFieldWithoutSuffix extends StatefulWidget {
-  TextFieldWithoutSuffix(
-      {this.selectedValueError,
+  const TextFieldWithoutSuffix(
+      {super.key,
+      this.selectedValueError,
       this.onChanged,
       this.hintText = "Select",
       this.value});

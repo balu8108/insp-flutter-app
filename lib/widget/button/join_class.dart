@@ -5,8 +5,9 @@ class JoinClassBtn extends StatelessWidget {
   final bool isTeacher;
   final Function() onPressedViewDetails;
 
-  JoinClassBtn(
-      {required this.status,
+  const JoinClassBtn(
+      {super.key,
+      required this.status,
       required this.isTeacher,
       required this.onPressedViewDetails});
 
@@ -63,16 +64,16 @@ class JoinClassBtn extends StatelessWidget {
         child: ElevatedButton(
           onPressed: btnDisabled ? null : onPressedViewDetails,
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(backColor),
-            foregroundColor: MaterialStateProperty.all(textColor),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            backgroundColor: WidgetStateProperty.all(backColor),
+            foregroundColor: WidgetStateProperty.all(textColor),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
                     8.0), // Adjust border radius as needed
               ),
             ),
             minimumSize:
-                MaterialStateProperty.all(const Size(double.infinity, 48.0)),
+                WidgetStateProperty.all(const Size(double.infinity, 48.0)),
           ),
           child: Text(
             text,

@@ -8,13 +8,13 @@ class TextFieldSuffix extends StatelessWidget {
   final IconData icon;
 
   const TextFieldSuffix({
-    Key? key,
+    super.key,
     this.selectedValue,
     this.selectedValueError,
     this.onChanged,
     this.hintText = "Select",
     required this.icon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

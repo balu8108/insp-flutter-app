@@ -65,7 +65,7 @@ class _TimetableUploadState extends State<TimetableUpload> {
     try {
       String userToken = getUserToken(context);
       Response response = await dio.post(
-        '${api}/generic/upload-timetable',
+        '$api/generic/upload-timetable',
         data: formData,
         options: Options(
           headers: {

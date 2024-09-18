@@ -49,7 +49,7 @@ class TopicLectureScreen extends StatelessWidget {
                           key: UniqueKey(),
                           heading: 'Topic (${state.selectedTopic.name})',
                           data: state.allTopicBasedLecture,
-                          allTopicsForSelectedCourse: []),
+                          allTopicsForSelectedCourse: const []),
                     ],
                   ),
                 ),

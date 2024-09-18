@@ -13,8 +13,8 @@ class FileBoxComponent extends StatelessWidget {
   final double maxHeight;
   final bool isTeacher;
 
-  FileBoxComponent(
-      {required this.data,
+  const FileBoxComponent(
+      {super.key, required this.data,
       required this.type,
       required this.scrollDirection,
       required this.maxHeight,
@@ -71,7 +71,7 @@ class FileBoxComponent extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4.0),
                         color: Colors.white,
                         border: Border.all(
-                            color: Color.fromRGBO(149, 151, 146, 0.49)),
+                            color: const Color.fromRGBO(149, 151, 146, 0.49)),
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8.0, vertical: 12.0),

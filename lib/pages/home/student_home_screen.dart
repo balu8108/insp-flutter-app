@@ -12,7 +12,7 @@ import 'package:insp/pages/common/courses/widget/mycourseswidget/my_courses_widg
 import 'package:insp/pages/common/upcomingclasses/upcoming_class_screen.dart';
 
 class StudentHomeScreen extends StatelessWidget {
-  StudentHomeScreen({super.key});
+  const StudentHomeScreen({super.key});
 
   void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
     Navigator.push(
@@ -54,9 +54,9 @@ class StudentHomeScreen extends StatelessWidget {
                       onViewDetailsClicked: onPressedMyCourse,
                     ),
                     const SizedBox(height: 16),
-                    UpcomingSession(),
+                    const UpcomingSession(),
                     const SizedBox(height: 16),
-                    AttendanceWidget(),
+                    const AttendanceWidget(),
                     const SizedBox(height: 16),
                     AssignmentWidget.getScreen(),
                     const SizedBox(height: 16),
@@ -89,7 +89,7 @@ class StudentHomeScreen extends StatelessWidget {
                                 flex: 7, // 70%
                                 child: AttendanceWidget(),
                               ),
-                              SizedBox(width: 16),
+                              const SizedBox(width: 16),
                               Expanded(
                                 flex: 3, // 30%
                                 child: AssignmentWidget.getScreen(),

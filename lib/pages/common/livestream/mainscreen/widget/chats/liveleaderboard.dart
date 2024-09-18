@@ -5,7 +5,7 @@ import 'package:insp/redux/AppState.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
 
 class LiveLeaderboard extends StatefulWidget {
-  LiveLeaderboard();
+  const LiveLeaderboard({super.key});
 
   @override
   _LiveLeaderboardState createState() => _LiveLeaderboardState();

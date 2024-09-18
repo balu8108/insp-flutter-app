@@ -6,7 +6,6 @@ import 'package:insp/utils/class_constants.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/card/model/insp_card_model.dart';
 import 'package:insp/widget/card/model/lecture_card_model.dart';
-import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/pages/student/library/librarylecturepage/library_lecture_screen.dart';
 import 'package:intl/intl.dart';

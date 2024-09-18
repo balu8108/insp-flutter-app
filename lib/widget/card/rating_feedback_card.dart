@@ -4,7 +4,7 @@ Widget RatingFeedbackCard(
     {required BuildContext context,
     required String username,
     required String feedback}) {
-  void _onBackwardButton() {}
+  void onBackwardButton() {}
 
   return Container(
     child: Column(
@@ -13,7 +13,7 @@ Widget RatingFeedbackCard(
         Row(children: [
           IconButton(
             icon: const Icon(Icons.account_circle, color: Colors.blue),
-            onPressed: _onBackwardButton,
+            onPressed: onBackwardButton,
           ),
           const SizedBox(
             width: 10,

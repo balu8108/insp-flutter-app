@@ -36,7 +36,7 @@ class ScheduleLiveClass extends StatelessWidget {
     TimeOfDay selectedStartTime = TimeOfDay.now();
     TimeOfDay selectedEndTime = TimeOfDay.now();
 
-    Future<void> _selectDate(BuildContext context) async {
+    Future<void> selectDate(BuildContext context) async {
       final DateTime? picked = await showDatePicker(
           context: context,
           initialDate: selectedDate,
@@ -49,7 +49,7 @@ class ScheduleLiveClass extends StatelessWidget {
       }
     }
 
-    Future<void> _selectStartTime(BuildContext context) async {
+    Future<void> selectStartTime(BuildContext context) async {
       // Select the start time
       final TimeOfDay? pickedStartTime = await showTimePicker(
         context: context,
@@ -63,7 +63,7 @@ class ScheduleLiveClass extends StatelessWidget {
       }
     }
 
-    Future<void> _selectEndTime(BuildContext context) async {
+    Future<void> selectEndTime(BuildContext context) async {
       // Select the start time
       final TimeOfDay? pickedEndTime = await showTimePicker(
         context: context,
@@ -108,7 +108,7 @@ class ScheduleLiveClass extends StatelessWidget {
                     ),
                   ],
                 ),
-                content: Container(
+                content: SizedBox(
                   height: 700,
                   width: 500, // Set your desired width here
                   child: SingleChildScrollView(
@@ -148,7 +148,7 @@ class ScheduleLiveClass extends StatelessWidget {
                                         state.selectedDateError!,
                                     hintText: 'dd/mm/yyyy',
                                     onChanged: () async {
-                                      await _selectDate(context);
+                                      await selectDate(context);
                                     },
                                     icon: Icons.calendar_month)),
                             const Spacer(),
@@ -160,7 +160,7 @@ class ScheduleLiveClass extends StatelessWidget {
                                         state.selectedStartTimeError!,
                                     hintText: '--:--',
                                     onChanged: () async {
-                                      await _selectStartTime(context);
+                                      await selectStartTime(context);
                                     },
                                     icon: Icons.access_time_rounded)),
                             const Spacer(),
@@ -172,7 +172,7 @@ class ScheduleLiveClass extends StatelessWidget {
                                         state.selectedEndTimeError!,
                                     hintText: '--:--',
                                     onChanged: () async {
-                                      await _selectEndTime(context);
+                                      await selectEndTime(context);
                                     },
                                     icon: Icons.access_time_rounded)),
                           ],
@@ -397,7 +397,7 @@ class ScheduleLiveClass extends StatelessWidget {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Container(
+                        SizedBox(
                           width: isWebOrLandScape
                               ? MediaQuery.of(context).size.width * 0.20
                               : MediaQuery.of(context).size.width * 0.50,

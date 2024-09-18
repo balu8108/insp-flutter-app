@@ -57,7 +57,7 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
             ],
           ),
           const SizedBox(height: 16),
-          Container(
+          SizedBox(
               height: MediaQuery.of(context).size.height,
               child: widget.allAssignemntofTopic.isNotEmpty
                   ? Scrollbar(
@@ -83,7 +83,7 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
                                       children: [
                                         Text(
                                           assignment.topicName,
-                                          style: TextStyle(fontSize: 12),
+                                          style: const TextStyle(fontSize: 12),
                                         ),
                                         const SizedBox(height: 2),
                                         Text(

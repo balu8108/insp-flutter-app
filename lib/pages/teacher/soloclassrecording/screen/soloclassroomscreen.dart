@@ -8,10 +8,10 @@ class Soloclassroomscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(43, 26, 43, 26),
-      child: Row(children: [
+      margin: const EdgeInsets.fromLTRB(43, 26, 43, 26),
+      child: const Row(children: [
         Expanded(flex: 1, child: SoloclassDescription()),
-        const SizedBox(width: 16),
+        SizedBox(width: 16),
         Expanded(flex: 4, child: SoloclassRecording()),
       ]),
     );

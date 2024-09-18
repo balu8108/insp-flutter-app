@@ -6,7 +6,7 @@ import 'package:insp/redux/AppState.dart';
 import 'package:insp/socket/mainsocket.dart';
 
 class PollTimer extends StatefulWidget {
-  PollTimer();
+  const PollTimer({super.key});
 
   @override
   _PollTimerState createState() => _PollTimerState();
@@ -24,7 +24,7 @@ class _PollTimerState extends State<PollTimer> {
       final pollData =
           StoreProvider.of<AppState>(context).state.chatWidgetAppState.pollData;
 
-      if (!isTimerInitialized && pollData != null) {
+      if (!isTimerInitialized) {
         setState(() {
           timer = pollData.time;
         });
@@ -34,7 +34,7 @@ class _PollTimerState extends State<PollTimer> {
   }
 
   void _startTimer() {
-    countdownTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (this.timer > 0) {
         setState(() {
           this.timer -= 1;
@@ -103,7 +103,7 @@ class _PollTimerState extends State<PollTimer> {
                         children: [
                           PollDetailItem(
                               label: 'Question Type',
-                              value: '${state.pollData.type ?? ''}'),
+                              value: state.pollData.type ?? ''),
                           PollDetailItem(
                               label: 'Question Number',
                               value: '${state.pollData.questionNo ?? ''}'),
@@ -115,7 +115,7 @@ class _PollTimerState extends State<PollTimer> {
                         children: [
                           PollDetailItem(
                               label: 'No. of Options',
-                              value: '${state.pollData?.noOfOptions ?? ''}'),
+                              value: '${state.pollData.noOfOptions ?? ''}'),
                           PollDetailItem(
                             label: 'Correct options',
                             value: state.pollData != null
@@ -128,7 +128,7 @@ class _PollTimerState extends State<PollTimer> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Container(
+                          SizedBox(
                             width: 200,
                             child: ElevatedButton(
                               onPressed: () {
@@ -169,7 +169,7 @@ class PollDetailItem extends StatelessWidget {
   final String label;
   final String value;
 
-  const PollDetailItem({required this.label, required this.value});
+  const PollDetailItem({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

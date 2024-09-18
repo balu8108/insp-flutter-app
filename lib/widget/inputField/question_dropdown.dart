@@ -6,7 +6,8 @@ class QuestionOption extends StatefulWidget {
   final List<String> optionArray; // List of options
   final Function(List<String>) updateCorrectAnswerArray;
 
-  QuestionOption({
+  const QuestionOption({
+    super.key,
     required this.questionType,
     required this.noOfOption,
     required this.optionArray,
@@ -111,7 +112,7 @@ class _QuestionOptionState extends State<QuestionOption> {
         }),
       );
     } else {
-      return Center(child: Text('Invalid question type'));
+      return const Center(child: Text('Invalid question type'));
     }
   }
 }

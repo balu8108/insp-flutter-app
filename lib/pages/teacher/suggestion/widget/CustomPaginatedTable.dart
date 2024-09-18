@@ -27,8 +27,8 @@ class CustomPaginatedTable extends StatefulWidget {
   final int rowsPerPage, totalPages, page;
   final Function(BuildContext, int) getpreviousornextFeedback;
 
-  CustomPaginatedTable(
-      {required this.columns,
+  const CustomPaginatedTable(
+      {super.key, required this.columns,
       required this.rows,
       required this.rowsPerPage,
       required this.totalPages,
@@ -51,7 +51,7 @@ class _CustomPaginatedTableState extends State<CustomPaginatedTable> {
           child: SingleChildScrollView(
             controller: _scrollController,
             scrollDirection: Axis.horizontal,
-            child: Container(
+            child: SizedBox(
               width: MediaQuery.of(context).size.width, // Full screen width
               child: Table(
                 border: TableBorder(
@@ -75,7 +75,7 @@ class _CustomPaginatedTableState extends State<CustomPaginatedTable> {
             ),
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         _buildPaginationControls(widget.totalPages),
       ],
     );
@@ -88,7 +88,7 @@ class _CustomPaginatedTableState extends State<CustomPaginatedTable> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   column.label,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ))
           .toList(),

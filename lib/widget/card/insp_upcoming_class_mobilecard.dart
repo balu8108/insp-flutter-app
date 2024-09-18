@@ -12,11 +12,10 @@ import '../button/join_class.dart';
 
 class ScheduleClassMobileBox extends StatefulWidget {
   const ScheduleClassMobileBox(
-      {Key? key,
+      {super.key,
       required this.type,
       required this.upcomingWidgetAppState,
-      required this.getUpcomingClass})
-      : super(key: key);
+      required this.getUpcomingClass});
 
   final String type;
   final UpcomingLectureCardModel upcomingWidgetAppState;

@@ -9,13 +9,13 @@ class TextFieldDefault extends StatefulWidget {
   final bool enableText;
 
   const TextFieldDefault({
-    Key? key,
+    super.key,
     this.selectedValue,
     this.selectedValueError,
     this.onChanged,
     this.hintText = "Select",
     this.enableText = true,
-  }) : super(key: key);
+  });
 
   @override
   _TextFieldDefaultState createState() => _TextFieldDefaultState();

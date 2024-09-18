@@ -8,19 +8,19 @@ class Dropdown extends StatelessWidget {
   final String hintText;
 
   const Dropdown({
-    Key? key,
+    super.key,
     required this.items,
     this.selectedValue,
     this.selectedValueError,
     this.onChanged,
     this.hintText = "Select",
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return ClipRect(
         // Clips the overflowing content
-        child: Container(
+        child: SizedBox(
       width: double.infinity, // Full width
       child: DropdownButtonFormField<String>(
         dropdownColor: Colors.white,
