@@ -143,6 +143,7 @@ class AddAssignment extends StatelessWidget {
                               ),
                               ListView.builder(
                                 shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemCount: state.previousFiles.length,
                                 itemBuilder: (context, index) {
                                   final LiveClassRoomFile file =
@@ -159,20 +160,27 @@ class AddAssignment extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          extractFileNameFromS3URL(file.key),
-                                          style: const TextStyle(
-                                            fontSize: 15.0,
-                                            color: Color(0xFF718096),
+                                        Expanded(
+                                            flex: 8,
+                                            child: Text(
+                                              extractFileNameFromS3URL(
+                                                  file.key),
+                                              style: const TextStyle(
+                                                fontSize: 12.0,
+                                                color: Color(0xFF718096),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            )),
+                                        Expanded(
+                                          flex: 2,
+                                          child: IconButton(
+                                            icon: const Icon(Icons.close),
+                                            onPressed: () => dispatch(
+                                                context,
+                                                RemovePreviousAssignmentFile(
+                                                    id: file.id)),
                                           ),
-                                        ),
-                                        IconButton(
-                                          icon: const Icon(Icons.close),
-                                          onPressed: () => dispatch(
-                                              context,
-                                              RemovePreviousAssignmentFile(
-                                                  id: file.id)),
-                                        ),
+                                        )
                                       ],
                                     ),
                                   );

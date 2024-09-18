@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:insp/pages/student/assignment/mainpage/assignmentScreen.dart';
 import 'package:insp/pages/common/calender/calendar_screen.dart';
 import 'package:insp/pages/teacher/suggestion/main_suggestion_page.dart';
+import 'package:insp/pages/teacher/uploads/mainpage/myuploads.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/card/model/insp_card_model.dart';
@@ -79,12 +80,12 @@ class _NavbarMobileState extends State<NavbarMobile> {
         'name': 'Calendar'
       },
       {
-        'widget': LibraryScreen.getScreen(inspCardModel),
+        'widget': AssignmentScreen.getScreen(inspCardModel),
         'icon': Icons.library_books,
         'name': 'Library'
       },
       {
-        'widget': AssignmentScreen.getScreen(inspCardModel),
+        'widget': const MyUploads(),
         'icon': Icons.assignment_add,
         'name': 'Assignments'
       },

@@ -140,7 +140,6 @@ class RecordingDetailWidget extends StatelessWidget {
                     data: recordingPlayerDetail.liveClassRoomFiles,
                     type: "live",
                     scrollDirection: "vertical",
-                    maxHeight: 140,
                     isTeacher: isTeacher)
                 : const Text(
                     'No Files',

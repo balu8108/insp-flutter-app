@@ -206,7 +206,6 @@ class _SoloclassroomDescriptionWidgetsState
           data: widget.soloclasstopicdetail.transformedData.soloClassRoomFiles,
           type: "solo",
           scrollDirection: "horizontal",
-          maxHeight: 60,
           isTeacher: isTeacher,
         ),
       ],

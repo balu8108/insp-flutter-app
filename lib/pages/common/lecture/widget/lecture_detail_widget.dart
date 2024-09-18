@@ -341,7 +341,6 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
                   data: lec.liveClassRoomFiles,
                   type: "live",
                   scrollDirection: "horizontal",
-                  maxHeight: 60,
                   isTeacher: isTeacher,
                 )
               ],

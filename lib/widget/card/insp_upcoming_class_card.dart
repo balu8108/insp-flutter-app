@@ -271,7 +271,6 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
             data: files,
             type: "live",
             scrollDirection: "vertical",
-            maxHeight: files.length * 50 > 50 ? 60 : files.length * 50,
             isTeacher: isTeacher,
           )
         : const Text(
