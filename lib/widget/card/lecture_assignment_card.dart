@@ -53,7 +53,6 @@ class LectureAssignmentCard extends StatelessWidget {
                               data: assignment.assignmentFiles,
                               type: "assignment",
                               scrollDirection: "horizontal",
-                              maxHeight: 60,
                               isTeacher: isTeacher,
                             )
                           ],

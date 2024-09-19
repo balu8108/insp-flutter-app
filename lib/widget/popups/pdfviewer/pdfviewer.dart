@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:insp/apiservices/models/login/login_response_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
-import 'package:insp/widget/popups/pdfviewer/pdfviewer_redux.dart';
-import 'package:pdfx/pdfx.dart';
-import 'package:internet_file/internet_file.dart';
-import 'package:universal_platform/universal_platform.dart';
+import 'package:insp/widget/popups/pdfviewer/pdfviewcontrol.dart';
 
 class PdfViewerFromUrl extends StatefulWidget {
   final String pdfId, type;
@@ -18,17 +14,8 @@ class PdfViewerFromUrl extends StatefulWidget {
 }
 
 class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
-  PdfController? _pdfControllerWindow;
-  PdfControllerPinch? _pdfController;
-  PDFViewerAppState pdfViewerAppState = const PDFViewerAppState();
+  String pdf = "";
 
-  void updateState(PDFViewerAppState pDFViewerAppState) {
-    setState(() {
-      pdfViewerAppState = pDFViewerAppState;
-    });
-  }
-
-  // call an API to get the PDF URL
   void getPdfUrl() async {
     try {
       final remoteDataSource = RemoteDataSource();
@@ -37,23 +24,13 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
           widget.pdfId, widget.type, userToken);
       if (pdfData.data.status == true) {
         final String pdfUrl = pdfData.data.data.getUrl;
-        final pdfBytes = await InternetFile.get(pdfUrl);
-        if (UniversalPlatform.isWindows) {
-          _pdfControllerWindow = PdfController(
-            document: PdfDocument.openData(pdfBytes),
-          );
-        } else {
-          _pdfController = PdfControllerPinch(
-            document: PdfDocument.openData(pdfBytes),
-          );
-        }
-        updateState(pdfViewerAppState.copyWith(fileUrl: pdfUrl));
+        setState(() {
+          pdf = pdfUrl; // Store the fetched data
+        });
       } else {
-        // Handle error response
         print('Error:');
       }
     } catch (e) {
-      // Handle any other errors
       print('Error: $e');
     }
   }
@@ -61,96 +38,53 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     getPdfUrl();
   }
 
   @override
   void dispose() {
-    _pdfControllerWindow?.dispose();
-    _pdfController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     bool isWebOrLandScape = context.isWebOrLandScape();
-    LoginResponseModelResult userData = getUserDataFromStore(context);
+    final ScrollController scrollController = ScrollController();
     return AlertDialog(
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(6.0),
-      ),
-      contentPadding: const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
-      insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
-      title: Row(
-        children: [
-          const Text(
-            "Document Viewer",
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const Spacer(),
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
-            },
-          ),
-        ],
-      ),
-      content: Column(children: [
-        Expanded(
-            child: SizedBox(
-          width: MediaQuery.of(context).size.width - 1100 < 500
-              ? 500
-              : MediaQuery.of(context).size.width, // Set desired width
-          height: 800, // Set desired height
-          child: _pdfController != null || _pdfControllerWindow != null
-              ? Stack(children: [
-                  UniversalPlatform.isWindows
-                      ? PdfView(controller: _pdfControllerWindow!)
-                      : PdfViewPinch(controller: _pdfController!),
-                  Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Opacity(
-                        opacity:
-                            0.4, // Set the transparency level of the watermark
-                        child: Text(
-                          '${userData.name} - ${userData.email}', // Watermark text
-                          style: const TextStyle(
-                            fontSize: 20, // Adjust size
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(60, 141, 188,
-                                1), // Adjust color of the watermark
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ),
-                ])
-              : const Center(
-                  child: CircularProgressIndicator(),
-                ),
-        )),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(6.0),
+        ),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
+        title: Row(
           children: [
-            IconButton(
-              icon: const Icon(Icons.zoom_out),
-              onPressed: () => {}, // Custom zoom-out functionality
+            const Text(
+              "Document Viewer",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+              ),
             ),
+            const Spacer(),
             IconButton(
-              icon: const Icon(Icons.zoom_in),
-              onPressed: () => {}, // Custom zoom-in functionality
+              icon: const Icon(Icons.close),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
             ),
           ],
         ),
-      ]),
-    );
+        content: pdf.isNotEmpty
+            ? PdfViewerFromUrlPoint(
+                pdfUrl: pdf,
+              )
+            : const Center(child: CircularProgressIndicator()));
   }
 }

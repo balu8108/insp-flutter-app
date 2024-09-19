@@ -144,6 +144,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<RatingTopicResponseModel>> postTopicRating(
       RatingTopicRequestModel feedbackrequest, String secretTokenHeader);
+
+  Future<HttpResponse<DeleteAssignmentResponseModel>> uploadAssignmentToClass(
+      String type, String classId, String secretTokenHeader);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -371,5 +374,12 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       RatingTopicRequestModel feedbackrequest, String secretTokenHeader) {
     return deviceNetworkService.postTopicRating(
         feedbackrequest, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<DeleteAssignmentResponseModel>> uploadAssignmentToClass(
+      String type, String classId, String secretTokenHeader) {
+    return deviceNetworkService.uploadAssignmentToClass(
+        type, classId, secretTokenHeader);
   }
 }

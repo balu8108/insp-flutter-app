@@ -91,6 +91,10 @@ class LiveclassCalendar extends StatelessWidget {
                     lastDay: DateTime.utc(2030, 3, 14),
                     focusedDay: state.focusedDay,
                     calendarFormat: state.calendarFormat,
+                    availableCalendarFormats: const {
+                      CalendarFormat.month:
+                          'Month', // Fixing the format to month
+                    },
                     headerStyle: const HeaderStyle(
                       formatButtonVisible: false,
                       titleCentered: true,
@@ -194,23 +198,25 @@ class LiveclassCalendar extends StatelessWidget {
                                     state.calendarScreenAllEventsForADay[index]
                                         .title,
                                     style: const TextStyle(
-                                      fontSize: 17,
+                                      fontSize: 14,
                                       color: Color.fromRGBO(5, 89, 137, 1),
                                     ),
                                   ),
+                                  const SizedBox(height: 5),
                                   Text(
                                     state.calendarScreenAllEventsForADay[index]
                                         .classType,
                                     style: const TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 11,
                                       color: Color.fromRGBO(40, 141, 188, 1),
                                     ),
                                   ),
+                                  const SizedBox(height: 5),
                                   Text(
                                     state.calendarScreenAllEventsForADay[index]
                                         .classLevel,
                                     style: const TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 11,
                                       color: Color.fromRGBO(60, 141, 188, 1),
                                     ),
                                   ),
