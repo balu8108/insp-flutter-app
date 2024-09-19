@@ -96,42 +96,39 @@ class _LiveQuestionState extends State<LiveQuestion> {
                   ),
                   const SizedBox(height: 10),
                   if (!isTeacher)
-                    Expanded(
-                      flex: 1,
-                      child: SizedBox(
-                        width: 300,
-                        child: TextField(
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide.none,
-                            ),
-                            hintText: 'Ask Something...',
-                            hintStyle: const TextStyle(fontSize: 14),
-                            suffixIcon: IconButton(
-                              icon: const Icon(Icons.send),
-                              iconSize: 16.0,
-                              onPressed: () {
-                                sendMessage();
-                              },
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 0,
-                              horizontal: 5,
-                            ), // Adjust padding
+                    SizedBox(
+                      height: 50,
+                      child: TextField(
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide.none,
                           ),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xFF2C3329), // Text color
+                          hintText: 'Ask Something...',
+                          hintStyle: const TextStyle(fontSize: 14),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.send),
+                            iconSize: 24.0,
+                            onPressed: () {
+                              sendMessage();
+                            },
                           ),
-                          onSubmitted: (value) {
-                            sendMessage();
-                          },
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 0,
+                            horizontal: 5,
+                          ), // Adjust padding
                         ),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xFF2C3329), // Text color
+                        ),
+                        onSubmitted: (value) {
+                          sendMessage();
+                        },
                       ),
                     ),
                 ],

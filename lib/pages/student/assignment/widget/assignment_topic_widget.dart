@@ -115,7 +115,6 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
                                           data: assignment.assignmentFiles,
                                           type: "assignment",
                                           scrollDirection: "horizontal",
-                                          maxHeight: 60,
                                           isTeacher: isTeacher,
                                         )
                                       ],

@@ -87,7 +87,6 @@ class _LiveClassDetailState extends State<LiveClassDetail> {
                             data: state.previewDataFiles,
                             type: "live",
                             scrollDirection: "vertical",
-                            maxHeight: 60,
                             isTeacher: isTeacher,
                           )
                         ]))));

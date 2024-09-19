@@ -9,17 +9,20 @@ import 'package:insp/widget/card/lecture_leaderboard_card.dart';
 import 'package:insp/widget/card/lecture_recording_card.dart';
 import 'package:insp/widget/card/model/lecture_assignment_card_model.dart';
 import 'package:insp/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
+import 'package:insp/widget/popups/uploadClassFile/upload_class_file.dart';
 
 class LectureDetailWidget extends StatefulWidget {
   const LectureDetailWidget(
       {super.key,
       required this.lectureData,
       required this.assignments,
-      required this.question});
+      required this.question,
+      required this.onUpdate});
 
   final AllLecturesData lectureData;
   final int question;
   final List<LectureAssignmentCardModel> assignments;
+  final Function() onUpdate;
 
   @override
   State<LectureDetailWidget> createState() {
@@ -32,6 +35,7 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
   Widget build(BuildContext context) {
     bool isTeacher = isTeacherLogin(context);
     bool isWebOrLandScape = context.isWebOrLandScape();
+    void dummy() {}
     final LecturesDetailResponseModelData lec =
         widget.lectureData.liveClassRoom;
     return Container(
@@ -328,20 +332,39 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Files/Notes',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color(0xFF2C3329),
-                    height: 1.25,
-                  ),
+                Row(
+                  children: [
+                    const Text(
+                      'Files/Notes',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF2C3329),
+                        height: 1.25,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    if (isTeacher)
+                      IconButton(
+                        icon: const Icon(Icons.file_upload_outlined),
+                        iconSize: 24.0,
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return UploadClassFile.getScreen(
+                                    lec.id.toString(), "live", widget.onUpdate);
+                              });
+                        },
+                      ),
+                  ],
                 ),
                 const SizedBox(height: 10),
                 FileBoxComponent(
                   data: lec.liveClassRoomFiles,
                   type: "live",
                   scrollDirection: "horizontal",
-                  maxHeight: 60,
                   isTeacher: isTeacher,
                 )
               ],

@@ -4,19 +4,22 @@ import 'package:insp/utils/file_box_component.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
 import 'package:insp/widget/card/lecture_recording_card.dart';
+import 'package:insp/widget/popups/uploadClassFile/upload_class_file.dart';
 
 class RecordingDetailWidget extends StatelessWidget {
   final RecordVideoResponseModelData recordingPlayerDetail;
   final Function(BuildContext, String) onViewDetailsClicked;
+  final Function() onUpdate;
 
-  const RecordingDetailWidget({super.key, 
-    required this.recordingPlayerDetail,
-    required this.onViewDetailsClicked,
-  });
+  RecordingDetailWidget(
+      {required this.recordingPlayerDetail,
+      required this.onViewDetailsClicked,
+      required this.onUpdate});
 
   @override
   Widget build(BuildContext context) {
     bool isTeacher = isTeacherLogin(context);
+
     return Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
@@ -124,14 +127,32 @@ class RecordingDetailWidget extends StatelessWidget {
                   ),
                 ),
           const SizedBox(height: 40),
-          const Text(
-            'Files',
-            style: TextStyle(
-              fontSize: 16,
-              color: Color(0xFF2C3329),
-              height: 1.25,
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            const Text(
+              'Files',
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                color: Color(0xFF2C3329),
+                height: 1.25,
+              ),
             ),
-          ),
+            if (isTeacher)
+              IconButton(
+                icon: const Icon(Icons.file_upload_outlined),
+                iconSize: 24.0,
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return UploadClassFile.getScreen(
+                            recordingPlayerDetail.id.toString(),
+                            "live",
+                            onUpdate);
+                      });
+                },
+              ),
+          ]),
           const SizedBox(height: 2),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 16),
@@ -140,7 +161,6 @@ class RecordingDetailWidget extends StatelessWidget {
                     data: recordingPlayerDetail.liveClassRoomFiles,
                     type: "live",
                     scrollDirection: "vertical",
-                    maxHeight: 140,
                     isTeacher: isTeacher)
                 : const Text(
                     'No Files',
@@ -158,9 +178,11 @@ class RecordingDetailWidget extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           LectureRecordingCardWidget(
-              liveClassRoomRecordings:
-                  recordingPlayerDetail.liveClassRoomRecordings,
-              classId: "",
+              liveClassRoomRecordings: recordingPlayerDetail
+                      .liveClassRoomRecordings.isNotEmpty
+                  ? recordingPlayerDetail.liveClassRoomRecordings.sublist(1)
+                  : [], // later we have to add condition. right now we now only 1 recording will we there
+              classId: recordingPlayerDetail.id.toString(),
               topicName: recordingPlayerDetail.liveClassRoomDetail.agenda,
               mentorName: recordingPlayerDetail.mentorName,
               description:

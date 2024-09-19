@@ -227,12 +227,21 @@ class ScheduleLiveClass extends StatelessWidget {
                         const SizedBox(height: 16.0),
                         // topic Dropdown
                         Dropdown(
-                          items: state.allTopics.map((ChapterTopicModel item) {
-                            return DropdownMenuItem<String>(
-                              value: item.label,
-                              child: Text(item.label),
-                            );
-                          }).toList(),
+                          items: state.allTopics.isEmpty
+                              ? topicList.map<DropdownMenuItem<String>>(
+                                  (ChapterTopicModel item) {
+                                  return DropdownMenuItem<String>(
+                                    value: item.label,
+                                    child: Text(item.label),
+                                  );
+                                }).toList()
+                              : state.allTopics.map<DropdownMenuItem<String>>(
+                                  (ChapterTopicModel item) {
+                                  return DropdownMenuItem<String>(
+                                    value: item.label,
+                                    child: Text(item.label),
+                                  );
+                                }).toList(),
                           selectedValueError: state.selectedTopicError,
                           selectedValue: state.selectedTopic!.isEmpty
                               ? null
