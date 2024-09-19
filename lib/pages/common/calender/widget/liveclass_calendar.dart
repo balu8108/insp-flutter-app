@@ -91,6 +91,10 @@ class LiveclassCalendar extends StatelessWidget {
                     lastDay: DateTime.utc(2030, 3, 14),
                     focusedDay: state.focusedDay,
                     calendarFormat: state.calendarFormat,
+                    availableCalendarFormats: const {
+                      CalendarFormat.month:
+                          'Month', // Fixing the format to month
+                    },
                     headerStyle: const HeaderStyle(
                       formatButtonVisible: false,
                       titleCentered: true,
