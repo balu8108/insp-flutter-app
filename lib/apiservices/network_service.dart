@@ -213,4 +213,10 @@ abstract class NetworkService {
   @GET('/schedule-live-class/get-details/{roomId}')
   Future<HttpResponse<LiveClassPreviewResponseModel>> getRoomPreviewData(
       @Path() String roomId, @Header('Authorization') String secretTokenHeader);
+
+  @GET('/schedule-live-class/upload-assignment-to-class/{type}/{classId}')
+  Future<HttpResponse<DeleteAssignmentResponseModel>> uploadAssignmentToClass(
+      @Path() String type,
+      @Path() String classId,
+      @Header('Authorization') String secretTokenHeader);
 }

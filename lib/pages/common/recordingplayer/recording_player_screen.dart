@@ -19,6 +19,10 @@ class RecordingPlayerScreen extends StatelessWidget {
       dispatch(context, getRecordedVideoUrlApi(context, tpStreamId));
     }
 
+    void onUpdate() {
+      dispatch(context, getRecordedVideoData(context));
+    }
+
     return Container(
         padding: const EdgeInsets.all(10.0),
         color: Colors.white,
@@ -43,6 +47,7 @@ class RecordingPlayerScreen extends StatelessWidget {
                           RecordingDetailWidget(
                             recordingPlayerDetail: state.recordedVideoData,
                             onViewDetailsClicked: onPressedRecording,
+                            onUpdate: onUpdate,
                           ),
                         ],
                       ),
@@ -63,6 +68,7 @@ class RecordingPlayerScreen extends StatelessWidget {
                               child: RecordingDetailWidget(
                                 recordingPlayerDetail: state.recordedVideoData,
                                 onViewDetailsClicked: onPressedRecording,
+                                onUpdate: onUpdate,
                               ),
                             )),
                       ],

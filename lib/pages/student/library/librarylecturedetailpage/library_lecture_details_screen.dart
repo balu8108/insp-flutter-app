@@ -17,6 +17,10 @@ class LibraryLectureDetailsScreen extends StatelessWidget {
     bool isWebOrLandScape = context.isWebOrLandScape();
     dispatch(context, initialFetchLectureDetail(context));
 
+    void onUpdate() {
+      dispatch(context, initialFetchLectureDetail(context));
+    }
+
     return Container(
       padding: isWebOrLandScape
           ? const EdgeInsets.all(10.0)
@@ -44,7 +48,8 @@ class LibraryLectureDetailsScreen extends StatelessWidget {
                     LectureDetailWidget(
                         lectureData: state.lectureData,
                         assignments: state.assignments,
-                        question: state.question)
+                        question: state.question,
+                        onUpdate: onUpdate)
                   ],
                 ),
               ),
