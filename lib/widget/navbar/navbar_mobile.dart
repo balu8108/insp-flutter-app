@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insp/apiservices/models/login/login_response_model.dart';
 import 'package:insp/main.dart';
+import 'package:insp/pages/common/courses/my_courses_screen.dart';
 import 'package:insp/pages/home/home_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:insp/pages/student/assignment/mainpage/assignmentScreen.dart';
@@ -80,7 +81,7 @@ class _NavbarMobileState extends State<NavbarMobile> {
         'name': 'Calendar'
       },
       {
-        'widget': AssignmentScreen.getScreen(inspCardModel),
+        'widget': MyCoursesScreen.getScreen(inspCardModel),
         'icon': Icons.library_books,
         'name': 'Library'
       },
