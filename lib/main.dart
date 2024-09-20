@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -33,12 +32,25 @@ import 'package:webview_flutter_platform_interface/webview_flutter_platform_inte
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+class NativeMacOSBridge {
+  static const platform = MethodChannel('com.example.macos/screenshot');
+
+  // Function to disable screenshots by calling the native macOS code
+  Future<void> disableScreenCapture() async {
+    try {
+      await platform.invokeMethod('disableScreenshot');
+    } on PlatformException catch (e) {
+      print("Failed to disable screenshot: '${e.message}'.");
+    }
+  }
+}
+
 void main() async {
   TPStreamsSDK.initialize(orgCode: "gcma48");
   // Ensure that the correct platform implementation is used for macOS
   WebViewPlatform.instance = WebKitWebViewPlatform();
   WidgetsFlutterBinding.ensureInitialized();
-
+  NativeMacOSBridge().disableScreenCapture();
   final store = Store<AppState>(
     appStateReducer,
     initialState: const AppState(
@@ -58,12 +70,6 @@ void main() async {
     store: store,
     child: MyApp(store: store),
   ));
-
-  // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-  //   if (Platform.isAndroid) {
-  //     await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-  //   }
-  // });
 }
 
 class MyApp extends StatefulWidget {
