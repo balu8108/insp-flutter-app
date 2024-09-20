@@ -17,35 +17,30 @@ class PdfViewerFromUrlPoint extends StatefulWidget {
 class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
   PdfController? _pdfControllerWindow;
   PDFViewerAppState pdfViewerAppState = const PDFViewerAppState();
-  int currentPageIndex = 1; // Add page index variable
-  double _scale = 1.0; // Scale for zoom
-  bool isZoom = false;
-
-  void updateState(PDFViewerAppState pDFViewerAppState) {
-    setState(() {
-      this.pdfViewerAppState = pDFViewerAppState;
-    });
-  }
+  int currentPageIndex = 1;
+  double _scale = 1.0;
+  bool isPdfLoaded = false;
 
   @override
   void initState() {
     super.initState();
+    _loadPdf();
   }
 
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    final pdfBytes = await InternetFile.get(widget.pdfUrl);
-    _pdfControllerWindow = PdfController(
-      document: PdfDocument.openData(pdfBytes),
-    );
-    updateState(pdfViewerAppState.copyWith(fileUrl: widget.pdfUrl));
-  }
-
-  @override
-  void dispose() {
-    _pdfControllerWindow?.dispose();
-    super.dispose();
+  Future<void> _loadPdf() async {
+    try {
+      final pdfBytes = await InternetFile.get(widget.pdfUrl);
+      _pdfControllerWindow = PdfController(
+        document: PdfDocument.openData(pdfBytes),
+      );
+      setState(() {
+        isPdfLoaded = true;
+      });
+    } catch (e) {
+      setState(() {
+        isPdfLoaded = false;
+      });
+    }
   }
 
   void goToNextPage() {
@@ -68,14 +63,20 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
 
   void zoomIn() {
     setState(() {
-      _scale *= 1.2; // Increase the scale by 20%
+      _scale *= 1.2;
     });
   }
 
   void zoomOut() {
     setState(() {
-      _scale /= 1.2; // Decrease the scale by 20%
+      _scale /= 1.2;
     });
+  }
+
+  @override
+  void dispose() {
+    _pdfControllerWindow?.dispose();
+    super.dispose();
   }
 
   @override
@@ -88,39 +89,40 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
               ? 450
               : MediaQuery.of(context).size.width,
           height: 800,
-          child: _pdfControllerWindow != null
-              ? Stack(children: [
-                  const Text(""),
-                  Positioned.fill(
+          child: isPdfLoaded && _pdfControllerWindow != null
+              ? Stack(
+                  children: [
+                    Positioned.fill(
                       child: Transform.scale(
-                          scale: _scale, // Apply the scale here
-                          child: PdfView(
-                            controller: _pdfControllerWindow!,
-                            physics: const NeverScrollableScrollPhysics(),
-                            backgroundDecoration:
-                                const BoxDecoration(color: Colors.white),
-                          ))),
-                  Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Opacity(
-                        opacity: 0.4,
-                        child: Text(
-                          '${userData.name} - ${userData.email}',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(60, 141, 188, 1),
-                          ),
-                          textAlign: TextAlign.center,
+                        scale: _scale,
+                        child: PdfView(
+                          controller: _pdfControllerWindow!,
+                          physics: const NeverScrollableScrollPhysics(),
+                          backgroundDecoration:
+                              const BoxDecoration(color: Colors.white),
                         ),
                       ),
                     ),
-                  ),
-                ])
-              : const Center(
-                  child: CircularProgressIndicator(),
-                ),
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Opacity(
+                          opacity: 0.4,
+                          child: Text(
+                            '${userData.name} - ${userData.email}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(60, 141, 188, 1),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : const Center(child: CircularProgressIndicator()),
         ),
       ),
       const SizedBox(height: 10),
@@ -131,7 +133,18 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
             icon: const Icon(Icons.arrow_back),
             onPressed: goToPreviousPage,
           ),
-          Text("$currentPageIndex/${_pdfControllerWindow?.pagesCount ?? 0}"),
+          if (_pdfControllerWindow != null)
+            PdfPageNumber(
+              controller: _pdfControllerWindow!,
+              builder: (_, page, loadingState, pagesCount) {
+                return Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    '$currentPageIndex/${pagesCount ?? 0}',
+                  ),
+                );
+              },
+            ),
           IconButton(
             icon: const Icon(Icons.arrow_forward),
             onPressed: goToNextPage,
