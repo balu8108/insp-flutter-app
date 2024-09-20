@@ -258,10 +258,9 @@ Future<void> leaveRoomHandler(Store<AppState> store) async {
   if (socket?.connected == true) {
     socket?.emitWithAck(SOCKET_EVENTS.LEAVE_ROOM, '', ack: (res) async {
       var feedBackStatus = res['feedBackStatus'];
-      store.dispatch(UpdateAllPeers(allPeers: []));
-      store.dispatch(UpdateFilteredPeers(filteredPeers: []));
-      store.dispatch(UpdateChatMessages(chatMessages: []));
-      store.dispatch(UpdateLeaderBoard(leaderBoard: []));
+      store.dispatch(setPeerInitialData());
+      store.dispatch(setChatInitialData());
+      store.dispatch(setTpStreamInitialData());
       LoginResponseModelResult userDatas = await getUserData();
       navigatorKey.currentState?.push(
         MaterialPageRoute(

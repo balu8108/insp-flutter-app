@@ -98,3 +98,11 @@ ThunkAction<AppState> getVideoUrlApi(BuildContext context) {
     }
   };
 }
+
+ThunkAction<AppState> setTpStreamInitialData() {
+  return (Store<AppState> store) async {
+    store.dispatch(UpdateAccestId(accestId: ''));
+    store.dispatch(
+        UpdateVideoResponse(videoResponse: const VideoResponseModel()));
+  };
+}

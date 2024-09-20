@@ -68,3 +68,10 @@ ThunkAction<AppState> defaultPeers() {
     store.dispatch(UpdateFilteredPeers(filteredPeers: defaultPeer));
   };
 }
+
+ThunkAction<AppState> setPeerInitialData() {
+  return (Store<AppState> store) async {
+    store.dispatch(UpdateAllPeers(allPeers: []));
+    store.dispatch(UpdateFilteredPeers(filteredPeers: []));
+  };
+}

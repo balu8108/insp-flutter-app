@@ -253,3 +253,12 @@ ThunkAction<AppState> joinRoomResponseData(BuildContext context, dynamic res) {
     );
   };
 }
+
+ThunkAction<AppState> setChatInitialData() {
+  return (Store<AppState> store) async {
+    store.dispatch(UpdateChatMessages(chatMessages: []));
+    store.dispatch(UpdateLeaderBoard(leaderBoard: []));
+    store.dispatch(UpdateQuestionMessage(questionMessages: []));
+    store.dispatch(UpdateLeaderboardMessages(leaderBoardAnswerPercentage: []));
+  };
+}
