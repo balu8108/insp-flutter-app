@@ -23,52 +23,55 @@ class _LiveClassScreenState extends State<LiveClassScreen> {
         ? Scaffold(
             appBar: const Navbar(),
             body: Container(
-                padding: isWebOrLandScape
-                    ? const EdgeInsets.all(10.0)
-                    : const EdgeInsets.all(0.0),
-                color: Colors.white,
-                height: MediaQuery.of(context).size.height,
-                child: Expanded(
-                    child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(flex: 2, child: LiveChatSectionWidget()),
-                    const SizedBox(width: 16),
-                    const Expanded(
-                      flex: 7,
-                      child: TPStreamLiveVideoPlayerWidget(),
-                    ),
-                    const SizedBox(width: 20),
-                    PeerListWidget()
-                  ],
-                ))))
+              padding: isWebOrLandScape
+                  ? const EdgeInsets.all(10.0)
+                  : const EdgeInsets.all(0.0),
+              color: Colors.white,
+              height: MediaQuery.of(context).size.height,
+              child: const Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                      flex: 2, child: LiveChatSectionWidget()), // Expanded here
+                  SizedBox(width: 16),
+                  Expanded(
+                    flex: 7,
+                    child: TPStreamLiveVideoPlayerWidget(), // Expanded here
+                  ),
+                  SizedBox(width: 20),
+                  PeerListWidget(),
+                ],
+              ),
+            ),
+          )
         : Scaffold(
             appBar: const Mobileappbar(),
             body: Container(
-                padding: isWebOrLandScape
-                    ? const EdgeInsets.all(10.0)
-                    : const EdgeInsets.all(0.0),
-                color: Colors.white,
-                height: MediaQuery.of(context).size.height,
-                child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const TPStreamMobileView(),
-                        const SizedBox(height: 20),
-                        const SizedBox(
-                          height: 200,
-                          child: LiveClassDetail(),
-                        ),
-                        const SizedBox(height: 20),
-                        SizedBox(
-                          height: 400,
-                          child: LiveLeftPart(),
-                        )
-                        // const SizedBox(width: 20),
-                        // PeerListWidget()
-                      ],
-                    ))));
+              padding: isWebOrLandScape
+                  ? const EdgeInsets.all(10.0)
+                  : const EdgeInsets.all(0.0),
+              color: Colors.white,
+              height: MediaQuery.of(context).size.height,
+              child: const SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TPStreamMobileView(),
+                    SizedBox(height: 20),
+                    SizedBox(
+                      height: 200,
+                      child: LiveClassDetail(),
+                    ),
+                    SizedBox(height: 20),
+                    SizedBox(
+                      height: 400,
+                      child: LiveLeftPart(),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
   }
 }
