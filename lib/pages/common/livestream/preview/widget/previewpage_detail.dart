@@ -245,8 +245,8 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
                                 const Color(0xFF3C8DBC)),
                             foregroundColor: WidgetStateProperty.all(
                                 const Color(0xFF3C8DBC)),
-                            shape: WidgetStateProperty.all<
-                                RoundedRectangleBorder>(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
                                     8.0), // Adjust border radius as needed
