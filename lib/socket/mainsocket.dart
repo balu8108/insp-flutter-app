@@ -32,7 +32,7 @@ void initializeSocketConnections(
 
   if (token.isNotEmpty) {
     socket = IO.io(
-        'http://localhost:4000',
+        'https://flutterdev.insp.1labventures.in',
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .disableAutoConnect()

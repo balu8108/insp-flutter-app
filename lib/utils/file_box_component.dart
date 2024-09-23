@@ -29,7 +29,7 @@ class FileBoxComponent extends StatelessWidget {
       final remoteDataSource = RemoteDataSource();
       String userToken = getUserToken(context);
       final pdfData =
-          await remoteDataSource.getDocumentUrl(pdfId, "live", userToken);
+          await remoteDataSource.getDocumentUrl(pdfId, type, userToken);
       if (pdfData.data.status) {
         final String pdfUrl = pdfData.data.data.getUrl;
         await downloadPdfWithDioToDownloads(context, pdfUrl, fileName);
