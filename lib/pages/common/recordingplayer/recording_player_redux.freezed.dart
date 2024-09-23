@@ -16,8 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RecordingPlayerAppState {
-  String get type => throw _privateConstructorUsedError;
-  String get classId => throw _privateConstructorUsedError;
   RecordVideoResponseModelData get recordedVideoData =>
       throw _privateConstructorUsedError;
   RecordingPlayerCard get selectedItem => throw _privateConstructorUsedError;
@@ -36,9 +34,7 @@ abstract class $RecordingPlayerAppStateCopyWith<$Res> {
       _$RecordingPlayerAppStateCopyWithImpl<$Res, RecordingPlayerAppState>;
   @useResult
   $Res call(
-      {String type,
-      String classId,
-      RecordVideoResponseModelData recordedVideoData,
+      {RecordVideoResponseModelData recordedVideoData,
       RecordingPlayerCard selectedItem,
       String accestId,
       VideoResponseModel videoResponse});
@@ -58,22 +54,12 @@ class _$RecordingPlayerAppStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = null,
-    Object? classId = null,
     Object? recordedVideoData = null,
     Object? selectedItem = null,
     Object? accestId = null,
     Object? videoResponse = null,
   }) {
     return _then(_value.copyWith(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      classId: null == classId
-          ? _value.classId
-          : classId // ignore: cast_nullable_to_non_nullable
-              as String,
       recordedVideoData: null == recordedVideoData
           ? _value.recordedVideoData
           : recordedVideoData // ignore: cast_nullable_to_non_nullable
@@ -104,9 +90,7 @@ abstract class _$$RecordingPlayerAppStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String type,
-      String classId,
-      RecordVideoResponseModelData recordedVideoData,
+      {RecordVideoResponseModelData recordedVideoData,
       RecordingPlayerCard selectedItem,
       String accestId,
       VideoResponseModel videoResponse});
@@ -125,22 +109,12 @@ class __$$RecordingPlayerAppStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = null,
-    Object? classId = null,
     Object? recordedVideoData = null,
     Object? selectedItem = null,
     Object? accestId = null,
     Object? videoResponse = null,
   }) {
     return _then(_$RecordingPlayerAppStateImpl(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      classId: null == classId
-          ? _value.classId
-          : classId // ignore: cast_nullable_to_non_nullable
-              as String,
       recordedVideoData: null == recordedVideoData
           ? _value.recordedVideoData
           : recordedVideoData // ignore: cast_nullable_to_non_nullable
@@ -167,17 +141,11 @@ class _$RecordingPlayerAppStateImpl
     with DiagnosticableTreeMixin
     implements _RecordingPlayerAppState {
   const _$RecordingPlayerAppStateImpl(
-      {required this.type,
-      required this.classId,
-      this.recordedVideoData = const RecordVideoResponseModelData(),
+      {this.recordedVideoData = const RecordVideoResponseModelData(),
       this.selectedItem = const RecordingPlayerCard('', '', '', [], [], ''),
       this.accestId = '',
       this.videoResponse = const VideoResponseModel()});
 
-  @override
-  final String type;
-  @override
-  final String classId;
   @override
   @JsonKey()
   final RecordVideoResponseModelData recordedVideoData;
@@ -193,7 +161,7 @@ class _$RecordingPlayerAppStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecordingPlayerAppState(type: $type, classId: $classId, recordedVideoData: $recordedVideoData, selectedItem: $selectedItem, accestId: $accestId, videoResponse: $videoResponse)';
+    return 'RecordingPlayerAppState(recordedVideoData: $recordedVideoData, selectedItem: $selectedItem, accestId: $accestId, videoResponse: $videoResponse)';
   }
 
   @override
@@ -201,8 +169,6 @@ class _$RecordingPlayerAppStateImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'RecordingPlayerAppState'))
-      ..add(DiagnosticsProperty('type', type))
-      ..add(DiagnosticsProperty('classId', classId))
       ..add(DiagnosticsProperty('recordedVideoData', recordedVideoData))
       ..add(DiagnosticsProperty('selectedItem', selectedItem))
       ..add(DiagnosticsProperty('accestId', accestId))
@@ -214,8 +180,6 @@ class _$RecordingPlayerAppStateImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RecordingPlayerAppStateImpl &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.classId, classId) || other.classId == classId) &&
             (identical(other.recordedVideoData, recordedVideoData) ||
                 other.recordedVideoData == recordedVideoData) &&
             (identical(other.selectedItem, selectedItem) ||
@@ -227,8 +191,8 @@ class _$RecordingPlayerAppStateImpl
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, type, classId, recordedVideoData,
-      selectedItem, accestId, videoResponse);
+  int get hashCode => Object.hash(
+      runtimeType, recordedVideoData, selectedItem, accestId, videoResponse);
 
   @JsonKey(ignore: true)
   @override
@@ -240,17 +204,11 @@ class _$RecordingPlayerAppStateImpl
 
 abstract class _RecordingPlayerAppState implements RecordingPlayerAppState {
   const factory _RecordingPlayerAppState(
-      {required final String type,
-      required final String classId,
-      final RecordVideoResponseModelData recordedVideoData,
+      {final RecordVideoResponseModelData recordedVideoData,
       final RecordingPlayerCard selectedItem,
       final String accestId,
       final VideoResponseModel videoResponse}) = _$RecordingPlayerAppStateImpl;
 
-  @override
-  String get type;
-  @override
-  String get classId;
   @override
   RecordVideoResponseModelData get recordedVideoData;
   @override

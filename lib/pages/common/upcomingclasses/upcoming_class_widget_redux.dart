@@ -16,7 +16,6 @@ part 'upcoming_class_widget_redux.freezed.dart';
 @freezed
 class UpcomingWidgetAppState with _$UpcomingWidgetAppState {
   const factory UpcomingWidgetAppState({
-    @Default([]) List<AllLecturesForCourseResponseModelData> mobileUpcoming,
     @Default([]) List<AllLecturesForCourseResponseModelData> ongoing,
     @Default([]) List<AllLecturesForCourseResponseModelData> today,
     @Default([]) List<AllLecturesForCourseResponseModelData> week,
@@ -45,8 +44,6 @@ UpcomingWidgetAppState upcomingWidgetReducer(
     UpcomingWidgetAppState state, dynamic action) {
   if (action is UpdateWeeklyData) {
     return state.copyWith(weeklyData: action.weeklyData);
-  } else if (action is UpdateMobileUpcoming) {
-    return state.copyWith(mobileUpcoming: action.mobileUpcoming);
   }
   return state;
 }
@@ -65,12 +62,11 @@ ThunkAction<AppState> getAllUpcomingClass(BuildContext context) {
               allLecture.data.data.today,
               allLecture.data.data.week,
               allLecture.data.data.completed);
-      final List<AllLecturesForCourseResponseModelData> mobileData = [
-        ...allLecture.data.data.ongoing,
-        ...allLecture.data.data.today,
-      ];
+      // final List<AllLecturesForCourseResponseModelData> mobileData = [
+      //   ...allLecture.data.data.ongoing,
+      //   ...allLecture.data.data.today,
+      // ];
       store.dispatch(UpdateWeeklyData(weeklyData: allSubjectsResults));
-      store.dispatch(UpdateMobileUpcoming(mobileUpcoming: mobileData));
     } catch (error) {
       // Handle errors appropriately here
     }

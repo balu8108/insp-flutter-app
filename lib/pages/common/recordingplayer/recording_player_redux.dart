@@ -6,6 +6,7 @@ import 'package:insp/apiservices/models/recording/view_recording_response_model.
 import 'package:insp/apiservices/models/tpstream/video_request_model.dart';
 import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/redux/AppState.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/card/model/recording_player_card_model.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -18,9 +19,7 @@ part 'recording_player_redux.freezed.dart';
 @freezed
 class RecordingPlayerAppState with _$RecordingPlayerAppState {
   const factory RecordingPlayerAppState(
-          {required String type,
-          required String classId,
-          @Default(RecordVideoResponseModelData())
+          {@Default(RecordVideoResponseModelData())
           RecordVideoResponseModelData recordedVideoData,
           @Default(RecordingPlayerCard('', '', '', [], [], ''))
           RecordingPlayerCard selectedItem,
@@ -49,38 +48,31 @@ class UpdateAccestId extends RecordingPlayerAction {
   UpdateAccestId({required this.accestId});
 }
 
-RecordingPlayerAppState recordingPlayerReducer(
-    RecordingPlayerAppState state, dynamic action) {
-  var upState = _recordingPlayerReducer(state, action);
-  if (kDebugMode) {}
-  return upState;
-}
-
 sealed class RecordingPlayerAction {}
 
-RecordingPlayerAppState _recordingPlayerReducer(
-    RecordingPlayerAppState state, RecordingPlayerAction action) {
-  switch (action) {
-    case UpdateSelectedItem():
-      return state.copyWith(selectedItem: action.selectedItem);
-    case UpdateRecordVideoData():
-      return state.copyWith(recordedVideoData: action.recordedVideoData);
-    case UpdateVideosResponse():
-      return state.copyWith(videoResponse: action.videoResponse);
-    case UpdateAccestId():
-      return state.copyWith(accestId: action.accestId);
+RecordingPlayerAppState recordingPlayerReducer(
+    RecordingPlayerAppState state, dynamic action) {
+  if (action is UpdateSelectedItem) {
+    return state.copyWith(selectedItem: action.selectedItem);
+  } else if (action is UpdateRecordVideoData) {
+    return state.copyWith(recordedVideoData: action.recordedVideoData);
+  } else if (action is UpdateVideosResponse) {
+    return state.copyWith(videoResponse: action.videoResponse);
+  } else if (action is UpdateAccestId) {
+    return state.copyWith(accestId: action.accestId);
   }
+  return state;
 }
 
-ThunkAction<RecordingPlayerAppState> getRecordedVideoData(
-    BuildContext context) {
-  return (Store<RecordingPlayerAppState> store) async {
+ThunkAction<AppState> getRecordedVideoData(
+    BuildContext context, String classId, String classType) {
+  return (Store<AppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
-      if (store.state.type.isNotEmpty && store.state.classId.isNotEmpty) {
+      if (classType.isNotEmpty && classId.isNotEmpty) {
         String userToken = getUserToken(context);
         final previewData = await remoteDataSource.getRecordingData(
-            store.state.type, store.state.classId, userToken);
+            classType, classId, userToken);
 
         if (previewData.response.statusCode == 200) {
           ViewRecordingResponseModel recordedVideoDatas =
@@ -108,9 +100,9 @@ ThunkAction<RecordingPlayerAppState> getRecordedVideoData(
   };
 }
 
-ThunkAction<RecordingPlayerAppState> getRecordedVideoUrlApi(
+ThunkAction<AppState> getRecordedVideoUrlApi(
     BuildContext context, String tpStreamId) {
-  return (Store<RecordingPlayerAppState> store) async {
+  return (Store<AppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
       // Validate the data before making the API call
@@ -138,5 +130,17 @@ ThunkAction<RecordingPlayerAppState> getRecordedVideoUrlApi(
         alignment: Alignment.topRight,
       );
     }
+  };
+}
+
+ThunkAction<AppState> setRecordingTpStreamInitialData() {
+  return (Store<AppState> store) async {
+    store.dispatch(UpdateAccestId(accestId: ''));
+    store.dispatch(UpdateRecordVideoData(
+        recordedVideoData: const RecordVideoResponseModelData()));
+    store.dispatch(UpdateSelectedItem(
+        selectedItem: const RecordingPlayerCard('', '', '', [], [], '')));
+    store.dispatch(
+        UpdateVideosResponse(videoResponse: const VideoResponseModel()));
   };
 }

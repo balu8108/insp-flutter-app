@@ -10,6 +10,7 @@ import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart'
 import 'package:insp/pages/common/livestream/widget/chat/peers_widget_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/preview_data_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
+import 'package:insp/pages/common/recordingplayer/recording_player_redux.dart';
 import 'package:insp/pages/home/home_screen.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/socket/socket_events.dart';
@@ -31,7 +32,7 @@ void initializeSocketConnections(
 
   if (token.isNotEmpty) {
     socket = IO.io(
-        'https://flutterdev.insp.1labventures.in',
+        'http://localhost:4000',
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .disableAutoConnect()
@@ -261,6 +262,7 @@ Future<void> leaveRoomHandler(Store<AppState> store) async {
       store.dispatch(setPeerInitialData());
       store.dispatch(setChatInitialData());
       store.dispatch(setTpStreamInitialData());
+      store.dispatch(setRecordingTpStreamInitialData());
       LoginResponseModelResult userDatas = await getUserData();
       navigatorKey.currentState?.push(
         MaterialPageRoute(

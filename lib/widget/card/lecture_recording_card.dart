@@ -30,8 +30,10 @@ Widget LectureRecordingCardWidget(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => MainScaffold(
-                                    content: RecordingPlayerScreen.getScreen(
-                                        "live", classId))));
+                                        content: RecordingPlayerScreen(
+                                      classType: "live",
+                                      classId: classId,
+                                    ))));
                       },
                       child: MouseRegion(
                           cursor: SystemMouseCursors.click,

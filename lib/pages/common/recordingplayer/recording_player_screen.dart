@@ -4,30 +4,47 @@ import 'package:insp/pages/common/recordingplayer/tpStream_recorded_mobile_playe
 import 'package:insp/pages/common/recordingplayer/tpStream_recorded_player.dart';
 import 'package:insp/pages/common/recordingplayer/recording_detail_widget.dart';
 import 'package:insp/pages/common/recordingplayer/recording_player_redux.dart';
+import 'package:insp/redux/AppState.dart';
 import 'package:insp/utils/extensions.dart';
 
-import '../../../base/base.dart';
+class RecordingPlayerScreen extends StatefulWidget {
+  const RecordingPlayerScreen(
+      {super.key, required this.classId, required this.classType});
 
-class RecordingPlayerScreen extends StatelessWidget {
-  const RecordingPlayerScreen({super.key});
+  final String classId, classType;
+
+  @override
+  _RecordingPlayerScreenState createState() => _RecordingPlayerScreenState();
+}
+
+class _RecordingPlayerScreenState extends State<RecordingPlayerScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final store = StoreProvider.of<AppState>(context, listen: false);
+    store.dispatch(
+        getRecordedVideoData(context, widget.classId, widget.classType));
+  }
+
+  void onPressedRecording(BuildContext context, String tpStreamId) {
+    final store = StoreProvider.of<AppState>(context, listen: false);
+    store.dispatch(getRecordedVideoUrlApi(context, tpStreamId));
+  }
+
+  void onUpdate() {
+    final store = StoreProvider.of<AppState>(context, listen: false);
+    store.dispatch(
+        getRecordedVideoData(context, widget.classId, widget.classType));
+  }
 
   @override
   Widget build(BuildContext context) {
     bool isWebOrLandScape = context.isWebOrLandScape();
-    dispatch(context, getRecordedVideoData(context));
-    void onPressedRecording(BuildContext context, String tpStreamId) {
-      dispatch(context, getRecordedVideoUrlApi(context, tpStreamId));
-    }
-
-    void onUpdate() {
-      dispatch(context, getRecordedVideoData(context));
-    }
-
     return Container(
         padding: const EdgeInsets.all(10.0),
         color: Colors.white,
-        child: StoreConnector<RecordingPlayerAppState, RecordingPlayerAppState>(
-          converter: (store) => store.state,
+        child: StoreConnector<AppState, RecordingPlayerAppState>(
+          converter: (store) => store.state.recordingPlayerAppState,
           builder: (context, RecordingPlayerAppState state) {
             return Padding(
               padding: isWebOrLandScape
@@ -79,17 +96,5 @@ class RecordingPlayerScreen extends StatelessWidget {
             );
           },
         ));
-  }
-
-  static getScreen(String type, String classId) {
-    return getBaseScreen<RecordingPlayerAppState, RecordingPlayerScreen>(
-      recordingPlayerReducer,
-      RecordingPlayerAppState(type: type, classId: classId),
-      const RecordingPlayerScreen(),
-    );
-  }
-
-  static dispatch(BuildContext context, dynamic action) {
-    baseDispatch<RecordingPlayerAppState>(context, action);
   }
 }

@@ -30,6 +30,8 @@ mixin _$AppState {
   TPStreamAppState get tpStreamAppState => throw _privateConstructorUsedError;
   PreviewDataAppState get previewDataAppState =>
       throw _privateConstructorUsedError;
+  RecordingPlayerAppState get recordingPlayerAppState =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppStateCopyWith<AppState> get copyWith =>
@@ -50,7 +52,8 @@ abstract class $AppStateCopyWith<$Res> {
       UploadLiveclassFileAppState uploadLiveclassFileAppState,
       NavbarAppState navbarAppState,
       TPStreamAppState tpStreamAppState,
-      PreviewDataAppState previewDataAppState});
+      PreviewDataAppState previewDataAppState,
+      RecordingPlayerAppState recordingPlayerAppState});
 
   $UserDataAppStateCopyWith<$Res> get userDataAppState;
   $LoginAppStateCopyWith<$Res> get loginState;
@@ -61,6 +64,7 @@ abstract class $AppStateCopyWith<$Res> {
   $NavbarAppStateCopyWith<$Res> get navbarAppState;
   $TPStreamAppStateCopyWith<$Res> get tpStreamAppState;
   $PreviewDataAppStateCopyWith<$Res> get previewDataAppState;
+  $RecordingPlayerAppStateCopyWith<$Res> get recordingPlayerAppState;
 }
 
 /// @nodoc
@@ -85,6 +89,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? navbarAppState = null,
     Object? tpStreamAppState = null,
     Object? previewDataAppState = null,
+    Object? recordingPlayerAppState = null,
   }) {
     return _then(_value.copyWith(
       userDataAppState: null == userDataAppState
@@ -123,6 +128,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.previewDataAppState
           : previewDataAppState // ignore: cast_nullable_to_non_nullable
               as PreviewDataAppState,
+      recordingPlayerAppState: null == recordingPlayerAppState
+          ? _value.recordingPlayerAppState
+          : recordingPlayerAppState // ignore: cast_nullable_to_non_nullable
+              as RecordingPlayerAppState,
     ) as $Val);
   }
 
@@ -202,6 +211,15 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
       return _then(_value.copyWith(previewDataAppState: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $RecordingPlayerAppStateCopyWith<$Res> get recordingPlayerAppState {
+    return $RecordingPlayerAppStateCopyWith<$Res>(
+        _value.recordingPlayerAppState, (value) {
+      return _then(_value.copyWith(recordingPlayerAppState: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -221,7 +239,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
       UploadLiveclassFileAppState uploadLiveclassFileAppState,
       NavbarAppState navbarAppState,
       TPStreamAppState tpStreamAppState,
-      PreviewDataAppState previewDataAppState});
+      PreviewDataAppState previewDataAppState,
+      RecordingPlayerAppState recordingPlayerAppState});
 
   @override
   $UserDataAppStateCopyWith<$Res> get userDataAppState;
@@ -241,6 +260,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
   $TPStreamAppStateCopyWith<$Res> get tpStreamAppState;
   @override
   $PreviewDataAppStateCopyWith<$Res> get previewDataAppState;
+  @override
+  $RecordingPlayerAppStateCopyWith<$Res> get recordingPlayerAppState;
 }
 
 /// @nodoc
@@ -263,6 +284,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? navbarAppState = null,
     Object? tpStreamAppState = null,
     Object? previewDataAppState = null,
+    Object? recordingPlayerAppState = null,
   }) {
     return _then(_$AppStateImpl(
       userDataAppState: null == userDataAppState
@@ -301,6 +323,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.previewDataAppState
           : previewDataAppState // ignore: cast_nullable_to_non_nullable
               as PreviewDataAppState,
+      recordingPlayerAppState: null == recordingPlayerAppState
+          ? _value.recordingPlayerAppState
+          : recordingPlayerAppState // ignore: cast_nullable_to_non_nullable
+              as RecordingPlayerAppState,
     ));
   }
 }
@@ -317,7 +343,8 @@ class _$AppStateImpl implements _AppState {
       required this.uploadLiveclassFileAppState,
       required this.navbarAppState,
       required this.tpStreamAppState,
-      required this.previewDataAppState});
+      required this.previewDataAppState,
+      required this.recordingPlayerAppState});
 
   @override
   final UserDataAppState userDataAppState;
@@ -337,10 +364,12 @@ class _$AppStateImpl implements _AppState {
   final TPStreamAppState tpStreamAppState;
   @override
   final PreviewDataAppState previewDataAppState;
+  @override
+  final RecordingPlayerAppState recordingPlayerAppState;
 
   @override
   String toString() {
-    return 'AppState(userDataAppState: $userDataAppState, loginState: $loginState, upcomingWidgetAppState: $upcomingWidgetAppState, chatWidgetAppState: $chatWidgetAppState, peersWidgetAppState: $peersWidgetAppState, uploadLiveclassFileAppState: $uploadLiveclassFileAppState, navbarAppState: $navbarAppState, tpStreamAppState: $tpStreamAppState, previewDataAppState: $previewDataAppState)';
+    return 'AppState(userDataAppState: $userDataAppState, loginState: $loginState, upcomingWidgetAppState: $upcomingWidgetAppState, chatWidgetAppState: $chatWidgetAppState, peersWidgetAppState: $peersWidgetAppState, uploadLiveclassFileAppState: $uploadLiveclassFileAppState, navbarAppState: $navbarAppState, tpStreamAppState: $tpStreamAppState, previewDataAppState: $previewDataAppState, recordingPlayerAppState: $recordingPlayerAppState)';
   }
 
   @override
@@ -367,7 +396,10 @@ class _$AppStateImpl implements _AppState {
             (identical(other.tpStreamAppState, tpStreamAppState) ||
                 other.tpStreamAppState == tpStreamAppState) &&
             (identical(other.previewDataAppState, previewDataAppState) ||
-                other.previewDataAppState == previewDataAppState));
+                other.previewDataAppState == previewDataAppState) &&
+            (identical(
+                    other.recordingPlayerAppState, recordingPlayerAppState) ||
+                other.recordingPlayerAppState == recordingPlayerAppState));
   }
 
   @override
@@ -381,7 +413,8 @@ class _$AppStateImpl implements _AppState {
       uploadLiveclassFileAppState,
       navbarAppState,
       tpStreamAppState,
-      previewDataAppState);
+      previewDataAppState,
+      recordingPlayerAppState);
 
   @JsonKey(ignore: true)
   @override
@@ -400,7 +433,9 @@ abstract class _AppState implements AppState {
       required final UploadLiveclassFileAppState uploadLiveclassFileAppState,
       required final NavbarAppState navbarAppState,
       required final TPStreamAppState tpStreamAppState,
-      required final PreviewDataAppState previewDataAppState}) = _$AppStateImpl;
+      required final PreviewDataAppState previewDataAppState,
+      required final RecordingPlayerAppState
+          recordingPlayerAppState}) = _$AppStateImpl;
 
   @override
   UserDataAppState get userDataAppState;
@@ -420,6 +455,8 @@ abstract class _AppState implements AppState {
   TPStreamAppState get tpStreamAppState;
   @override
   PreviewDataAppState get previewDataAppState;
+  @override
+  RecordingPlayerAppState get recordingPlayerAppState;
   @override
   @JsonKey(ignore: true)
   _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>

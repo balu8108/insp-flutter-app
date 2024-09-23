@@ -374,7 +374,7 @@ ThunkAction<ScheduleLiveclassAppState> getLectureNumberAPI(
 
       if (allTopics.response.statusCode == 200) {
         store.dispatch(UpdateLiveClassLectureNo(
-            lectureNo: allTopics.data.data.toString()));
+            lectureNo: (allTopics.data.data + 1).toString()));
       } else {
         store.dispatch(UpdateLiveClassLectureNo(lectureNo: "0"));
       }

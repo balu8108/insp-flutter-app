@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return widget.userData.userType == 0
-        ? StudentHomeScreen()
-        : TeacherHomeScreen();
+        ? const StudentHomeScreen()
+        : const TeacherHomeScreen();
   }
 }

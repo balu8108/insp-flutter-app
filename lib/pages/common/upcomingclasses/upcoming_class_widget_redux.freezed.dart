@@ -16,8 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UpcomingWidgetAppState {
-  List<AllLecturesForCourseResponseModelData> get mobileUpcoming =>
-      throw _privateConstructorUsedError;
   List<AllLecturesForCourseResponseModelData> get ongoing =>
       throw _privateConstructorUsedError;
   List<AllLecturesForCourseResponseModelData> get today =>
@@ -40,8 +38,7 @@ abstract class $UpcomingWidgetAppStateCopyWith<$Res> {
       _$UpcomingWidgetAppStateCopyWithImpl<$Res, UpcomingWidgetAppState>;
   @useResult
   $Res call(
-      {List<AllLecturesForCourseResponseModelData> mobileUpcoming,
-      List<AllLecturesForCourseResponseModelData> ongoing,
+      {List<AllLecturesForCourseResponseModelData> ongoing,
       List<AllLecturesForCourseResponseModelData> today,
       List<AllLecturesForCourseResponseModelData> week,
       List<AllLecturesForCourseResponseModelData> completed,
@@ -62,7 +59,6 @@ class _$UpcomingWidgetAppStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mobileUpcoming = null,
     Object? ongoing = null,
     Object? today = null,
     Object? week = null,
@@ -70,10 +66,6 @@ class _$UpcomingWidgetAppStateCopyWithImpl<$Res,
     Object? weeklyData = null,
   }) {
     return _then(_value.copyWith(
-      mobileUpcoming: null == mobileUpcoming
-          ? _value.mobileUpcoming
-          : mobileUpcoming // ignore: cast_nullable_to_non_nullable
-              as List<AllLecturesForCourseResponseModelData>,
       ongoing: null == ongoing
           ? _value.ongoing
           : ongoing // ignore: cast_nullable_to_non_nullable
@@ -108,8 +100,7 @@ abstract class _$$UpcomingWidgetAppStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<AllLecturesForCourseResponseModelData> mobileUpcoming,
-      List<AllLecturesForCourseResponseModelData> ongoing,
+      {List<AllLecturesForCourseResponseModelData> ongoing,
       List<AllLecturesForCourseResponseModelData> today,
       List<AllLecturesForCourseResponseModelData> week,
       List<AllLecturesForCourseResponseModelData> completed,
@@ -129,7 +120,6 @@ class __$$UpcomingWidgetAppStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mobileUpcoming = null,
     Object? ongoing = null,
     Object? today = null,
     Object? week = null,
@@ -137,10 +127,6 @@ class __$$UpcomingWidgetAppStateImplCopyWithImpl<$Res>
     Object? weeklyData = null,
   }) {
     return _then(_$UpcomingWidgetAppStateImpl(
-      mobileUpcoming: null == mobileUpcoming
-          ? _value._mobileUpcoming
-          : mobileUpcoming // ignore: cast_nullable_to_non_nullable
-              as List<AllLecturesForCourseResponseModelData>,
       ongoing: null == ongoing
           ? _value._ongoing
           : ongoing // ignore: cast_nullable_to_non_nullable
@@ -171,27 +157,15 @@ class _$UpcomingWidgetAppStateImpl
     with DiagnosticableTreeMixin
     implements _UpcomingWidgetAppState {
   const _$UpcomingWidgetAppStateImpl(
-      {final List<AllLecturesForCourseResponseModelData> mobileUpcoming =
-          const [],
-      final List<AllLecturesForCourseResponseModelData> ongoing = const [],
+      {final List<AllLecturesForCourseResponseModelData> ongoing = const [],
       final List<AllLecturesForCourseResponseModelData> today = const [],
       final List<AllLecturesForCourseResponseModelData> week = const [],
       final List<AllLecturesForCourseResponseModelData> completed = const [],
       this.weeklyData = const UpcomingLectureCardModel([], [], [], [])})
-      : _mobileUpcoming = mobileUpcoming,
-        _ongoing = ongoing,
+      : _ongoing = ongoing,
         _today = today,
         _week = week,
         _completed = completed;
-
-  final List<AllLecturesForCourseResponseModelData> _mobileUpcoming;
-  @override
-  @JsonKey()
-  List<AllLecturesForCourseResponseModelData> get mobileUpcoming {
-    if (_mobileUpcoming is EqualUnmodifiableListView) return _mobileUpcoming;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_mobileUpcoming);
-  }
 
   final List<AllLecturesForCourseResponseModelData> _ongoing;
   @override
@@ -235,7 +209,7 @@ class _$UpcomingWidgetAppStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UpcomingWidgetAppState(mobileUpcoming: $mobileUpcoming, ongoing: $ongoing, today: $today, week: $week, completed: $completed, weeklyData: $weeklyData)';
+    return 'UpcomingWidgetAppState(ongoing: $ongoing, today: $today, week: $week, completed: $completed, weeklyData: $weeklyData)';
   }
 
   @override
@@ -243,7 +217,6 @@ class _$UpcomingWidgetAppStateImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'UpcomingWidgetAppState'))
-      ..add(DiagnosticsProperty('mobileUpcoming', mobileUpcoming))
       ..add(DiagnosticsProperty('ongoing', ongoing))
       ..add(DiagnosticsProperty('today', today))
       ..add(DiagnosticsProperty('week', week))
@@ -256,8 +229,6 @@ class _$UpcomingWidgetAppStateImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpcomingWidgetAppStateImpl &&
-            const DeepCollectionEquality()
-                .equals(other._mobileUpcoming, _mobileUpcoming) &&
             const DeepCollectionEquality().equals(other._ongoing, _ongoing) &&
             const DeepCollectionEquality().equals(other._today, _today) &&
             const DeepCollectionEquality().equals(other._week, _week) &&
@@ -270,7 +241,6 @@ class _$UpcomingWidgetAppStateImpl
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_mobileUpcoming),
       const DeepCollectionEquality().hash(_ongoing),
       const DeepCollectionEquality().hash(_today),
       const DeepCollectionEquality().hash(_week),
@@ -287,16 +257,13 @@ class _$UpcomingWidgetAppStateImpl
 
 abstract class _UpcomingWidgetAppState implements UpcomingWidgetAppState {
   const factory _UpcomingWidgetAppState(
-          {final List<AllLecturesForCourseResponseModelData> mobileUpcoming,
-          final List<AllLecturesForCourseResponseModelData> ongoing,
+          {final List<AllLecturesForCourseResponseModelData> ongoing,
           final List<AllLecturesForCourseResponseModelData> today,
           final List<AllLecturesForCourseResponseModelData> week,
           final List<AllLecturesForCourseResponseModelData> completed,
           final UpcomingLectureCardModel weeklyData}) =
       _$UpcomingWidgetAppStateImpl;
 
-  @override
-  List<AllLecturesForCourseResponseModelData> get mobileUpcoming;
   @override
   List<AllLecturesForCourseResponseModelData> get ongoing;
   @override

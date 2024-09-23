@@ -78,9 +78,9 @@ class ScheduleClassMobileBoxWidgetState extends State<ScheduleClassMobileBox> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => MainScaffold(
-                            content: RecordingPlayerScreen.getScreen(
-                          "live",
-                          data.id.toString(),
+                            content: RecordingPlayerScreen(
+                          classType: "live",
+                          classId: data.id.toString(),
                         )),
                       ),
                     );

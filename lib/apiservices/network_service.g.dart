@@ -13,7 +13,7 @@ class _NetworkService implements NetworkService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://flutterdev.insp.1labventures.in/';
+    baseUrl ??= 'http://localhost:4000/';
   }
 
   final Dio _dio;
@@ -276,7 +276,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<AllLecturesForTopicResponseModel>>(Options(
       method: 'GET',
@@ -306,7 +306,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<LatestSoloClassesResponseModel>>(Options(
       method: 'GET',
@@ -336,7 +336,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<LatestCompletedClassesResponseModel>>(
             Options(
@@ -367,7 +367,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<TimeTableResponseDataModel>>(Options(
       method: 'GET',
@@ -400,7 +400,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<RatingFeedbackRatingDetailResponseModel>>(
             Options(
@@ -432,7 +432,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<LatestUploadedAssignmentResponseModel>>(
             Options(
@@ -463,7 +463,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<AllSoloClassesResponseModel>>(Options(
       method: 'GET',
@@ -496,7 +496,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<SoloclassTopicwiseDetailsResponseModel>>(
             Options(
@@ -528,7 +528,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<AllLecturesForUpcomingResponseModel>>(
             Options(
@@ -559,7 +559,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<AllCalendarScheduledDataModel>>(Options(
       method: 'GET',
@@ -625,7 +625,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<LectureDetailByRoomIdResponseModel>>(
             Options(
@@ -658,7 +658,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{r'topicId': topicId};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<AllAssignmentResponseModel>>(Options(
       method: 'GET',
@@ -690,7 +690,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<DeleteAssignmentResponseModel>>(Options(
       method: 'DELETE',
@@ -724,7 +724,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<AllLecturesForCourseResponseModel>>(Options(
       method: 'GET',
@@ -754,7 +754,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<AllAssignmentResponseModel>>(Options(
       method: 'GET',
@@ -819,7 +819,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<DeleteAssignmentResponseModel>>(Options(
       method: 'DELETE',
@@ -851,7 +851,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<AllAssignmentResponseModel>>(Options(
       method: 'GET',
@@ -883,7 +883,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<AllSoloClassesResponseModel>>(Options(
       method: 'GET',
@@ -919,7 +919,7 @@ class _NetworkService implements NetworkService {
     };
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<GenericOpenFileResponseModel>>(Options(
       method: 'GET',
@@ -988,7 +988,7 @@ class _NetworkService implements NetworkService {
     };
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<ViewRecordingResponseModel>>(Options(
       method: 'GET',
@@ -1055,7 +1055,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<LiveClassPreviewResponseModel>>(Options(
       method: 'GET',

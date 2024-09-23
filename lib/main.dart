@@ -7,6 +7,7 @@ import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart'
 import 'package:insp/pages/common/livestream/widget/chat/peers_widget_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/preview_data_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
+import 'package:insp/pages/common/recordingplayer/recording_player_redux.dart';
 import 'package:insp/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
 import 'package:insp/pages/home/home_screen.dart';
 import 'package:insp/pages/login/login_redux.dart';
@@ -62,7 +63,8 @@ void main() async {
         uploadLiveclassFileAppState: UploadLiveclassFileAppState(),
         navbarAppState: NavbarAppState(),
         tpStreamAppState: TPStreamAppState(),
-        previewDataAppState: PreviewDataAppState()),
+        previewDataAppState: PreviewDataAppState(),
+        recordingPlayerAppState: RecordingPlayerAppState()),
     middleware: [thunkMiddleware],
   );
 
@@ -98,21 +100,6 @@ class _MyAppState extends State<MyApp> {
     });
     widget.store.dispatch(UpdateUserData(userData: userData));
   }
-
-  // Future<void> secureScreen() async {
-  //   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-  // }
-
-  // // Function to clear secure screen flag
-  // Future<void> clearSecureScreen() async {
-  //   await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
-  // }
-
-  // @override
-  // void dispose() {
-  //   clearSecureScreen(); // Clear the secure flag on dispose
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {

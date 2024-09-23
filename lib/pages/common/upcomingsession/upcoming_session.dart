@@ -43,10 +43,10 @@ class UpcomingSession extends StatelessWidget {
                       height: 39,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: WidgetStateProperty.all(
-                              const Color(0xFF3C8DBC)),
-                          foregroundColor: WidgetStateProperty.all(
-                              const Color(0xFF3C8DBC)),
+                          backgroundColor:
+                              WidgetStateProperty.all(const Color(0xFF3C8DBC)),
+                          foregroundColor:
+                              WidgetStateProperty.all(const Color(0xFF3C8DBC)),
                           shape:
                               WidgetStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
@@ -95,10 +95,10 @@ class UpcomingSession extends StatelessWidget {
                     height: 20,
                   ),
                   Expanded(
-                      child: classMobileCategories.isNotEmpty
+                      child: classCategories.isNotEmpty
                           ? ListView.separated(
                               scrollDirection: Axis.vertical,
-                              itemCount: classMobileCategories.length,
+                              itemCount: classCategories.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return Column(
                                   children: [
@@ -109,14 +109,12 @@ class UpcomingSession extends StatelessWidget {
                                         Expanded(
                                           flex: 9,
                                           child: INSPHeading(
-                                              classMobileCategories[index]
-                                                  .label),
+                                              classCategories[index].label),
                                         ),
                                       ],
                                     ),
                                     ScheduleClassMobileBox(
-                                        type: classMobileCategories[index]
-                                            .category,
+                                        type: classCategories[index].category,
                                         upcomingWidgetAppState:
                                             state.weeklyData,
                                         getUpcomingClass: getUpcomingClass),

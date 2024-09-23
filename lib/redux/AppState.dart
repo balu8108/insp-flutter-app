@@ -3,6 +3,7 @@ import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart'
 import 'package:insp/pages/common/livestream/widget/chat/peers_widget_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/preview_data_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
+import 'package:insp/pages/common/recordingplayer/recording_player_redux.dart';
 import 'package:insp/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
 import 'package:insp/pages/login/login_redux.dart';
 import 'package:insp/redux/userData/userdata_redux.dart';
@@ -23,5 +24,6 @@ class AppState with _$AppState {
       required UploadLiveclassFileAppState uploadLiveclassFileAppState,
       required NavbarAppState navbarAppState,
       required TPStreamAppState tpStreamAppState,
-      required PreviewDataAppState previewDataAppState}) = _AppState;
+      required PreviewDataAppState previewDataAppState,
+      required RecordingPlayerAppState recordingPlayerAppState}) = _AppState;
 }
