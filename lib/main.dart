@@ -15,6 +15,7 @@ import 'package:insp/pages/login/login_redux.dart';
 import 'package:insp/pages/login/login_screen.dart';
 import 'package:insp/pages/onboarding/onboarding_screen.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:insp/pages/teacher/soloclassrecording/redux/soloclass_redux.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/redux/app_reducer.dart';
 import 'package:insp/redux/userData/userdata_redux.dart';
@@ -66,7 +67,8 @@ void main() async {
         tpStreamAppState: TPStreamAppState(),
         previewDataAppState: PreviewDataAppState(),
         recordingPlayerAppState: RecordingPlayerAppState(),
-        pollTimerAppState: PollTimerAppState()),
+        pollTimerAppState: PollTimerAppState(),
+        soloClassDetailDataAppState: SoloClassDetailDataAppState()),
     middleware: [thunkMiddleware],
   );
 

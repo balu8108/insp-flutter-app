@@ -3,16 +3,20 @@ import 'package:insp/pages/teacher/soloclassrecording/widgets/soloclassdescripti
 import 'package:insp/pages/teacher/soloclassrecording/widgets/solorecording/soloclass_recording.dart';
 
 class Soloclassroomscreen extends StatelessWidget {
-  const Soloclassroomscreen({super.key});
+  final String soloClassId;
+
+  const Soloclassroomscreen({super.key, required this.soloClassId});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(43, 26, 43, 26),
-      child: const Row(children: [
-        Expanded(flex: 1, child: SoloclassDescription()),
-        SizedBox(width: 16),
-        Expanded(flex: 4, child: SoloclassRecording()),
+      height: MediaQuery.of(context).size.height,
+      margin: const EdgeInsets.all(20),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Expanded(
+            flex: 1, child: SoloclassDescription(soloClassId: soloClassId)),
+        const SizedBox(width: 16),
+        const Expanded(flex: 4, child: SoloclassRecording()),
       ]),
     );
   }

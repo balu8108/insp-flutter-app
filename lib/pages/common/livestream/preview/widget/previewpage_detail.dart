@@ -9,6 +9,7 @@ import 'package:insp/utils/capitalize.dart';
 import 'package:insp/utils/format_time.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
+import 'package:toastification/toastification.dart';
 
 class LiveCLassPreviowlWidget extends StatelessWidget {
   final String roomId;
@@ -29,8 +30,13 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
 
     void copyTextToClipboard(String textToCopy) {
       Clipboard.setData(ClipboardData(text: textToCopy));
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Text copied to clipboard!')),
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.success,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: const Text('Text copied to clipboard!'),
+        alignment: Alignment.topRight,
       );
     }
 

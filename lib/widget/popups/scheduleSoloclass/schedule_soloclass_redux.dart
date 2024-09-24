@@ -264,7 +264,7 @@ ThunkAction<ScheduleSoloclassAppState> showAllTopics(BuildContext context) {
 }
 
 ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
-    BuildContext context) {
+    BuildContext context, Function(String soloclassid) navigateToSolo) {
   return (Store<ScheduleSoloclassAppState> store) async {
     List<MultipartFile> files = [];
 
@@ -333,16 +333,10 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
       if (response.statusCode == 201) {
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
 
-        // final soloClassRoomId = response.data['soloClassRoomId'];
+        int soloClassId = response.data['soloClassRoomId'];
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  const MainScaffold(content: Soloclassroomscreen())),
-        );
+        navigateToSolo(soloClassId.toString());
 
-        Navigator.of(context).pop();
         toastification.show(
           context: context, // optional if you use ToastificationWrapper
           type: ToastificationType.success,
@@ -363,6 +357,24 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
           alignment: Alignment.topRight,
         );
       }
+    } on DioException catch (e) {
+      // Handle Dio-specific errors
+      String errorMessage;
+      if (e.response != null) {
+        final errorData = e.response?.data;
+        errorMessage = errorData['error'] ?? 'An unexpected error occurred';
+      } else {
+        errorMessage = 'Network error or server not reachable';
+      }
+      store.dispatch(UpdateIsClassLoading(isClassLoading: false));
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.error,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: Text(errorMessage),
+        alignment: Alignment.topRight,
+      );
     } catch (e) {
       print(e);
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
@@ -478,6 +490,24 @@ ThunkAction<ScheduleSoloclassAppState> handleUpdateSoloClass(
           alignment: Alignment.topRight,
         );
       }
+    } on DioException catch (e) {
+      // Handle Dio-specific errors
+      String errorMessage;
+      if (e.response != null) {
+        final errorData = e.response?.data;
+        errorMessage = errorData['error'] ?? 'An unexpected error occurred';
+      } else {
+        errorMessage = 'Network error or server not reachable';
+      }
+      store.dispatch(UpdateIsClassLoading(isClassLoading: false));
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.error,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: Text(errorMessage),
+        alignment: Alignment.topRight,
+      );
     } catch (e) {
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
       toastification.show(

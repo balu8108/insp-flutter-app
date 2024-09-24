@@ -85,7 +85,34 @@ class _TimetableUploadState extends State<TimetableUpload> {
         );
       }
       Navigator.of(context).pop();
-    } catch (e) {}
+    } on DioException catch (e) {
+      // Handle Dio-specific errors
+      String errorMessage;
+      if (e.response != null) {
+        final errorData = e.response?.data;
+        errorMessage = errorData['error'] ?? 'An unexpected error occurred';
+      } else {
+        errorMessage = 'Network error or server not reachable';
+      }
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.error,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: Text(errorMessage),
+        alignment: Alignment.topRight,
+      );
+    } catch (e) {
+      Navigator.of(context).pop();
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.warning,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: const Text('Failed to upload files'),
+        alignment: Alignment.topRight,
+      );
+    }
   }
 
   @override

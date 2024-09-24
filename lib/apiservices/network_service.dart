@@ -28,6 +28,7 @@ import 'package:insp/apiservices/models/ratingfeedback/rating_feedback_rating_de
 import 'package:insp/apiservices/models/recording/view_recording_response_model.dart';
 import 'package:insp/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:insp/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
+import 'package:insp/apiservices/models/soloclasses/soloclass_detail_response_model.dart';
 import 'package:insp/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
 import 'package:insp/apiservices/models/tpstream/video_request_model.dart';
 import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
@@ -120,6 +121,11 @@ abstract class NetworkService {
 
   @GET('/solo-lecture/get-all-soloclassrooms')
   Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClasses(
+      @Header('Authorization') String secretTokenHeader);
+
+  @GET('/solo-lecture/get-details-data-for-class/{soloclassId}')
+  Future<HttpResponse<SoloClassDetailResponseModel>> getSoloClassDetail(
+      @Path() String soloclassId,
       @Header('Authorization') String secretTokenHeader);
 
   @GET('/solo-lecture/get-topic-details/{topicId}')

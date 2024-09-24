@@ -25,6 +25,7 @@ import 'package:insp/apiservices/models/ratingfeedback/rating_feedback_rating_de
 import 'package:insp/apiservices/models/recording/view_recording_response_model.dart';
 import 'package:insp/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:insp/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
+import 'package:insp/apiservices/models/soloclasses/soloclass_detail_response_model.dart';
 import 'package:insp/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
 import 'package:insp/apiservices/models/tpstream/video_request_model.dart';
 import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
@@ -85,6 +86,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClasses(
       String secretTokenHeader);
+
+  Future<HttpResponse<SoloClassDetailResponseModel>> getSoloClassDetail(
+      String soloClassId, String secretTokenHeader);
 
   Future<HttpResponse<LectureDetailByRoomIdResponseModel>>
       getLecturesDetailByRoomId(String roomId, String secretTokenHeader);
@@ -241,6 +245,13 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClasses(
       String secretTokenHeader) {
     return deviceNetworkService.getAllSoloClasses(secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<SoloClassDetailResponseModel>> getSoloClassDetail(
+      String soloClassId, String secretTokenHeader) {
+    return deviceNetworkService.getSoloClassDetail(
+        soloClassId, secretTokenHeader);
   }
 
   @override

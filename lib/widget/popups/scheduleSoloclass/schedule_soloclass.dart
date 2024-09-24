@@ -18,14 +18,18 @@ class ScheduleSoloClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isWebOrLandScape = context.isWebOrLandScape();
-    void createSoloClass() {
-      dispatch(context, handleCreateSoloClass(context));
+
+    void navigateToSolo(String soloclassid) {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                const MainScaffold(content: Soloclassroomscreen())),
+            builder: (context) => MainScaffold(
+                content: Soloclassroomscreen(soloClassId: soloclassid))),
       );
+    }
+
+    void createSoloClass() {
+      dispatch(context, handleCreateSoloClass(context, navigateToSolo));
     }
 
     dispatch(context, getLectureNumberAPI(context));

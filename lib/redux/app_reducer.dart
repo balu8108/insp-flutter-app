@@ -6,6 +6,7 @@ import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
 import 'package:insp/pages/common/recordingplayer/recording_player_redux.dart';
 import 'package:insp/pages/common/upcomingclasses/upcoming_class_widget_redux.dart';
 import 'package:insp/pages/login/login_redux.dart';
+import 'package:insp/pages/teacher/soloclassrecording/redux/soloclass_redux.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/redux/userData/userdata_redux.dart';
 import 'package:insp/widget/navbar/navbar_redux.dart';
@@ -29,6 +30,7 @@ AppState appStateReducer(AppState state, dynamic action) {
           previewDataReducer(state.previewDataAppState, action),
       recordingPlayerAppState:
           recordingPlayerReducer(state.recordingPlayerAppState, action),
-      pollTimerAppState:
-          polltimerStateReducer(state.pollTimerAppState, action));
+      pollTimerAppState: polltimerStateReducer(state.pollTimerAppState, action),
+      soloClassDetailDataAppState: soloClassDetailDataReducer(
+          state.soloClassDetailDataAppState, action));
 }

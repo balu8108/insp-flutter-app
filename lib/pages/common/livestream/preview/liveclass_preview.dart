@@ -26,11 +26,10 @@ class LiveClassPreviewScreen extends StatelessWidget {
               ? Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
+                    const Expanded(
                       flex: 7,
                       child: SizedBox(height: 700, child: PreviewVideo()),
                     ),
-                    // Expanded(child: PreviewVideo()),
                     const SizedBox(width: 16),
                     Expanded(
                         flex: 3, child: LiveCLassPreviowlWidget(roomId: roomId))
@@ -39,7 +38,7 @@ class LiveClassPreviewScreen extends StatelessWidget {
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 200,
                       child: PreviewVideo(),
                     ),

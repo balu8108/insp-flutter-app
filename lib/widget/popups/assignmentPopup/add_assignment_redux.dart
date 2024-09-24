@@ -272,6 +272,24 @@ ThunkAction<AddAssignmentAppState> handleCreate(
           alignment: Alignment.topRight,
         );
       }
+    } on DioException catch (e) {
+      store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
+      // Handle Dio-specific errors
+      String errorMessage;
+      if (e.response != null) {
+        final errorData = e.response?.data;
+        errorMessage = errorData['error'] ?? 'An unexpected error occurred';
+      } else {
+        errorMessage = 'Network error or server not reachable';
+      }
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.error,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: Text(errorMessage),
+        alignment: Alignment.topRight,
+      );
     } catch (e) {
       store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
       toastification.show(
@@ -387,6 +405,24 @@ ThunkAction<AddAssignmentAppState> handleUpdate(
           alignment: Alignment.topRight,
         );
       }
+    } on DioException catch (e) {
+      store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
+      // Handle Dio-specific errors
+      String errorMessage;
+      if (e.response != null) {
+        final errorData = e.response?.data;
+        errorMessage = errorData['error'] ?? 'An unexpected error occurred';
+      } else {
+        errorMessage = 'Network error or server not reachable';
+      }
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.error,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: Text(errorMessage),
+        alignment: Alignment.topRight,
+      );
     } catch (e) {
       store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
       toastification.show(

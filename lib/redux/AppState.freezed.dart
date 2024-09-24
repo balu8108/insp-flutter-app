@@ -33,6 +33,8 @@ mixin _$AppState {
   RecordingPlayerAppState get recordingPlayerAppState =>
       throw _privateConstructorUsedError;
   PollTimerAppState get pollTimerAppState => throw _privateConstructorUsedError;
+  SoloClassDetailDataAppState get soloClassDetailDataAppState =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppStateCopyWith<AppState> get copyWith =>
@@ -55,7 +57,8 @@ abstract class $AppStateCopyWith<$Res> {
       TPStreamAppState tpStreamAppState,
       PreviewDataAppState previewDataAppState,
       RecordingPlayerAppState recordingPlayerAppState,
-      PollTimerAppState pollTimerAppState});
+      PollTimerAppState pollTimerAppState,
+      SoloClassDetailDataAppState soloClassDetailDataAppState});
 
   $UserDataAppStateCopyWith<$Res> get userDataAppState;
   $LoginAppStateCopyWith<$Res> get loginState;
@@ -68,6 +71,7 @@ abstract class $AppStateCopyWith<$Res> {
   $PreviewDataAppStateCopyWith<$Res> get previewDataAppState;
   $RecordingPlayerAppStateCopyWith<$Res> get recordingPlayerAppState;
   $PollTimerAppStateCopyWith<$Res> get pollTimerAppState;
+  $SoloClassDetailDataAppStateCopyWith<$Res> get soloClassDetailDataAppState;
 }
 
 /// @nodoc
@@ -94,6 +98,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? previewDataAppState = null,
     Object? recordingPlayerAppState = null,
     Object? pollTimerAppState = null,
+    Object? soloClassDetailDataAppState = null,
   }) {
     return _then(_value.copyWith(
       userDataAppState: null == userDataAppState
@@ -140,6 +145,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.pollTimerAppState
           : pollTimerAppState // ignore: cast_nullable_to_non_nullable
               as PollTimerAppState,
+      soloClassDetailDataAppState: null == soloClassDetailDataAppState
+          ? _value.soloClassDetailDataAppState
+          : soloClassDetailDataAppState // ignore: cast_nullable_to_non_nullable
+              as SoloClassDetailDataAppState,
     ) as $Val);
   }
 
@@ -236,6 +245,15 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
       return _then(_value.copyWith(pollTimerAppState: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SoloClassDetailDataAppStateCopyWith<$Res> get soloClassDetailDataAppState {
+    return $SoloClassDetailDataAppStateCopyWith<$Res>(
+        _value.soloClassDetailDataAppState, (value) {
+      return _then(_value.copyWith(soloClassDetailDataAppState: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -257,7 +275,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
       TPStreamAppState tpStreamAppState,
       PreviewDataAppState previewDataAppState,
       RecordingPlayerAppState recordingPlayerAppState,
-      PollTimerAppState pollTimerAppState});
+      PollTimerAppState pollTimerAppState,
+      SoloClassDetailDataAppState soloClassDetailDataAppState});
 
   @override
   $UserDataAppStateCopyWith<$Res> get userDataAppState;
@@ -281,6 +300,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
   $RecordingPlayerAppStateCopyWith<$Res> get recordingPlayerAppState;
   @override
   $PollTimerAppStateCopyWith<$Res> get pollTimerAppState;
+  @override
+  $SoloClassDetailDataAppStateCopyWith<$Res> get soloClassDetailDataAppState;
 }
 
 /// @nodoc
@@ -305,6 +326,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? previewDataAppState = null,
     Object? recordingPlayerAppState = null,
     Object? pollTimerAppState = null,
+    Object? soloClassDetailDataAppState = null,
   }) {
     return _then(_$AppStateImpl(
       userDataAppState: null == userDataAppState
@@ -351,6 +373,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.pollTimerAppState
           : pollTimerAppState // ignore: cast_nullable_to_non_nullable
               as PollTimerAppState,
+      soloClassDetailDataAppState: null == soloClassDetailDataAppState
+          ? _value.soloClassDetailDataAppState
+          : soloClassDetailDataAppState // ignore: cast_nullable_to_non_nullable
+              as SoloClassDetailDataAppState,
     ));
   }
 }
@@ -369,7 +395,8 @@ class _$AppStateImpl implements _AppState {
       required this.tpStreamAppState,
       required this.previewDataAppState,
       required this.recordingPlayerAppState,
-      required this.pollTimerAppState});
+      required this.pollTimerAppState,
+      required this.soloClassDetailDataAppState});
 
   @override
   final UserDataAppState userDataAppState;
@@ -393,10 +420,12 @@ class _$AppStateImpl implements _AppState {
   final RecordingPlayerAppState recordingPlayerAppState;
   @override
   final PollTimerAppState pollTimerAppState;
+  @override
+  final SoloClassDetailDataAppState soloClassDetailDataAppState;
 
   @override
   String toString() {
-    return 'AppState(userDataAppState: $userDataAppState, loginState: $loginState, upcomingWidgetAppState: $upcomingWidgetAppState, chatWidgetAppState: $chatWidgetAppState, peersWidgetAppState: $peersWidgetAppState, uploadLiveclassFileAppState: $uploadLiveclassFileAppState, navbarAppState: $navbarAppState, tpStreamAppState: $tpStreamAppState, previewDataAppState: $previewDataAppState, recordingPlayerAppState: $recordingPlayerAppState, pollTimerAppState: $pollTimerAppState)';
+    return 'AppState(userDataAppState: $userDataAppState, loginState: $loginState, upcomingWidgetAppState: $upcomingWidgetAppState, chatWidgetAppState: $chatWidgetAppState, peersWidgetAppState: $peersWidgetAppState, uploadLiveclassFileAppState: $uploadLiveclassFileAppState, navbarAppState: $navbarAppState, tpStreamAppState: $tpStreamAppState, previewDataAppState: $previewDataAppState, recordingPlayerAppState: $recordingPlayerAppState, pollTimerAppState: $pollTimerAppState, soloClassDetailDataAppState: $soloClassDetailDataAppState)';
   }
 
   @override
@@ -428,7 +457,11 @@ class _$AppStateImpl implements _AppState {
                     other.recordingPlayerAppState, recordingPlayerAppState) ||
                 other.recordingPlayerAppState == recordingPlayerAppState) &&
             (identical(other.pollTimerAppState, pollTimerAppState) ||
-                other.pollTimerAppState == pollTimerAppState));
+                other.pollTimerAppState == pollTimerAppState) &&
+            (identical(other.soloClassDetailDataAppState,
+                    soloClassDetailDataAppState) ||
+                other.soloClassDetailDataAppState ==
+                    soloClassDetailDataAppState));
   }
 
   @override
@@ -444,7 +477,8 @@ class _$AppStateImpl implements _AppState {
       tpStreamAppState,
       previewDataAppState,
       recordingPlayerAppState,
-      pollTimerAppState);
+      pollTimerAppState,
+      soloClassDetailDataAppState);
 
   @JsonKey(ignore: true)
   @override
@@ -465,7 +499,9 @@ abstract class _AppState implements AppState {
       required final TPStreamAppState tpStreamAppState,
       required final PreviewDataAppState previewDataAppState,
       required final RecordingPlayerAppState recordingPlayerAppState,
-      required final PollTimerAppState pollTimerAppState}) = _$AppStateImpl;
+      required final PollTimerAppState pollTimerAppState,
+      required final SoloClassDetailDataAppState
+          soloClassDetailDataAppState}) = _$AppStateImpl;
 
   @override
   UserDataAppState get userDataAppState;
@@ -489,6 +525,8 @@ abstract class _AppState implements AppState {
   RecordingPlayerAppState get recordingPlayerAppState;
   @override
   PollTimerAppState get pollTimerAppState;
+  @override
+  SoloClassDetailDataAppState get soloClassDetailDataAppState;
   @override
   @JsonKey(ignore: true)
   _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>

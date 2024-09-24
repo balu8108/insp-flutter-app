@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/teacher/soloclassrecording/screen/soloclassroomscreen.dart';
 import 'package:insp/widget/card/insp_card.dart';
 import 'package:insp/widget/card/model/insp_card_model.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
