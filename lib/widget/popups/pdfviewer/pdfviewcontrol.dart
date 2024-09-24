@@ -15,10 +15,9 @@ class PdfViewerFromUrlPoint extends StatefulWidget {
 }
 
 class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
-  PdfController? _pdfControllerWindow;
+  PdfControllerPinch? _pdfController;
   PDFViewerAppState pdfViewerAppState = const PDFViewerAppState();
   int currentPageIndex = 1;
-  double _scale = 1.0;
   bool isPdfLoaded = false;
 
   @override
@@ -30,7 +29,7 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
   Future<void> _loadPdf() async {
     try {
       final pdfBytes = await InternetFile.get(widget.pdfUrl);
-      _pdfControllerWindow = PdfController(
+      _pdfController = PdfControllerPinch(
         document: PdfDocument.openData(pdfBytes),
       );
       setState(() {
@@ -44,11 +43,11 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
   }
 
   void goToNextPage() {
-    if (currentPageIndex < (_pdfControllerWindow?.pagesCount ?? 0)) {
+    if (currentPageIndex < (_pdfController?.pagesCount ?? 0)) {
       setState(() {
         currentPageIndex++;
       });
-      _pdfControllerWindow?.jumpToPage(currentPageIndex);
+      _pdfController?.jumpToPage(currentPageIndex);
     }
   }
 
@@ -57,25 +56,13 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
       setState(() {
         currentPageIndex--;
       });
-      _pdfControllerWindow?.jumpToPage(currentPageIndex);
+      _pdfController?.jumpToPage(currentPageIndex);
     }
-  }
-
-  void zoomIn() {
-    setState(() {
-      _scale *= 1.2;
-    });
-  }
-
-  void zoomOut() {
-    setState(() {
-      _scale /= 1.2;
-    });
   }
 
   @override
   void dispose() {
-    _pdfControllerWindow?.dispose();
+    _pdfController?.dispose();
     super.dispose();
   }
 
@@ -83,25 +70,46 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
   Widget build(BuildContext context) {
     LoginResponseModelResult userData = getUserDataFromStore(context);
     return Column(children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: goToPreviousPage,
+          ),
+          if (_pdfController != null)
+            PdfPageNumber(
+              controller: _pdfController!,
+              builder: (_, page, loadingState, pagesCount) {
+                return Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    '$currentPageIndex/${pagesCount ?? 0}',
+                  ),
+                );
+              },
+            ),
+          IconButton(
+            icon: const Icon(Icons.arrow_forward),
+            onPressed: goToNextPage,
+          ),
+        ],
+      ),
+      const SizedBox(height: 10),
       Expanded(
         child: SizedBox(
           width: MediaQuery.of(context).size.width - 1100 < 500
               ? 450
               : MediaQuery.of(context).size.width,
-          height: 800,
-          child: isPdfLoaded && _pdfControllerWindow != null
+          height: 500,
+          child: isPdfLoaded && _pdfController != null
               ? Stack(
                   children: [
-                    Positioned.fill(
-                      child: Transform.scale(
-                        scale: _scale,
-                        child: PdfView(
-                          controller: _pdfControllerWindow!,
-                          physics: const NeverScrollableScrollPhysics(),
-                          backgroundDecoration:
-                              const BoxDecoration(color: Colors.white),
-                        ),
-                      ),
+                    PdfViewPinch(
+                      controller: _pdfController!,
+                      scrollDirection: Axis.horizontal,
+                      backgroundDecoration:
+                          const BoxDecoration(color: Colors.white),
                     ),
                     Positioned.fill(
                       child: Align(
@@ -124,40 +132,6 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
                 )
               : const Center(child: CircularProgressIndicator()),
         ),
-      ),
-      const SizedBox(height: 10),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: goToPreviousPage,
-          ),
-          if (_pdfControllerWindow != null)
-            PdfPageNumber(
-              controller: _pdfControllerWindow!,
-              builder: (_, page, loadingState, pagesCount) {
-                return Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    '$currentPageIndex/${pagesCount ?? 0}',
-                  ),
-                );
-              },
-            ),
-          IconButton(
-            icon: const Icon(Icons.arrow_forward),
-            onPressed: goToNextPage,
-          ),
-          IconButton(
-            icon: const Icon(Icons.zoom_out),
-            onPressed: zoomOut,
-          ),
-          IconButton(
-            icon: const Icon(Icons.zoom_in),
-            onPressed: zoomIn,
-          ),
-        ],
       ),
     ]);
   }

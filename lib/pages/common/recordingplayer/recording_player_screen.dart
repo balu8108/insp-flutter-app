@@ -21,9 +21,6 @@ class _RecordingPlayerScreenState extends State<RecordingPlayerScreen> {
   @override
   void initState() {
     super.initState();
-    final store = StoreProvider.of<AppState>(context, listen: false);
-    store.dispatch(
-        getRecordedVideoData(context, widget.classId, widget.classType));
   }
 
   void onPressedRecording(BuildContext context, String tpStreamId) {
@@ -39,6 +36,9 @@ class _RecordingPlayerScreenState extends State<RecordingPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context, listen: false);
+    store.dispatch(
+        getRecordedVideoData(context, widget.classId, widget.classType));
     bool isWebOrLandScape = context.isWebOrLandScape();
     return Container(
         padding: const EdgeInsets.all(10.0),

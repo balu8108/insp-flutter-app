@@ -39,8 +39,10 @@ class ScheduleClassMobileBoxWidgetState extends State<ScheduleClassMobileBox> {
         return widget.upcomingWidgetAppState.ongoing;
       case 'Today':
         return widget.upcomingWidgetAppState.today;
+      case 'Week':
+        return widget.upcomingWidgetAppState.week;
       default:
-        return [];
+        return widget.upcomingWidgetAppState.completed;
     }
   }
 

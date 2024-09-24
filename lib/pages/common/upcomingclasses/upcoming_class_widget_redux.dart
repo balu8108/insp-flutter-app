@@ -62,10 +62,6 @@ ThunkAction<AppState> getAllUpcomingClass(BuildContext context) {
               allLecture.data.data.today,
               allLecture.data.data.week,
               allLecture.data.data.completed);
-      // final List<AllLecturesForCourseResponseModelData> mobileData = [
-      //   ...allLecture.data.data.ongoing,
-      //   ...allLecture.data.data.today,
-      // ];
       store.dispatch(UpdateWeeklyData(weeklyData: allSubjectsResults));
     } catch (error) {
       // Handle errors appropriately here

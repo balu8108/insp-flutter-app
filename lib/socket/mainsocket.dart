@@ -296,5 +296,7 @@ Future<void> leaveRoomHandler(Store<AppState> store) async {
         alignment: Alignment.topRight,
       );
     });
+  } else {
+    store.dispatch(setRecordingTpStreamInitialData());
   }
 }
