@@ -30,7 +30,7 @@ class RecordingDetailWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(flex: 9, child: INSPHeading('Recorded Class')),
+              Expanded(flex: 9, child: INSPHeading('Live Recorded Class')),
             ],
           ),
           const SizedBox(
@@ -178,17 +178,12 @@ class RecordingDetailWidget extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           LectureRecordingCardWidget(
-              liveClassRoomRecordings: recordingPlayerDetail
-                      .liveClassRoomRecordings.isNotEmpty
-                  ? recordingPlayerDetail.liveClassRoomRecordings.sublist(1)
-                  : [], // later we have to add condition. right now we now only 1 recording will we there
-              classId: recordingPlayerDetail.id.toString(),
-              topicName: recordingPlayerDetail.liveClassRoomDetail.agenda,
-              mentorName: recordingPlayerDetail.mentorName,
-              description:
-                  recordingPlayerDetail.liveClassRoomDetail.description,
-              files: recordingPlayerDetail.liveClassRoomFiles,
-              agenda: recordingPlayerDetail.liveClassRoomDetail.agenda)
+            liveClassRoomRecordings: recordingPlayerDetail
+                    .liveClassRoomRecordings.isNotEmpty
+                ? recordingPlayerDetail.liveClassRoomRecordings.sublist(1)
+                : [], // later we have to add condition. right now we now only 1 recording will we there
+            classId: recordingPlayerDetail.id.toString(),
+          )
         ]));
   }
 }

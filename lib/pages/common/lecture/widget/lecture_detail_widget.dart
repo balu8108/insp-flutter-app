@@ -320,12 +320,7 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
                 const SizedBox(height: 10),
                 LectureRecordingCardWidget(
                     liveClassRoomRecordings: lec.liveClassRoomRecordings,
-                    classId: lec.id.toString(),
-                    topicName: lec.liveClassRoomDetail.topicName,
-                    mentorName: lec.mentorName,
-                    description: lec.liveClassRoomDetail.description,
-                    files: lec.liveClassRoomFiles,
-                    agenda: lec.liveClassRoomDetail.agenda)
+                    classId: lec.id.toString())
               ],
             ),
             const SizedBox(height: 40),

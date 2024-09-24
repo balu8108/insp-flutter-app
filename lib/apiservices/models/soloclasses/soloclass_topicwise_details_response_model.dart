@@ -34,7 +34,7 @@ class TransformedModelData {
   final String subjectId, topicId, topic;
 
   @JsonKey(name: 'SoloClassRoomRecordings')
-  final List<LiveClassRoomRecordings> soloClassRoomRecordings;
+  final List<SoloClassRoomRecordings> soloClassRoomRecordings;
 
   @JsonKey(name: 'SoloClassRoomFiles')
   final List<LiveClassRoomFile> soloClassRoomFiles;
@@ -44,4 +44,32 @@ class TransformedModelData {
 
   @override
   Map<String, dynamic> toJson() => _$TransformedModelDataToJson(this);
+}
+
+@JsonSerializable()
+class SoloClassRoomRecordings {
+  const SoloClassRoomRecordings(
+      [this.id = 0,
+      this.key = '',
+      this.soloClassRoomId = 0,
+      this.tpStreamId = '',
+      this.rtmpUrl = '',
+      this.streamKey = '',
+      this.status = '',
+      this.createdAt = '',
+      this.updatedAt = '']);
+
+  final int id, soloClassRoomId;
+  final String key, tpStreamId, status;
+  final String createdAt, updatedAt;
+  @JsonKey(name: 'rtmp_url')
+  final String rtmpUrl;
+  @JsonKey(name: 'stream_key')
+  final String streamKey;
+
+  factory SoloClassRoomRecordings.fromJson(Map<String, Object?> json) =>
+      _$SoloClassRoomRecordingsFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$SoloClassRoomRecordingsToJson(this);
 }

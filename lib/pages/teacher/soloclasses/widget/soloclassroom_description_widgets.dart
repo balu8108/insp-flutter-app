@@ -3,8 +3,8 @@ import 'package:insp/apiservices/models/soloclasses/soloclass_topicwise_details_
 import 'package:insp/data/hardcoded/library_subjects.dart';
 import 'package:insp/utils/file_box_component.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
-import 'package:insp/widget/card/lecture_recording_card.dart';
 import 'package:insp/widget/card/model/insp_card_model.dart';
+import 'package:insp/widget/card/solo_recording_card.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
 
 class SoloclassroomDescriptionWidgets extends StatefulWidget {
@@ -175,15 +175,9 @@ class _SoloclassroomDescriptionWidgetsState
           ),
         ),
         const SizedBox(height: 10),
-        LectureRecordingCardWidget(
-          liveClassRoomRecordings: widget
+        SoloRecordingCardWidget(
+          soloClassRoomRecordings: widget
               .soloclasstopicdetail.transformedData.soloClassRoomRecordings,
-          classId: "",
-          topicName: widget.soloclasstopicdetail.transformedData.topic,
-          mentorName: "Nitin Sachan",
-          description: "",
-          files: widget.soloclasstopicdetail.transformedData.soloClassRoomFiles,
-          agenda: "",
         ),
       ],
     );

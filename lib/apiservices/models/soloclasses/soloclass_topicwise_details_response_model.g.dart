@@ -32,7 +32,7 @@ TransformedModelData _$TransformedModelDataFromJson(
       json['topic'] as String? ?? '',
       (json['SoloClassRoomRecordings'] as List<dynamic>?)
               ?.map((e) =>
-                  LiveClassRoomRecordings.fromJson(e as Map<String, dynamic>))
+                  SoloClassRoomRecordings.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       (json['SoloClassRoomFiles'] as List<dynamic>?)
@@ -50,4 +50,32 @@ Map<String, dynamic> _$TransformedModelDataToJson(
       'topic': instance.topic,
       'SoloClassRoomRecordings': instance.soloClassRoomRecordings,
       'SoloClassRoomFiles': instance.soloClassRoomFiles,
+    };
+
+SoloClassRoomRecordings _$SoloClassRoomRecordingsFromJson(
+        Map<String, dynamic> json) =>
+    SoloClassRoomRecordings(
+      (json['id'] as num?)?.toInt() ?? 0,
+      json['key'] as String? ?? '',
+      (json['soloClassRoomId'] as num?)?.toInt() ?? 0,
+      json['tpStreamId'] as String? ?? '',
+      json['rtmp_url'] as String? ?? '',
+      json['stream_key'] as String? ?? '',
+      json['status'] as String? ?? '',
+      json['createdAt'] as String? ?? '',
+      json['updatedAt'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$SoloClassRoomRecordingsToJson(
+        SoloClassRoomRecordings instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'soloClassRoomId': instance.soloClassRoomId,
+      'key': instance.key,
+      'tpStreamId': instance.tpStreamId,
+      'status': instance.status,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+      'rtmp_url': instance.rtmpUrl,
+      'stream_key': instance.streamKey,
     };

@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:insp/pages/common/recordingplayer/tpStream_recorded_mobile_player.dart';
 import 'package:insp/pages/common/recordingplayer/tpStream_recorded_player.dart';
-import 'package:insp/pages/common/recordingplayer/recording_detail_widget.dart';
+import 'package:insp/pages/common/recordingplayer/liveclasses/recording_detail_widget.dart';
 import 'package:insp/pages/common/recordingplayer/recording_player_redux.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/utils/extensions.dart';
 
 class RecordingPlayerScreen extends StatefulWidget {
-  const RecordingPlayerScreen(
-      {super.key, required this.classId, required this.classType});
+  const RecordingPlayerScreen({super.key, required this.classId});
 
-  final String classId, classType;
+  final String classId;
 
   @override
   _RecordingPlayerScreenState createState() => _RecordingPlayerScreenState();
@@ -30,15 +29,13 @@ class _RecordingPlayerScreenState extends State<RecordingPlayerScreen> {
 
   void onUpdate() {
     final store = StoreProvider.of<AppState>(context, listen: false);
-    store.dispatch(
-        getRecordedVideoData(context, widget.classId, widget.classType));
+    store.dispatch(getLiveRecordedVideoData(context, widget.classId));
   }
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context, listen: false);
-    store.dispatch(
-        getRecordedVideoData(context, widget.classId, widget.classType));
+    store.dispatch(getLiveRecordedVideoData(context, widget.classId));
     bool isWebOrLandScape = context.isWebOrLandScape();
     return Container(
         padding: const EdgeInsets.all(10.0),

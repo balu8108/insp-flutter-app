@@ -15,7 +15,10 @@ class SoloclassRecording extends StatelessWidget {
         converter: (store) => store.state.soloClassDetailDataAppState,
         builder: (context, SoloClassDetailDataAppState state) {
           return Container(
-              height: double.infinity,
+              height: MediaQuery.of(context).size.height - 150 < 600
+                  ? MediaQuery.of(context).size.height - 150
+                  : 600,
+              width: double.infinity,
               padding: const EdgeInsets.all(16.0),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(

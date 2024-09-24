@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:insp/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
+import 'package:insp/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
 import 'package:insp/main.dart';
-import 'package:insp/pages/common/recordingplayer/liveclasses/recording_player_screen.dart';
+import 'package:insp/pages/common/recordingplayer/soloclasses/solo_recording_player_screen.dart';
 
-Widget LectureRecordingCardWidget({
-  required List<LiveClassRoomRecordings> liveClassRoomRecordings,
-  required String classId,
+Widget SoloRecordingCardWidget({
+  required List<SoloClassRoomRecordings> soloClassRoomRecordings,
 }) {
   final ScrollController scrollController = ScrollController();
 
   return Container(
       height: 100,
       margin: const EdgeInsets.only(right: 16),
-      child: liveClassRoomRecordings.isNotEmpty
+      child: soloClassRoomRecordings.isNotEmpty
           ? Scrollbar(
               controller: scrollController,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 controller: scrollController,
-                itemCount: liveClassRoomRecordings.length,
+                itemCount: soloClassRoomRecordings.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                       onTap: () {
@@ -26,8 +25,10 @@ Widget LectureRecordingCardWidget({
                             context,
                             MaterialPageRoute(
                                 builder: (context) => MainScaffold(
-                                        content: RecordingPlayerScreen(
-                                      classId: classId,
+                                        content: SoloRecordingPlayerScreen(
+                                      classId: soloClassRoomRecordings[index]
+                                          .soloClassRoomId
+                                          .toString(),
                                     ))));
                       },
                       child: MouseRegion(

@@ -23,6 +23,7 @@ import 'package:insp/apiservices/models/mycourses/get_lecture_no_response_model.
 import 'package:insp/apiservices/models/ratingfeedback/latest_completed_class_response_model.dart';
 import 'package:insp/apiservices/models/ratingfeedback/rating_feedback_rating_detail_response_model.dart';
 import 'package:insp/apiservices/models/recording/view_recording_response_model.dart';
+import 'package:insp/apiservices/models/recording/view_solo_recording_response_model.dart';
 import 'package:insp/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:insp/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
 import 'package:insp/apiservices/models/soloclasses/soloclass_detail_response_model.dart';
@@ -127,11 +128,17 @@ abstract class RemoteDataSource {
   Future<HttpResponse<AllSoloClassesResponseModel>> getAllSoloClassForTopic(
       String topicId, String secretTokenHeader);
 
+  Future<HttpResponse<RatingTopicResponseModel>> stopSoloClassRecording(
+      String tpStreamId, String secretTokenHeader);
+
   Future<HttpResponse<GenericOpenFileResponseModel>> getDocumentUrl(
       String docId, String docType, String secretTokenHeader);
 
   Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
-      String type, String id, String secretTokenHeader);
+      String id, String secretTokenHeader);
+
+  Future<HttpResponse<ViewSoloRecordingResponseModel>> getSoloRecordingData(
+      String id, String secretTokenHeader);
 
   Future<HttpResponse<CreateStudentFeedbackResponseModel>>
       createStudentFeedback(CreateStudentFeedbackRequestModel feedbackrequest,
@@ -262,6 +269,13 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
+  Future<HttpResponse<RatingTopicResponseModel>> stopSoloClassRecording(
+      String tpStreamId, String secretTokenHeader) {
+    return deviceNetworkService.stopSoloClassRecording(
+        tpStreamId, secretTokenHeader);
+  }
+
+  @override
   Future<HttpResponse<LectureDetailByRoomIdResponseModel>>
       getLecturesDetailByRoomId(String roomId, String secretTokenHeader) {
     return deviceNetworkService.getLecturesDetailByRoomId(
@@ -349,8 +363,14 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
   @override
   Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
-      String type, String id, String secretTokenHeader) {
-    return deviceNetworkService.getRecordingData(type, id, secretTokenHeader);
+      String id, String secretTokenHeader) {
+    return deviceNetworkService.getRecordingData(id, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<ViewSoloRecordingResponseModel>> getSoloRecordingData(
+      String id, String secretTokenHeader) {
+    return deviceNetworkService.getSoloRecordingData(id, secretTokenHeader);
   }
 
   @override

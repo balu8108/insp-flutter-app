@@ -2,10 +2,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:insp/apiservices/models/login/login_response_model.dart';
 import 'package:insp/apiservices/models/recording/view_recording_response_model.dart';
+import 'package:insp/apiservices/models/recording/view_solo_recording_response_model.dart';
 import 'package:insp/apiservices/models/tpstream/video_request_model.dart';
 import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/main.dart';
+import 'package:insp/pages/home/home_screen.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/card/model/recording_player_card_model.dart';
@@ -21,6 +25,8 @@ class RecordingPlayerAppState with _$RecordingPlayerAppState {
   const factory RecordingPlayerAppState(
           {@Default(RecordVideoResponseModelData())
           RecordVideoResponseModelData recordedVideoData,
+          @Default(RecordSoloVideoResponseModelData())
+          RecordSoloVideoResponseModelData soloRecordedVideoData,
           @Default(RecordingPlayerCard('', '', '', [], [], ''))
           RecordingPlayerCard selectedItem,
           @Default('') String accestId,
@@ -31,6 +37,11 @@ class RecordingPlayerAppState with _$RecordingPlayerAppState {
 class UpdateRecordVideoData extends RecordingPlayerAction {
   RecordVideoResponseModelData recordedVideoData;
   UpdateRecordVideoData({required this.recordedVideoData});
+}
+
+class UpdateSoloRecordVideoData extends RecordingPlayerAction {
+  RecordSoloVideoResponseModelData soloRecordedVideoData;
+  UpdateSoloRecordVideoData({required this.soloRecordedVideoData});
 }
 
 class UpdateSelectedItem extends RecordingPlayerAction {
@@ -56,6 +67,8 @@ RecordingPlayerAppState recordingPlayerReducer(
     return state.copyWith(selectedItem: action.selectedItem);
   } else if (action is UpdateRecordVideoData) {
     return state.copyWith(recordedVideoData: action.recordedVideoData);
+  } else if (action is UpdateSoloRecordVideoData) {
+    return state.copyWith(soloRecordedVideoData: action.soloRecordedVideoData);
   } else if (action is UpdateVideosResponse) {
     return state.copyWith(videoResponse: action.videoResponse);
   } else if (action is UpdateAccestId) {
@@ -64,15 +77,15 @@ RecordingPlayerAppState recordingPlayerReducer(
   return state;
 }
 
-ThunkAction<AppState> getRecordedVideoData(
-    BuildContext context, String classId, String classType) {
+ThunkAction<AppState> getLiveRecordedVideoData(
+    BuildContext context, String classId) {
   return (Store<AppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
-      if (classType.isNotEmpty && classId.isNotEmpty) {
+      if (classId.isNotEmpty) {
         String userToken = getUserToken(context);
-        final previewData = await remoteDataSource.getRecordingData(
-            classType, classId, userToken);
+        final previewData =
+            await remoteDataSource.getRecordingData(classId, userToken);
 
         if (previewData.response.statusCode == 200) {
           ViewRecordingResponseModel recordedVideoDatas =
@@ -82,6 +95,43 @@ ThunkAction<AppState> getRecordedVideoData(
 
           store.dispatch(getRecordedVideoUrlApi(context,
               recordedVideoDatas.data.liveClassRoomRecordings[0].tpStreamId));
+        }
+      } else {
+        print("tpstream url null");
+      }
+    } catch (error) {
+      print(error);
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.error,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: const Text('Some issue, please try again'),
+        alignment: Alignment.topRight,
+      );
+    }
+  };
+}
+
+ThunkAction<AppState> getSoloRecordedVideoData(
+    BuildContext context, String classId) {
+  return (Store<AppState> store) async {
+    try {
+      final remoteDataSource = RemoteDataSource();
+      if (classId.isNotEmpty) {
+        String userToken = getUserToken(context);
+        final previewData =
+            await remoteDataSource.getSoloRecordingData(classId, userToken);
+
+        if (previewData.response.statusCode == 200) {
+          ViewSoloRecordingResponseModel recordedVideoDatas =
+              ViewSoloRecordingResponseModel.fromJson(
+                  previewData.response.data);
+          store.dispatch(UpdateSoloRecordVideoData(
+              soloRecordedVideoData: recordedVideoDatas.data));
+
+          store.dispatch(getRecordedVideoUrlApi(context,
+              recordedVideoDatas.data.soloClassRoomRecordings[0].tpStreamId));
         }
       } else {
         print("tpstream url null");
@@ -133,11 +183,95 @@ ThunkAction<AppState> getRecordedVideoUrlApi(
   };
 }
 
+ThunkAction<AppState> stopSoloClassLecture(BuildContext context) {
+  return (Store<AppState> store) async {
+    try {
+      final remoteDataSource = RemoteDataSource();
+      // Validate the data before making the API call
+      String userToken = getUserToken(context);
+
+      // Fetch the tpStreamId from Redux state
+      String tpStreamId = store.state.soloClassDetailDataAppState.soloData
+              .soloClassRoomRecordings.isNotEmpty
+          ? store.state.soloClassDetailDataAppState.soloData
+              .soloClassRoomRecordings[0].tpStreamId
+          : '';
+
+      // Check if the tpStreamId is valid
+      if (tpStreamId.isNotEmpty) {
+        // Call the API to stop the recording
+        final previewData = await remoteDataSource.stopSoloClassRecording(
+            tpStreamId, userToken);
+
+        // Check for a successful response
+        if (previewData.response.statusCode == 200) {
+          // Dispatch Redux action to reset the recorded video data
+          store.dispatch(setRecordingTpStreamInitialData());
+          // Call refresh function to update the UI or navigate
+          LoginResponseModelResult userDatas = await getUserData();
+          // Close the current dialog first and then navigate to the home screen.
+          // Use Future.delayed to ensure the widget tree has stabilized after popping the dialog
+          navigatorKey.currentState?.push(
+            MaterialPageRoute(
+                builder: (context) =>
+                    MainScaffold(content: HomeScreen(userData: userDatas))),
+          );
+          // Show success notification
+          toastification.show(
+            context: context, // optional if you use ToastificationWrapper
+            type: ToastificationType.success,
+            style: ToastificationStyle.fillColored,
+            autoCloseDuration: const Duration(seconds: 3),
+            title: const Text('Solo class ended'),
+            alignment: Alignment.topRight,
+          );
+        } else {
+          // Handle non-200 response, maybe show an error toast
+          toastification.show(
+            context: context,
+            type: ToastificationType.error,
+            style: ToastificationStyle.fillColored,
+            autoCloseDuration: const Duration(seconds: 3),
+            title: const Text('Failed to stop solo class recording'),
+            alignment: Alignment.topRight,
+          );
+        }
+      } else {
+        Navigator.of(context).pop();
+        // Handle empty tpStreamId case
+        toastification.show(
+          context: context,
+          type: ToastificationType.error,
+          style: ToastificationStyle.fillColored,
+          autoCloseDuration: const Duration(seconds: 3),
+          title: const Text('No recording found to stop'),
+          alignment: Alignment.topRight,
+        );
+      }
+    } catch (error) {
+      // Log the error for debugging purposes (can use any logging tool or print statement)
+      print('Error stopping solo class lecture: $error');
+
+      // Show error notification
+      toastification.show(
+        context: context, // optional if you use ToastificationWrapper
+        type: ToastificationType.error,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: const Duration(seconds: 3),
+        title: const Text('Some issue, please try again'),
+        alignment: Alignment.topRight,
+      );
+    }
+  };
+}
+
 ThunkAction<AppState> setRecordingTpStreamInitialData() {
   return (Store<AppState> store) async {
     store.dispatch(UpdateAccestId(accestId: ''));
     store.dispatch(UpdateRecordVideoData(
         recordedVideoData: const RecordVideoResponseModelData()));
+    store.dispatch(UpdateSoloRecordVideoData(
+        soloRecordedVideoData: const RecordSoloVideoResponseModelData()));
     store.dispatch(UpdateSelectedItem(
         selectedItem: const RecordingPlayerCard('', '', '', [], [], '')));
     store.dispatch(

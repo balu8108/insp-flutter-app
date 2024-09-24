@@ -26,6 +26,7 @@ import 'package:insp/apiservices/models/mycourses/physics_course_topics_response
 import 'package:insp/apiservices/models/ratingfeedback/latest_completed_class_response_model.dart';
 import 'package:insp/apiservices/models/ratingfeedback/rating_feedback_rating_detail_response_model.dart';
 import 'package:insp/apiservices/models/recording/view_recording_response_model.dart';
+import 'package:insp/apiservices/models/recording/view_solo_recording_response_model.dart';
 import 'package:insp/apiservices/models/soloclasses/all_solo_classes_response_model.dart';
 import 'package:insp/apiservices/models/soloclasses/latest_solo_classes_response_model.dart';
 import 'package:insp/apiservices/models/soloclasses/soloclass_detail_response_model.dart';
@@ -128,6 +129,11 @@ abstract class NetworkService {
       @Path() String soloclassId,
       @Header('Authorization') String secretTokenHeader);
 
+  @GET('/solo-lecture/stop-soloclass-recording/{tpStreamId}')
+  Future<HttpResponse<RatingTopicResponseModel>> stopSoloClassRecording(
+      @Path() String tpStreamId,
+      @Header('Authorization') String secretTokenHeader);
+
   @GET('/solo-lecture/get-topic-details/{topicId}')
   Future<HttpResponse<SoloclassTopicwiseDetailsResponseModel>>
       getSoloClassTopicWiseDetails(@Path() String topicId,
@@ -204,9 +210,13 @@ abstract class NetworkService {
       @Body() RatingTopicRequestModel feedbackrequest,
       @Header('Authorization') String secretTokenHeader);
 
-  @GET('/recording/view-recording')
+  @GET('/recording/view-live-recording')
   Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
-      @Query('type') String type,
+      @Query('id') String id,
+      @Header('Authorization') String secretTokenHeader);
+
+  @GET('/recording/view-solo-recording')
+  Future<HttpResponse<ViewSoloRecordingResponseModel>> getSoloRecordingData(
       @Query('id') String id,
       @Header('Authorization') String secretTokenHeader);
 

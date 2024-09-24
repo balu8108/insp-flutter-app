@@ -519,6 +519,38 @@ class _NetworkService implements NetworkService {
   }
 
   @override
+  Future<HttpResponse<RatingTopicResponseModel>> stopSoloClassRecording(
+    String tpStreamId,
+    String secretTokenHeader,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<RatingTopicResponseModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/solo-lecture/stop-soloclass-recording/${tpStreamId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = RatingTopicResponseModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
   Future<HttpResponse<SoloclassTopicwiseDetailsResponseModel>>
       getSoloClassTopicWiseDetails(
     String topicId,
@@ -1009,15 +1041,11 @@ class _NetworkService implements NetworkService {
 
   @override
   Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
-    String type,
     String id,
     String secretTokenHeader,
   ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'type': type,
-      r'id': id,
-    };
+    final queryParameters = <String, dynamic>{r'id': id};
     final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
@@ -1029,7 +1057,7 @@ class _NetworkService implements NetworkService {
     )
             .compose(
               _dio.options,
-              '/recording/view-recording',
+              '/recording/view-live-recording',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -1039,6 +1067,38 @@ class _NetworkService implements NetworkService {
               baseUrl,
             ))));
     final value = ViewRecordingResponseModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<ViewSoloRecordingResponseModel>> getSoloRecordingData(
+    String id,
+    String secretTokenHeader,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'id': id};
+    final _headers = <String, dynamic>{r'Authorization': secretTokenHeader};
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<ViewSoloRecordingResponseModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/recording/view-solo-recording',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ViewSoloRecordingResponseModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

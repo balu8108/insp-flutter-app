@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$RecordingPlayerAppState {
   RecordVideoResponseModelData get recordedVideoData =>
       throw _privateConstructorUsedError;
+  RecordSoloVideoResponseModelData get soloRecordedVideoData =>
+      throw _privateConstructorUsedError;
   RecordingPlayerCard get selectedItem => throw _privateConstructorUsedError;
   String get accestId => throw _privateConstructorUsedError;
   VideoResponseModel get videoResponse => throw _privateConstructorUsedError;
@@ -35,6 +37,7 @@ abstract class $RecordingPlayerAppStateCopyWith<$Res> {
   @useResult
   $Res call(
       {RecordVideoResponseModelData recordedVideoData,
+      RecordSoloVideoResponseModelData soloRecordedVideoData,
       RecordingPlayerCard selectedItem,
       String accestId,
       VideoResponseModel videoResponse});
@@ -55,6 +58,7 @@ class _$RecordingPlayerAppStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? recordedVideoData = null,
+    Object? soloRecordedVideoData = null,
     Object? selectedItem = null,
     Object? accestId = null,
     Object? videoResponse = null,
@@ -64,6 +68,10 @@ class _$RecordingPlayerAppStateCopyWithImpl<$Res,
           ? _value.recordedVideoData
           : recordedVideoData // ignore: cast_nullable_to_non_nullable
               as RecordVideoResponseModelData,
+      soloRecordedVideoData: null == soloRecordedVideoData
+          ? _value.soloRecordedVideoData
+          : soloRecordedVideoData // ignore: cast_nullable_to_non_nullable
+              as RecordSoloVideoResponseModelData,
       selectedItem: null == selectedItem
           ? _value.selectedItem
           : selectedItem // ignore: cast_nullable_to_non_nullable
@@ -91,6 +99,7 @@ abstract class _$$RecordingPlayerAppStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {RecordVideoResponseModelData recordedVideoData,
+      RecordSoloVideoResponseModelData soloRecordedVideoData,
       RecordingPlayerCard selectedItem,
       String accestId,
       VideoResponseModel videoResponse});
@@ -110,6 +119,7 @@ class __$$RecordingPlayerAppStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? recordedVideoData = null,
+    Object? soloRecordedVideoData = null,
     Object? selectedItem = null,
     Object? accestId = null,
     Object? videoResponse = null,
@@ -119,6 +129,10 @@ class __$$RecordingPlayerAppStateImplCopyWithImpl<$Res>
           ? _value.recordedVideoData
           : recordedVideoData // ignore: cast_nullable_to_non_nullable
               as RecordVideoResponseModelData,
+      soloRecordedVideoData: null == soloRecordedVideoData
+          ? _value.soloRecordedVideoData
+          : soloRecordedVideoData // ignore: cast_nullable_to_non_nullable
+              as RecordSoloVideoResponseModelData,
       selectedItem: null == selectedItem
           ? _value.selectedItem
           : selectedItem // ignore: cast_nullable_to_non_nullable
@@ -142,6 +156,7 @@ class _$RecordingPlayerAppStateImpl
     implements _RecordingPlayerAppState {
   const _$RecordingPlayerAppStateImpl(
       {this.recordedVideoData = const RecordVideoResponseModelData(),
+      this.soloRecordedVideoData = const RecordSoloVideoResponseModelData(),
       this.selectedItem = const RecordingPlayerCard('', '', '', [], [], ''),
       this.accestId = '',
       this.videoResponse = const VideoResponseModel()});
@@ -149,6 +164,9 @@ class _$RecordingPlayerAppStateImpl
   @override
   @JsonKey()
   final RecordVideoResponseModelData recordedVideoData;
+  @override
+  @JsonKey()
+  final RecordSoloVideoResponseModelData soloRecordedVideoData;
   @override
   @JsonKey()
   final RecordingPlayerCard selectedItem;
@@ -161,7 +179,7 @@ class _$RecordingPlayerAppStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecordingPlayerAppState(recordedVideoData: $recordedVideoData, selectedItem: $selectedItem, accestId: $accestId, videoResponse: $videoResponse)';
+    return 'RecordingPlayerAppState(recordedVideoData: $recordedVideoData, soloRecordedVideoData: $soloRecordedVideoData, selectedItem: $selectedItem, accestId: $accestId, videoResponse: $videoResponse)';
   }
 
   @override
@@ -170,6 +188,7 @@ class _$RecordingPlayerAppStateImpl
     properties
       ..add(DiagnosticsProperty('type', 'RecordingPlayerAppState'))
       ..add(DiagnosticsProperty('recordedVideoData', recordedVideoData))
+      ..add(DiagnosticsProperty('soloRecordedVideoData', soloRecordedVideoData))
       ..add(DiagnosticsProperty('selectedItem', selectedItem))
       ..add(DiagnosticsProperty('accestId', accestId))
       ..add(DiagnosticsProperty('videoResponse', videoResponse));
@@ -182,6 +201,8 @@ class _$RecordingPlayerAppStateImpl
             other is _$RecordingPlayerAppStateImpl &&
             (identical(other.recordedVideoData, recordedVideoData) ||
                 other.recordedVideoData == recordedVideoData) &&
+            (identical(other.soloRecordedVideoData, soloRecordedVideoData) ||
+                other.soloRecordedVideoData == soloRecordedVideoData) &&
             (identical(other.selectedItem, selectedItem) ||
                 other.selectedItem == selectedItem) &&
             (identical(other.accestId, accestId) ||
@@ -191,8 +212,8 @@ class _$RecordingPlayerAppStateImpl
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, recordedVideoData, selectedItem, accestId, videoResponse);
+  int get hashCode => Object.hash(runtimeType, recordedVideoData,
+      soloRecordedVideoData, selectedItem, accestId, videoResponse);
 
   @JsonKey(ignore: true)
   @override
@@ -205,12 +226,15 @@ class _$RecordingPlayerAppStateImpl
 abstract class _RecordingPlayerAppState implements RecordingPlayerAppState {
   const factory _RecordingPlayerAppState(
       {final RecordVideoResponseModelData recordedVideoData,
+      final RecordSoloVideoResponseModelData soloRecordedVideoData,
       final RecordingPlayerCard selectedItem,
       final String accestId,
       final VideoResponseModel videoResponse}) = _$RecordingPlayerAppStateImpl;
 
   @override
   RecordVideoResponseModelData get recordedVideoData;
+  @override
+  RecordSoloVideoResponseModelData get soloRecordedVideoData;
   @override
   RecordingPlayerCard get selectedItem;
   @override

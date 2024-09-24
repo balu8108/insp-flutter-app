@@ -334,6 +334,7 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
 
         int soloClassId = response.data['soloClassRoomId'];
+        int tpstreamId = response.data['soloClassRoomId'];
 
         navigateToSolo(soloClassId.toString());
 

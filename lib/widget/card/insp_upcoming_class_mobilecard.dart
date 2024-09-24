@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insp/main.dart';
 import 'package:insp/pages/common/livestream/preview/liveclass_preview.dart';
-import 'package:insp/pages/common/recordingplayer/recording_player_screen.dart';
+import 'package:insp/pages/common/recordingplayer/liveclasses/recording_player_screen.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/card/model/upcoming_lecture_card_model.dart';
 import 'package:insp/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
@@ -81,7 +81,6 @@ class ScheduleClassMobileBoxWidgetState extends State<ScheduleClassMobileBox> {
                       MaterialPageRoute(
                         builder: (context) => MainScaffold(
                             content: RecordingPlayerScreen(
-                          classType: "live",
                           classId: data.id.toString(),
                         )),
                       ),
