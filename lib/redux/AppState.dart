@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/peers_widget_redux.dart';
+import 'package:insp/pages/common/livestream/widget/chat/poll_timer_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/preview_data_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
 import 'package:insp/pages/common/recordingplayer/recording_player_redux.dart';
@@ -25,5 +26,6 @@ class AppState with _$AppState {
       required NavbarAppState navbarAppState,
       required TPStreamAppState tpStreamAppState,
       required PreviewDataAppState previewDataAppState,
-      required RecordingPlayerAppState recordingPlayerAppState}) = _AppState;
+      required RecordingPlayerAppState recordingPlayerAppState,
+      required PollTimerAppState pollTimerAppState}) = _AppState;
 }

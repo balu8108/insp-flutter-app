@@ -3,6 +3,7 @@ import 'package:insp/pages/common/livestream/mainscreen/widget/chats/liveChat.da
 import 'package:insp/pages/common/livestream/mainscreen/widget/chats/liveleaderboard.dart';
 import 'package:insp/pages/common/livestream/mainscreen/widget/chats/livepollresult.dart';
 import 'package:insp/pages/common/livestream/mainscreen/widget/chats/livequestion.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/chats/middlewidget.dart';
 
 class LiveLeftPart extends StatefulWidget {
   const LiveLeftPart({super.key});
@@ -13,10 +14,12 @@ class LiveLeftPart extends StatefulWidget {
 
 class _LiveLeftPartState extends State<LiveLeftPart> {
   int _selectedLeaderboardIndex = 3;
+  bool showFirstWidget = true;
+  // bool isTimerInitialized = false;
 
   final List<Widget> _leaderboards = [
-    LiveLeaderboard(),
-    LivePollResult(),
+    const LiveLeaderboard(),
+    const LivePollResult(),
     const LiveQuestion(),
     const LiveChat(),
   ];
@@ -38,9 +41,16 @@ class _LiveLeftPartState extends State<LiveLeftPart> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child:
-                _leaderboards[_selectedLeaderboardIndex], // Use other widgets
+          Visibility(
+            visible: _selectedLeaderboardIndex == 0,
+            child: const MiddleWidget(),
+          ),
+          Visibility(
+            visible: _selectedLeaderboardIndex != 0,
+            child: Expanded(
+              child:
+                  _leaderboards[_selectedLeaderboardIndex], // Use other widgets
+            ),
           ),
           const SizedBox(height: 10),
           SizedBox(

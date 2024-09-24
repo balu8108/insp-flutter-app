@@ -8,6 +8,7 @@ import 'package:insp/pages/common/livestream/models/peers_model.dart';
 import 'package:insp/pages/common/livestream/models/polldata_model.dart';
 import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/peers_widget_redux.dart';
+import 'package:insp/pages/common/livestream/widget/chat/poll_timer_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/preview_data_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
 import 'package:insp/pages/common/recordingplayer/recording_player_redux.dart';
@@ -135,6 +136,7 @@ void sendQuestionHandler(Store<AppState> store, dynamic data) {
   socket?.emitWithAck(SOCKET_EVENTS.QUESTION_SENT_TO_SERVER, data, ack: (res) {
     PollDataModel pollDataModel = PollDataModel.fromJson(res);
     store.dispatch(UpdatePollData(pollData: pollDataModel));
+    store.dispatch(setTimerValue(pollDataModel.time));
   });
 }
 

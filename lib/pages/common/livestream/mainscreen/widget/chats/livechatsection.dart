@@ -7,13 +7,13 @@ class LiveChatSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        const SizedBox(
+        SizedBox(
           height: 200,
           child: LiveClassDetail(),
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: 20),
         //Expanded widget to take up the remaining space
         Expanded(
           child: LiveLeftPart(),

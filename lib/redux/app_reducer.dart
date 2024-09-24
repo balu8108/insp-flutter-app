@@ -1,5 +1,6 @@
 import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/peers_widget_redux.dart';
+import 'package:insp/pages/common/livestream/widget/chat/poll_timer_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/preview_data_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
 import 'package:insp/pages/common/recordingplayer/recording_player_redux.dart';
@@ -27,5 +28,7 @@ AppState appStateReducer(AppState state, dynamic action) {
       previewDataAppState:
           previewDataReducer(state.previewDataAppState, action),
       recordingPlayerAppState:
-          recordingPlayerReducer(state.recordingPlayerAppState, action));
+          recordingPlayerReducer(state.recordingPlayerAppState, action),
+      pollTimerAppState:
+          polltimerStateReducer(state.pollTimerAppState, action));
 }
