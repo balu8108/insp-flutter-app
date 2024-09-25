@@ -58,6 +58,7 @@ ThunkAction<SoloClassesWidgetAppState> getSoloClass(BuildContext context) {
       final latestSoloCardModels = allSubjectsResults
           .map((latestSoloClassResult) => LatestSoloClassCardModel(
               latestSoloClassResult.id.toString(),
+              latestSoloClassResult.topicId,
               latestSoloClassResult.topic == ""
                   ? "General"
                   : capitalizeFirstLetter(latestSoloClassResult.topic),

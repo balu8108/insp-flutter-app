@@ -61,7 +61,7 @@ Widget LatestSoloClassCard(
               child: TextButton(
                   onPressed: () {
                     INSPCardModel selectedTopic = INSPCardModel(
-                        "15",
+                        soloCardModel.topicId,
                         soloCardModel.topic.capitalizeFirstLetter(),
                         'Nitin Sachan',
                         topicDescriptionConstants[int.parse("15" ?? '1')] ??
