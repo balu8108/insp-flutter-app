@@ -32,11 +32,6 @@ Future<void> downloadPdfWithDioToDownloads(
     await dio.download(
       pdfUrl,
       savePath,
-      // onReceiveProgress: (received, total) {
-      //   if (total != -1) {
-      //     print('Downloading: ${(received / total * 100).toStringAsFixed(0)}%');
-      //   }
-      // },
     );
 
     toastification.show(

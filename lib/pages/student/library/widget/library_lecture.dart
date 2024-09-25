@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:insp/main.dart';
+import 'package:insp/pages/student/library/soloclass/solo_class_detail_screen.dart';
 import 'package:insp/widget/buildgridview/build_grid_view.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
 import 'package:insp/widget/card/insp_lecture_card.dart';
 import 'package:insp/widget/card/model/lecture_card_model.dart';
-import 'package:insp/pages/student/library/librarylecturedetailpage/library_lecture_details_screen.dart';
 
 class LibraryLectureWidget extends StatefulWidget {
   const LibraryLectureWidget({
@@ -34,8 +34,8 @@ class _LibraryLectureWidgetState extends State<LibraryLectureWidget> {
       context,
       MaterialPageRoute(
           builder: (context) => MainScaffold(
-              content: LibraryLectureDetailsScreen.getScreen(
-                  lectureCardModel, widget.allLectureOfTopic))),
+              content: SoloClassDetailsScreen.getScreen(
+                  lectureCardModel, true, widget.allLectureOfTopic))),
     );
   }
 

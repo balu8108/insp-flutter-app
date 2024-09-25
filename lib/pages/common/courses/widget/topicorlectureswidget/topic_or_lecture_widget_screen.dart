@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insp/main.dart';
 import 'package:insp/pages/common/courses/chapterdetail/chapter_detail_screen.dart';
+import 'package:insp/pages/student/library/soloclass/solo_class_detail_screen.dart';
 import 'package:insp/widget/card/insp_card.dart';
 import 'package:insp/widget/buildgridview/build_grid_view.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
@@ -82,13 +83,25 @@ class _TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
 
   void _onPressedMyCourse(
       BuildContext context, LectureCardModel lectureCardModel) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => MainScaffold(
-              content: LibraryLectureDetailsScreen.getScreen(lectureCardModel,
-                  _lecturesWidgetAppState.filteredLectureForSelectedCourse))),
-    );
+    if (widget.heading.toLowerCase().contains('inpho')) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MainScaffold(
+                content: SoloClassDetailsScreen.getScreen(
+                    lectureCardModel,
+                    false,
+                    _lecturesWidgetAppState.filteredLectureForSelectedCourse))),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MainScaffold(
+                content: LibraryLectureDetailsScreen.getScreen(lectureCardModel,
+                    _lecturesWidgetAppState.filteredLectureForSelectedCourse))),
+      );
+    }
   }
 
   void _onPressedMyTopic(BuildContext context, INSPCardModel selectedchapter) {

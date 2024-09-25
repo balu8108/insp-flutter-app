@@ -13,7 +13,7 @@ Widget INSPLectureCard(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     child: Container(
       width: context.isWebOrLandScape()
-          ? MediaQuery.of(context).size.width / 3
+          ? MediaQuery.of(context).size.width / 5
           : MediaQuery.of(context).size.width * 0.6,
       height: 230,
       padding: const EdgeInsets.all(16),

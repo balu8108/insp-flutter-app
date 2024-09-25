@@ -72,14 +72,10 @@ Widget LectureRecordingCardWidget({
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
-                                  const Positioned(
-                                    bottom: 10,
-                                    left: 10,
-                                    child: Icon(
-                                      Icons.play_circle_fill,
-                                      size: 24,
-                                      color: Colors.white,
-                                    ),
+                                  const Icon(
+                                    Icons.play_circle_fill,
+                                    size: 24,
+                                    color: Colors.white,
                                   ),
                                 ],
                               ))));

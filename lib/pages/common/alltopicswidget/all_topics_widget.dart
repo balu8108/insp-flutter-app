@@ -59,12 +59,6 @@ class AllTopicWidget extends StatelessWidget {
                     ),
                   ],
                 )
-              else if (heading.contains("Chemistry"))
-                AssignmentSubjectTopic(
-                  key: UniqueKey(),
-                  allSubjectTopics: state.filterSubjectTopics,
-                  onViewDetailsClicked: onPressedViewDetails,
-                )
               else
                 AssignmentSubjectTopic(
                   key: UniqueKey(),
