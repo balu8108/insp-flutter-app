@@ -34,16 +34,16 @@ class TPStreamVideoPlayer extends StatelessWidget {
               color: Color.fromRGBO(232, 242, 249, 1),
             ),
             child: state.videoResponse.playback_url.isNotEmpty
-                ? UniversalPlatform.isWindows || UniversalPlatform.isAndroid
+                ? UniversalPlatform.isWindows
                     ? WebviewUniversalWindow(
                         url: state.videoResponse.playback_url,
                         streamStatus: state.streamStatusChangeTo)
-                    : WebviewMacOs(
-                        url: state.videoResponse.playback_url,
-                        streamStatus: state.streamStatusChangeTo,
-                      )
-                // : const Text("Platform not supported")
-                : const Text("waiting..."));
+                    : UniversalPlatform.isMacOS
+                        ? WebviewMacOs(
+                            url: state.videoResponse.playback_url,
+                            streamStatus: state.streamStatusChangeTo)
+                        : const Text("Platform not supported")
+                : const Text("Waiting..."));
       },
     );
   }

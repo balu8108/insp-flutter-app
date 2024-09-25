@@ -52,6 +52,7 @@ class AssignmentWidget extends StatelessWidget {
                     child: Scrollbar(
                       controller: scrollController,
                       child: ListView.separated(
+                        scrollDirection: Axis.vertical,
                         controller: scrollController,
                         itemCount: state.allRecentAssignment.length,
                         itemBuilder: (BuildContext context, int index) {

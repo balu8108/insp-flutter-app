@@ -72,6 +72,7 @@ class _ViewTimetableState extends State<ViewTimetable> {
                 ? Scrollbar(
                     controller: scrollController,
                     child: ListView.builder(
+                      scrollDirection: Axis.vertical,
                       controller: scrollController,
                       itemCount: _pdfUrlsFuture.length,
                       itemBuilder: (context, index) {

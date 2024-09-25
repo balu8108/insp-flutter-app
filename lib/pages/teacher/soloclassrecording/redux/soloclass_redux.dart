@@ -100,16 +100,12 @@ ThunkAction<AppState> getSoloVideoUrlApi(
     try {
       final remoteDataSource = RemoteDataSource();
 
-      print("TERERETER");
-      print(tpStreamId);
-
       if (tpStreamId.isNotEmpty) {
         final previewData = await remoteDataSource.getVideoPlayUrl(
             tpStreamId,
             const VideoRequestModel(),
             'Token 74aba046d30c440659f486db92691fe30b9df689bd123ae9446760093ac0bbe7');
 
-        print(previewData.response.data);
         VideoResponseModel videoResponseData =
             VideoResponseModel.fromJson(previewData.response.data);
 
@@ -121,7 +117,6 @@ ThunkAction<AppState> getSoloVideoUrlApi(
         print("tpstream url null");
       }
     } catch (error) {
-      print(error);
       toastification.show(
         context: context, // optional if you use ToastificationWrapper
         type: ToastificationType.error,

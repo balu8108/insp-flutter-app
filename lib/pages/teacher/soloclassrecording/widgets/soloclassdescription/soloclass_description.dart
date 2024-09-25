@@ -27,6 +27,7 @@ class SoloclassDescription extends StatelessWidget {
     return Scrollbar(
         controller: scrollController,
         child: SingleChildScrollView(
+          controller: scrollController,
           child: StoreConnector<AppState, SoloClassDetailDataAppState>(
             converter: (store) => store.state.soloClassDetailDataAppState,
             builder: (context, state) => Container(

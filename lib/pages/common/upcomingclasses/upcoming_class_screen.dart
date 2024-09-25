@@ -16,6 +16,7 @@ class UpcomingClassesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController scrollController = ScrollController();
     bool isTeacher = isTeacherLogin(context);
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(getAllUpcomingClass(context));
@@ -27,6 +28,7 @@ class UpcomingClassesScreen extends StatelessWidget {
     return StoreConnector<AppState, UpcomingWidgetAppState>(
       converter: (store) => store.state.upcomingWidgetAppState,
       builder: (context, UpcomingWidgetAppState state) => Container(
+        height: MediaQuery.of(context).size.height,
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -88,8 +90,7 @@ class UpcomingClassesScreen extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: 17),
-            SizedBox(
-              height: 700,
+            Expanded(
               child: classCategories.isNotEmpty
                   ? ListView.separated(
                       scrollDirection: Axis.vertical,

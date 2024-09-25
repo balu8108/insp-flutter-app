@@ -28,15 +28,16 @@ class SoloclassRecording extends StatelessWidget {
                 color: Color.fromRGBO(232, 242, 249, 1),
               ),
               child: state.videoResponse.playback_url.isNotEmpty
-                  ? UniversalPlatform.isWindows || UniversalPlatform.isAndroid
+                  ? UniversalPlatform.isWindows
                       ? WebviewUniversalWindow(
                           url: state.videoResponse.playback_url,
-                          streamStatus: "")
-                      : WebviewMacOs(
-                          url: state.videoResponse.playback_url,
-                          streamStatus: "",
-                        )
-                  : const Text("waiting..."));
+                          streamStatus: '')
+                      : UniversalPlatform.isMacOS
+                          ? WebviewMacOs(
+                              url: state.videoResponse.playback_url,
+                              streamStatus: '')
+                          : const Text("Platform not supported")
+                  : const Text("Waiting..."));
         });
   }
 }

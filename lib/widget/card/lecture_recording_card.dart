@@ -39,17 +39,17 @@ Widget LectureRecordingCardWidget({
                                 alignment: Alignment.center,
                                 children: [
                                   Image.network(
-                                    "https://insp-test-local-bucket.s3.ap-south-1.amazonaws.com/image1.png",
+                                    "https://insp-test-local-bucket.s3.ap-south-1.amazonaws.com/sXK51.png",
                                     fit: BoxFit.cover,
                                     width: double.infinity,
                                     height: double.infinity,
                                   ),
-                                  const Positioned(
+                                  Positioned(
                                     bottom: 8,
                                     left: 8,
                                     child: Text(
-                                      'Recording-${1}',
-                                      style: TextStyle(
+                                      'Recording-${index + 1}',
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                         color: Colors.white,
@@ -69,10 +69,14 @@ Widget LectureRecordingCardWidget({
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
-                                  const Icon(
-                                    Icons.play_circle_fill,
-                                    size: 24,
-                                    color: Colors.black,
+                                  const Positioned(
+                                    bottom: 10,
+                                    left: 10,
+                                    child: Icon(
+                                      Icons.play_circle_fill,
+                                      size: 24,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ],
                               ))));

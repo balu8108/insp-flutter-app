@@ -10,6 +10,7 @@ import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/main.dart';
 import 'package:insp/pages/home/home_screen.dart';
+import 'package:insp/pages/teacher/soloclassrecording/redux/soloclass_redux.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/card/model/recording_player_card_model.dart';
@@ -30,6 +31,7 @@ class RecordingPlayerAppState with _$RecordingPlayerAppState {
           @Default(RecordingPlayerCard('', '', '', [], [], ''))
           RecordingPlayerCard selectedItem,
           @Default('') String accestId,
+          @Default(false) bool isDeleted,
           @Default(VideoResponseModel()) VideoResponseModel videoResponse}) =
       _RecordingPlayerAppState;
 }
@@ -59,6 +61,11 @@ class UpdateAccestId extends RecordingPlayerAction {
   UpdateAccestId({required this.accestId});
 }
 
+class UpdateIsDeleted extends RecordingPlayerAction {
+  bool isDeleted;
+  UpdateIsDeleted({required this.isDeleted});
+}
+
 sealed class RecordingPlayerAction {}
 
 RecordingPlayerAppState recordingPlayerReducer(
@@ -73,6 +80,8 @@ RecordingPlayerAppState recordingPlayerReducer(
     return state.copyWith(videoResponse: action.videoResponse);
   } else if (action is UpdateAccestId) {
     return state.copyWith(accestId: action.accestId);
+  } else if (action is UpdateIsDeleted) {
+    return state.copyWith(isDeleted: action.isDeleted);
   }
   return state;
 }
@@ -186,6 +195,7 @@ ThunkAction<AppState> getRecordedVideoUrlApi(
 ThunkAction<AppState> stopSoloClassLecture(BuildContext context) {
   return (Store<AppState> store) async {
     try {
+      store.dispatch(UpdateIsDeleted(isDeleted: true));
       final remoteDataSource = RemoteDataSource();
       // Validate the data before making the API call
       String userToken = getUserToken(context);
@@ -205,7 +215,9 @@ ThunkAction<AppState> stopSoloClassLecture(BuildContext context) {
 
         // Check for a successful response
         if (previewData.response.statusCode == 200) {
+          store.dispatch(UpdateIsDeleted(isDeleted: false));
           // Dispatch Redux action to reset the recorded video data
+          store.dispatch(setSoloTpStreamInitialData());
           store.dispatch(setRecordingTpStreamInitialData());
           // Call refresh function to update the UI or navigate
           LoginResponseModelResult userDatas = await getUserData();
@@ -226,6 +238,8 @@ ThunkAction<AppState> stopSoloClassLecture(BuildContext context) {
             alignment: Alignment.topRight,
           );
         } else {
+          store.dispatch(UpdateIsDeleted(isDeleted: false));
+          Navigator.of(context).pop();
           // Handle non-200 response, maybe show an error toast
           toastification.show(
             context: context,
@@ -237,8 +251,8 @@ ThunkAction<AppState> stopSoloClassLecture(BuildContext context) {
           );
         }
       } else {
+        store.dispatch(UpdateIsDeleted(isDeleted: false));
         Navigator.of(context).pop();
-        // Handle empty tpStreamId case
         toastification.show(
           context: context,
           type: ToastificationType.error,
@@ -249,8 +263,7 @@ ThunkAction<AppState> stopSoloClassLecture(BuildContext context) {
         );
       }
     } catch (error) {
-      // Log the error for debugging purposes (can use any logging tool or print statement)
-      print('Error stopping solo class lecture: $error');
+      store.dispatch(UpdateIsDeleted(isDeleted: false));
 
       // Show error notification
       toastification.show(

@@ -78,12 +78,14 @@ class StudentHomeScreen extends StatelessWidget {
                     Expanded(
                       flex: 9,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           MyCoursesWidget(
                             onViewDetailsClicked: onPressedMyCourse,
                           ),
                           const SizedBox(height: 16),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Expanded(
                                 flex: 7, // 70%

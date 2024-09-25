@@ -61,6 +61,30 @@ class KickPeerPopup extends StatelessWidget {
               width: 100,
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: const Color.fromRGBO(60, 141, 188, 1),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+                child: const Text("No"),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            SizedBox(
+              width: 100,
+              child: ElevatedButton(
+                onPressed: () {
                   callKickApi();
                   Navigator.of(context).pop();
                 },
