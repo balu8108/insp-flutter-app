@@ -91,7 +91,13 @@ ThunkAction<SoloclassTopicDetailReduxAppState> showAllTopics(
               topicDescriptionConstants[int.parse(it.id ?? '1')] ?? ''))
           .toList();
 
-      store.dispatch(initialFetchTopicDetail(context, allTopicsForSubject[0]));
+      if (store.state.selectedTopic.id.isNotEmpty) {
+        store.dispatch(
+            showSoloclassTopicwiseDetails(context, store.state.selectedTopic));
+      } else {
+        store.dispatch(
+            showSoloclassTopicwiseDetails(context, allTopicsForSubject[0]));
+      }
       store.dispatch(UpdateAllTopic(allTopics: allTopicsForSubject));
     }
   };
@@ -131,18 +137,6 @@ ThunkAction<SoloclassTopicDetailReduxAppState> initialFetchTopics(
     BuildContext context) {
   return (Store<SoloclassTopicDetailReduxAppState> store) async {
     store.dispatch(showAllTopics(context));
-  };
-}
-
-ThunkAction<SoloclassTopicDetailReduxAppState> initialFetchTopicDetail(
-    BuildContext context, INSPCardModel apiData) {
-  return (Store<SoloclassTopicDetailReduxAppState> store) async {
-    if (store.state.selectedTopic.id.isNotEmpty) {
-      store.dispatch(
-          showSoloclassTopicwiseDetails(context, store.state.selectedTopic));
-    } else {
-      store.dispatch(showSoloclassTopicwiseDetails(context, apiData));
-    }
   };
 }
 
