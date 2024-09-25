@@ -76,7 +76,7 @@ class ScheduleClassMobileBoxWidgetState extends State<ScheduleClassMobileBox> {
 
                 void navigateToPreviewScreen() {
                   if (data.classStatus == classStatus['FINISHED']) {
-                    Navigator.push(
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
                         builder: (context) => MainScaffold(
@@ -84,6 +84,7 @@ class ScheduleClassMobileBoxWidgetState extends State<ScheduleClassMobileBox> {
                           classId: data.id.toString(),
                         )),
                       ),
+                      (route) => false,
                     );
                   } else {
                     Navigator.push(

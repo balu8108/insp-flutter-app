@@ -21,15 +21,17 @@ Widget SoloRecordingCardWidget({
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MainScaffold(
-                                        content: SoloRecordingPlayerScreen(
-                                      classId: soloClassRoomRecordings[index]
-                                          .soloClassRoomId
-                                          .toString(),
-                                    ))));
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MainScaffold(
+                                content: SoloRecordingPlayerScreen(
+                                    classId: soloClassRoomRecordings[index]
+                                        .soloClassRoomId
+                                        .toString())),
+                          ),
+                          (route) => false,
+                        );
                       },
                       child: MouseRegion(
                           cursor: SystemMouseCursors.click,
