@@ -74,29 +74,3 @@ Map<String, dynamic> _$SoloResponseModelDataToJson(
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };
-
-SoloClassRoomRecordings _$SoloClassRoomRecordingsFromJson(
-        Map<String, dynamic> json) =>
-    SoloClassRoomRecordings(
-      (json['id'] as num?)?.toInt() ?? 0,
-      json['key'] as String? ?? '',
-      json['tpStreamId'] as String? ?? '',
-      json['rtmp_url'] as String? ?? '',
-      json['stream_key'] as String? ?? '',
-      json['status'] as String? ?? '',
-      json['createdAt'] as String? ?? '',
-      json['updatedAt'] as String? ?? '',
-    );
-
-Map<String, dynamic> _$SoloClassRoomRecordingsToJson(
-        SoloClassRoomRecordings instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'key': instance.key,
-      'tpStreamId': instance.tpStreamId,
-      'status': instance.status,
-      'createdAt': instance.createdAt,
-      'updatedAt': instance.updatedAt,
-      'rtmp_url': instance.rtmpUrl,
-      'stream_key': instance.streamKey,
-    };

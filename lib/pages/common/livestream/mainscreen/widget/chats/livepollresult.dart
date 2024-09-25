@@ -41,7 +41,6 @@ class LivePollResult extends StatelessWidget {
                       ),
                     )
                   : Expanded(
-                      child: Expanded(
                       child: ListView.builder(
                         itemCount: state.leaderBoardAnswerPercentage.length,
                         itemBuilder: (context, index) {
@@ -108,7 +107,7 @@ class LivePollResult extends StatelessWidget {
                           );
                         },
                       ),
-                    ))
+                    )
             ])));
   }
 }

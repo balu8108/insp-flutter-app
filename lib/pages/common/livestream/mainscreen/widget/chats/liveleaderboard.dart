@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:insp/pages/common/livestream/models/leaderboard_model.dart';
 import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
@@ -31,9 +32,24 @@ class _LiveLeaderboardState extends State<LiveLeaderboard> {
       10: 'assets/images/leaderboardranks/tenth.png',
     };
 
+    List<LeaderboardModel> tt = [
+      const LeaderboardModel(),
+      const LeaderboardModel(),
+      const LeaderboardModel(),
+      const LeaderboardModel(),
+      const LeaderboardModel(),
+      const LeaderboardModel(),
+      const LeaderboardModel(),
+      const LeaderboardModel(),
+      const LeaderboardModel(),
+      const LeaderboardModel(),
+      const LeaderboardModel()
+    ];
+
     return StoreConnector<AppState, ChatWidgetAppState>(
       converter: (store) => store.state.chatWidgetAppState,
       builder: (context, state) => Container(
+        height: double.infinity,
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,54 +61,46 @@ class _LiveLeaderboardState extends State<LiveLeaderboard> {
               ],
             ),
             const SizedBox(height: 15),
-            state.leaderBoard.isEmpty
-                ? const Text(
-                    "No Data",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Color.fromRGBO(44, 51, 41, 0.47),
-                      height: 1.75,
+            Expanded(
+                child: ClipRect(
+              child: ListView.builder(
+                itemCount: tt.length,
+                itemBuilder: (context, index) {
+                  final data = tt[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Image.asset(
+                              leaderboardRankingIcons[index + 1] ??
+                                  'assets/images/leaderboardranks/tenth.png',
+                              height: 20,
+                              width: 20,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              data.peerDetails.name,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          '${data.correctAnswers}',
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                        Text(
+                          '${data.combinedResponseTime} s',
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      ],
                     ),
-                  )
-                : Expanded(
-                    child: ListView.builder(
-                      itemCount: state.leaderBoard.length,
-                      itemBuilder: (context, index) {
-                        final data = state.leaderBoard[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    leaderboardRankingIcons[index + 1] ??
-                                        'assets/images/leaderboardranks/tenth.png',
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    data.peerDetails.name,
-                                    style: const TextStyle(fontSize: 12),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                '${data.correctAnswers}',
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                              Text(
-                                '${data.combinedResponseTime} s',
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  );
+                },
+              ),
+            )),
           ],
         ),
       ),

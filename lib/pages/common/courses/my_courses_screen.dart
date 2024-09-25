@@ -39,7 +39,7 @@ class MyCoursesScreen extends StatelessWidget {
                       const SizedBox(height: 16),
                       TopicOrLectureWidget(
                           key: UniqueKey(),
-                          heading: 'My Courss (${state.selectedItem.name})',
+                          heading: 'My Courses (${state.selectedItem.name})',
                           data: state.allLectures,
                           allTopicsForSelectedCourse:
                               state.allTopicsForSelectedCourse),
