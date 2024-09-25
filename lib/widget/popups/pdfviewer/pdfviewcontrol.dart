@@ -57,12 +57,13 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
       setState(() {
         currentPageIndex++;
       });
-      if (Platform.isWindows) {
-        _pdfControllerWindow?.jumpToPage(currentPageIndex);
-      } else {
-        _pdfController?.jumpToPage(currentPageIndex);
-      }
-    }
+      _pdfController?.jumpToPage(currentPageIndex);
+    } else if (currentPageIndex < (_pdfControllerWindow?.pagesCount ?? 0)) {
+      setState(() {
+        currentPageIndex++;
+      });
+      _pdfControllerWindow?.jumpToPage(currentPageIndex);
+    } else {}
   }
 
   void goToPreviousPage() {
