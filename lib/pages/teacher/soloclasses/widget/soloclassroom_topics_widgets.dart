@@ -21,6 +21,7 @@ class _SoloclassroomTopicsWidgetsState
     extends State<SoloclassroomTopicsWidgets> {
   @override
   Widget build(BuildContext context) {
+    final ScrollController scrollController = ScrollController();
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -67,8 +68,10 @@ class _SoloclassroomTopicsWidgetsState
             height: 230.0,
             child: widget.allTopics.isNotEmpty
                 ? Scrollbar(
+                    controller: scrollController,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
+                      controller: scrollController,
                       itemCount: widget.allTopics.length,
                       itemBuilder: (BuildContext context, int index) {
                         return INSPCard(

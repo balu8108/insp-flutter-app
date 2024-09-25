@@ -94,6 +94,7 @@ class UpcomingClassesScreen extends StatelessWidget {
               child: classCategories.isNotEmpty
                   ? ListView.separated(
                       scrollDirection: Axis.vertical,
+                      controller: scrollController,
                       itemCount: classCategories.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Column(

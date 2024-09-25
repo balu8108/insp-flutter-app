@@ -33,7 +33,6 @@ class TeacherHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isWebOrLandScape = context.isWebOrLandScape();
-    // bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
 
     return Padding(
       padding: isWebOrLandScape

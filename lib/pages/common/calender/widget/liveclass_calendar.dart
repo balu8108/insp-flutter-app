@@ -173,6 +173,7 @@ class LiveclassCalendar extends StatelessWidget {
                       controller: scrollController,
                       child: ListView.separated(
                         scrollDirection: Axis.vertical,
+                        controller: scrollController,
                         itemCount: state.calendarScreenAllEventsForADay.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
