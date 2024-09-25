@@ -9,6 +9,7 @@ import 'package:insp/pages/common/calender/calendar_screen.dart';
 import 'package:insp/pages/teacher/suggestion/main_suggestion_page.dart';
 import 'package:insp/pages/teacher/uploads/mainpage/myuploads.dart';
 import 'package:insp/redux/AppState.dart';
+import 'package:insp/socket/mainsocket.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/card/model/insp_card_model.dart';
 import 'package:insp/pages/student/library/mainpage/library_screen.dart';
@@ -41,6 +42,7 @@ class _NavbarMobileState extends State<NavbarMobile> {
   Widget build(BuildContext context) {
     LoginResponseModelResult userData = getUserDataFromStore(context);
     void onButtonPressed(String buttonText) {
+      leaveRoomHandler(StoreProvider.of<AppState>(context));
       StoreProvider.of<AppState>(context)
           .dispatch(UpdateSelectedButton(selectedButton: buttonText));
     }

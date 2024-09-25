@@ -81,10 +81,21 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          assignment.topicName,
-                                          style: const TextStyle(fontSize: 12),
-                                        ),
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                  flex: 5,
+                                                  child: Text(
+                                                    assignment.topicName,
+                                                    style: const TextStyle(
+                                                      fontSize: 12,
+                                                    ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  )),
+                                            ]),
                                         const SizedBox(height: 2),
                                         Text(
                                           assignment.instructorName,

@@ -77,7 +77,7 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
 
                 void navigateToPreviewScreen() {
                   if (data.classStatus == classStatus['FINISHED']) {
-                    Navigator.push(
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
                         builder: (context) => MainScaffold(
@@ -85,6 +85,7 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
                           classId: data.id.toString(),
                         )),
                       ),
+                      (route) => false,
                     );
                   } else {
                     Navigator.push(
