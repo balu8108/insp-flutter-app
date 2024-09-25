@@ -124,7 +124,8 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
               ? 450
               : MediaQuery.of(context).size.width,
           height: 500,
-          child: isPdfLoaded && _pdfController != null
+          child: isPdfLoaded &&
+                  (_pdfController != null || _pdfControllerWindow != null)
               ? Stack(
                   children: [
                     Platform.isWindows
