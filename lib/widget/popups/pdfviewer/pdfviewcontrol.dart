@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:insp/apiservices/models/login/login_response_model.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
@@ -16,6 +18,7 @@ class PdfViewerFromUrlPoint extends StatefulWidget {
 
 class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
   PdfControllerPinch? _pdfController;
+  PdfController? _pdfControllerWindow;
   PDFViewerAppState pdfViewerAppState = const PDFViewerAppState();
   int currentPageIndex = 1;
   bool isPdfLoaded = false;
@@ -29,9 +32,16 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
   Future<void> _loadPdf() async {
     try {
       final pdfBytes = await InternetFile.get(widget.pdfUrl);
-      _pdfController = PdfControllerPinch(
-        document: PdfDocument.openData(pdfBytes),
-      );
+      if (Platform.isWindows) {
+        _pdfControllerWindow = PdfController(
+          document: PdfDocument.openData(pdfBytes),
+        );
+      } else {
+        _pdfController = PdfControllerPinch(
+          document: PdfDocument.openData(pdfBytes),
+        );
+      }
+
       setState(() {
         isPdfLoaded = true;
       });
@@ -77,7 +87,19 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
             icon: const Icon(Icons.arrow_back),
             onPressed: goToPreviousPage,
           ),
-          if (_pdfController != null)
+          if (_pdfControllerWindow != null && Platform.isWindows)
+            PdfPageNumber(
+              controller: _pdfControllerWindow!,
+              builder: (_, page, loadingState, pagesCount) {
+                return Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    '$currentPageIndex/${pagesCount ?? 0}',
+                  ),
+                );
+              },
+            ),
+          if (_pdfController != null && !Platform.isWindows)
             PdfPageNumber(
               controller: _pdfController!,
               builder: (_, page, loadingState, pagesCount) {
@@ -105,12 +127,20 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
           child: isPdfLoaded && _pdfController != null
               ? Stack(
                   children: [
-                    PdfViewPinch(
-                      controller: _pdfController!,
-                      scrollDirection: Axis.horizontal,
-                      backgroundDecoration:
-                          const BoxDecoration(color: Colors.white),
-                    ),
+                    Platform.isWindows
+                        ? PdfView(
+                            controller: _pdfControllerWindow!,
+                            scrollDirection: Axis.horizontal,
+                            physics: const NeverScrollableScrollPhysics(),
+                            backgroundDecoration:
+                                const BoxDecoration(color: Colors.white),
+                          )
+                        : PdfViewPinch(
+                            controller: _pdfController!,
+                            scrollDirection: Axis.horizontal,
+                            backgroundDecoration:
+                                const BoxDecoration(color: Colors.white),
+                          ),
                     Positioned.fill(
                       child: Align(
                         alignment: Alignment.center,
