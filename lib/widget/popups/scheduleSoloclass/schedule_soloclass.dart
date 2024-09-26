@@ -20,12 +20,8 @@ class ScheduleSoloClass extends StatelessWidget {
     bool isWebOrLandScape = context.isWebOrLandScape();
 
     void navigateToSolo(String soloclassid) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MainScaffold(
-                content: Soloclassroomscreen(soloClassId: soloclassid))),
-      );
+      pushWithoutAnimation(
+          context, Soloclassroomscreen(soloClassId: soloclassid));
     }
 
     void createSoloClass() {
@@ -62,7 +58,7 @@ class ScheduleSoloClass extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () {
-                        Navigator.of(context).pop(); // Close the dialog
+                        Navigator.of(context).pop();
                       },
                     ),
                   ],

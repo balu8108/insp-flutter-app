@@ -11,8 +11,6 @@ import 'package:insp/apiservices/models/mycourses/physics_course_topics_request_
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/data/hardcoded/topic_list.dart';
-import 'package:insp/main.dart';
-import 'package:insp/pages/teacher/soloclassrecording/screen/soloclassroomscreen.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -334,7 +332,6 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
 
         int soloClassId = response.data['soloClassRoomId'];
-        int tpstreamId = response.data['soloClassRoomId'];
 
         navigateToSolo(soloClassId.toString());
 

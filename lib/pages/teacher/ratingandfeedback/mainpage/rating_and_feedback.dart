@@ -14,12 +14,8 @@ class RatingAndFeedback extends StatelessWidget {
     bool isWebOrLandScape = context.isWebOrLandScape();
 
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MainScaffold(
-                content: RatingFeedbackDetail.getScreen(inspCardModel))),
-      );
+      pushWithoutAnimation(
+          context, RatingFeedbackDetail.getScreen(inspCardModel));
     }
 
     return Container(

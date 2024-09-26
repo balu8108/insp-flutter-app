@@ -22,16 +22,11 @@ Widget LectureRecordingCardWidget({
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                       onTap: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MainScaffold(
-                                content: RecordingPlayerScreen(
+                        pushAndRemoveUntilWithoutAnimation(
+                            context,
+                            RecordingPlayerScreen(
                               classId: classId,
-                            )),
-                          ),
-                          (route) => false,
-                        );
+                            ));
                       },
                       child: MouseRegion(
                           cursor: SystemMouseCursors.click,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insp/main.dart';
 import 'package:insp/pages/login/login_screen.dart';
 import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/localstorage.dart';
@@ -58,13 +59,8 @@ class TokenExpired extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   await logoutData("insp_user_profile");
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ),
-                    (route) => false, // This removes all the previous routes
-                  );
+                  pushAndRemoveUntilWithoutAnimation(
+                      context, const LoginScreen());
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
