@@ -66,14 +66,8 @@ Widget LatestSoloClassCard(
                         'Nitin Sachan',
                         topicDescriptionConstants[int.parse("15" ?? '1')] ??
                             '');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MainScaffold(
-                              content: SoloclassTopicDetailScreen.getScreen(
-                                  selectedTopic))),
-                    );
-                    // onPressedViewDetails(context, inspCardModel);
+                    pushWithoutAnimation(context,
+                        SoloclassTopicDetailScreen.getScreen(selectedTopic));
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.transparent,

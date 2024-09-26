@@ -97,12 +97,7 @@ ThunkAction<ChapterDetailAppState> initialFetchTopics(BuildContext context) {
 ThunkAction<ChapterDetailAppState> sendToTopicLectureScreen(
     BuildContext context, INSPCardModel inspCardModel) {
   return (Store<ChapterDetailAppState> store) async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => MainScaffold(
-              content: TopicLectureScreen.getScreen(
-                  inspCardModel, store.state.allTopics))),
-    );
+    pushWithoutAnimation(context,
+        TopicLectureScreen.getScreen(inspCardModel, store.state.allTopics));
   };
 }

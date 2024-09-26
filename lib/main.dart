@@ -180,3 +180,34 @@ class MainScaffold extends StatelessWidget {
           );
   }
 }
+
+void pushWithoutAnimation(BuildContext context, Widget screen) {
+  Navigator.push(
+    context,
+    PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          MainScaffold(content: screen),
+      transitionDuration: Duration.zero, // No transition duration
+      reverseTransitionDuration: Duration.zero, // No reverse transition
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child; // Directly return the child without any animation
+      },
+    ),
+  );
+}
+
+void pushAndRemoveUntilWithoutAnimation(BuildContext context, Widget screen) {
+  Navigator.pushAndRemoveUntil(
+    context,
+    PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          MainScaffold(content: screen),
+      transitionDuration: Duration.zero, // No transition duration
+      reverseTransitionDuration: Duration.zero, // No reverse transition
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child; // Directly return the child without any animation
+      },
+    ),
+    (route) => false, // Remove all previous routes
+  );
+}

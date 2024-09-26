@@ -104,14 +104,8 @@ ThunkAction<AppState> handleLogin(BuildContext context) {
             store.dispatch(
                 UpdateUserData(userData: result.data.loginResponseModelResult));
 
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => MainScaffold(
-                    content: HomeScreen(
-                        userData: result.data.loginResponseModelResult)),
-              ),
-            );
+            pushAndRemoveUntilWithoutAnimation(context,
+                HomeScreen(userData: result.data.loginResponseModelResult));
 
             store.dispatch(UpdateIsLoading(isLoading: false));
             toastification.show(

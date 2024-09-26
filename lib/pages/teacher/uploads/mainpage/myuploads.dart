@@ -13,12 +13,8 @@ class MyUploads extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isWebOrLandScape = context.isWebOrLandScape();
     void onPressedMyCourse(BuildContext context, INSPCardModel selectedTopic) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MainScaffold(
-                content: AssignmentTopicScreen.getScreen(selectedTopic))),
-      );
+      pushWithoutAnimation(
+          context, AssignmentTopicScreen.getScreen(selectedTopic));
     }
 
     return Container(

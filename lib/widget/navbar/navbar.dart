@@ -143,10 +143,7 @@ class _NavbarState extends State<Navbar> {
 
   void _navigateToScreen(BuildContext context, Widget screen) {
     leaveRoomHandler(StoreProvider.of<AppState>(context));
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MainScaffold(content: screen)),
-    );
+    pushAndRemoveUntilWithoutAnimation(context, screen);
   }
 
   Padding _buildTextButton(String text, VoidCallback onPressed) {
@@ -192,10 +189,17 @@ class _NavbarState extends State<Navbar> {
           await logoutData("insp_user_profile");
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(
-              builder: (context) => const LoginScreen(),
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  const LoginScreen(),
+              transitionDuration: Duration.zero, // No transition duration
+              reverseTransitionDuration: Duration.zero, // No reverse transition
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return child; // Directly return the child without any animation
+              },
             ),
-            (route) => false, // This removes all the previous routes
+            (route) => false, // Remove all previous routes
           );
         }
       },

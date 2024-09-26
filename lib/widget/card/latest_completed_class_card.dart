@@ -65,16 +65,11 @@ Widget LatestCompletedClassCard(
                         completedCardModel.topicName,
                         "Nitin Sachan",
                         topicDescriptionConstants[
-                                int.parse(completedCardModel.topicId ?? '1')] ??
+                                int.parse(completedCardModel.topicId)] ??
                             '');
 
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MainScaffold(
-                            content: RatingFeedbackDetail.getScreen(topic)),
-                      ),
-                    );
+                    pushWithoutAnimation(
+                        context, RatingFeedbackDetail.getScreen(topic));
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.transparent,

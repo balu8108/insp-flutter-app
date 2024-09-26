@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:insp/apiservices/models/login/login_response_model.dart';
+import 'package:insp/main.dart';
 import 'package:insp/pages/login/login_screen.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/socket/mainsocket.dart';
@@ -53,10 +54,19 @@ class _MobileappbarState extends State<Mobileappbar> {
                   await logoutData("insp_user_profile");
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          const LoginScreen(),
+                      transitionDuration:
+                          Duration.zero, // No transition duration
+                      reverseTransitionDuration:
+                          Duration.zero, // No reverse transition
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return child; // Directly return the child without any animation
+                      },
                     ),
-                    (route) => false, // This removes all the previous routes
+                    (route) => false, // Remove all previous routes
                   );
                 },
                 // icon: const Icon(Icons.logout),

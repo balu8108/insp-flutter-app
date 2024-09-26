@@ -16,12 +16,7 @@ class RatingFeedback extends StatelessWidget {
     final ScrollController scrollController = ScrollController();
 
     void handleSeeAll() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                const MainScaffold(content: RatingAndFeedback())),
-      );
+      pushWithoutAnimation(context, const RatingAndFeedback());
     }
 
     return StoreConnector<RatingFeedbackWidgetAppState,

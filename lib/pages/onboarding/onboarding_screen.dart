@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insp/main.dart';
 import 'package:insp/pages/login/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -32,8 +33,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     },
   ];
   void _onSkipButton() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+    Navigator.pushAndRemoveUntil(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const LoginScreen(),
+        transitionDuration: Duration.zero, // No transition duration
+        reverseTransitionDuration: Duration.zero, // No reverse transition
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return child; // Directly return the child without any animation
+        },
+      ),
+      (route) => false, // Remove all previous routes
+    );
   }
 
   void _onBackwardButton() {
@@ -46,9 +58,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _onNextButton() {
     if (_currentPage == onBoardingData.length - 1) {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
-          (Route<dynamic> route) => false);
+      Navigator.pushAndRemoveUntil(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const LoginScreen(),
+          transitionDuration: Duration.zero, // No transition duration
+          reverseTransitionDuration: Duration.zero, // No reverse transition
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child; // Directly return the child without any animation
+          },
+        ),
+        (route) => false, // Remove all previous routes
+      );
     } else {
       _pageController.nextPage(
           duration: const Duration(milliseconds: 300), curve: Curves.easeIn);

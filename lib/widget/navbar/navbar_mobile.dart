@@ -104,6 +104,7 @@ class _NavbarMobileState extends State<NavbarMobile> {
 
     return Container(
         height: 70,
+        margin: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: const Color.fromRGBO(60, 141, 188, 1),
           borderRadius: BorderRadius.circular(20),
@@ -144,14 +145,8 @@ class _NavbarMobileState extends State<NavbarMobile> {
                                   StudentSuggestion.getScreen(),
                             );
                           } else {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    MainScaffold(content: item['widget']),
-                              ),
-                              (route) => false,
-                            );
+                            pushAndRemoveUntilWithoutAnimation(
+                                context, item['widget']);
                           }
                         },
                       ),

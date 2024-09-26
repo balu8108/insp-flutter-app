@@ -25,12 +25,8 @@ class AssignmentScreen extends StatelessWidget {
     }
 
     void onPressedTopic(BuildContext context, INSPCardModel selectedTopic) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MainScaffold(
-                content: AssignmentTopicScreen.getScreen(selectedTopic))),
-      );
+      pushWithoutAnimation(
+          context, AssignmentTopicScreen.getScreen(selectedTopic));
     }
 
     return Container(
