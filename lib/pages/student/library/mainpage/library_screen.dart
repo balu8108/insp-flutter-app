@@ -26,21 +26,13 @@ class LibraryScreen extends StatelessWidget {
     }
 
     void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MainScaffold(
-                content: LibraryLectureScreen.getScreen(inspCardModel))),
-      );
+      pushWithoutAnimation(
+          context, LibraryLectureScreen.getScreen(inspCardModel));
     }
 
     void onPressedSoloClass(BuildContext context, INSPCardModel inspCardModel) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MainScaffold(
-                content: LibrarySoloclassScreen.getScreen(inspCardModel))),
-      );
+      pushWithoutAnimation(
+          context, LibrarySoloclassScreen.getScreen(inspCardModel));
     }
 
     return Container(

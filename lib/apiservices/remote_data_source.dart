@@ -127,7 +127,7 @@ abstract class RemoteDataSource {
       String docId, String docType, String secretTokenHeader);
 
   Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
-      String type, String id, String secretTokenHeader);
+      String id, String secretTokenHeader);
 
   Future<HttpResponse<CreateStudentFeedbackResponseModel>>
       createStudentFeedback(CreateStudentFeedbackRequestModel feedbackrequest,
@@ -338,8 +338,8 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
   @override
   Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
-      String type, String id, String secretTokenHeader) {
-    return deviceNetworkService.getRecordingData(type, id, secretTokenHeader);
+      String id, String secretTokenHeader) {
+    return deviceNetworkService.getRecordingData(id, secretTokenHeader);
   }
 
   @override

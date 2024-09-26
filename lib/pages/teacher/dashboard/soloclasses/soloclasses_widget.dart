@@ -17,12 +17,8 @@ class Soloclasses extends StatelessWidget {
     final ScrollController scrollController = ScrollController();
     void handleSeeAll() {
       INSPCardModel selectedTopic = const INSPCardModel("", "", "", "");
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MainScaffold(
-                content: SoloclassTopicDetailScreen.getScreen(selectedTopic))),
-      );
+      pushWithoutAnimation(
+          context, SoloclassTopicDetailScreen.getScreen(selectedTopic));
     }
 
     return StoreConnector<SoloClassesWidgetAppState, SoloClassesWidgetAppState>(

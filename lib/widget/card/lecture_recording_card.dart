@@ -26,12 +26,8 @@ Widget LectureRecordingCardWidget(
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MainScaffold(
-                                    content: RecordingPlayerScreen.getScreen(
-                                        "live", classId))));
+                        pushWithoutAnimation(context,
+                            RecordingPlayerScreen.getScreen("live", classId));
                       },
                       child: MouseRegion(
                           cursor: SystemMouseCursors.click,

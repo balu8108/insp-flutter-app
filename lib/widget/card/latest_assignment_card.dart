@@ -58,12 +58,7 @@ Widget LatestAssignmentCard(
           Center(
               child: TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const MainScaffold(content: MyUploads())),
-                    );
+                    pushWithoutAnimation(context, const MyUploads());
                   },
                   child: const Text(
                     'View Details',

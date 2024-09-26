@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insp/main.dart';
 import 'package:insp/pages/login/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -32,8 +33,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     },
   ];
   void _onSkipButton() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+    pushAndRemoveUntilWithoutAnimation(context, const LoginScreen());
   }
 
   void _onBackwardButton() {

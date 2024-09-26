@@ -38,7 +38,7 @@ class LeaveOrEndClassPopup extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.close),
             onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
+              Navigator.of(context).pop();
             },
           ),
         ],

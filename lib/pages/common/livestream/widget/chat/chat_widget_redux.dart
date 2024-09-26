@@ -244,12 +244,6 @@ ThunkAction<AppState> joinRoomResponseData(BuildContext context, dynamic res) {
       store.dispatch(UpdateLeaderboardMessages(
           leaderBoardAnswerPercentage: leaderBoardListAnswer));
     }
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const LiveClassScreen(),
-      ),
-      (route) => false,
-    );
+    pushAndRemoveUntilWithoutAnimation(context, const LiveClassScreen());
   };
 }

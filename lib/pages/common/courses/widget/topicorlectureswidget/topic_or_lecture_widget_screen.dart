@@ -82,23 +82,17 @@ class _TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
 
   void _onPressedMyCourse(
       BuildContext context, LectureCardModel lectureCardModel) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => MainScaffold(
-              content: LibraryLectureDetailsScreen.getScreen(lectureCardModel,
-                  _lecturesWidgetAppState.filteredLectureForSelectedCourse))),
-    );
+    pushWithoutAnimation(
+        context,
+        LibraryLectureDetailsScreen.getScreen(lectureCardModel,
+            _lecturesWidgetAppState.filteredLectureForSelectedCourse));
   }
 
   void _onPressedMyTopic(BuildContext context, INSPCardModel selectedchapter) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => MainScaffold(
-              content: ChapterDetailScreen.getScreen(selectedchapter,
-                  _lecturesWidgetAppState.allTopicsForSelectedCourse))),
-    );
+    pushWithoutAnimation(
+        context,
+        ChapterDetailScreen.getScreen(selectedchapter,
+            _lecturesWidgetAppState.allTopicsForSelectedCourse));
   }
 
   Widget _buildComingSoon() {

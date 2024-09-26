@@ -332,15 +332,7 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
 
       if (response.statusCode == 201) {
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-
-        // final soloClassRoomId = response.data['soloClassRoomId'];
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  const MainScaffold(content: Soloclassroomscreen())),
-        );
+        pushWithoutAnimation(context, const Soloclassroomscreen());
 
         Navigator.of(context).pop();
         toastification.show(

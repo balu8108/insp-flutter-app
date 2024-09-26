@@ -198,9 +198,8 @@ abstract class NetworkService {
       @Body() RatingTopicRequestModel feedbackrequest,
       @Header('Authorization') String secretTokenHeader);
 
-  @GET('/recording/view-recording')
+  @GET('/recording/view-live-recording')
   Future<HttpResponse<ViewRecordingResponseModel>> getRecordingData(
-      @Query('type') String type,
       @Query('id') String id,
       @Header('Authorization') String secretTokenHeader);
 

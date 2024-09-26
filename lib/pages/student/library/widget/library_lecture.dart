@@ -30,13 +30,10 @@ class _LibraryLectureWidgetState extends State<LibraryLectureWidget> {
 
   void _onPressedMyCourse(
       BuildContext context, LectureCardModel lectureCardModel) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => MainScaffold(
-              content: LibraryLectureDetailsScreen.getScreen(
-                  lectureCardModel, widget.allLectureOfTopic))),
-    );
+    pushWithoutAnimation(
+        context,
+        LibraryLectureDetailsScreen.getScreen(
+            lectureCardModel, widget.allLectureOfTopic));
   }
 
   @override

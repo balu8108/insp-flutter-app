@@ -77,25 +77,15 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
 
                 void navigateToPreviewScreen() {
                   if (data.classStatus == classStatus['FINISHED']) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MainScaffold(
-                            content: RecordingPlayerScreen.getScreen(
+                    pushWithoutAnimation(
+                        context,
+                        RecordingPlayerScreen.getScreen(
                           "live",
                           data.id.toString(),
-                        )),
-                      ),
-                    );
+                        ));
                   } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MainScaffold(
-                            content:
-                                LiveClassPreviewScreen(roomId: data.roomId)),
-                      ),
-                    );
+                    pushWithoutAnimation(
+                        context, LiveClassPreviewScreen(roomId: data.roomId));
                   }
                 }
 

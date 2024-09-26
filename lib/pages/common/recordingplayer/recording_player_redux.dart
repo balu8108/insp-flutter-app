@@ -77,10 +77,10 @@ ThunkAction<RecordingPlayerAppState> getRecordedVideoData(
   return (Store<RecordingPlayerAppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
-      if (store.state.type.isNotEmpty && store.state.classId.isNotEmpty) {
+      if (store.state.classId.isNotEmpty) {
         String userToken = getUserToken(context);
         final previewData = await remoteDataSource.getRecordingData(
-            store.state.type, store.state.classId, userToken);
+            store.state.classId, userToken);
 
         if (previewData.response.statusCode == 200) {
           ViewRecordingResponseModel recordedVideoDatas =

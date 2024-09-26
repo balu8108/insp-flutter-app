@@ -15,25 +15,16 @@ class TeacherHomeScreen extends StatelessWidget {
   const TeacherHomeScreen({super.key});
 
   void onPressedMyCourse(BuildContext context, INSPCardModel inspCardModel) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MainScaffold(
-                content: MyCoursesScreen.getScreen(inspCardModel))));
+    pushWithoutAnimation(context, MyCoursesScreen.getScreen(inspCardModel));
   }
 
   void onPressedLibrary(BuildContext context, INSPCardModel inspCardModel) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                MainScaffold(content: LibraryScreen.getScreen(inspCardModel))));
+    pushWithoutAnimation(context, LibraryScreen.getScreen(inspCardModel));
   }
 
   @override
   Widget build(BuildContext context) {
     bool isWebOrLandScape = context.isWebOrLandScape();
-    // bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
 
     return Padding(
       padding: isWebOrLandScape
