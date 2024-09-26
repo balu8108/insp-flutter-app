@@ -59,8 +59,22 @@ class TokenExpired extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   await logoutData("insp_user_profile");
-                  pushAndRemoveUntilWithoutAnimation(
-                      context, const LoginScreen());
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          const LoginScreen(),
+                      transitionDuration:
+                          Duration.zero, // No transition duration
+                      reverseTransitionDuration:
+                          Duration.zero, // No reverse transition
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return child; // Directly return the child without any animation
+                      },
+                    ),
+                    (route) => false, // Remove all previous routes
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,

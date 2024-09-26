@@ -52,8 +52,22 @@ class _MobileappbarState extends State<Mobileappbar> {
                 onPressed: () async {
                   leaveRoomHandler(StoreProvider.of<AppState>(context));
                   await logoutData("insp_user_profile");
-                  pushAndRemoveUntilWithoutAnimation(
-                      context, const LoginScreen());
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          const LoginScreen(),
+                      transitionDuration:
+                          Duration.zero, // No transition duration
+                      reverseTransitionDuration:
+                          Duration.zero, // No reverse transition
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return child; // Directly return the child without any animation
+                      },
+                    ),
+                    (route) => false, // Remove all previous routes
+                  );
                 },
                 // icon: const Icon(Icons.logout),
                 label: const Text(
