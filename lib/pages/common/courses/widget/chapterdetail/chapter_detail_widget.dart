@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insp/utils/extensions.dart';
 import 'package:insp/widget/card/insp_card.dart';
 import 'package:insp/widget/buildgridview/build_grid_view.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
@@ -47,6 +48,7 @@ class ChapterDetailWidgetState extends State<ChapterDetailWidget> {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -55,14 +57,26 @@ class ChapterDetailWidgetState extends State<ChapterDetailWidget> {
       ),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                  flex: 5, child: INSPHeading(widget.selectedChapter.name)),
-              searchBox(context, _filterWithQueryText),
-            ],
-          ),
+          isWebOrLandScape
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                        flex: 5,
+                        child: INSPHeading(widget.selectedChapter.name)),
+                    searchBox(context, _filterWithQueryText),
+                  ],
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    INSPHeading(widget.selectedChapter.name),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    searchBox(context, _filterWithQueryText),
+                  ],
+                ),
           const SizedBox(height: 16),
           filteredTopics.isNotEmpty
               ? BuildGridView(

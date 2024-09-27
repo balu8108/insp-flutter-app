@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/file_box_component.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
 import 'package:insp/widget/card/model/topic_assignment_card_model.dart';
 import 'package:insp/widget/popups/assignmentDelete/delete_assignment.dart';
 import 'package:insp/widget/popups/assignmentPopup/add_assignment.dart';
+import 'package:insp/widget/searchbox/search_box.dart';
 
 class AssignmentTopicWidget extends StatefulWidget {
   const AssignmentTopicWidget(
@@ -25,9 +27,27 @@ class AssignmentTopicWidget extends StatefulWidget {
 
 class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
   final ScrollController _scrollController = ScrollController();
+  List<TopicAssignmentCardModel> filteredAssignmentTopics = [];
+
   @override
   void initState() {
     super.initState();
+    filteredAssignmentTopics = widget.allAssignemntofTopic;
+  }
+
+  void _filterWithQueryText(String query) {
+    if (query.isNotEmpty) {
+      setState(() {
+        filteredAssignmentTopics = widget.allAssignemntofTopic
+            .where((it) =>
+                it.topicName.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      });
+    } else {
+      setState(() {
+        filteredAssignmentTopics = widget.allAssignemntofTopic;
+      });
+    }
   }
 
   @override
@@ -38,6 +58,7 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     void temporyFunction() {}
     bool isTeacher = isTeacherLogin(context);
 
@@ -49,26 +70,37 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
       ),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(flex: 5, child: INSPHeading(widget.heading)),
-              // searchBox(context, _filterWithQueryText),
-            ],
-          ),
+          isWebOrLandScape
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(flex: 5, child: INSPHeading(widget.heading)),
+                    searchBox(context, _filterWithQueryText),
+                  ],
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    INSPHeading(widget.heading),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    searchBox(context, _filterWithQueryText),
+                  ],
+                ),
           const SizedBox(height: 16),
           SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: widget.allAssignemntofTopic.isNotEmpty
+              child: filteredAssignmentTopics.isNotEmpty
                   ? Scrollbar(
                       controller: _scrollController,
                       child: ListView.separated(
                           scrollDirection: Axis.vertical,
                           controller: _scrollController,
-                          itemCount: widget.allAssignemntofTopic.length,
+                          itemCount: filteredAssignmentTopics.length,
                           itemBuilder: (context, index) {
                             final TopicAssignmentCardModel assignment =
-                                widget.allAssignemntofTopic[index];
+                                filteredAssignmentTopics[index];
                             return Card(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18),

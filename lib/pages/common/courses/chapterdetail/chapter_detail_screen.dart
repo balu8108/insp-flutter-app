@@ -25,65 +25,53 @@ class ChapterDetailScreen extends StatelessWidget {
       dispatch(context, sendToTopicLectureScreen(context, inspCardModel));
     }
 
-    return Container(
-        padding: isWebOrLandScape
-            ? const EdgeInsets.all(10.0)
-            : const EdgeInsets.all(0.0),
-        color: Colors.white,
-        child: StoreConnector<ChapterDetailAppState, ChapterDetailAppState>(
-          converter: (store) => store.state,
-          builder: (context, ChapterDetailAppState state) =>
-              SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: !isWebOrLandScape
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ChapterWidget(
-                          title: "Physics",
-                          key: UniqueKey(),
-                          allTopicsForSelectedCourse: state.allChapter,
-                          onViewDetailsClicked: onPressedMyCourse),
-                      const SizedBox(height: 16),
-                      ChapterDetailWidget(
-                          key: UniqueKey(),
-                          allTopics: state.allTopics,
-                          selectedChapter: state.selectedchapter,
-                          onViewDetailsClicked: onPressedTopic)
-                    ],
-                  )
-                : Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 9,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ChapterWidget(
-                                title: "Physics",
-                                key: UniqueKey(),
-                                allTopicsForSelectedCourse: state.allChapter,
-                                onViewDetailsClicked: onPressedMyCourse),
-                            const SizedBox(height: 16),
-                            ChapterDetailWidget(
-                                key: UniqueKey(),
-                                allTopics: state.allTopics,
-                                selectedChapter: state.selectedchapter,
-                                onViewDetailsClicked: onPressedTopic)
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 17),
-                      if (isWebOrLandScape)
-                        const Expanded(
-                          flex: 3,
-                          child: UpcomingClassesScreen(),
-                        ),
-                    ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Container(
+          padding: isWebOrLandScape
+              ? const EdgeInsets.all(10.0)
+              : const EdgeInsets.all(0.0),
+          color: Colors.white,
+          child: StoreConnector<ChapterDetailAppState, ChapterDetailAppState>(
+            converter: (store) => store.state,
+            builder: (context, ChapterDetailAppState state) =>
+                SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 9,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ChapterWidget(
+                            title: "Physics",
+                            key: UniqueKey(),
+                            allTopicsForSelectedCourse: state.allChapter,
+                            onViewDetailsClicked: onPressedMyCourse),
+                        const SizedBox(height: 16),
+                        ChapterDetailWidget(
+                            key: UniqueKey(),
+                            allTopics: state.allTopics,
+                            selectedChapter: state.selectedchapter,
+                            onViewDetailsClicked: onPressedTopic),
+                      ],
+                    ),
                   ),
+                  if (isWebOrLandScape) const SizedBox(width: 17),
+                  if (isWebOrLandScape)
+                    const Expanded(
+                      flex: 3,
+                      child: UpcomingClassesScreen(),
+                    ),
+                ],
+              ),
+            ),
           ),
-        ));
+        );
+      },
+    );
   }
 
   static getScreen(INSPCardModel selectedchapter,
