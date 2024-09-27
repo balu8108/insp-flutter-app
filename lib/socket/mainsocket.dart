@@ -301,6 +301,8 @@ Future<void> leaveRoomHandler(Store<AppState> store) async {
       );
     });
   } else {
+    print("fdsfsf");
+    print("324242");
     store.dispatch(setRecordingTpStreamInitialData());
     store.dispatch(setSoloTpStreamInitialData());
   }

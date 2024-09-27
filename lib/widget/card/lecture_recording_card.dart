@@ -22,7 +22,7 @@ Widget LectureRecordingCardWidget({
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                       onTap: () {
-                        pushAndRemoveUntilWithoutAnimation(
+                        pushWithoutAnimation(
                             context,
                             RecordingPlayerScreen(
                               classId: classId,

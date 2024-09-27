@@ -170,7 +170,8 @@ ThunkAction<AppState> getRecordedVideoUrlApi(
             tpStreamId,
             const VideoRequestModel(),
             'Token 74aba046d30c440659f486db92691fe30b9df689bd123ae9446760093ac0bbe7');
-
+        print(tpStreamId);
+        print(previewData.response.data);
         VideoResponseModel videoResponseData =
             VideoResponseModel.fromJson(previewData.response.data);
         // Dispatch the action to update chat messages in the store

@@ -143,7 +143,7 @@ class _NavbarState extends State<Navbar> {
 
   void _navigateToScreen(BuildContext context, Widget screen) {
     leaveRoomHandler(StoreProvider.of<AppState>(context));
-    pushAndRemoveUntilWithoutAnimation(context, screen);
+    pushAndRemoveUntilWithoutAnimation(context, MainScaffold(content: screen));
   }
 
   Padding _buildTextButton(String text, VoidCallback onPressed) {

@@ -76,7 +76,7 @@ class ScheduleClassMobileBoxWidgetState extends State<ScheduleClassMobileBox> {
 
                 void navigateToPreviewScreen() {
                   if (data.classStatus == classStatus['FINISHED']) {
-                    pushAndRemoveUntilWithoutAnimation(
+                    pushWithoutAnimation(
                         context,
                         RecordingPlayerScreen(
                           classId: data.id.toString(),

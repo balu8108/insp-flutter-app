@@ -37,5 +37,7 @@
 	<string>NSApplication</string>
 	<key>UILaunchStoryboardName</key>
 	<string>MainMenu.xib</string>
+	<key>allowScreenShot</key> 
+    <false/> 
 </dict>
 </plist>
