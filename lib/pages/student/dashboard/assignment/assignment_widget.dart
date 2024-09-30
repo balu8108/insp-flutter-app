@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:insp/base/base.dart';
 import 'package:insp/main.dart';
+import 'package:insp/pages/student/assignment/mainpage/assignmentScreen.dart';
 import 'package:insp/pages/student/dashboard/assignment/assignment_widget_redux.dart';
-import 'package:insp/pages/teacher/uploads/mainpage/myuploads.dart';
 import 'package:insp/widget/card/latest_assignment_card.dart';
+import 'package:insp/widget/card/model/insp_card_model.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
 
 class AssignmentWidget extends StatelessWidget {
@@ -14,6 +15,12 @@ class AssignmentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final ScrollController scrollController = ScrollController();
     dispatch(context, showRecentAssignment(context));
+    INSPCardModel inspCardModel = const INSPCardModel(
+        '1',
+        'Physics',
+        'In Progress',
+        'Explore the fascinating world of Physics with a collection of resources covering classical mechanics, electromagnetism, thermodynamics, and quantum mechanics. Dive into the fundamental principles that govern the physical universe.');
+
     return StoreConnector<AssignmentWidgetAppState, AssignmentWidgetAppState>(
       converter: (store) => store.state,
       builder: (context, AssignmentWidgetAppState state) => Container(
@@ -32,7 +39,8 @@ class AssignmentWidget extends StatelessWidget {
                 const Spacer(),
                 TextButton(
                     onPressed: () {
-                      pushWithoutAnimation(context, const MyUploads());
+                      pushWithoutAnimation(
+                          context, AssignmentScreen.getScreen(inspCardModel));
                     },
                     child: const Text(
                       "See All",

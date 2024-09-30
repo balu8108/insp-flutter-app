@@ -14,6 +14,7 @@ class LibraryLectureDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("DW#sd");
     bool isWebOrLandScape = context.isWebOrLandScape();
     dispatch(context, initialFetchLectureDetail(context));
 

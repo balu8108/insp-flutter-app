@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:insp/base/base.dart';
 import 'package:insp/pages/common/alltopicswidget/all_topics_widget_redux.dart';
 import 'package:insp/pages/student/assignment/widget/assignment_subject_topic.dart';
+import 'package:insp/utils/extensions.dart';
 import 'package:insp/widget/card/model/insp_card_model.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
 import 'package:insp/widget/searchbox/search_box.dart';
@@ -19,6 +20,7 @@ class AllTopicWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     dispatch(context, initialFetchSubjectTopic(context));
 
     void filterWithQuery(String text) {
@@ -36,13 +38,24 @@ class AllTopicWidget extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(flex: 5, child: INSPHeading(heading)),
-                  searchBox(context, filterWithQuery),
-                ],
-              ),
+              isWebOrLandScape
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(flex: 5, child: INSPHeading(heading)),
+                        searchBox(context, filterWithQuery),
+                      ],
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        INSPHeading(heading),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        searchBox(context, filterWithQuery),
+                      ],
+                    ),
               const SizedBox(height: 16),
               if (heading.contains("Mathematics") ||
                   heading.contains("Chemistry"))

@@ -53,7 +53,8 @@ class AssignmentScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 16),
                                     AllTopicWidget.getScreen(
-                                        heading: state.selectedItem.name,
+                                        heading:
+                                            'Assignments (${state.selectedItem.name})',
                                         onPressedViewDetails: onPressedTopic)
                                   ],
                                 ),

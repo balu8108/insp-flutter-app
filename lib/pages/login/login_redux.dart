@@ -104,8 +104,11 @@ ThunkAction<AppState> handleLogin(BuildContext context) {
             store.dispatch(
                 UpdateUserData(userData: result.data.loginResponseModelResult));
 
-            pushAndRemoveUntilWithoutAnimation(context,
-                HomeScreen(userData: result.data.loginResponseModelResult));
+            pushAndRemoveUntilWithoutAnimation(
+                context,
+                MainScaffold(
+                    content: HomeScreen(
+                        userData: result.data.loginResponseModelResult)));
 
             store.dispatch(UpdateIsLoading(isLoading: false));
             toastification.show(

@@ -146,7 +146,7 @@ class _NavbarMobileState extends State<NavbarMobile> {
                             );
                           } else {
                             pushAndRemoveUntilWithoutAnimation(
-                                context, item['widget']);
+                                context, MainScaffold(content: item['widget']));
                           }
                         },
                       ),

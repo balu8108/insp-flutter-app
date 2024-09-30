@@ -81,7 +81,7 @@ class TeacherHomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 17),
+                  if (isWebOrLandScape) const SizedBox(width: 17),
                   if (isWebOrLandScape)
                     const Expanded(
                       flex: 3,

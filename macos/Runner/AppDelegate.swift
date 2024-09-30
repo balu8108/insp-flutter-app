@@ -3,38 +3,45 @@ import FlutterMacOS
 
 @main
 class AppDelegate: FlutterAppDelegate {
-  override func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-    return true
-  }
-  override func applicationDidFinishLaunching(_ notification: Notification) {
-    let controller = mainFlutterWindow?.contentViewController as! FlutterViewController
-    let channel = FlutterMethodChannel(name: "com.example.macos/screenshot",
-                                        binaryMessenger: controller.engine.binaryMessenger)
+    var overlayWindow: NSWindow? // Declare overlayWindow to manage its state
 
-    channel.setMethodCallHandler { (call: FlutterMethodCall, result: @escaping FlutterResult) in
-        if call.method == "disableScreenshot" {
-            disableScreenRecording()  // Function to disable screen recording
-            result(nil)
-        } else {
-            result(FlutterMethodNotImplemented)
-        }
+    override func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return true
     }
 
-    super.applicationDidFinishLaunching(notification)
-  }
-}
+    override func applicationDidFinishLaunching(_ notification: Notification) {
+        let controller = mainFlutterWindow?.contentViewController as! FlutterViewController
+        let channel = FlutterMethodChannel(name: "com.example.macos/screenshot",
+                                           binaryMessenger: controller.engine.binaryMessenger)
 
-func disableScreenRecording() {
-    // Prevent screen recording and screenshots
-    let screen = NSScreen.main
-    let screenFrame = screen?.frame ?? NSRect.zero
-    let overlayWindow = NSWindow(contentRect: screenFrame,
-                                 styleMask: .borderless,
-                                 backing: .buffered,
-                                 defer: false)
-    overlayWindow.isOpaque = false
-    overlayWindow.level = .screenSaver
-    overlayWindow.alphaValue = 0.01  // Almost transparent window to block screenshot
-    overlayWindow.backgroundColor = NSColor.black.withAlphaComponent(0.01)
-    overlayWindow.makeKeyAndOrderFront(nil)
+        channel.setMethodCallHandler { (call: FlutterMethodCall, result: @escaping FlutterResult) in
+            if call.method == "disableScreenshot" {
+                self.disableScreenRecording()
+                result(nil)
+            } else {
+                result(FlutterMethodNotImplemented)
+            }
+        }
+
+        super.applicationDidFinishLaunching(notification)
+    }
+
+    func disableScreenRecording() {
+        // Create an overlay window to prevent screenshots and screen recording
+        let screen = NSScreen.main
+        let screenFrame = screen?.frame ?? NSRect.zero
+
+        if overlayWindow == nil {
+            overlayWindow = NSWindow(contentRect: screenFrame,
+                                     styleMask: .borderless,
+                                     backing: .buffered,
+                                     defer: false)
+            overlayWindow?.isOpaque = false
+            overlayWindow?.level = .mainMenu
+            overlayWindow?.alphaValue = 0.01 // Set almost transparent to block screenshot
+            overlayWindow?.backgroundColor = NSColor.black.withAlphaComponent(0.01)
+        }
+
+        overlayWindow?.makeKeyAndOrderFront(nil) // Show the overlay window
+    }
 }

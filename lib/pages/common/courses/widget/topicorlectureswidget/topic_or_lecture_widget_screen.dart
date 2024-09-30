@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:insp/main.dart';
 import 'package:insp/pages/common/courses/chapterdetail/chapter_detail_screen.dart';
 import 'package:insp/pages/student/library/soloclass/solo_class_detail_screen.dart';
+import 'package:insp/utils/extensions.dart';
 import 'package:insp/widget/card/insp_card.dart';
 import 'package:insp/widget/buildgridview/build_grid_view.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
@@ -119,6 +120,7 @@ class _TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
 
   @override
   Widget build(BuildContext context) {
+    bool isWebOrLandScape = context.isWebOrLandScape();
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -127,13 +129,24 @@ class _TopicOrLectureWidgetState extends State<TopicOrLectureWidget> {
       ),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(flex: 5, child: INSPHeading(widget.heading)),
-              searchBox(context, _filterWithQueryText),
-            ],
-          ),
+          isWebOrLandScape
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(flex: 5, child: INSPHeading(widget.heading)),
+                    searchBox(context, _filterWithQueryText),
+                  ],
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    INSPHeading(widget.heading),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    searchBox(context, _filterWithQueryText),
+                  ],
+                ),
           const SizedBox(height: 16),
           if (widget.heading.contains("Mathematics") ||
               widget.heading.contains("Chemistry"))

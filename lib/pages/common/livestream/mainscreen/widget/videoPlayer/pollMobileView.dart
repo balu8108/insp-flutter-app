@@ -32,9 +32,9 @@ class _PollMobileViewWidgetState extends State<PollMobileViewWidget> {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ChatWidgetAppState>(
       converter: (store) => store.state.chatWidgetAppState,
-      builder: (context, state) {
+      builder: (context, statee) {
         // Trigger showDialog when correctAnswers are available and dialog is not already open
-        if (state.questionFromServer.correctAnswers.isNotEmpty &&
+        if (statee.questionFromServer.correctAnswers.isNotEmpty &&
             !_isDialogOpen) {
           _isDialogOpen =
               true; // Set the flag to true before opening the dialog
@@ -44,14 +44,18 @@ class _PollMobileViewWidgetState extends State<PollMobileViewWidget> {
               context: context,
               builder: (context) {
                 return Dialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  child: LiveQuestionAnswer(
-                      polldata: state.questionFromServer,
-                      increasePollTimeModel: state.increasePollTimeModel,
-                      closedDialog: _closeDialog),
-                );
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: StoreConnector<AppState, ChatWidgetAppState>(
+                        converter: (store) => store.state.chatWidgetAppState,
+                        builder: (context, state) {
+                          return LiveQuestionAnswer(
+                              polldata: state.questionFromServer,
+                              increasePollTimeModel:
+                                  state.increasePollTimeModel,
+                              closedDialog: _closeDialog);
+                        }));
               },
             ).then((_) {
               // Reset the flag when the dialog is dismissed

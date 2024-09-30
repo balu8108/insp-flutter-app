@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ import 'package:insp/pages/teacher/soloclassrecording/redux/soloclass_redux.dart
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/redux/app_reducer.dart';
 import 'package:insp/redux/userData/userdata_redux.dart';
+import 'package:insp/socket/mainsocket.dart';
 import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/mobileAppbar/mobileAppbar.dart';
@@ -41,6 +44,7 @@ class NativeMacOSBridge {
   // Function to disable screenshots by calling the native macOS code
   Future<void> disableScreenCapture() async {
     try {
+      print("SADA");
       await platform.invokeMethod('disableScreenshot');
     } on PlatformException catch (e) {
       print("Failed to disable screenshot: '${e.message}'.");
@@ -48,12 +52,17 @@ class NativeMacOSBridge {
   }
 }
 
-void main() async {
-  TPStreamsSDK.initialize(orgCode: "gcma48");
+void main() {
   // Ensure that the correct platform implementation is used for macOS
   WebViewPlatform.instance = WebKitWebViewPlatform();
   WidgetsFlutterBinding.ensureInitialized();
-  NativeMacOSBridge().disableScreenCapture();
+  if (Platform.isMacOS) {
+    // // Assuming you want to disable screenshots at some point in your app
+    // NativeMacOSBridge platform = NativeMacOSBridge();
+
+    // // Example call to disable screenshots when a button is pressed
+    // platform.disableScreenCapture();
+  }
   final store = Store<AppState>(
     appStateReducer,
     initialState: const AppState(
@@ -72,6 +81,7 @@ void main() async {
     middleware: [thunkMiddleware],
   );
 
+  TPStreamsSDK.initialize(orgCode: "gcma48");
   runApp(StoreProvider<AppState>(
     store: store,
     child: MyApp(store: store),
@@ -168,16 +178,23 @@ class MainScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isWebOrLandScape = context.isWebOrLandScape();
+    Future<bool> onBackPressed() async {
+      leaveRoomHandler(StoreProvider.of<AppState>(context));
+      return true; // Return true to allow the back navigation
+    }
+
     return isWebOrLandScape
         ? Scaffold(
             appBar: const Navbar(),
             body: content,
           )
-        : Scaffold(
-            appBar: const Mobileappbar(),
-            body: content,
-            bottomNavigationBar: const NavbarMobile(),
-          );
+        : WillPopScope(
+            onWillPop: onBackPressed,
+            child: Scaffold(
+              appBar: const Mobileappbar(),
+              body: content,
+              bottomNavigationBar: const NavbarMobile(),
+            ));
   }
 }
 
@@ -200,8 +217,7 @@ void pushAndRemoveUntilWithoutAnimation(BuildContext context, Widget screen) {
   Navigator.pushAndRemoveUntil(
     context,
     PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          MainScaffold(content: screen),
+      pageBuilder: (context, animation, secondaryAnimation) => screen,
       transitionDuration: Duration.zero, // No transition duration
       reverseTransitionDuration: Duration.zero, // No reverse transition
       transitionsBuilder: (context, animation, secondaryAnimation, child) {

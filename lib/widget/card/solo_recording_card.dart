@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:insp/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
 import 'package:insp/main.dart';
+import 'package:insp/pages/common/recordingplayer/soloclasses/solo_recording_desktop_player_screen.dart';
 import 'package:insp/pages/common/recordingplayer/soloclasses/solo_recording_player_screen.dart';
 
 Widget SoloRecordingCardWidget({
@@ -21,17 +24,24 @@ Widget SoloRecordingCardWidget({
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                       onTap: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MainScaffold(
-                                content: SoloRecordingPlayerScreen(
+                        if (Platform.isMacOS || Platform.isWindows) {
+                          pushWithoutAnimation(
+                              context,
+                              SoloRecordingDesktopPlayerScreen(
+                                classId: soloClassRoomRecordings[index]
+                                    .soloClassRoomId
+                                    .toString(),
+                              ));
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SoloRecordingPlayerScreen(
                                     classId: soloClassRoomRecordings[index]
                                         .soloClassRoomId
                                         .toString())),
-                          ),
-                          (route) => false,
-                        );
+                          );
+                        }
                       },
                       child: MouseRegion(
                           cursor: SystemMouseCursors.click,

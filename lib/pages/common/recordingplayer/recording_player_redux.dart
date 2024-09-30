@@ -8,6 +8,7 @@ import 'package:insp/apiservices/models/recording/view_solo_recording_response_m
 import 'package:insp/apiservices/models/tpstream/video_request_model.dart';
 import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/main.dart';
 import 'package:insp/pages/home/home_screen.dart';
 import 'package:insp/pages/teacher/soloclassrecording/redux/soloclass_redux.dart';
@@ -167,10 +168,7 @@ ThunkAction<AppState> getRecordedVideoUrlApi(
       // Validate the data before making the API call
       if (tpStreamId.isNotEmpty) {
         final previewData = await remoteDataSource.getVideoPlayUrl(
-            tpStreamId,
-            const VideoRequestModel(),
-            'Token 74aba046d30c440659f486db92691fe30b9df689bd123ae9446760093ac0bbe7');
-
+            tpStreamId, const VideoRequestModel(), tpStreamToken);
         VideoResponseModel videoResponseData =
             VideoResponseModel.fromJson(previewData.response.data);
         // Dispatch the action to update chat messages in the store
