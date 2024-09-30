@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:insp/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 import 'package:insp/main.dart';
+import 'package:insp/pages/common/recordingplayer/liveclasses/recording_player_desktop_screen.dart';
 import 'package:insp/pages/common/recordingplayer/liveclasses/recording_player_screen.dart';
 
 Widget LectureRecordingCardWidget({
@@ -22,11 +25,21 @@ Widget LectureRecordingCardWidget({
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                       onTap: () {
-                        pushWithoutAnimation(
+                        if (Platform.isMacOS || Platform.isWindows) {
+                          pushWithoutAnimation(
+                              context,
+                              RecordingPlayerDesktopScreen(
+                                classId: classId,
+                              ));
+                        } else {
+                          Navigator.push(
                             context,
-                            RecordingPlayerScreen(
-                              classId: classId,
-                            ));
+                            MaterialPageRoute(
+                                builder: (context) => RecordingPlayerScreen(
+                                      classId: classId,
+                                    )),
+                          );
+                        }
                       },
                       child: MouseRegion(
                           cursor: SystemMouseCursors.click,

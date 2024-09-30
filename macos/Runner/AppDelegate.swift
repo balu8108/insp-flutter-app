@@ -37,7 +37,7 @@ class AppDelegate: FlutterAppDelegate {
                                      backing: .buffered,
                                      defer: false)
             overlayWindow?.isOpaque = false
-            overlayWindow?.level = .screenSaver
+            overlayWindow?.level = .mainMenu
             overlayWindow?.alphaValue = 0.01 // Set almost transparent to block screenshot
             overlayWindow?.backgroundColor = NSColor.black.withAlphaComponent(0.01)
         }

@@ -16,9 +16,11 @@ class _TPStreamRecordedMobilePlayerState
     extends State<TPStreamRecordedMobilePlayer> {
   @override
   Widget build(BuildContext context) {
-    return widget.accessToken.isNotEmpty && widget.accestID.isNotEmpty
-        ? TPStreamPlayer(
-            assetId: widget.accestID, accessToken: widget.accessToken)
-        : const Text("waiting...");
+    return Column(children: [
+      widget.accessToken.isNotEmpty && widget.accestID.isNotEmpty
+          ? TPStreamPlayer(
+              assetId: widget.accestID, accessToken: widget.accessToken)
+          : const Text("waiting...")
+    ]);
   }
 }

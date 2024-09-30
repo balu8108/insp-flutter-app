@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:insp/main.dart';
 import 'package:insp/pages/common/livestream/preview/liveclass_preview.dart';
+import 'package:insp/pages/common/recordingplayer/liveclasses/recording_player_desktop_screen.dart';
 import 'package:insp/pages/common/recordingplayer/liveclasses/recording_player_screen.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/card/model/upcoming_lecture_card_model.dart';
@@ -76,11 +79,21 @@ class ScheduleClassMobileBoxWidgetState extends State<ScheduleClassMobileBox> {
 
                 void navigateToPreviewScreen() {
                   if (data.classStatus == classStatus['FINISHED']) {
-                    pushWithoutAnimation(
+                    if (Platform.isMacOS || Platform.isWindows) {
+                      pushWithoutAnimation(
+                          context,
+                          RecordingPlayerDesktopScreen(
+                            classId: data.id.toString(),
+                          ));
+                    } else {
+                      Navigator.push(
                         context,
-                        RecordingPlayerScreen(
-                          classId: data.id.toString(),
-                        ));
+                        MaterialPageRoute(
+                            builder: (context) => RecordingPlayerScreen(
+                                  classId: data.id.toString(),
+                                )),
+                      );
+                    }
                   } else {
                     pushWithoutAnimation(
                         context, LiveClassPreviewScreen(roomId: data.roomId));

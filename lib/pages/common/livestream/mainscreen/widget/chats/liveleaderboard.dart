@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:insp/pages/common/livestream/models/leaderboard_model.dart';
 import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
@@ -13,10 +12,6 @@ class LiveLeaderboard extends StatefulWidget {
 }
 
 class _LiveLeaderboardState extends State<LiveLeaderboard> {
-  static void dispatch(BuildContext context, ChatWidgetAppState action) {
-    StoreProvider.of<AppState>(context).dispatch(action);
-  }
-
   @override
   Widget build(BuildContext context) {
     const Map<int, String> leaderboardRankingIcons = {
@@ -31,20 +26,6 @@ class _LiveLeaderboardState extends State<LiveLeaderboard> {
       9: 'assets/images/leaderboardranks/ninth.png',
       10: 'assets/images/leaderboardranks/tenth.png',
     };
-
-    List<LeaderboardModel> tt = [
-      const LeaderboardModel(),
-      const LeaderboardModel(),
-      const LeaderboardModel(),
-      const LeaderboardModel(),
-      const LeaderboardModel(),
-      const LeaderboardModel(),
-      const LeaderboardModel(),
-      const LeaderboardModel(),
-      const LeaderboardModel(),
-      const LeaderboardModel(),
-      const LeaderboardModel()
-    ];
 
     return StoreConnector<AppState, ChatWidgetAppState>(
       converter: (store) => store.state.chatWidgetAppState,
@@ -64,9 +45,9 @@ class _LiveLeaderboardState extends State<LiveLeaderboard> {
             Expanded(
                 child: ClipRect(
               child: ListView.builder(
-                itemCount: tt.length,
+                itemCount: state.leaderBoard.length,
                 itemBuilder: (context, index) {
-                  final data = tt[index];
+                  final data = state.leaderBoard[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5.0),
                     child: Row(

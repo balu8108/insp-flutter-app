@@ -6,8 +6,6 @@ import 'package:insp/pages/common/livestream/mainscreen/widget/liveclassdetail.d
 import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamMobileView.dart';
 import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamview.dart';
 import 'package:insp/utils/extensions.dart';
-import 'package:insp/widget/mobileAppbar/mobileAppbar.dart';
-import 'package:insp/widget/navbar/navbar.dart';
 
 class LiveClassScreen extends StatefulWidget {
   const LiveClassScreen({super.key});
@@ -20,56 +18,50 @@ class _LiveClassScreenState extends State<LiveClassScreen> {
   Widget build(BuildContext context) {
     bool isWebOrLandScape = context.isWebOrLandScape();
     return isWebOrLandScape
-        ? Scaffold(
-            appBar: const Navbar(),
-            body: Container(
-              padding: isWebOrLandScape
-                  ? const EdgeInsets.all(10.0)
-                  : const EdgeInsets.all(0.0),
-              color: Colors.white,
-              height: MediaQuery.of(context).size.height,
-              child: const Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      flex: 2, child: LiveChatSectionWidget()), // Expanded here
-                  SizedBox(width: 16),
-                  Expanded(
-                    flex: 7,
-                    child: TPStreamLiveVideoPlayerWidget(), // Expanded here
-                  ),
-                  SizedBox(width: 20),
-                  PeerListWidget(),
-                ],
-              ),
+        ? Container(
+            padding: isWebOrLandScape
+                ? const EdgeInsets.all(10.0)
+                : const EdgeInsets.all(0.0),
+            color: Colors.white,
+            height: MediaQuery.of(context).size.height,
+            child: const Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    flex: 2, child: LiveChatSectionWidget()), // Expanded here
+                SizedBox(width: 16),
+                Expanded(
+                  flex: 7,
+                  child: TPStreamLiveVideoPlayerWidget(), // Expanded here
+                ),
+                SizedBox(width: 20),
+                PeerListWidget(),
+              ],
             ),
           )
-        : Scaffold(
-            appBar: const Mobileappbar(),
-            body: Container(
-              padding: isWebOrLandScape
-                  ? const EdgeInsets.all(10.0)
-                  : const EdgeInsets.all(0.0),
-              color: Colors.white,
-              height: MediaQuery.of(context).size.height,
-              child: const SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TPStreamMobileView(),
-                    SizedBox(height: 20),
-                    SizedBox(
-                      height: 200,
-                      child: LiveClassDetail(),
-                    ),
-                    SizedBox(height: 20),
-                    SizedBox(
-                      height: 400,
-                      child: LiveLeftPart(),
-                    )
-                  ],
-                ),
+        : Container(
+            padding: isWebOrLandScape
+                ? const EdgeInsets.all(10.0)
+                : const EdgeInsets.all(0.0),
+            color: Colors.white,
+            height: MediaQuery.of(context).size.height,
+            child: const SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TPStreamMobileView(),
+                  SizedBox(height: 20),
+                  SizedBox(
+                    height: 200,
+                    child: LiveClassDetail(),
+                  ),
+                  SizedBox(height: 20),
+                  SizedBox(
+                    height: 400,
+                    child: LiveLeftPart(),
+                  )
+                ],
               ),
             ),
           );

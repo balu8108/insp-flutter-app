@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insp/apiservices/models/login/login_response_model.dart';
+import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/main.dart';
 import 'package:insp/pages/common/livestream/models/increase_polltime_model.dart';
 import 'package:insp/pages/common/livestream/models/leaderboard_answer_model.dart';
@@ -34,7 +35,7 @@ void initializeSocketConnections(
 
   if (token.isNotEmpty) {
     socket = IO.io(
-        'https://flutterdev.insp.1labventures.in',
+        api,
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .disableAutoConnect()
@@ -301,8 +302,6 @@ Future<void> leaveRoomHandler(Store<AppState> store) async {
       );
     });
   } else {
-    print("fdsfsf");
-    print("324242");
     store.dispatch(setRecordingTpStreamInitialData());
     store.dispatch(setSoloTpStreamInitialData());
   }

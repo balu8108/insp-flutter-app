@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:insp/apiservices/models/tpstream/video_request_model.dart';
 import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
@@ -71,9 +72,7 @@ ThunkAction<AppState> getVideoUrlApi(BuildContext context) {
         final tpStreamId = recording.tpStreamId;
         if (tpStreamId.isNotEmpty) {
           final previewData = await remoteDataSource.getVideoPlayUrl(
-              tpStreamId,
-              const VideoRequestModel(),
-              'Token 74aba046d30c440659f486db92691fe30b9df689bd123ae9446760093ac0bbe7');
+              tpStreamId, const VideoRequestModel(), tpStreamToken);
 
           VideoResponseModel videoResponseData =
               VideoResponseModel.fromJson(previewData.response.data);

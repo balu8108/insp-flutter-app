@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +44,7 @@ class NativeMacOSBridge {
   // Function to disable screenshots by calling the native macOS code
   Future<void> disableScreenCapture() async {
     try {
+      print("SADA");
       await platform.invokeMethod('disableScreenshot');
     } on PlatformException catch (e) {
       print("Failed to disable screenshot: '${e.message}'.");
@@ -49,12 +52,17 @@ class NativeMacOSBridge {
   }
 }
 
-void main() async {
-  TPStreamsSDK.initialize(orgCode: "gcma48");
+void main() {
   // Ensure that the correct platform implementation is used for macOS
   WebViewPlatform.instance = WebKitWebViewPlatform();
   WidgetsFlutterBinding.ensureInitialized();
-  NativeMacOSBridge().disableScreenCapture();
+  if (Platform.isMacOS) {
+    // // Assuming you want to disable screenshots at some point in your app
+    // NativeMacOSBridge platform = NativeMacOSBridge();
+
+    // // Example call to disable screenshots when a button is pressed
+    // platform.disableScreenCapture();
+  }
   final store = Store<AppState>(
     appStateReducer,
     initialState: const AppState(
@@ -73,6 +81,7 @@ void main() async {
     middleware: [thunkMiddleware],
   );
 
+  TPStreamsSDK.initialize(orgCode: "gcma48");
   runApp(StoreProvider<AppState>(
     store: store,
     child: MyApp(store: store),
