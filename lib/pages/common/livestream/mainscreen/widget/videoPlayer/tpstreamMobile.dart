@@ -18,10 +18,13 @@ class TPStreamMobileVideoPlayer extends StatelessWidget {
     return StoreConnector<AppState, TPStreamAppState>(
       converter: (store) => store.state.tpStreamAppState,
       builder: (context, TPStreamAppState state) {
-        return state.videoResponse.playback_url.isNotEmpty
-            ? TPStreamPlayer(
-                assetId: state.accestId, accessToken: state.videoResponse.code)
-            : const Text("waiting...");
+        return Column(children: [
+          state.videoResponse.playback_url.isNotEmpty
+              ? TPStreamPlayer(
+                  assetId: state.accestId,
+                  accessToken: state.videoResponse.code)
+              : const Text("waiting...")
+        ]);
       },
     );
   }
