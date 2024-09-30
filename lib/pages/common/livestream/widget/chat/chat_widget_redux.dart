@@ -1,10 +1,12 @@
 // This file is "main.dart"
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:insp/main.dart';
-import 'package:insp/pages/common/livestream/mainscreen/liveclass.dart';
+import 'package:insp/pages/common/livestream/mainscreen/liveclass_mobile_screen.dart';
+import 'package:insp/pages/common/livestream/mainscreen/liveclass_desktop_screen.dart';
 import 'package:insp/pages/common/livestream/models/chat_message_model.dart';
 import 'package:insp/pages/common/livestream/models/increase_polltime_model.dart';
 import 'package:insp/pages/common/livestream/models/leaderboard_answer_model.dart';
@@ -244,7 +246,14 @@ ThunkAction<AppState> joinRoomResponseData(BuildContext context, dynamic res) {
       store.dispatch(UpdateLeaderboardMessages(
           leaderBoardAnswerPercentage: leaderBoardListAnswer));
     }
-    pushWithoutAnimation(context, const LiveClassScreen());
+    if (Platform.isMacOS || Platform.isWindows) {
+      pushWithoutAnimation(context, const LiveClassDesktopScreen());
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LiveClassMobileScreen()),
+      );
+    }
   };
 }
 

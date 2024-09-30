@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:insp/main.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
@@ -57,33 +56,28 @@ class UpcomingClassesScreen extends StatelessWidget {
                         const EdgeInsets.symmetric(vertical: 12.0)),
                   ),
                   onPressed: () {
-                    // Assuming you want to disable screenshots at some point in your app
-                    NativeMacOSBridge platform = NativeMacOSBridge();
-
-                    // Example call to disable screenshots when a button is pressed
-                    platform.disableScreenCapture();
-                    // showDialog(
-                    //   context: context,
-                    //   builder: (BuildContext context) {
-                    //     return ScheduleLiveClass.getScreen(
-                    //         0,
-                    //         false,
-                    //         '',
-                    //         '',
-                    //         '',
-                    //         '',
-                    //         '',
-                    //         '',
-                    //         '',
-                    //         '',
-                    //         '',
-                    //         '',
-                    //         '',
-                    //         false,
-                    //         [],
-                    //         getUpcomingClass);
-                    //   },
-                    // );
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ScheduleLiveClass.getScreen(
+                            0,
+                            false,
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            false,
+                            [],
+                            getUpcomingClass);
+                      },
+                    );
                   },
                   child: const Text(
                     'Schedule Class',
