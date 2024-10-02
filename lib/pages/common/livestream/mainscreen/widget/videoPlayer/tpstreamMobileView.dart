@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/actionButton.dart';
+import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/mobileActionButton.dart';
 import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/pollMobileView.dart';
 import 'package:insp/pages/common/livestream/mainscreen/widget/videoPlayer/tpstreamMobile.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
@@ -35,7 +35,7 @@ class _TPStreamMobileViewState extends State<TPStreamMobileView> {
             ),
             child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: ActionButtonWidget(isTeacher: isTeacher))),
+                child: MobileActionButtonWidget(isTeacher: isTeacher))),
         const PollMobileViewWidget()
       ],
     );

@@ -247,6 +247,7 @@ void pollTimeIncreaseResponseHandler(Store<AppState> store, dynamic res) {
 }
 
 void kickOutResponseHandler(Store<AppState> store, dynamic res) {
+  store.dispatch(UpdateIsClassEnded(isClassEnded: false));
   leaveRoomHandler(store);
 }
 
@@ -255,8 +256,12 @@ void tpStreamLivestreamStatus(Store<AppState> store, dynamic res) {
   store.dispatch(getStatus(message));
 }
 
-void endMeetHandler() {
-  socket?.emit(SOCKET_EVENTS.END_MEET_TO_SERVER);
+void endMeetHandler(Store<AppState> store, BuildContext context) {
+  store.dispatch(UpdateIsClassEnded(isClassEnded: true));
+  socket?.emitWithAck(SOCKET_EVENTS.END_MEET_TO_SERVER, '', ack: (res) {
+    store.dispatch(UpdateIsClassEnded(isClassEnded: false));
+    Navigator.pop(context);
+  });
 }
 
 Future<void> leaveRoomHandler(Store<AppState> store) async {

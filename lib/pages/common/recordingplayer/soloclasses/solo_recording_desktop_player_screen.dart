@@ -17,6 +17,8 @@ class SoloRecordingDesktopPlayerScreen extends StatefulWidget {
 
 class _SoloRecordingDesktopPlayerScreenState
     extends State<SoloRecordingDesktopPlayerScreen> {
+  bool isFullScreen = false;
+
   @override
   void initState() {
     super.initState();
@@ -43,28 +45,78 @@ class _SoloRecordingDesktopPlayerScreenState
             converter: (store) => store.state.recordingPlayerAppState,
             builder: (context, RecordingPlayerAppState state) {
               return Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: isFullScreen
+                      ? const EdgeInsets.all(0.0)
+                      : const EdgeInsets.all(16.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        flex: 7,
-                        child: TPStreamRecordedPlayer(
-                            videourl: state.videoResponse.playback_url),
+                        flex: isFullScreen ? 10 : 7,
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: TPStreamRecordedPlayer(
+                                  videourl: state.videoResponse.playback_url,
+                                ),
+                              ),
+                              _buildBottomBar(), // Refactored bottom bar
+                            ],
+                          ),
+                        ),
                       ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                          flex: 3,
-                          child: SingleChildScrollView(
-                            child: SoloRecordingDetailWidget(
-                              recordingSoloPlayerDetail:
-                                  state.soloRecordedVideoData,
-                              onViewDetailsClicked: onPressedRecording,
-                              onUpdate: onUpdate,
-                            ),
-                          )),
+                      if (!isFullScreen) const SizedBox(width: 16),
+                      if (!isFullScreen)
+                        Expanded(
+                            flex: 3,
+                            child: SingleChildScrollView(
+                              child: SoloRecordingDetailWidget(
+                                recordingSoloPlayerDetail:
+                                    state.soloRecordedVideoData,
+                                onViewDetailsClicked: onPressedRecording,
+                                onUpdate: onUpdate,
+                              ),
+                            )),
                     ],
                   ));
             }));
+  }
+
+  // Refactored bottom bar
+  Widget _buildBottomBar() {
+    return Container(
+      height: 50,
+      width: double.infinity,
+      padding: const EdgeInsets.only(right: 16),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(16),
+          bottomRight: Radius.circular(16),
+        ),
+        color: Color.fromRGBO(232, 242, 249, 1),
+      ),
+      child: Row(
+        mainAxisAlignment:
+            MainAxisAlignment.end, // Align the fullscreen button to the right
+        children: [
+          Tooltip(
+            message: isFullScreen ? "Exit FullScreen" : "FullScreen",
+            child: IconButton(
+              icon: isFullScreen
+                  ? const Icon(Icons.fullscreen_exit)
+                  : const Icon(Icons.fullscreen),
+              iconSize: 24.0,
+              onPressed: () {
+                setState(() {
+                  isFullScreen = !isFullScreen;
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

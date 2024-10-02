@@ -1,6 +1,7 @@
 // This file is "main.dart"
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:insp/apiservices/models/login/login_response_model.dart';
 import 'package:insp/apiservices/models/soloclasses/soloclass_detail_response_model.dart';
 import 'package:insp/apiservices/models/tpstream/video_request_model.dart';
 import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
@@ -100,10 +101,35 @@ ThunkAction<AppState> getSoloVideoUrlApi(
   return (Store<AppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
+      LoginResponseModelResult userData = getUserDataFromStore(context);
 
       if (tpStreamId.isNotEmpty) {
         final previewData = await remoteDataSource.getVideoPlayUrl(
-            tpStreamId, const VideoRequestModel(), tpStreamToken);
+            tpStreamId,
+            VideoRequestModel(
+              expires_after_first_usage: false,
+              annotations: [
+                StaticAnnotation(
+                  type: "static",
+                  text: userData.email,
+                  x: 40,
+                  y: 40,
+                  opacity: 0.4,
+                  color: "#808080",
+                  size: 4,
+                ),
+                DynamicAnnotation(
+                  type: "dynamic",
+                  text: userData.mobile,
+                  opacity: 0.4,
+                  color: "#808080",
+                  size: 4,
+                  interval: 5000,
+                  skip: 2000,
+                ),
+              ],
+            ),
+            tpStreamToken);
 
         VideoResponseModel videoResponseData =
             VideoResponseModel.fromJson(previewData.response.data);

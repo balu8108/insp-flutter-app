@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:insp/main.dart';
 import 'package:insp/pages/login/login_screen.dart';
 import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/localstorage.dart';

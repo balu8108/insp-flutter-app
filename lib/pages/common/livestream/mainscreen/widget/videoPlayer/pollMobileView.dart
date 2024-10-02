@@ -42,6 +42,7 @@ class _PollMobileViewWidgetState extends State<PollMobileViewWidget> {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             showDialog(
               context: context,
+              barrierDismissible: false,
               builder: (context) {
                 return Dialog(
                     shape: RoundedRectangleBorder(

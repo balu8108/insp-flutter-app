@@ -4,7 +4,9 @@ import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart'
 import 'package:insp/redux/AppState.dart';
 
 class PreviewVideo extends StatelessWidget {
-  const PreviewVideo({super.key});
+  const PreviewVideo({super.key, required this.name});
+
+  final String name;
 
   static void dispatch(BuildContext context, ChatWidgetAppState action) {
     StoreProvider.of<AppState>(context).dispatch(action);
@@ -27,9 +29,9 @@ class PreviewVideo extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 color: Colors.black,
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
-                  "Live Streaming...",
+                  name,
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
