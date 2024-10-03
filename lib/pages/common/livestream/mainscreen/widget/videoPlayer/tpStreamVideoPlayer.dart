@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:insp/pages/common/livestream/preview/widget/previewvideo.dart';
 import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
 import 'package:insp/pages/common/recordingplayer/webview_macos.dart';
 import 'package:insp/pages/common/recordingplayer/webview_window.dart';
 import 'package:insp/redux/AppState.dart';
-import 'package:universal_platform/universal_platform.dart';
 
 class TPStreamVideoPlayer extends StatelessWidget {
   const TPStreamVideoPlayer({super.key});
@@ -21,9 +23,6 @@ class TPStreamVideoPlayer extends StatelessWidget {
       converter: (store) => store.state.tpStreamAppState,
       builder: (context, TPStreamAppState state) {
         return Container(
-            height: MediaQuery.of(context).size.height - 150 < 600
-                ? MediaQuery.of(context).size.height - 150
-                : 600,
             width: double.infinity,
             padding: const EdgeInsets.all(16.0),
             decoration: const BoxDecoration(
@@ -34,16 +33,16 @@ class TPStreamVideoPlayer extends StatelessWidget {
               color: Color.fromRGBO(232, 242, 249, 1),
             ),
             child: state.videoResponse.playback_url.isNotEmpty
-                ? UniversalPlatform.isWindows
+                ? Platform.isWindows
                     ? WebviewUniversalWindow(
                         url: state.videoResponse.playback_url,
                         streamStatus: state.streamStatusChangeTo)
-                    : UniversalPlatform.isMacOS
+                    : Platform.isMacOS
                         ? WebviewMacOs(
                             url: state.videoResponse.playback_url,
                             streamStatus: state.streamStatusChangeTo)
                         : const Text("Platform not supported")
-                : const Text("Waiting..."));
+                : const PreviewVideo(name: "waiting..."));
       },
     );
   }

@@ -165,10 +165,35 @@ ThunkAction<AppState> getRecordedVideoUrlApi(
   return (Store<AppState> store) async {
     try {
       final remoteDataSource = RemoteDataSource();
+      LoginResponseModelResult userData = getUserDataFromStore(context);
       // Validate the data before making the API call
       if (tpStreamId.isNotEmpty) {
         final previewData = await remoteDataSource.getVideoPlayUrl(
-            tpStreamId, const VideoRequestModel(), tpStreamToken);
+            tpStreamId,
+            VideoRequestModel(
+              expires_after_first_usage: false,
+              annotations: [
+                StaticAnnotation(
+                  type: "static",
+                  text: userData.email,
+                  x: 40,
+                  y: 40,
+                  opacity: 0.4,
+                  color: "#808080",
+                  size: 4,
+                ),
+                DynamicAnnotation(
+                  type: "dynamic",
+                  text: userData.mobile,
+                  opacity: 0.4,
+                  color: "#808080",
+                  size: 4,
+                  interval: 5000,
+                  skip: 2000,
+                ),
+              ],
+            ),
+            tpStreamToken);
         VideoResponseModel videoResponseData =
             VideoResponseModel.fromJson(previewData.response.data);
         // Dispatch the action to update chat messages in the store

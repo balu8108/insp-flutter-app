@@ -36,7 +36,8 @@ class ChatWidgetAppState with _$ChatWidgetAppState {
       @Default(PollDataModel()) PollDataModel pollData,
       @Default(PollDataModel()) PollDataModel questionFromServer,
       @Default(IncreasePollTimeModel())
-      IncreasePollTimeModel increasePollTimeModel}) = _ChatWidgetAppState;
+      IncreasePollTimeModel increasePollTimeModel,
+      @Default(false) bool isClassEnded}) = _ChatWidgetAppState;
 }
 
 class UpdateChatMessages extends ChatWidgetAction {
@@ -74,6 +75,11 @@ class UpdateIncreasePollTimeModel extends ChatWidgetAction {
   UpdateIncreasePollTimeModel({required this.increasePollTimeModel});
 }
 
+class UpdateIsClassEnded extends ChatWidgetAction {
+  bool isClassEnded;
+  UpdateIsClassEnded({required this.isClassEnded});
+}
+
 sealed class ChatWidgetAction {}
 
 ChatWidgetAppState chatMessageStateReducer(
@@ -93,6 +99,8 @@ ChatWidgetAppState chatMessageStateReducer(
     return state.copyWith(questionFromServer: action.questionFromServer);
   } else if (action is UpdateIncreasePollTimeModel) {
     return state.copyWith(increasePollTimeModel: action.increasePollTimeModel);
+  } else if (action is UpdateIsClassEnded) {
+    return state.copyWith(isClassEnded: action.isClassEnded);
   }
   return state;
 }
@@ -263,5 +271,10 @@ ThunkAction<AppState> setChatInitialData() {
     store.dispatch(UpdateLeaderBoard(leaderBoard: []));
     store.dispatch(UpdateQuestionMessage(questionMessages: []));
     store.dispatch(UpdateLeaderboardMessages(leaderBoardAnswerPercentage: []));
+    store.dispatch(
+        UpdateQuestionFromServer(questionFromServer: const PollDataModel()));
+    store.dispatch(UpdateIncreasePollTimeModel(
+        increasePollTimeModel: const IncreasePollTimeModel()));
+    store.dispatch(UpdatePollData(pollData: PollDataModel()));
   };
 }

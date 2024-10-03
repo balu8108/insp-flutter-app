@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -38,31 +35,10 @@ import 'package:webview_flutter_platform_interface/webview_flutter_platform_inte
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-class NativeMacOSBridge {
-  static const platform = MethodChannel('com.example.macos/screenshot');
-
-  // Function to disable screenshots by calling the native macOS code
-  Future<void> disableScreenCapture() async {
-    try {
-      print("SADA");
-      await platform.invokeMethod('disableScreenshot');
-    } on PlatformException catch (e) {
-      print("Failed to disable screenshot: '${e.message}'.");
-    }
-  }
-}
-
 void main() {
   // Ensure that the correct platform implementation is used for macOS
   WebViewPlatform.instance = WebKitWebViewPlatform();
-  WidgetsFlutterBinding.ensureInitialized();
-  if (Platform.isMacOS) {
-    // // Assuming you want to disable screenshots at some point in your app
-    // NativeMacOSBridge platform = NativeMacOSBridge();
 
-    // // Example call to disable screenshots when a button is pressed
-    // platform.disableScreenCapture();
-  }
   final store = Store<AppState>(
     appStateReducer,
     initialState: const AppState(

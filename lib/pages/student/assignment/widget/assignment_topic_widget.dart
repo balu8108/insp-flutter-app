@@ -35,6 +35,14 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
     filteredAssignmentTopics = widget.allAssignemntofTopic;
   }
 
+  @override
+  void didUpdateWidget(covariant AssignmentTopicWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.allAssignemntofTopic != widget.allAssignemntofTopic) {
+      filteredAssignmentTopics = widget.allAssignemntofTopic;
+    }
+  }
+
   void _filterWithQueryText(String query) {
     if (query.isNotEmpty) {
       setState(() {

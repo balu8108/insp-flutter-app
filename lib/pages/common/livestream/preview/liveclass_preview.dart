@@ -28,7 +28,9 @@ class LiveClassPreviewScreen extends StatelessWidget {
                   children: [
                     const Expanded(
                       flex: 7,
-                      child: SizedBox(height: 700, child: PreviewVideo()),
+                      child: SizedBox(
+                          height: 700,
+                          child: PreviewVideo(name: "Live Streaming...")),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -40,7 +42,7 @@ class LiveClassPreviewScreen extends StatelessWidget {
                   children: [
                     const SizedBox(
                       height: 200,
-                      child: PreviewVideo(),
+                      child: PreviewVideo(name: "Live Streaming..."),
                     ),
                     const SizedBox(height: 20),
                     LiveCLassPreviowlWidget(roomId: roomId)

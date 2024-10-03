@@ -10,23 +10,35 @@ class LiveClassDesktopScreen extends StatefulWidget {
 }
 
 class _LiveClassScreenState extends State<LiveClassDesktopScreen> {
+  bool isFullScreen = false;
+
+  void _changeFullScreen() {
+    setState(() {
+      isFullScreen = !isFullScreen;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10.0),
       color: Colors.white,
       height: MediaQuery.of(context).size.height,
-      child: const Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(flex: 2, child: LiveChatSectionWidget()), // Expanded here
-          SizedBox(width: 16),
+          if (!isFullScreen)
+            const Expanded(
+                flex: 2, child: LiveChatSectionWidget()), // Expanded here
+          if (!isFullScreen) const SizedBox(width: 16),
           Expanded(
-            flex: 7,
-            child: TPStreamLiveVideoPlayerWidget(), // Expanded here
+            flex: isFullScreen ? 10 : 7,
+            child: TPStreamLiveVideoPlayerWidget(
+                isFullScreen: isFullScreen,
+                fullScreen: _changeFullScreen), // Expanded here
           ),
-          SizedBox(width: 20),
-          PeerListWidget(),
+          if (!isFullScreen) const SizedBox(width: 20),
+          if (!isFullScreen) const PeerListWidget(),
         ],
       ),
     );
