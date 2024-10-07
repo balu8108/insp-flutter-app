@@ -24,4 +24,16 @@ class DeviceStatusChecker {
       return false;
     }
   }
+
+  // Method to check if the device is jailbroken
+  static Future<bool> isDeviceJailbroken() async {
+    try {
+      final bool isJailbroken =
+          await platform.invokeMethod('isDeviceJailbroken');
+      return isJailbroken;
+    } on PlatformException catch (e) {
+      print("Failed to check if the device is jailbroken: '${e.message}'.");
+      return false;
+    }
+  }
 }

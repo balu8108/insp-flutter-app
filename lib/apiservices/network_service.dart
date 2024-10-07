@@ -34,6 +34,8 @@ import 'package:insp/apiservices/models/soloclasses/soloclass_topicwise_details_
 import 'package:insp/apiservices/models/tpstream/video_request_model.dart';
 import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
 import 'package:insp/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
+import 'package:insp/apiservices/models/versioncontrol/version_control_request_model.dart';
+import 'package:insp/apiservices/models/versioncontrol/version_control_response_model.dart';
 import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
@@ -110,6 +112,10 @@ abstract class NetworkService {
   @GET('/generic/get-all-timetable')
   Future<HttpResponse<TimeTableResponseDataModel>> getAllTimeTable(
       @Header('Authorization') String secretTokenHeader);
+
+  @POST('/generic/get-version-update')
+  Future<HttpResponse<VersionControlResponseModel>> checkIsNewVersionAvailable(
+      @Body() VersionControlRequestModel videoRequestModel);
 
   @GET('/generic/topic-feedback-rating-details/{topicId}')
   Future<HttpResponse<RatingFeedbackRatingDetailResponseModel>>

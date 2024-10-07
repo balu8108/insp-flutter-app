@@ -31,6 +31,8 @@ import 'package:insp/apiservices/models/soloclasses/soloclass_topicwise_details_
 import 'package:insp/apiservices/models/tpstream/video_request_model.dart';
 import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
 import 'package:insp/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
+import 'package:insp/apiservices/models/versioncontrol/version_control_request_model.dart';
+import 'package:insp/apiservices/models/versioncontrol/version_control_response_model.dart';
 import 'package:retrofit/dio.dart';
 
 import 'models/library/all_topics_for_subject_request_model.dart';
@@ -158,6 +160,9 @@ abstract class RemoteDataSource {
 
   Future<HttpResponse<DeleteAssignmentResponseModel>> uploadAssignmentToClass(
       String type, String classId, String secretTokenHeader);
+
+  Future<HttpResponse<VersionControlResponseModel>> checkIsNewVersionAvailable(
+      VersionControlRequestModel videoRequestModel);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -412,5 +417,11 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       String type, String classId, String secretTokenHeader) {
     return deviceNetworkService.uploadAssignmentToClass(
         type, classId, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<VersionControlResponseModel>> checkIsNewVersionAvailable(
+      VersionControlRequestModel videoRequestModel) {
+    return deviceNetworkService.checkIsNewVersionAvailable(videoRequestModel);
   }
 }

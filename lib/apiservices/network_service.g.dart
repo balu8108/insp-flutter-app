@@ -13,7 +13,7 @@ class _NetworkService implements NetworkService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://flutterdev.insp.1labventures.in/';
+    baseUrl ??= 'http://localhost:4000/';
   }
 
   final Dio _dio;
@@ -386,6 +386,36 @@ class _NetworkService implements NetworkService {
               baseUrl,
             ))));
     final value = TimeTableResponseDataModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<VersionControlResponseModel>> checkIsNewVersionAvailable(
+      VersionControlRequestModel videoRequestModel) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(videoRequestModel.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<VersionControlResponseModel>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/generic/get-version-update',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = VersionControlResponseModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
