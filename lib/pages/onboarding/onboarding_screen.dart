@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:insp/main.dart';
 import 'package:insp/pages/login/login_screen.dart';
+import 'package:insp/utils/isAdbEnabled.dart';
+import 'package:insp/widget/popups/isAdbEnabled.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -32,6 +33,43 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           " Have questions? Clear your doubts in no time! Connect with educators and peers effortlessly, ensuring a smooth learning journey. Say goodbye to uncertainties, embrace clarity!"
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _checkDeviceStatus();
+  }
+
+  // Function to check ADB and Root status
+  Future<void> _checkDeviceStatus() async {
+    bool adbEnabled = await DeviceStatusChecker.isAdbEnabled();
+    bool deviceRooted = await DeviceStatusChecker.isDeviceRooted();
+
+    if (adbEnabled || deviceRooted) {
+      String message = "Please address the following issues to proceed:\n";
+
+      if (adbEnabled) {
+        message +=
+            "- Developer mode is currently enabled. Please disable it.\n";
+      }
+
+      if (deviceRooted) {
+        message +=
+            "- Your device appears to be rooted. Please unroot your device.\n";
+      }
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return ADBEnablePopup(
+            message: message,
+          );
+        },
+      );
+    }
+  }
+
   void _onSkipButton() {
     Navigator.pushAndRemoveUntil(
       context,
