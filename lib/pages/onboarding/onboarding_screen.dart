@@ -212,39 +212,42 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   });
                 },
                 itemBuilder: (context, index) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        onBoardingData[index]['image'],
-                        height: 300,
-                      ),
-                      Text(
-                        onBoardingData[index]['title'],
-                        style: const TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.w500),
-                      ),
-                      const SizedBox(height: 12),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                        child: Text(
-                          onBoardingData[index]['description'],
-                          style: const TextStyle(
-                              fontSize: 14,
-                              color: Color.fromRGBO(0, 0, 0, 0.81)),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      Row(
+                  return SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                          onBoardingData.length,
-                          (index) => buildDot(index, context),
-                        ),
-                      ),
-                    ],
-                  );
+                        children: [
+                          Image.asset(
+                            onBoardingData[index]['image'],
+                            height: 300,
+                          ),
+                          Text(
+                            onBoardingData[index]['title'],
+                            style: const TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.w500),
+                          ),
+                          const SizedBox(height: 12),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 25.0),
+                            child: Text(
+                              onBoardingData[index]['description'],
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Color.fromRGBO(0, 0, 0, 0.81)),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(
+                              onBoardingData.length,
+                              (index) => buildDot(index, context),
+                            ),
+                          ),
+                        ],
+                      ));
                 },
               )
             ])),
