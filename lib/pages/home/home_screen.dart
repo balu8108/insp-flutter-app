@@ -43,10 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (adbEnabled || deviceRooted) {
       String message = "Please address the following issues to proceed:\n";
-      if (adbEnabled)
+      if (adbEnabled) {
         message += "- Developer mode is enabled. Please disable it.\n";
-      if (deviceRooted)
+      }
+      if (deviceRooted) {
         message += "- Your device appears to be rooted. Please unroot it.\n";
+      }
 
       _showDialog(
         ADBEnablePopup(message: message),

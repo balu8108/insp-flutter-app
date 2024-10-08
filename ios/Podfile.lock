@@ -49,24 +49,21 @@ PODS:
   - SDWebImage (5.19.7):
     - SDWebImage/Core (= 5.19.7)
   - SDWebImage/Core (5.19.7)
-  - Sentry (8.0.0):
-    - Sentry/Core (= 8.0.0)
-    - SentryPrivate (= 8.0.0)
-  - Sentry/Core (8.0.0):
-    - SentryPrivate (= 8.0.0)
-  - SentryPrivate (8.0.0)
+  - Sentry (8.36.0):
+    - Sentry/Core (= 8.36.0)
+  - Sentry/Core (8.36.0)
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
   - SwiftyGif (5.4.5)
   - tpstreams_player_sdk (0.0.2):
     - Flutter
-    - TPStreamsSDK (= 1.1.5)
-  - TPStreamsSDK (1.1.5):
+    - TPStreamsSDK (= 1.1.8)
+  - TPStreamsSDK (1.1.8):
     - Alamofire (~> 5.9.0)
     - M3U8Kit (~> 1.1.0)
     - ReachabilitySwift (~> 5.2.2)
-    - Sentry (~> 8.0.0)
+    - Sentry (~> 8.36.0)
   - url_launcher_ios (0.0.1):
     - Flutter
   - webview_flutter_wkwebview (0.0.1):
@@ -94,7 +91,6 @@ SPEC REPOS:
     - ReachabilitySwift
     - SDWebImage
     - Sentry
-    - SentryPrivate
     - SwiftyGif
     - TPStreamsSDK
 
@@ -133,12 +129,11 @@ SPEC CHECKSUMS:
   pdfx: 7b876b09de8b7a0bf444a4f82b439ffcff4ee1ec
   ReachabilitySwift: 7f151ff156cea1481a8411701195ac6a984f4979
   SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
-  Sentry: 2158a4621096dcd0a3a4f7c80b84b04dde261035
-  SentryPrivate: 1e3acf96ee818a8d0d95b8e922d39ab6be338ea0
+  Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
-  tpstreams_player_sdk: 2539ce55a3d3cd1290f439e789a1e9f7a5803573
-  TPStreamsSDK: 92f1a53facf4ceb7481045a8b1f23ba3f97aefbc
+  tpstreams_player_sdk: 497641f3a0210a5a11a0e701a8da115f0f2e5513
+  TPStreamsSDK: 810232f3472a34f644c524570242278c3e65bcdd
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
   webview_flutter_wkwebview: 0982481e3d9c78fd5c6f62a002fcd24fc791f1e4
 
