@@ -51,8 +51,6 @@ class StudentHomeScreen extends StatelessWidget {
                     LibrarySubject(
                       onViewDetailsClicked: onPressedLibrary,
                     ),
-                    const SizedBox(height: 16),
-                    if (isWebOrLandScape) const UpcomingClassesScreen(),
                   ],
                 ),
               );
