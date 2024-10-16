@@ -32,8 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if (Platform.isAndroid || Platform.isIOS) {
       await _checkDeviceStatus();
     }
+    if (Platform.isWindows || Platform.isMacOS) {
+      await _checkForNewVersion();
+    }
     await _checkStoreToken(widget.userData);
-    await _checkForNewVersion();
   }
 
   // Function to check ADB and Root status
@@ -73,21 +75,19 @@ class _HomeScreenState extends State<HomeScreen> {
         ? "WINDOW"
         : Platform.isMacOS
             ? 'MACOS'
-            : Platform.isAndroid
-                ? 'ANDROID'
-                : Platform.isIOS
-                    ? 'IOS'
-                    : '';
+            : '';
 
     final versionData =
         VersionControlRequestModel(version: '1.0.0', deviceName: device);
+
     final isVersionValid =
         await remoteDataSource.checkIsNewVersionAvailable(versionData);
 
     if (!isVersionValid.data.status) {
       _showDialog(VersionControlPopup(
           version: isVersionValid.data.version,
-          message: isVersionValid.data.description));
+          message: isVersionValid.data.description,
+          downloadurl: isVersionValid.data.downloadLink));
     }
   }
 

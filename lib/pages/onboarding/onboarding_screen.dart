@@ -42,8 +42,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    _checkDeviceStatus();
-    _checkForNewVersion();
+    _initializeChecks();
+  }
+
+  Future<void> _initializeChecks() async {
+    if (Platform.isAndroid || Platform.isIOS) {
+      await _checkDeviceStatus();
+    }
+    if (Platform.isWindows || Platform.isMacOS) {
+      await _checkForNewVersion();
+    }
   }
 
   // Function to check ADB and Root status
@@ -116,7 +124,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (!isVersionValid.data.status) {
       _showDialog(VersionControlPopup(
           version: isVersionValid.data.version,
-          message: isVersionValid.data.description));
+          message: isVersionValid.data.description,
+          downloadurl: isVersionValid.data.downloadLink));
     }
   }
 
