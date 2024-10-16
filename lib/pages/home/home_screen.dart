@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
             : '';
 
     final versionData =
-        VersionControlRequestModel(version: '1.0.0', deviceName: device);
+        VersionControlRequestModel(version: currentVersion, deviceName: device);
 
     final isVersionValid =
         await remoteDataSource.checkIsNewVersionAvailable(versionData);

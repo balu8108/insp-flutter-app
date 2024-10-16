@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:insp/apiservices/models/versioncontrol/version_control_request_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/pages/login/login_screen.dart';
 import 'package:insp/utils/isAdbEnabled.dart';
 import 'package:insp/widget/popups/isAdbEnabled.dart';
@@ -111,13 +112,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ? "WINDOW"
         : Platform.isMacOS
             ? 'MACOS'
-            : Platform.isAndroid
-                ? 'ANDROID'
-                : Platform.isIOS
-                    ? 'IOS'
-                    : '';
+            : '';
     final versionData =
-        VersionControlRequestModel(version: '1.0.0', deviceName: device);
+        VersionControlRequestModel(version: currentVersion, deviceName: device);
     final isVersionValid =
         await remoteDataSource.checkIsNewVersionAvailable(versionData);
 
