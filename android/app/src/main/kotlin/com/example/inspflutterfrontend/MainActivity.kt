@@ -1,4 +1,4 @@
-package com.example.insp
+package com.insp
 
 import android.os.Bundle
 import android.provider.Settings
