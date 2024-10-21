@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:insp/apiservices/models/login/login_response_model.dart';
-import 'package:insp/main.dart';
 import 'package:insp/pages/login/login_screen.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/socket/mainsocket.dart';

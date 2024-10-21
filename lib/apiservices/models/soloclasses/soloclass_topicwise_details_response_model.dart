@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:insp/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
-import 'package:insp/apiservices/models/upcomingclasses/lecture_detail_by_roomid_response_model.dart';
 
 part 'soloclass_topicwise_details_response_model.g.dart';
 

@@ -11,8 +11,9 @@ class SoloRecordingDetailWidget extends StatelessWidget {
   final Function(BuildContext, String) onViewDetailsClicked;
   final Function() onUpdate;
 
-  SoloRecordingDetailWidget(
-      {required this.recordingSoloPlayerDetail,
+  const SoloRecordingDetailWidget(
+      {super.key,
+      required this.recordingSoloPlayerDetail,
       required this.onViewDetailsClicked,
       required this.onUpdate});
 

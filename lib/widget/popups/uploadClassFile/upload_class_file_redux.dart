@@ -122,7 +122,7 @@ ThunkAction<UploadClassFileAppState> handleUploadFileClass(
     try {
       String userToken = getUserToken(context);
       Response response = await dio.post(
-        '${api}/schedule-live-class/upload-assignment-to-class/${store.state.classtype}/${store.state.classroomId}',
+        '$api/schedule-live-class/upload-assignment-to-class/${store.state.classtype}/${store.state.classroomId}',
         data: formData,
         options: Options(
           headers: {

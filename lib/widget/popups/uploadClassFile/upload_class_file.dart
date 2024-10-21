@@ -49,7 +49,7 @@ class UploadClassFile extends StatelessWidget {
                     ),
                   ],
                 ),
-                content: Container(
+                content: SizedBox(
                   height: 200,
                   width: 500, // Set your desired width here
                   child: SingleChildScrollView(
@@ -72,7 +72,7 @@ class UploadClassFile extends StatelessWidget {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Container(
+                        SizedBox(
                           width: isWebOrLandScape
                               ? MediaQuery.of(context).size.width * 0.20
                               : MediaQuery.of(context).size.width * 0.50,

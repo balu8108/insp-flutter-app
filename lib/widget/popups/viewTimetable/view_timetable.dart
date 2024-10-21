@@ -63,7 +63,7 @@ class _ViewTimetableState extends State<ViewTimetable> {
             ),
           ],
         ),
-        content: Container(
+        content: SizedBox(
             width: MediaQuery.of(context).size.width - 1100 < 500
                 ? 450
                 : MediaQuery.of(context).size.width,

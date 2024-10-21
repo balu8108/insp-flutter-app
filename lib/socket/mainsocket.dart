@@ -122,8 +122,7 @@ void leaderBoardAnswerResponseHandler(Store<AppState> store, dynamic res) {
     List<LeaderBoardAnswerModel> leaderBoardListAnswer =
         (res['averagePeersOption'] as List<dynamic>)
             .whereType<Map<String, dynamic>>() // Filter to ensure it's a Map
-            .map((item) =>
-                LeaderBoardAnswerModel.fromJson(item as Map<String, dynamic>))
+            .map((item) => LeaderBoardAnswerModel.fromJson(item))
             .toList();
 
     store.dispatch(UpdateLeaderboardMessages(

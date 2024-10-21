@@ -42,20 +42,14 @@ class Annotation {
 @JsonSerializable()
 class StaticAnnotation extends Annotation {
   const StaticAnnotation({
-    required String type,
-    required String text,
-    required double opacity,
-    required String color,
-    required int size,
+    required super.type,
+    required super.text,
+    required super.opacity,
+    required super.color,
+    required super.size,
     required this.x,
     required this.y,
-  }) : super(
-          type: type,
-          text: text,
-          opacity: opacity,
-          color: color,
-          size: size,
-        );
+  });
 
   final int x;
   final int y;
@@ -63,26 +57,21 @@ class StaticAnnotation extends Annotation {
   factory StaticAnnotation.fromJson(Map<String, Object?> json) =>
       _$StaticAnnotationFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$StaticAnnotationToJson(this);
 }
 
 @JsonSerializable()
 class DynamicAnnotation extends Annotation {
   const DynamicAnnotation({
-    required String type,
-    required String text,
-    required double opacity,
-    required String color,
-    required int size,
+    required super.type,
+    required super.text,
+    required super.opacity,
+    required super.color,
+    required super.size,
     required this.interval,
     required this.skip,
-  }) : super(
-          type: type,
-          text: text,
-          opacity: opacity,
-          color: color,
-          size: size,
-        );
+  });
 
   final int interval;
   final int skip;
@@ -90,5 +79,6 @@ class DynamicAnnotation extends Annotation {
   factory DynamicAnnotation.fromJson(Map<String, Object?> json) =>
       _$DynamicAnnotationFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$DynamicAnnotationToJson(this);
 }

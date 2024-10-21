@@ -7,7 +7,7 @@ import 'package:insp/redux/AppState.dart';
 import 'package:insp/socket/mainsocket.dart';
 
 class PollTimer extends StatefulWidget {
-  const PollTimer({Key? key}) : super(key: key);
+  const PollTimer({super.key});
 
   @override
   _PollTimerState createState() => _PollTimerState();
@@ -127,8 +127,7 @@ class PollDetailItem extends StatelessWidget {
   final String label;
   final String value;
 
-  const PollDetailItem({Key? key, required this.label, required this.value})
-      : super(key: key);
+  const PollDetailItem({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

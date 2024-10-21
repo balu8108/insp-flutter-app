@@ -76,7 +76,7 @@ class SoloclassDescription extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             )),
                         if (state.soloData.soloClassRoomRecordings.isNotEmpty)
-                          state.soloData.soloClassRoomRecordings[0].rtmpUrl!
+                          state.soloData.soloClassRoomRecordings[0].rtmpUrl
                                   .isEmpty
                               ? IconButton(
                                   icon: const Icon(Icons.replay_outlined),
@@ -87,7 +87,7 @@ class SoloclassDescription extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     if (state.soloData.soloClassRoomRecordings.isNotEmpty)
-                      state.soloData.soloClassRoomRecordings[0].rtmpUrl!.isEmpty
+                      state.soloData.soloClassRoomRecordings[0].rtmpUrl.isEmpty
                           ? const Text(
                               "As it takes 1-2 mins to get credentials, you can refresh it",
                               style: TextStyle(
@@ -244,11 +244,11 @@ class SoloclassDescription extends StatelessWidget {
           child: MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
-              onTap: () => copyTextToClipboard(rtmpUrl!),
+              onTap: () => copyTextToClipboard(rtmpUrl),
               child: Tooltip(
                 message: rtmpUrl,
                 child: Text(
-                  rtmpUrl!,
+                  rtmpUrl,
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 14,
@@ -279,11 +279,11 @@ class SoloclassDescription extends StatelessWidget {
           child: MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
-              onTap: () => copyTextToClipboard(streamKey!),
+              onTap: () => copyTextToClipboard(streamKey),
               child: Tooltip(
                 message: streamKey,
                 child: Text(
-                  streamKey!,
+                  streamKey,
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 14,

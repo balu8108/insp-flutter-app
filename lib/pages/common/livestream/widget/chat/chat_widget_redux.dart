@@ -275,6 +275,6 @@ ThunkAction<AppState> setChatInitialData() {
         UpdateQuestionFromServer(questionFromServer: const PollDataModel()));
     store.dispatch(UpdateIncreasePollTimeModel(
         increasePollTimeModel: const IncreasePollTimeModel()));
-    store.dispatch(UpdatePollData(pollData: PollDataModel()));
+    store.dispatch(UpdatePollData(pollData: const PollDataModel()));
   };
 }
