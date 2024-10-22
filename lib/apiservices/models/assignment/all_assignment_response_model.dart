@@ -31,7 +31,7 @@ class AllAssignmentModelData {
       this.assignmentFiles = const []]);
 
   final int id;
-  final String subjectId,
+  final String subjectId, 
       subjectName,
       createdAt,
       updatedAt,
