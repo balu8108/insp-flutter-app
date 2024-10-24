@@ -3,6 +3,7 @@ import 'package:insp/apiservices/models/calendar/timetable_response_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/popups/pdfviewer/pdf_timetable.dart';
 import 'package:insp/widget/popups/pdfviewer/pdfviewcontrol.dart';
 
 class ViewTimetable extends StatefulWidget {
@@ -13,7 +14,7 @@ class ViewTimetable extends StatefulWidget {
 }
 
 class _ViewTimetableState extends State<ViewTimetable> {
-  List<String> _pdfUrlsFuture = [];
+  List<TimeTableDataModel> _pdfUrlsFuture = [];
   final ScrollController scrollController = ScrollController();
 
   @override
@@ -30,10 +31,10 @@ class _ViewTimetableState extends State<ViewTimetable> {
     final timetableData = await remoteDataSource.getAllTimeTable(userToken);
 
     if (timetableData.response.statusCode == 200) {
-      final TimeTableResponseDataModel document = timetableData.data;
-      List<String> pdfUrls = document.data.map((doc) => doc.url).toList();
+      final TimeTableResponseDataModel tt = timetableData.data;
+
       setState(() {
-        _pdfUrlsFuture = pdfUrls;
+        _pdfUrlsFuture = tt.data;
       });
     } else {
       throw Exception("Failed to load timetable data");
@@ -78,13 +79,14 @@ class _ViewTimetableState extends State<ViewTimetable> {
                       itemBuilder: (context, index) {
                         return SizedBox(
                           height: 800, // Set a height for each PDF viewer
-                          child: PdfViewerFromUrlPoint(
-                            pdfUrl: _pdfUrlsFuture[index],
+                          child: PdfTimeTable(
+                            pdfData: _pdfUrlsFuture[index],
                           ),
                         );
                       },
                     ),
                   )
-                : const Center(child: CircularProgressIndicator())));
+                : const Center(
+                    child: Text("There is no time table available"))));
   }
 }
