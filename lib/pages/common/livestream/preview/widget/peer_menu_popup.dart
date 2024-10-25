@@ -38,6 +38,7 @@ class _KickPeerWidgetState extends State<KickPeerWidget> {
             builder: (context, state) => GestureDetector(
                 onTap: () {
                   if (!widget.isTeacher) {
+                    Navigator.pop(context);
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
