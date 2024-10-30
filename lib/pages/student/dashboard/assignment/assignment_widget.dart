@@ -24,7 +24,7 @@ class AssignmentWidget extends StatelessWidget {
     return StoreConnector<AssignmentWidgetAppState, AssignmentWidgetAppState>(
       converter: (store) => store.state,
       builder: (context, AssignmentWidgetAppState state) => Container(
-        height: 270, // Height of the container
+        height: 281, // Height of the container
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),

@@ -1,5 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -34,34 +32,40 @@ import 'package:toastification/toastification.dart';
 import 'package:tpstreams_player_sdk/tpstreams_player_sdk.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+import 'dart:io';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
-  // Ensure that the correct platform implementation is used for macOS
-  WebViewPlatform.instance = WebKitWebViewPlatform();
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Only initialize WebViewPlatform if platform supports it
+  if (!kIsWeb && Platform.isMacOS) {
+    WebViewPlatform.instance = WebKitWebViewPlatform();
+  }
+
+  // Initialize TPStreams SDK
+  TPStreamsSDK.initialize(orgCode: "gcma48");
 
   final store = Store<AppState>(
     appStateReducer,
     initialState: const AppState(
-        userDataAppState: UserDataAppState(),
-        loginState: LoginAppState(),
-        upcomingWidgetAppState: UpcomingWidgetAppState(),
-        chatWidgetAppState: ChatWidgetAppState(),
-        peersWidgetAppState: PeersWidgetAppState(),
-        uploadLiveclassFileAppState: UploadLiveclassFileAppState(),
-        navbarAppState: NavbarAppState(),
-        tpStreamAppState: TPStreamAppState(),
-        previewDataAppState: PreviewDataAppState(),
-        recordingPlayerAppState: RecordingPlayerAppState(),
-        pollTimerAppState: PollTimerAppState(),
-        soloClassDetailDataAppState: SoloClassDetailDataAppState()),
+      userDataAppState: UserDataAppState(),
+      loginState: LoginAppState(),
+      upcomingWidgetAppState: UpcomingWidgetAppState(),
+      chatWidgetAppState: ChatWidgetAppState(),
+      peersWidgetAppState: PeersWidgetAppState(),
+      uploadLiveclassFileAppState: UploadLiveclassFileAppState(),
+      navbarAppState: NavbarAppState(),
+      tpStreamAppState: TPStreamAppState(),
+      previewDataAppState: PreviewDataAppState(),
+      recordingPlayerAppState: RecordingPlayerAppState(),
+      pollTimerAppState: PollTimerAppState(),
+      soloClassDetailDataAppState: SoloClassDetailDataAppState(),
+    ),
     middleware: [thunkMiddleware],
   );
 
-  TPStreamsSDK.initialize(orgCode: "gcma48");
-  await Firebase.initializeApp();
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   runApp(StoreProvider<AppState>(
     store: store,
     child: MyApp(store: store),
@@ -104,8 +108,8 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.white, // Set AppBar background to white
-            elevation: 0, // Optional: Remove shadow under AppBar
+            backgroundColor: Colors.white,
+            elevation: 0,
           ),
         ),
         home: Builder(
@@ -160,7 +164,7 @@ class MainScaffold extends StatelessWidget {
     bool isWebOrLandScape = context.isWebOrLandScape();
     Future<bool> onBackPressed() async {
       leaveRoomHandler(StoreProvider.of<AppState>(context));
-      return true; // Return true to allow the back navigation
+      return true;
     }
 
     return isWebOrLandScape
@@ -184,10 +188,10 @@ void pushWithoutAnimation(BuildContext context, Widget screen) {
     PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
           MainScaffold(content: screen),
-      transitionDuration: Duration.zero, // No transition duration
-      reverseTransitionDuration: Duration.zero, // No reverse transition
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return child; // Directly return the child without any animation
+        return child;
       },
     ),
   );
@@ -198,12 +202,12 @@ void pushAndRemoveUntilWithoutAnimation(BuildContext context, Widget screen) {
     context,
     PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => screen,
-      transitionDuration: Duration.zero, // No transition duration
-      reverseTransitionDuration: Duration.zero, // No reverse transition
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return child; // Directly return the child without any animation
+        return child;
       },
     ),
-    (route) => false, // Remove all previous routes
+    (route) => false,
   );
 }
