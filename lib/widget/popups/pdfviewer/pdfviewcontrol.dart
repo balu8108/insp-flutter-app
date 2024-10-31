@@ -170,7 +170,7 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
                     ),
                   ],
                 )
-              : const Center(child: CircularProgressIndicator()),
+              : const Center(),
         ),
       ),
     ]);

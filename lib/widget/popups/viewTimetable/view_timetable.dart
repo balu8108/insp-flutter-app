@@ -15,6 +15,7 @@ class ViewTimetable extends StatefulWidget {
 class _ViewTimetableState extends State<ViewTimetable> {
   List<String> _pdfUrlsFuture = [];
   final ScrollController scrollController = ScrollController();
+  bool _isLoading = true; // Added loading state
 
   @override
   void didChangeDependencies() {
@@ -34,8 +35,12 @@ class _ViewTimetableState extends State<ViewTimetable> {
       List<String> pdfUrls = document.data.map((doc) => doc.url).toList();
       setState(() {
         _pdfUrlsFuture = pdfUrls;
+        _isLoading = false; // Set loading to false after data is loaded
       });
     } else {
+      setState(() {
+        _isLoading = false; // Set loading to false even if there's an error
+      });
       throw Exception("Failed to load timetable data");
     }
   }
@@ -45,30 +50,33 @@ class _ViewTimetableState extends State<ViewTimetable> {
     bool isWebOrLandScape = context.isWebOrLandScape();
 
     return AlertDialog(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
-        insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
-        title: Row(
-          children: [
-            const Text(
-              "INSP Time Table",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-            ),
-            const Spacer(),
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
-        ),
-        content: SizedBox(
-            width: MediaQuery.of(context).size.width - 1100 < 500
-                ? 450
-                : MediaQuery.of(context).size.width,
-            height: 800,
-            child: _pdfUrlsFuture.isNotEmpty
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
+      contentPadding: const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
+      insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
+      title: Row(
+        children: [
+          const Text(
+            "INSP Time Table",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+          ),
+          const Spacer(),
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+      content: SizedBox(
+        width: MediaQuery.of(context).size.width - 1100 < 500
+            ? 450
+            : MediaQuery.of(context).size.width,
+        height: 800,
+        child: _isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : _pdfUrlsFuture.isNotEmpty
                 ? Scrollbar(
                     controller: scrollController,
                     child: ListView.builder(
@@ -85,6 +93,16 @@ class _ViewTimetableState extends State<ViewTimetable> {
                       },
                     ),
                   )
-                : const Center(child: CircularProgressIndicator())));
+                : const Center(
+                    child: Text(
+                      'No timetable uploaded',
+                      style: TextStyle(
+                        fontSize: 16, // Adjust font size as needed
+                        color: Colors.black, // Change color if you want
+                      ),
+                    ),
+                  ),
+      ),
+    );
   }
 }
