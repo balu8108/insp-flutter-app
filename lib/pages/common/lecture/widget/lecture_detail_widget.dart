@@ -337,22 +337,20 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
                         height: 1.25,
                       ),
                     ),
-                    // const SizedBox(
-                    //   width: 10,
-                    // ),
-                    // if (isTeacher)
-                    //   IconButton(
-                    //     icon: const Icon(Icons.file_upload_outlined),
-                    //     iconSize: 24.0,
-                    //     onPressed: () {
-                    //       showDialog(
-                    //           context: context,
-                    //           builder: (BuildContext context) {
-                    //             return UploadClassFile.getScreen(
-                    //                 lec.id.toString(), "live", widget.onUpdate);
-                    //           });
-                    //     },
-                    //   ),
+                    const Spacer(),
+                    if (isTeacher)
+                      IconButton(
+                        icon: const Icon(Icons.file_upload_outlined),
+                        iconSize: 24.0,
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return UploadClassFile.getScreen(
+                                    lec.id.toString(), "live", widget.onUpdate);
+                              });
+                        },
+                      ),
                   ],
                 ),
                 const SizedBox(height: 10),
