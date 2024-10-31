@@ -4,7 +4,6 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   emoji_picker_flutter
-  firebase_core
   pdfx
   url_launcher_windows
   webview_windows

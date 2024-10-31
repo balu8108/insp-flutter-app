@@ -66,6 +66,7 @@ void main() async {
     middleware: [thunkMiddleware],
   );
 
+  TPStreamsSDK.initialize(orgCode: "gcma48");
   runApp(StoreProvider<AppState>(
     store: store,
     child: MyApp(store: store),

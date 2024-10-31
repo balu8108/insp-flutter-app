@@ -118,6 +118,9 @@ abstract class RemoteDataSource {
   Future<HttpResponse<DeleteAssignmentResponseModel>> deleteAssignment(
       int assignmentId, String secretTokenHeader);
 
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteTimeTable(
+      int timeTableId, String secretTokenHeader);
+
   Future<HttpResponse<DeleteAssignmentResponseModel>> deleteStudentFeedback(
       int feedbackId, String secretTokenHeader);
 
@@ -329,6 +332,12 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       String secretTokenHeader) {
     return deviceNetworkService.getLectureNumber(
         lectureNoRequestModel, secretTokenHeader);
+  }
+
+  @override
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteTimeTable(
+      int timeTableId, String secretTokenHeader) {
+    return deviceNetworkService.deleteTimeTable(timeTableId, secretTokenHeader);
   }
 
   @override
