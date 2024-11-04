@@ -7,6 +7,7 @@ import 'package:insp/pages/common/livestream/widget/chat/preview_data_redux.dart
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/utils/capitalize.dart';
 import 'package:insp/utils/format_time.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
 import 'package:toastification/toastification.dart';
@@ -30,14 +31,8 @@ class LiveCLassPreviowlWidget extends StatelessWidget {
 
     void copyTextToClipboard(String textToCopy) {
       Clipboard.setData(ClipboardData(text: textToCopy));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.success,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Text copied to clipboard!'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Text copied to clipboard!', ToastificationType.success);
     }
 
     return Container(

@@ -17,6 +17,7 @@ import 'package:insp/pages/home/home_screen.dart';
 import 'package:insp/pages/teacher/soloclassrecording/redux/soloclass_redux.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/socket/socket_events.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/popups/rating/rating.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -189,14 +190,7 @@ Future<void> joinRoomHandler(
   socket?.emitWithAck(SOCKET_EVENTS.JOIN_ROOM,
       {'roomId': roomId, 'peerDetails': userData.toJson()}, ack: (res) {
     if (!res['success']) {
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: Text(res['errMsg']),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, res['errMsg'], ToastificationType.error);
     } else if (res['success']) {
       store.dispatch(joinRoomResponseData(context, res));
     } else {
@@ -297,13 +291,8 @@ Future<void> leaveRoomHandler(Store<AppState> store) async {
       }
       socket?.disconnect();
       socket?.close();
-      toastification.show(
-        type: ToastificationType.info,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Class Leaved'),
-        alignment: Alignment.topRight,
-      );
+      // showToast(context, 'Class Leaved', ToastificationType.info);
+      // toastification.show
     });
   } else {
     store.dispatch(setRecordingTpStreamInitialData());

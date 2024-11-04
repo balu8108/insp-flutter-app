@@ -11,6 +11,7 @@ import 'package:insp/apiservices/models/mycourses/get_lecture_no_request_model.d
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/data/hardcoded/topic_list.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -396,8 +397,7 @@ ThunkAction<ScheduleLiveclassAppState> showTopicsforLiveClassByChapter(
       final remoteDataSource = RemoteDataSource();
       final allTopics = await remoteDataSource.getAllTopicsByChapter(
           AllTopicsForChapterRequestModel(
-              secret_key: "U5Ga0Z1aaNlYHp0MjdEdXJ1aKVVVB1TP",
-              chapter_id: chapterId));
+              secret_key: secretKey, chapter_id: chapterId));
 
       if (allTopics.response.statusCode == 201 &&
           allTopics.data.status == true) {
@@ -545,25 +545,12 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         getAllUpcomingClass();
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.success,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Class Scheduled successfully'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Class Scheduled successfully',
+            ToastificationType.success);
       } else {
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.warning,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Please try again'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Please try again', ToastificationType.warning);
       }
     } on DioException catch (e) {
       // Handle Dio-specific errors
@@ -575,24 +562,10 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
         errorMessage = 'Network error or server not reachable';
       }
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: Text(errorMessage),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, errorMessage, ToastificationType.error);
     } catch (e) {
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('ggh'),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, 'Please try again', ToastificationType.error);
     }
   };
 }
@@ -731,25 +704,12 @@ ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
         getAllUpcomingClass();
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.success,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Class updated successfully'),
-          alignment: Alignment.topRight,
-        );
+        showToast(
+            context, 'Class updated successfully', ToastificationType.success);
       } else {
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.warning,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Please try again'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Please try again', ToastificationType.warning);
       }
     } on DioException catch (e) {
       // Handle Dio-specific errors
@@ -761,24 +721,11 @@ ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
         errorMessage = 'Network error or server not reachable';
       }
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: Text(errorMessage),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, errorMessage, ToastificationType.error);
     } catch (e) {
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }

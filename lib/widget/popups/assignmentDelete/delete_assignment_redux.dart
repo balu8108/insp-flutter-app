@@ -1,6 +1,7 @@
 // This file is "main.dart"
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:toastification/toastification.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
@@ -50,35 +51,17 @@ ThunkAction<DeleteAssignmentAppState> deleteAssignment(BuildContext context,
       if (deleteTopicData.response.statusCode == 200) {
         fetchAssignmentAfterUpdateorDelete();
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.success,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Assignment Deleted Succesfully'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Assignment Deleted Succesfully',
+            ToastificationType.success);
       } else {
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.warning,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Some issue, please try again'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Some issue, please try again',
+            ToastificationType.warning);
       }
     } catch (error) {
       Navigator.of(context).pop();
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }

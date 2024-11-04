@@ -13,6 +13,7 @@ import 'package:insp/main.dart';
 import 'package:insp/pages/home/home_screen.dart';
 import 'package:insp/pages/teacher/soloclassrecording/redux/soloclass_redux.dart';
 import 'package:insp/redux/AppState.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/card/model/recording_player_card_model.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -110,15 +111,8 @@ ThunkAction<AppState> getLiveRecordedVideoData(
         print("tpstream url null");
       }
     } catch (error) {
-      print(error);
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }
@@ -147,15 +141,8 @@ ThunkAction<AppState> getSoloRecordedVideoData(
         print("tpstream url null");
       }
     } catch (error) {
-      print(error);
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }
@@ -199,18 +186,10 @@ ThunkAction<AppState> getRecordedVideoUrlApi(
         // Dispatch the action to update chat messages in the store
         store.dispatch(UpdateVideosResponse(videoResponse: videoResponseData));
         store.dispatch(UpdateAccestId(accestId: tpStreamId));
-      } else {
-        print("tpstream url null");
       }
     } catch (error) {
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }
@@ -252,51 +231,23 @@ ThunkAction<AppState> stopSoloClassLecture(BuildContext context) {
                     MainScaffold(content: HomeScreen(userData: userDatas))),
           );
           // Show success notification
-          toastification.show(
-            context: context, // optional if you use ToastificationWrapper
-            type: ToastificationType.success,
-            style: ToastificationStyle.fillColored,
-            autoCloseDuration: const Duration(seconds: 3),
-            title: const Text('Solo class ended'),
-            alignment: Alignment.topRight,
-          );
+          showToast(context, 'Solo class ended', ToastificationType.success);
         } else {
           store.dispatch(UpdateIsDeleted(isDeleted: false));
           Navigator.of(context).pop();
-          // Handle non-200 response, maybe show an error toast
-          toastification.show(
-            context: context,
-            type: ToastificationType.error,
-            style: ToastificationStyle.fillColored,
-            autoCloseDuration: const Duration(seconds: 3),
-            title: const Text('Failed to stop solo class recording'),
-            alignment: Alignment.topRight,
-          );
+          showToast(context, 'Failed to stop solo class recording',
+              ToastificationType.error);
         }
       } else {
         store.dispatch(UpdateIsDeleted(isDeleted: false));
         Navigator.of(context).pop();
-        toastification.show(
-          context: context,
-          type: ToastificationType.error,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('No recording found to stop'),
-          alignment: Alignment.topRight,
-        );
+        showToast(
+            context, 'No recording found to stop', ToastificationType.error);
       }
     } catch (error) {
       store.dispatch(UpdateIsDeleted(isDeleted: false));
-
-      // Show error notification
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }

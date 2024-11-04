@@ -1,6 +1,7 @@
 // This file is "main.dart"
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:toastification/toastification.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:insp/apiservices/models/feedback/all_student_feedback_request_model.dart';
@@ -87,33 +88,15 @@ ThunkAction<SuggestionAppState> deleteAssignment(
 
       if (deleteTopicData.response.statusCode == 200) {
         store.dispatch(getAllFeedback(context, store.state.page));
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.success,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Feedback Deleted Succesfully'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Feedback Deleted Succesfully',
+            ToastificationType.success);
       } else {
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.warning,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Some issue, please try again'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Some issue, please try again',
+            ToastificationType.warning);
       }
     } catch (error) {
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }

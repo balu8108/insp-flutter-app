@@ -180,17 +180,25 @@ class ScheduleLiveClass extends StatelessWidget {
                         const SizedBox(height: 16.0),
                         // Class level Dropdown
                         Dropdown(
-                          items: classLevel.map((ChapterTopicModel item) {
-                            return DropdownMenuItem<String>(
-                              value: item.label,
-                              child: Text(item.label),
-                            );
-                          }).toList(),
+                          items: state.selectedSubject == "GENERAL"
+                              ? classLevelGeneral.map((ChapterTopicModel item) {
+                                  return DropdownMenuItem<String>(
+                                    value: item.label,
+                                    child: Text(item.label),
+                                  );
+                                }).toList()
+                              : classLevel.map((ChapterTopicModel item) {
+                                  return DropdownMenuItem<String>(
+                                    value: item.label,
+                                    child: Text(item.label),
+                                  );
+                                }).toList(),
                           selectedValueError: state.selectedClassLevelError,
                           selectedValue: state.selectedClassLevel!.isEmpty
                               ? null
                               : state.selectedClassLevel,
-                          onChanged: state.selectedSubject == "PHYSICS"
+                          onChanged: state.selectedSubject == "PHYSICS" ||
+                                  state.selectedSubject == "GENERAL"
                               ? (String? newValue) {
                                   dispatch(
                                       context,
@@ -202,84 +210,90 @@ class ScheduleLiveClass extends StatelessWidget {
                           hintText: "Select class level...",
                         ),
                         const SizedBox(height: 16.0),
-                        // Chapter Dropdown
-                        Dropdown(
-                          items: chapter.map((ChapterTopicModel item) {
-                            return DropdownMenuItem<String>(
-                              value: item.label,
-                              child: Text(item.label),
-                            );
-                          }).toList(),
-                          selectedValueError: state.selectedChapterError,
-                          selectedValue: state.selectedChapter!.isEmpty
-                              ? null
-                              : state.selectedChapter,
-                          onChanged: state.selectedSubject == "PHYSICS"
-                              ? (String? newValue) {
-                                  dispatch(
-                                      context,
-                                      showTopicsforLiveClassByChapter(
-                                          context, newValue));
-                                }
-                              : null,
-                          hintText: "Select chapter...",
-                        ),
-                        const SizedBox(height: 16.0),
+                        if (state.selectedSubject != "GENERAL")
+                          // Chapter Dropdown
+                          Dropdown(
+                            items: chapter.map((ChapterTopicModel item) {
+                              return DropdownMenuItem<String>(
+                                value: item.label,
+                                child: Text(item.label),
+                              );
+                            }).toList(),
+                            selectedValueError: state.selectedChapterError,
+                            selectedValue: state.selectedChapter!.isEmpty
+                                ? null
+                                : state.selectedChapter,
+                            onChanged: state.selectedSubject == "PHYSICS"
+                                ? (String? newValue) {
+                                    dispatch(
+                                        context,
+                                        showTopicsforLiveClassByChapter(
+                                            context, newValue));
+                                  }
+                                : null,
+                            hintText: "Select chapter...",
+                          ),
+                        if (state.selectedSubject != "GENERAL")
+                          const SizedBox(height: 16.0),
                         // topic Dropdown
-                        Dropdown(
-                          items: state.allTopics.isEmpty
-                              ? topicList.map<DropdownMenuItem<String>>(
-                                  (ChapterTopicModel item) {
-                                  return DropdownMenuItem<String>(
-                                    value: item.label,
-                                    child: Text(item.label),
-                                  );
-                                }).toList()
-                              : state.allTopics.map<DropdownMenuItem<String>>(
-                                  (ChapterTopicModel item) {
-                                  return DropdownMenuItem<String>(
-                                    value: item.label,
-                                    child: Text(item.label),
-                                  );
-                                }).toList(),
-                          selectedValueError: state.selectedTopicError,
-                          selectedValue: state.selectedTopic!.isEmpty
-                              ? null
-                              : state.selectedTopic,
-                          onChanged: state.selectedSubject == "PHYSICS"
-                              ? (String? newValue) {
-                                  dispatch(
-                                      context,
-                                      UpdateSelectedTopic(
-                                          selectedTopic: newValue));
-                                }
-                              : null,
-                          hintText: "Select topic...",
-                        ),
-                        const SizedBox(height: 16.0),
+                        if (state.selectedSubject != "GENERAL")
+                          Dropdown(
+                            items: state.allTopics.isEmpty
+                                ? topicList.map<DropdownMenuItem<String>>(
+                                    (ChapterTopicModel item) {
+                                    return DropdownMenuItem<String>(
+                                      value: item.label,
+                                      child: Text(item.label),
+                                    );
+                                  }).toList()
+                                : state.allTopics.map<DropdownMenuItem<String>>(
+                                    (ChapterTopicModel item) {
+                                    return DropdownMenuItem<String>(
+                                      value: item.label,
+                                      child: Text(item.label),
+                                    );
+                                  }).toList(),
+                            selectedValueError: state.selectedTopicError,
+                            selectedValue: state.selectedTopic!.isEmpty
+                                ? null
+                                : state.selectedTopic,
+                            onChanged: state.selectedSubject == "PHYSICS"
+                                ? (String? newValue) {
+                                    dispatch(
+                                        context,
+                                        UpdateSelectedTopic(
+                                            selectedTopic: newValue));
+                                  }
+                                : null,
+                            hintText: "Select topic...",
+                          ),
+                        if (state.selectedSubject != "GENERAL")
+                          const SizedBox(height: 16.0),
                         // classType Dropdown
-                        Dropdown(
-                          items: classType.map((ChapterTopicModel item) {
-                            return DropdownMenuItem<String>(
-                              value: item.label,
-                              child: Text(item.label),
-                            );
-                          }).toList(),
-                          selectedValueError: state.selectedCourseTypeError,
-                          selectedValue: state.selectedCourseType!.isEmpty
-                              ? null
-                              : state.selectedCourseType,
-                          onChanged: state.selectedSubject == "PHYSICS"
-                              ? (String? newValue) {
-                                  dispatch(
-                                      context,
-                                      UpdateLiveClassSelectedCourseType(
-                                          selectedCourseType: newValue));
-                                  dispatch(context, getLectureNumber(context));
-                                }
-                              : null,
-                          hintText: "Select course type...",
-                        ),
+                        if (state.selectedSubject != "GENERAL")
+                          Dropdown(
+                            items: classType.map((ChapterTopicModel item) {
+                              return DropdownMenuItem<String>(
+                                value: item.label,
+                                child: Text(item.label),
+                              );
+                            }).toList(),
+                            selectedValueError: state.selectedCourseTypeError,
+                            selectedValue: state.selectedCourseType!.isEmpty
+                                ? null
+                                : state.selectedCourseType,
+                            onChanged: state.selectedSubject == "PHYSICS"
+                                ? (String? newValue) {
+                                    dispatch(
+                                        context,
+                                        UpdateLiveClassSelectedCourseType(
+                                            selectedCourseType: newValue));
+                                    dispatch(
+                                        context, getLectureNumber(context));
+                                  }
+                                : null,
+                            hintText: "Select course type...",
+                          ),
                         const SizedBox(height: 16.0),
                         TextField(
                           enabled: false,

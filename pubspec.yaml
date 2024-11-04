@@ -61,6 +61,7 @@ dependencies:
   url_launcher: ^6.0.20
   flutter_rating_bar: ^4.0.1
   device_info_plus: ^10.1.2
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:
