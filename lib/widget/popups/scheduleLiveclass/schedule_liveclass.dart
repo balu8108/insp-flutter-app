@@ -133,6 +133,11 @@ class ScheduleLiveClass extends StatelessWidget {
                                 UpdateLiveClassSelectedSubject(
                                     selectedSubject: newValue));
 
+                            dispatch(
+                                context,
+                                UpdateLiveClassSelectedClassLevel(
+                                    selectedClassLevel: ''));
+
                             dispatch(context, getLectureNumber(context));
                           },
                           hintText: "Select Subject...",
@@ -200,10 +205,12 @@ class ScheduleLiveClass extends StatelessWidget {
                           onChanged: state.selectedSubject == "PHYSICS" ||
                                   state.selectedSubject == "GENERAL"
                               ? (String? newValue) {
+                                  print("ere");
                                   dispatch(
                                       context,
                                       UpdateLiveClassSelectedClassLevel(
                                           selectedClassLevel: newValue));
+                                  print("sdsd");
                                   dispatch(context, getLectureNumber(context));
                                 }
                               : null,
