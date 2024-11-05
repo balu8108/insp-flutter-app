@@ -400,23 +400,20 @@ ThunkAction<ScheduleSoloclassAppState> handleUpdateSoloClass(
             .add(await MultipartFile.fromFile(file.path!, filename: file.name));
       }
     }
-    Map<String, dynamic> jsonSubjectObject = {
-      'value': subjectList
-          .firstWhere((item) => item.label == store.state.selectedSubject)
-          .value,
-      'label': store.state.selectedSubject,
-    };
-
-    Map<String, dynamic> jsonTopicObject = {
-      'value': topicList
-          .firstWhere((item) => item.label == store.state.selectedTopic)
-          .value,
-      'label': store.state.selectedTopic,
-    };
 
     FormData formData = FormData.fromMap({
-      'topic': jsonEncode(jsonTopicObject),
-      'subject': jsonEncode(jsonSubjectObject),
+      'topic': jsonEncode({
+        'value': topicList
+            .firstWhere((item) => item.label == store.state.selectedTopic)
+            .value,
+        'label': store.state.selectedTopic,
+      }),
+      'subject': jsonEncode({
+        'value': subjectList
+            .firstWhere((item) => item.label == store.state.selectedSubject)
+            .value,
+        'label': store.state.selectedSubject,
+      }),
       'agenda': store.state.agenda,
       'lectureNo': store.state.lectureNo,
       'description': store.state.description,
