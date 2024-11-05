@@ -11,8 +11,9 @@ class RecordingDetailWidget extends StatelessWidget {
   final Function(BuildContext, String) onViewDetailsClicked;
   final Function() onUpdate;
 
-  RecordingDetailWidget(
-      {required this.recordingPlayerDetail,
+  const RecordingDetailWidget(
+      {super.key,
+      required this.recordingPlayerDetail,
       required this.onViewDetailsClicked,
       required this.onUpdate});
 

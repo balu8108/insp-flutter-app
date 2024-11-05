@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:insp/data/hardcoded/secret_key.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/inputField/picked_file.dart';
 import 'package:toastification/toastification.dart';
@@ -75,14 +76,8 @@ class _TimetableUploadState extends State<TimetableUpload> {
         ),
       );
       if (response.statusCode == 200) {
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.success,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Timetable uploaded successfully'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Timetable uploaded successfully',
+            ToastificationType.success);
       }
       Navigator.of(context).pop();
     } on DioException catch (e) {
@@ -94,24 +89,11 @@ class _TimetableUploadState extends State<TimetableUpload> {
       } else {
         errorMessage = 'Network error or server not reachable';
       }
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: Text(errorMessage),
-        alignment: Alignment.topRight,
-      );
+
+      showToast(context, errorMessage, ToastificationType.error);
     } catch (e) {
       Navigator.of(context).pop();
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.warning,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Failed to upload files'),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, 'Failed to upload files', ToastificationType.warning);
     }
   }
 

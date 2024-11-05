@@ -32,7 +32,7 @@ class PreviewVideo extends StatelessWidget {
               child: Center(
                 child: Text(
                   name,
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  style: const TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
             ),

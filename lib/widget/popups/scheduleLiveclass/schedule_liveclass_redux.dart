@@ -11,6 +11,7 @@ import 'package:insp/apiservices/models/mycourses/get_lecture_no_request_model.d
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/data/hardcoded/topic_list.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -346,10 +347,16 @@ ThunkAction<ScheduleLiveclassAppState> pickFilesforliveclass(
 ThunkAction<ScheduleLiveclassAppState> getLectureNumber(BuildContext context) {
   return (Store<ScheduleLiveclassAppState> store) async {
     try {
-      if (store.state.selectedClassLevel != '' &&
-          store.state.selectedCourseType != '' &&
-          store.state.selectedSubject != '') {
-        store.dispatch(getLectureNumberAPI(context));
+      if (store.state.selectedSubject != '') {
+        if (store.state.selectedSubject == "GENERAL" &&
+            store.state.selectedClassLevel != '') {
+          store.dispatch(getLectureNumberAPI(context));
+        } else {
+          if (store.state.selectedClassLevel != '' &&
+              store.state.selectedCourseType != '') {
+            store.dispatch(getLectureNumberAPI(context));
+          }
+        }
       }
     } catch (error) {
       print("ERROR");
@@ -367,6 +374,7 @@ ThunkAction<ScheduleLiveclassAppState> getLectureNumberAPI(
               classType: store.state.selectedCourseType ?? '',
               isSoloClass: false,
               subjectName: store.state.selectedSubject ?? '');
+
       String userToken = getUserToken(context);
       final remoteDataSource = RemoteDataSource();
       final allTopics = await remoteDataSource.getLectureNumber(
@@ -396,8 +404,7 @@ ThunkAction<ScheduleLiveclassAppState> showTopicsforLiveClassByChapter(
       final remoteDataSource = RemoteDataSource();
       final allTopics = await remoteDataSource.getAllTopicsByChapter(
           AllTopicsForChapterRequestModel(
-              secret_key: "U5Ga0Z1aaNlYHp0MjdEdXJ1aKVVVB1TP",
-              chapter_id: chapterId));
+              secret_key: secretKey, chapter_id: chapterId));
 
       if (allTopics.response.statusCode == 201 &&
           allTopics.data.status == true) {
@@ -429,18 +436,28 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
           selectedSubjectError: 'Please select a subject'));
       return;
     }
-    if (store.state.selectedClassLevel == null ||
-        store.state.selectedClassLevel!.isEmpty) {
-      store.dispatch(UpdateLiveClassSelectedClassLevelError(
-          selectedClassLevelError: 'Please select a classlevel'));
-      return;
+
+    if (store.state.selectedSubject == "GENERAL") {
+      if (store.state.selectedCourseType == null ||
+          store.state.selectedCourseType!.isEmpty) {
+        store.dispatch(UpdateLiveClassSelectedCourseTypeError(
+            selectedCourseTypeError: 'Please select a classtype'));
+        return;
+      }
+      if (store.state.selectedChapter == null ||
+          store.state.selectedChapter!.isEmpty) {
+        store.dispatch(UpdateLiveClassSelectedChapterError(
+            selectedChapterError: 'Please select a chapter'));
+        return;
+      }
+      if (store.state.selectedTopic == null ||
+          store.state.selectedTopic!.isEmpty) {
+        store.dispatch(UpdateSelectedTopicError(
+            selectedTopicsError: 'Please select a topic'));
+        return;
+      }
     }
-    if (store.state.selectedCourseType == null ||
-        store.state.selectedCourseType!.isEmpty) {
-      store.dispatch(UpdateLiveClassSelectedCourseTypeError(
-          selectedCourseTypeError: 'Please select a classtype'));
-      return;
-    }
+
     if (store.state.selectedDate == null || store.state.selectedDate!.isEmpty) {
       store.dispatch(UpdateLiveClassSelectedDateError(
           selectedDateError: 'Please select a date'));
@@ -458,16 +475,10 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
           selectedEndTimeError: 'Please select a end time'));
       return;
     }
-    if (store.state.selectedChapter == null ||
-        store.state.selectedChapter!.isEmpty) {
-      store.dispatch(UpdateLiveClassSelectedChapterError(
-          selectedChapterError: 'Please select a chapter'));
-      return;
-    }
-    if (store.state.selectedTopic == null ||
-        store.state.selectedTopic!.isEmpty) {
-      store.dispatch(UpdateSelectedTopicError(
-          selectedTopicsError: 'Please select a topic'));
+    if (store.state.selectedClassLevel == null ||
+        store.state.selectedClassLevel!.isEmpty) {
+      store.dispatch(UpdateLiveClassSelectedClassLevelError(
+          selectedClassLevelError: 'Please select a classlevel'));
       return;
     }
     if (store.state.agenda == null || store.state.agenda!.isEmpty) {
@@ -489,32 +500,27 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
             .add(await MultipartFile.fromFile(file.path!, filename: file.name));
       }
     }
-    Map<String, dynamic> jsonSubjectObject = {
-      'value': subjectList
-          .firstWhere((item) => item.label == store.state.selectedSubject)
-          .value,
-      'label': store.state.selectedSubject,
-    };
-
-    Map<String, dynamic> jsonTopicObject = {
-      'value': topicList
-          .firstWhere((item) => item.label == store.state.selectedTopic)
-          .value,
-      'label': store.state.selectedTopic,
-    };
-
-    Map<String, dynamic> jsonChapterObject = {
-      'value': chapter
-          .firstWhere((item) => item.label == store.state.selectedChapter)
-          .value,
-      'label': store.state.selectedChapter,
-    };
 
     FormData formData = FormData.fromMap({
       'classType': store.state.selectedCourseType,
-      'topic': jsonEncode(jsonTopicObject),
-      'chapter': jsonEncode(jsonChapterObject),
-      'subject': jsonEncode(jsonSubjectObject),
+      'topic': jsonEncode({
+        'value': topicList
+            .firstWhere((item) => item.label == store.state.selectedTopic)
+            .value,
+        'label': store.state.selectedTopic,
+      }),
+      'chapter': jsonEncode({
+        'value': chapter
+            .firstWhere((item) => item.label == store.state.selectedChapter)
+            .value,
+        'label': store.state.selectedChapter,
+      }),
+      'subject': jsonEncode({
+        'value': subjectList
+            .firstWhere((item) => item.label == store.state.selectedSubject)
+            .value,
+        'label': store.state.selectedSubject,
+      }),
       'classLevel': store.state.selectedClassLevel ?? '',
       'scheduledDate': store.state.selectedDate,
       'scheduledStartTime': store.state.selectedStartTime,
@@ -542,29 +548,15 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
       );
 
       if (response.statusCode == 200) {
-        store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         getAllUpcomingClass();
-        Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.success,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Class Scheduled successfully'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Class Scheduled successfully',
+            ToastificationType.success);
       } else {
-        store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-        Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.warning,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Please try again'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Please try again', ToastificationType.warning);
       }
+
+      Navigator.of(context).pop();
+      store.dispatch(UpdateIsClassLoading(isClassLoading: false));
     } on DioException catch (e) {
       // Handle Dio-specific errors
       String errorMessage;
@@ -575,24 +567,10 @@ ThunkAction<ScheduleLiveclassAppState> handleCreateLiveClass(
         errorMessage = 'Network error or server not reachable';
       }
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: Text(errorMessage),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, errorMessage, ToastificationType.error);
     } catch (e) {
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('ggh'),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, 'Please try again', ToastificationType.error);
     }
   };
 }
@@ -731,25 +709,12 @@ ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
         getAllUpcomingClass();
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.success,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Class updated successfully'),
-          alignment: Alignment.topRight,
-        );
+        showToast(
+            context, 'Class updated successfully', ToastificationType.success);
       } else {
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.warning,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Please try again'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Please try again', ToastificationType.warning);
       }
     } on DioException catch (e) {
       // Handle Dio-specific errors
@@ -761,24 +726,11 @@ ThunkAction<ScheduleLiveclassAppState> handleUpdateLiveClass(
         errorMessage = 'Network error or server not reachable';
       }
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: Text(errorMessage),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, errorMessage, ToastificationType.error);
     } catch (e) {
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }

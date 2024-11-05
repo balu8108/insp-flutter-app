@@ -5,6 +5,7 @@ import 'package:insp/pages/teacher/soloclassrecording/redux/soloclass_redux.dart
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/utils/capitalize.dart';
 import 'package:insp/utils/file_box_component.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
 import 'package:toastification/toastification.dart';
 
@@ -76,7 +77,7 @@ class SoloclassDescription extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             )),
                         if (state.soloData.soloClassRoomRecordings.isNotEmpty)
-                          state.soloData.soloClassRoomRecordings[0].rtmpUrl!
+                          state.soloData.soloClassRoomRecordings[0].rtmpUrl
                                   .isEmpty
                               ? IconButton(
                                   icon: const Icon(Icons.replay_outlined),
@@ -87,7 +88,7 @@ class SoloclassDescription extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     if (state.soloData.soloClassRoomRecordings.isNotEmpty)
-                      state.soloData.soloClassRoomRecordings[0].rtmpUrl!.isEmpty
+                      state.soloData.soloClassRoomRecordings[0].rtmpUrl.isEmpty
                           ? const Text(
                               "As it takes 1-2 mins to get credentials, you can refresh it",
                               style: TextStyle(
@@ -110,14 +111,8 @@ class SoloclassDescription extends StatelessWidget {
   Widget _credential(BuildContext context, SoloClassDetailDataAppState state) {
     void copyTextToClipboard(String textToCopy) {
       Clipboard.setData(ClipboardData(text: textToCopy));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.success,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Text copied to clipboard!'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Text copied to clipboard!', ToastificationType.success);
     }
 
     return Column(
@@ -244,11 +239,11 @@ class SoloclassDescription extends StatelessWidget {
           child: MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
-              onTap: () => copyTextToClipboard(rtmpUrl!),
+              onTap: () => copyTextToClipboard(rtmpUrl),
               child: Tooltip(
                 message: rtmpUrl,
                 child: Text(
-                  rtmpUrl!,
+                  rtmpUrl,
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 14,
@@ -279,11 +274,11 @@ class SoloclassDescription extends StatelessWidget {
           child: MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
-              onTap: () => copyTextToClipboard(streamKey!),
+              onTap: () => copyTextToClipboard(streamKey),
               child: Tooltip(
                 message: streamKey,
                 child: Text(
-                  streamKey!,
+                  streamKey,
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 14,

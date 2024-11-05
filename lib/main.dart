@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -20,7 +21,6 @@ import 'package:insp/redux/app_reducer.dart';
 import 'package:insp/redux/userData/userdata_redux.dart';
 import 'package:insp/socket/mainsocket.dart';
 import 'package:insp/utils/extensions.dart';
-import 'package:insp/utils/isAdbEnabled.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/mobileAppbar/mobileAppbar.dart';
 import 'package:insp/widget/navbar/navbar.dart';
@@ -28,18 +28,36 @@ import 'package:insp/widget/navbar/navbar_mobile.dart';
 import 'package:insp/widget/navbar/navbar_redux.dart';
 import 'package:insp/widget/popups/isAdbEnabled.dart';
 import 'package:insp/widget/popups/uploadLiveclassFile/upload_liveclass_file_redux.dart';
+import 'package:onetaplogin/onetaplogin.dart';
+import 'package:onetaplogin/risk_monitoring_callback.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
 import 'package:toastification/toastification.dart';
 import 'package:tpstreams_player_sdk/tpstreams_player_sdk.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
+void main() async {
   // Ensure that the correct platform implementation is used for macOS
   WebViewPlatform.instance = WebKitWebViewPlatform();
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
   final store = Store<AppState>(
     appStateReducer,
@@ -62,7 +80,7 @@ void main() {
   TPStreamsSDK.initialize(orgCode: "gcma48");
   runApp(StoreProvider<AppState>(
     store: store,
-    child: MyApp(store: store),
+    child: MaterialApp(home: MyApp(store: store)),
   ));
 }
 
@@ -83,6 +101,84 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _loadUserData();
+    try {
+      Onetaplogin.initDeviceIntelligence('clientId', 'txnId');
+      final riskMonitoringCallback = RiskMonitoringCallback(
+        onDeveloperModeStatusChanged: (bool status) {
+          if (status) {
+            _showDialog(const ADBEnablePopup(
+                message: 'Please turn off developer mode to continue'),);
+          }
+
+          //print('onDeveloperModeStatusChanged enabled status changed: $status');
+        },
+        onADBEnabledStatusChanged: (bool status) {
+          if (status) {
+            _showDialog(const ADBEnablePopup(
+                message: 'Please turn off developer mode to continue'),);
+          }
+          //print('ADB enabled status changed: $status');
+        },
+        onDeviceRootedOrJailBroken: () {
+          _showDialog(
+            const ADBEnablePopup(message: 'Device is rooted or jailbroken!'),);
+          //print('Device has been rooted!');
+        },
+        onBootLoaderUnlocked: () {
+          _showDialog(
+            const ADBEnablePopup(message: 'Bootloader is unlocked!'),);
+          //print('Bootloader has been unlocked!');
+        },
+        onMockGpsStatusChanged: (bool status) {
+          if (status) {
+            _showDialog(const ADBEnablePopup(
+                message: 'Please turn off mock GPS to continue'),);
+          }
+          //print('Mock GPS status changed: $status');
+        },
+        onPackageDebuggable: () {
+          _showDialog(const ADBEnablePopup(message: 'Package is debuggable!'),);
+          //print('Package is debuggable!');
+        },
+        onAppCloningDetected: () {
+          _showDialog(const ADBEnablePopup(message: 'App cloning detected !'),);
+          //print('App cloning detected!');
+        },
+        onVPNStatusChanged: (bool status) {
+          if (status) {
+            _showDialog(const ADBEnablePopup(
+                message: 'Please turn off vpn to continue'),);
+          }
+          //print('VPN status changed: $status');
+        },
+        onDebuggerStatusChanged: (bool status) {
+          if (status) {
+            _showDialog(const ADBEnablePopup(
+                message: 'Please turn off debugger to continue'),);
+          }
+          //print('Debugger status changed: $status');
+        },
+        onHookingStatusChanged: (bool status) {
+          if (status) {
+            _showDialog(const ADBEnablePopup(
+                message: 'Please turn off hooking to continue'),);
+          }
+          //print('Hooking status changed: $status');
+        },
+      );
+
+      Onetaplogin.enableRiskMonitoring(riskMonitoringCallback);
+    } catch (_) {
+
+    }
+  }
+
+  void _showDialog(Widget dialog) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => dialog,
+    );
   }
 
   Future<void> _loadUserData() async {

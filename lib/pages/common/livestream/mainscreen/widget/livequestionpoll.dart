@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
@@ -7,7 +6,7 @@ import 'package:insp/redux/AppState.dart';
 import 'package:insp/socket/mainsocket.dart';
 
 class PollTimer extends StatefulWidget {
-  const PollTimer({Key? key}) : super(key: key);
+  const PollTimer({super.key});
 
   @override
   _PollTimerState createState() => _PollTimerState();
@@ -127,8 +126,7 @@ class PollDetailItem extends StatelessWidget {
   final String label;
   final String value;
 
-  const PollDetailItem({Key? key, required this.label, required this.value})
-      : super(key: key);
+  const PollDetailItem({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

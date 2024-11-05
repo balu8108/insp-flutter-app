@@ -33,9 +33,9 @@ class _PeerListWidgetState extends State<PeerListWidget> {
             width: isExpanded ? 250 : 80, // Adjust these values as needed
             child: isExpanded
                 ? isTeacher
-                    ? LivePeersFullListTeacherWidget()
-                    : LivePeersFullListWidget()
-                : LivePeersListWidget(),
+                    ? const LivePeersFullListTeacherWidget()
+                    : const LivePeersFullListWidget()
+                : const LivePeersListWidget(),
           ),
         ));
   }

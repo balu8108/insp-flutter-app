@@ -96,7 +96,7 @@ ThunkAction<RatingFeedbackDetailAppState> showTopicsForSubject(
     const subjectId =
         "1"; // baad mai dynamic karenge jab math or chemistry ke topic aa jaaye
     final allTopics = await remoteDataSource.getAllTopicsForSubject(
-        AllTopicsForSubjectRequestModel(
+        const AllTopicsForSubjectRequestModel(
             secret_key: secretKey, subject_id: subjectId));
     if (allTopics.response.statusCode == 201 && allTopics.data.status == true) {
       final allTopicsForSubject = allTopics

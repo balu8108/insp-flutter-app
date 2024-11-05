@@ -11,6 +11,7 @@ import 'package:insp/apiservices/models/mycourses/physics_course_topics_request_
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/data/hardcoded/topic_list.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -244,8 +245,7 @@ ThunkAction<ScheduleSoloclassAppState> showAllTopics(BuildContext context) {
       final remoteDataSource = RemoteDataSource();
 
       final allTopics = await remoteDataSource.getAllTopics(
-          const PhysicsCourseTopicsRequestModel(
-              secret_key: "U5Ga0Z1aaNlYHp0MjdEdXJ1aKVVVB1TP"));
+          const PhysicsCourseTopicsRequestModel(secret_key: secretKey));
       if (allTopics.response.statusCode == 201) {
         final allTopicsForSubject = allTopics
             .data.physicsCourseTopicsResponseModelResult
@@ -335,25 +335,13 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
 
         navigateToSolo(soloClassId.toString());
 
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.success,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 2),
-          title: const Text('SoloClass Scheduled successfully'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'SoloClass Scheduled successfully',
+            ToastificationType.success);
       } else {
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.warning,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Failed to create soloclass'),
-          alignment: Alignment.topRight,
-        );
+        showToast(
+            context, 'Failed to create soloclass', ToastificationType.warning);
       }
     } on DioException catch (e) {
       // Handle Dio-specific errors
@@ -365,25 +353,11 @@ ThunkAction<ScheduleSoloclassAppState> handleCreateSoloClass(
         errorMessage = 'Network error or server not reachable';
       }
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: Text(errorMessage),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, errorMessage, ToastificationType.error);
     } catch (e) {
-      print(e);
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }
@@ -426,23 +400,20 @@ ThunkAction<ScheduleSoloclassAppState> handleUpdateSoloClass(
             .add(await MultipartFile.fromFile(file.path!, filename: file.name));
       }
     }
-    Map<String, dynamic> jsonSubjectObject = {
-      'value': subjectList
-          .firstWhere((item) => item.label == store.state.selectedSubject)
-          .value,
-      'label': store.state.selectedSubject,
-    };
-
-    Map<String, dynamic> jsonTopicObject = {
-      'value': topicList
-          .firstWhere((item) => item.label == store.state.selectedTopic)
-          .value,
-      'label': store.state.selectedTopic,
-    };
 
     FormData formData = FormData.fromMap({
-      'topic': jsonEncode(jsonTopicObject),
-      'subject': jsonEncode(jsonSubjectObject),
+      'topic': jsonEncode({
+        'value': topicList
+            .firstWhere((item) => item.label == store.state.selectedTopic)
+            .value,
+        'label': store.state.selectedTopic,
+      }),
+      'subject': jsonEncode({
+        'value': subjectList
+            .firstWhere((item) => item.label == store.state.selectedSubject)
+            .value,
+        'label': store.state.selectedSubject,
+      }),
       'agenda': store.state.agenda,
       'lectureNo': store.state.lectureNo,
       'description': store.state.description,
@@ -468,25 +439,13 @@ ThunkAction<ScheduleSoloclassAppState> handleUpdateSoloClass(
       if (response.statusCode == 200) {
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.error,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('SoloClass updated successfully'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'SoloClass updated successfully',
+            ToastificationType.success);
       } else {
         store.dispatch(UpdateIsClassLoading(isClassLoading: false));
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.warning,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Failed to create class'),
-          alignment: Alignment.topRight,
-        );
+        showToast(
+            context, 'Failed to update class', ToastificationType.warning);
       }
     } on DioException catch (e) {
       // Handle Dio-specific errors
@@ -498,24 +457,11 @@ ThunkAction<ScheduleSoloclassAppState> handleUpdateSoloClass(
         errorMessage = 'Network error or server not reachable';
       }
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: Text(errorMessage),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, errorMessage, ToastificationType.error);
     } catch (e) {
       store.dispatch(UpdateIsClassLoading(isClassLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }

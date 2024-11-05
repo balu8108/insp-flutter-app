@@ -14,7 +14,8 @@ class FileBoxComponent extends StatelessWidget {
   final String scrollDirection;
   final bool isTeacher;
 
-  FileBoxComponent({
+  const FileBoxComponent({
+    super.key,
     required this.data,
     required this.type,
     required this.scrollDirection,

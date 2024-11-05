@@ -113,6 +113,11 @@ abstract class NetworkService {
   Future<HttpResponse<TimeTableResponseDataModel>> getAllTimeTable(
       @Header('Authorization') String secretTokenHeader);
 
+  @DELETE('/generic/delete-timetable/{timeTableId}')
+  Future<HttpResponse<DeleteAssignmentResponseModel>> deleteTimeTable(
+      @Path() int timeTableId,
+      @Header('Authorization') String secretTokenHeader);
+
   @POST('/generic/get-version-update')
   Future<HttpResponse<VersionControlResponseModel>> checkIsNewVersionAvailable(
       @Body() VersionControlRequestModel videoRequestModel);

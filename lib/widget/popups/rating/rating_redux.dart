@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:insp/apiservices/models/feedback/rating_topic_request_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -78,23 +79,11 @@ ThunkAction<RatingAppState> rateClass(BuildContext context) {
 
       if (ratingresponse.response.statusCode == 200) {
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.success,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Feedback created successfully'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Feedback created successfully',
+            ToastificationType.success);
       } else {
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.error,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Some issue, please try again'),
-          alignment: Alignment.topRight,
-        );
+        showToast(
+            context, 'Some issue, please try again', ToastificationType.error);
       }
     } catch (e) {
       Navigator.of(context).pop();

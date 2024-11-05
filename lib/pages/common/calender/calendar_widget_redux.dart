@@ -6,7 +6,6 @@ import 'package:insp/apiservices/models/calendar/all_calendar_scheduled_data_mod
 import 'package:insp/pages/common/calender/widget/event_data_model.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
-import 'package:intl/intl.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:table_calendar/table_calendar.dart';

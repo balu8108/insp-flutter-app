@@ -9,6 +9,7 @@ List<ChapterTopicModel> subjectList = [
   ChapterTopicModel(value: "1", label: "PHYSICS"),
   ChapterTopicModel(value: "2", label: "MATHMETICS"),
   ChapterTopicModel(value: "3", label: "CHEMISTRY"),
+  ChapterTopicModel(value: "4", label: "GENERAL"),
 ];
 
 List<ChapterTopicModel> classLevel = [

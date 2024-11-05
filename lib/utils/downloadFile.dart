@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:path/path.dart' as path;
 import 'package:toastification/toastification.dart';
 
@@ -11,14 +12,7 @@ Future<void> downloadPdfWithDioToDownloads(
     String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
 
     if (selectedDirectory == null) {
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('No directory selected.'),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, 'No directory selected.', ToastificationType.error);
       return; // User canceled the picker
     }
 
@@ -34,14 +28,8 @@ Future<void> downloadPdfWithDioToDownloads(
       savePath,
     );
 
-    toastification.show(
-      context: context, // optional if you use ToastificationWrapper
-      type: ToastificationType.success,
-      style: ToastificationStyle.fillColored,
-      autoCloseDuration: const Duration(seconds: 3),
-      title: const Text('file downloaded successfully'),
-      alignment: Alignment.topRight,
-    );
+    showToast(
+        context, 'file downloaded successfully', ToastificationType.success);
   } catch (e) {
     print('Error downloading PDF: $e');
   }
