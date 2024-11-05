@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'insp-c2312.firebasestorage.app',
     measurementId: 'G-4Z7JQ4PX1V',
   );
+
 }
