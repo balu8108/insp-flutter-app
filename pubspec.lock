@@ -624,6 +624,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  onetaplogin:
+    dependency: "direct main"
+    description:
+      name: onetaplogin
+      sha256: "1987df98ff97a1c47e7d3942ece294db336b5706fe6a2212e68c55330609114e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.1-alpha02"
   package_config:
     dependency: transitive
     description:
