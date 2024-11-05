@@ -4,6 +4,7 @@ import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/pages/common/livestream/widget/chat/chat_widget_redux.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/utils/extensions.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:toastification/toastification.dart';
 
@@ -36,35 +37,17 @@ class _DeleteTimeTablePopupState extends State<DeleteTimeTablePopup> {
 
         if (deleteTopicData.response.statusCode == 200) {
           Navigator.of(context).pop();
-          toastification.show(
-            context: context,
-            type: ToastificationType.success,
-            style: ToastificationStyle.fillColored,
-            autoCloseDuration: const Duration(seconds: 3),
-            title: const Text('Time table Deleted Successfully'),
-            alignment: Alignment.topRight,
-          );
+          showToast(context, 'Time table Deleted Successfully',
+              ToastificationType.success);
         } else {
           Navigator.of(context).pop();
-          toastification.show(
-            context: context,
-            type: ToastificationType.warning,
-            style: ToastificationStyle.fillColored,
-            autoCloseDuration: const Duration(seconds: 3),
-            title: const Text('Some issue, please try again'),
-            alignment: Alignment.topRight,
-          );
+          showToast(context, 'Some issue, please try again',
+              ToastificationType.warning);
         }
       } catch (error) {
         Navigator.of(context).pop();
-        toastification.show(
-          context: context,
-          type: ToastificationType.error,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Some issue, please try again'),
-          alignment: Alignment.topRight,
-        );
+        showToast(
+            context, 'Some issue, please try again', ToastificationType.error);
       } finally {
         setState(() {
           isDeleting = false; // Hide loading indicator

@@ -8,6 +8,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:insp/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/data/hardcoded/topic_list.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -252,25 +253,13 @@ ThunkAction<AddAssignmentAppState> handleCreate(
         store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
         getAssignment();
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.success,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Assignment created successfully'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Assignment created successfully',
+            ToastificationType.success);
       } else {
         store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.warning,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Failed to upload files'),
-          alignment: Alignment.topRight,
-        );
+        showToast(
+            context, 'Failed to upload files', ToastificationType.warning);
       }
     } on DioException catch (e) {
       store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
@@ -282,24 +271,11 @@ ThunkAction<AddAssignmentAppState> handleCreate(
       } else {
         errorMessage = 'Network error or server not reachable';
       }
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: Text(errorMessage),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, errorMessage, ToastificationType.error);
     } catch (e) {
       store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }
@@ -385,25 +361,13 @@ ThunkAction<AddAssignmentAppState> handleUpdate(
         store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
         fetchAssignmentAfterUpdateorDelete();
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.success,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Assignment update successfully'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Assignment update successfully',
+            ToastificationType.success);
       } else {
         store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.warning,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Failed to update assignment'),
-          alignment: Alignment.topRight,
-        );
+        showToast(
+            context, 'Failed to update assignment', ToastificationType.warning);
       }
     } on DioException catch (e) {
       store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
@@ -415,24 +379,11 @@ ThunkAction<AddAssignmentAppState> handleUpdate(
       } else {
         errorMessage = 'Network error or server not reachable';
       }
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: Text(errorMessage),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, errorMessage, ToastificationType.error);
     } catch (e) {
       store.dispatch(UpdateIsAssignmentLoading(isAssignmentLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }

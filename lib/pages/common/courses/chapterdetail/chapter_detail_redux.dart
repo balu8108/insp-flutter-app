@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/main.dart';
 import 'package:insp/pages/common/courses/chapterdetail/chapter_detail_screen.dart';
 import 'package:insp/utils/extensions.dart';
@@ -63,8 +64,7 @@ ThunkAction<ChapterDetailAppState> showTopicsByChapter(
       final chapterId = inspCardModel.id;
       final allTopics = await remoteDataSource.getAllTopicsByChapter(
           AllTopicsForChapterRequestModel(
-              secret_key: "U5Ga0Z1aaNlYHp0MjdEdXJ1aKVVVB1TP",
-              chapter_id: chapterId));
+              secret_key: secretKey, chapter_id: chapterId));
 
       if (allTopics.response.statusCode == 201 &&
           allTopics.data.status == true) {

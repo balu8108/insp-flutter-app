@@ -7,6 +7,7 @@ import 'package:insp/apiservices/models/mycourses/physics_course_topics_request_
 import 'package:insp/apiservices/models/soloclasses/soloclass_topicwise_details_response_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/data/hardcoded/library_subjects.dart';
+import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/card/model/insp_card_model.dart';
@@ -79,8 +80,7 @@ ThunkAction<SoloclassTopicDetailReduxAppState> showAllTopics(
     final remoteDataSource = RemoteDataSource();
 
     final allTopics = await remoteDataSource.getAllTopics(
-        const PhysicsCourseTopicsRequestModel(
-            secret_key: "U5Ga0Z1aaNlYHp0MjdEdXJ1aKVVVB1TP"));
+        const PhysicsCourseTopicsRequestModel(secret_key: secretKey));
     if (allTopics.response.statusCode == 201 && allTopics.data.status == true) {
       final allTopicsForSubject = allTopics
           .data.physicsCourseTopicsResponseModelResult

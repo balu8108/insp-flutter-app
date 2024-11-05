@@ -7,6 +7,7 @@ import 'package:insp/apiservices/models/login/device_login_request_model.dart';
 import 'package:insp/main.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/redux/userData/userdata_redux.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:toastification/toastification.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:insp/pages/home/home_screen.dart';
@@ -110,57 +111,21 @@ ThunkAction<AppState> handleLogin(BuildContext context) {
                     content: HomeScreen(
                         userData: result.data.loginResponseModelResult)));
 
-            store.dispatch(UpdateIsLoading(isLoading: false));
-            toastification.show(
-              context: context, // optional if you use ToastificationWrapper
-              type: ToastificationType.success,
-              style: ToastificationStyle.fillColored,
-              autoCloseDuration: const Duration(seconds: 3),
-              title: const Text("Logging you in !!"),
-              alignment: Alignment.topRight,
-            );
+            showToast(context, "Logging you in !!", ToastificationType.success);
           } else if (result.data.status == false) {
-            store.dispatch(UpdateIsLoading(isLoading: false));
-            toastification.show(
-              context: context, // optional if you use ToastificationWrapper
-              type: ToastificationType.warning,
-              style: ToastificationStyle.fillColored,
-              autoCloseDuration: const Duration(seconds: 3),
-              title: Text(result.data.responseMessage),
-              alignment: Alignment.topRight,
-            );
+            showToast(context, result.data.responseMessage,
+                ToastificationType.warning);
           }
         } else {
-          store.dispatch(UpdateIsLoading(isLoading: false));
-          toastification.show(
-            context: context, // optional if you use ToastificationWrapper
-            type: ToastificationType.warning,
-            style: ToastificationStyle.fillColored,
-            autoCloseDuration: const Duration(seconds: 3),
-            title: const Text('Invalid Credential'),
-            alignment: Alignment.topRight,
-          );
+          showToast(context, 'Invalid Credential', ToastificationType.warning);
         }
+        store.dispatch(UpdateIsLoading(isLoading: false));
       } catch (error) {
         store.dispatch(UpdateIsLoading(isLoading: false));
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.error,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Error logging in'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Error logging in', ToastificationType.error);
       }
     } else {
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.warning,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text("Please add credentials"),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, "Please add credentials", ToastificationType.warning);
     }
   };
 }

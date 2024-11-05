@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:insp/data/hardcoded/secret_key.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -136,25 +137,12 @@ ThunkAction<UploadClassFileAppState> handleUploadFileClass(
         store.dispatch(UpdateIsLoading(isLoading: false));
         getAllUpcomingClass();
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.success,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('File upload successfully'),
-          alignment: Alignment.topRight,
-        );
+        showToast(
+            context, 'File upload successfully', ToastificationType.success);
       } else {
         store.dispatch(UpdateIsLoading(isLoading: false));
         Navigator.of(context).pop();
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.warning,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Please try again'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Please try again', ToastificationType.warning);
       }
     } on DioException catch (e) {
       store.dispatch(UpdateIsLoading(isLoading: false));
@@ -166,24 +154,10 @@ ThunkAction<UploadClassFileAppState> handleUploadFileClass(
       } else {
         errorMessage = 'Network error or server not reachable';
       }
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: Text(errorMessage),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, errorMessage, ToastificationType.error);
     } catch (e) {
       store.dispatch(UpdateIsLoading(isLoading: false));
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('ggh'),
-        alignment: Alignment.topRight,
-      );
+      showToast(context, 'error', ToastificationType.error);
     }
   };
 }

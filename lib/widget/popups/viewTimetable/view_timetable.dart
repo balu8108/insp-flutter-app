@@ -3,6 +3,7 @@ import 'package:insp/apiservices/models/calendar/timetable_response_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/popups/pdfviewer/pdf_timetable.dart';
 import 'package:insp/widget/popups/pdfviewer/pdfviewcontrol.dart';
 
 class ViewTimetable extends StatefulWidget {

@@ -8,6 +8,7 @@ import 'package:insp/apiservices/models/tpstream/video_response_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/redux/AppState.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
@@ -74,24 +75,12 @@ ThunkAction<AppState> getPreviewSoloClassData(
               context, previewFinalData.soloClassRoomRecordings[0].tpStreamId));
         }
       } else {
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.warning,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Some issue, please try again'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Some issue, please try again',
+            ToastificationType.warning);
       }
     } catch (error) {
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }
@@ -142,14 +131,8 @@ ThunkAction<AppState> getSoloVideoUrlApi(
         print("tpstream url null");
       }
     } catch (error) {
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }

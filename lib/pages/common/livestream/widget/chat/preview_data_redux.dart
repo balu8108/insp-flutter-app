@@ -7,6 +7,7 @@ import 'package:insp/apiservices/models/upcomingclasses/lecture_detail_by_roomid
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/redux/AppState.dart';
 import 'package:insp/socket/mainsocket.dart';
+import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:redux/redux.dart';
@@ -63,24 +64,12 @@ ThunkAction<AppState> getPreviewClassData(BuildContext context, String roomId) {
             previewDataFiles: previewFinalData.liveClassRoomFiles));
         store.dispatch(initialSetup(context, roomId, userData.token));
       } else {
-        toastification.show(
-          context: context, // optional if you use ToastificationWrapper
-          type: ToastificationType.warning,
-          style: ToastificationStyle.fillColored,
-          autoCloseDuration: const Duration(seconds: 3),
-          title: const Text('Some issue, please try again'),
-          alignment: Alignment.topRight,
-        );
+        showToast(context, 'Some issue, please try again',
+            ToastificationType.warning);
       }
     } catch (error) {
-      toastification.show(
-        context: context, // optional if you use ToastificationWrapper
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: const Duration(seconds: 3),
-        title: const Text('Some issue, please try again'),
-        alignment: Alignment.topRight,
-      );
+      showToast(
+          context, 'Some issue, please try again', ToastificationType.error);
     }
   };
 }

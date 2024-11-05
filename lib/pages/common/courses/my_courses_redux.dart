@@ -175,8 +175,7 @@ ThunkAction<MyCoursesAppState> showTopicsForCourse(
       }
     } else if (selectedCardName.contains('physics')) {
       final allTopics = await remoteDataSource.getAllTopicsForMyCourse(
-          const PhysicsCourseTopicsRequestModel(
-              secret_key: "U5Ga0Z1aaNlYHp0MjdEdXJ1aKVVVB1TP"));
+          const PhysicsCourseTopicsRequestModel(secret_key: secretKey));
       if (allTopics.response.statusCode == 201 &&
           allTopics.data.status == true) {
         final allTopicsForSubject = allTopics
