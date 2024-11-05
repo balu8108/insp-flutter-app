@@ -7,8 +7,6 @@ import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/pages/home/student_home_screen.dart';
 import 'package:insp/pages/home/teacher_home_screen.dart';
-import 'package:insp/utils/isAdbEnabled.dart';
-import 'package:insp/widget/popups/isAdbEnabled.dart';
 import 'package:insp/widget/popups/isVersionUpdate.dart';
 import 'package:insp/widget/popups/tokenexpire.dart';
 
@@ -30,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _initializeChecks() async {
     if (Platform.isAndroid || Platform.isIOS) {
-      await _checkDeviceStatus();
+      // await _checkDeviceStatus();
     }
     if (Platform.isWindows || Platform.isMacOS) {
       await _checkForNewVersion();
@@ -39,24 +37,24 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Function to check ADB and Root status
-  Future<void> _checkDeviceStatus() async {
-    bool adbEnabled = await DeviceStatusChecker.isAdbEnabled();
-    bool deviceRooted = await DeviceStatusChecker.isDeviceRooted();
-
-    if (adbEnabled || deviceRooted) {
-      String message = "Please address the following issues to proceed:\n";
-      if (adbEnabled) {
-        message += "- Developer mode is enabled. Please disable it.\n";
-      }
-      if (deviceRooted) {
-        message += "- Your device appears to be rooted. Please unroot it.\n";
-      }
-
-      _showDialog(
-        ADBEnablePopup(message: message),
-      );
-    }
-  }
+  // Future<void> _checkDeviceStatus() async {
+  //   bool adbEnabled = await DeviceStatusChecker.isAdbEnabled();
+  //   bool deviceRooted = await DeviceStatusChecker.isDeviceRooted();
+  //
+  //   if (adbEnabled || deviceRooted) {
+  //     String message = "Please address the following issues to proceed:\n";
+  //     if (adbEnabled) {
+  //       message += "- Developer mode is enabled. Please disable it.\n";
+  //     }
+  //     if (deviceRooted) {
+  //       message += "- Your device appears to be rooted. Please unroot it.\n";
+  //     }
+  //
+  //     _showDialog(
+  //       ADBEnablePopup(message: message),
+  //     );
+  //   }
+  // }
 
   Future<void> _checkStoreToken(LoginResponseModelResult userData) async {
     final remoteDataSource = RemoteDataSource();

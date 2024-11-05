@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:insp/apiservices/models/versioncontrol/version_control_request_model.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/pages/login/login_screen.dart';
-import 'package:insp/utils/isAdbEnabled.dart';
-import 'package:insp/widget/popups/isAdbEnabled.dart';
 import 'package:insp/widget/popups/isVersionUpdate.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -47,7 +45,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Future<void> _initializeChecks() async {
     if (Platform.isAndroid || Platform.isIOS) {
-      await _checkDeviceStatus();
+      //await _checkDeviceStatus();
     }
     if (Platform.isWindows || Platform.isMacOS) {
       await _checkForNewVersion();
@@ -55,55 +53,55 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   // Function to check ADB and Root status
-  Future<void> _checkDeviceStatus() async {
-    if (Platform.isAndroid) {
-      bool adbEnabled = await DeviceStatusChecker.isAdbEnabled();
-      bool deviceRooted = await DeviceStatusChecker.isDeviceRooted();
-
-      if (adbEnabled || deviceRooted) {
-        String message = "Please address the following issues to proceed:\n";
-
-        if (adbEnabled) {
-          message +=
-              "- Developer mode is currently enabled. Please disable it.\n";
-        }
-
-        if (deviceRooted) {
-          message +=
-              "- Your device appears to be rooted. Please unroot your device.\n";
-        }
-
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return ADBEnablePopup(
-              message: message,
-            );
-          },
-        );
-      }
-    }
-    if (Platform.isIOS) {
-      bool deviceJailBroken = await DeviceStatusChecker.isDeviceJailbroken();
-      String message = "Please address the following issues to proceed:\n";
-
-      if (deviceJailBroken) {
-        message +=
-            "- Developer mode is currently enabled. Please disable it.\n";
-      }
-
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return ADBEnablePopup(
-            message: message,
-          );
-        },
-      );
-    }
-  }
+  // Future<void> _checkDeviceStatus() async {
+  //   if (Platform.isAndroid) {
+  //     bool adbEnabled = await DeviceStatusChecker.isAdbEnabled();
+  //     bool deviceRooted = await DeviceStatusChecker.isDeviceRooted();
+  //
+  //     if (adbEnabled || deviceRooted) {
+  //       String message = "Please address the following issues to proceed:\n";
+  //
+  //       if (adbEnabled) {
+  //         message +=
+  //             "- Developer mode is currently enabled. Please disable it.\n";
+  //       }
+  //
+  //       if (deviceRooted) {
+  //         message +=
+  //             "- Your device appears to be rooted. Please unroot your device.\n";
+  //       }
+  //
+  //       showDialog(
+  //         context: context,
+  //         barrierDismissible: false,
+  //         builder: (BuildContext context) {
+  //           return ADBEnablePopup(
+  //             message: message,
+  //           );
+  //         },
+  //       );
+  //     }
+  //   }
+  //   if (Platform.isIOS) {
+  //     bool deviceJailBroken = await DeviceStatusChecker.isDeviceJailbroken();
+  //     String message = "Please address the following issues to proceed:\n";
+  //
+  //     if (deviceJailBroken) {
+  //       message +=
+  //           "- Developer mode is currently enabled. Please disable it.\n";
+  //     }
+  //
+  //     showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (BuildContext context) {
+  //         return ADBEnablePopup(
+  //           message: message,
+  //         );
+  //       },
+  //     );
+  //   }
+  // }
 
   Future<void> _checkForNewVersion() async {
     final remoteDataSource = RemoteDataSource();
