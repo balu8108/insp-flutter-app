@@ -63,7 +63,7 @@ dependencies:
   device_info_plus: ^10.1.2
   flutter_screenutil: ^5.9.3
   firebase_crashlytics: ^2.9.0
-  #onetaplogin: 1.4.1-alpha02
+  onetaplogin: 1.4.1-alpha02
 
 dev_dependencies:
   flutter_test:
