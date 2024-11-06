@@ -89,6 +89,8 @@ class _PdfViewerFromUrlPointState extends State<PdfTimeTable> {
 
   @override
   Widget build(BuildContext context) {
+    bool isTeacher = isTeacherLogin(context);
+
     LoginResponseModelResult userData = getUserDataFromStore(context);
     return Column(children: [
       Row(
@@ -133,20 +135,21 @@ class _PdfViewerFromUrlPointState extends State<PdfTimeTable> {
           const SizedBox(
             width: 10,
           ),
-          Tooltip(
-              message: "Delete",
-              child: IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return DeleteTimeTablePopup(
-                          timeTableId: widget.pdfData.id);
-                    },
-                  );
-                },
-              )),
+          if (isTeacher)
+            Tooltip(
+                message: "Delete",
+                child: IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return DeleteTimeTablePopup(
+                            timeTableId: widget.pdfData.id);
+                      },
+                    );
+                  },
+                )),
         ],
       ),
       const SizedBox(height: 10),
