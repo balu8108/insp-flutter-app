@@ -119,15 +119,20 @@ class _MyAppState extends State<MyApp> {
           }
           //print('ADB enabled status changed: $status');
         },
-        onDeviceRootedOrJailBroken: () {
-          _showDialog(
-            const ADBEnablePopup(message: 'Device is rooted or jailbroken!'),);
+        onDeviceRootedOrJailBroken: (bool status) {
+          if(status) {
+            _showDialog(
+              const ADBEnablePopup(
+                  message: 'Device is rooted or jailbroken!'),);
+          }
           //print('Device has been rooted!');
         },
-        onBootLoaderUnlocked: () {
-          _showDialog(
-            const ADBEnablePopup(message: 'Bootloader is unlocked!'),);
-          //print('Bootloader has been unlocked!');
+        onBootLoaderUnlocked: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(message: 'Bootloader is unlocked!'),);
+            //print('Bootloader has been unlocked!');
+          }
         },
         onMockGpsStatusChanged: (bool status) {
           if (status) {
@@ -136,13 +141,19 @@ class _MyAppState extends State<MyApp> {
           }
           //print('Mock GPS status changed: $status');
         },
-        onPackageDebuggable: () {
-          _showDialog(const ADBEnablePopup(message: 'Package is debuggable!'),);
-          //print('Package is debuggable!');
+        onPackageDebuggable: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(message: 'Package is debuggable!'),);
+            //print('Package is debuggable!');
+          }
         },
-        onAppCloningDetected: () {
-          _showDialog(const ADBEnablePopup(message: 'App cloning detected !'),);
-          //print('App cloning detected!');
+        onAppCloningDetected: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(message: 'App cloning detected !'),);
+            //print('App cloning detected!');
+          }
         },
         onVPNStatusChanged: (bool status) {
           if (status) {
