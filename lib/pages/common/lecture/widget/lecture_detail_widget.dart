@@ -337,9 +337,7 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
                         height: 1.25,
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    const Spacer(),
                     if (isTeacher)
                       IconButton(
                         icon: const Icon(Icons.file_upload_outlined),

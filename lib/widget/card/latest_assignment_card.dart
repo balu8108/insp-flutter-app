@@ -45,7 +45,7 @@ Widget LatestAssignmentCard(
           ),
           Text(
             assignmentCardModel.description,
-            maxLines: 3,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
                 fontSize: 11,

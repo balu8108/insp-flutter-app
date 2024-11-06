@@ -253,19 +253,19 @@ class SoloDetailWidgetState extends State<SoloDetailWidget> {
                     const SizedBox(
                       width: 10,
                     ),
-                    if (isTeacher)
-                      IconButton(
-                        icon: const Icon(Icons.file_upload_outlined),
-                        iconSize: 24.0,
-                        onPressed: () {
-                          // showDialog(
-                          //     context: context,
-                          //     builder: (BuildContext context) {
-                          //       return UploadClassFile.getScreen(
-                          //           lec.id.toString(), "live", widget.onUpdate);
-                          //     });
-                        },
-                      ),
+                    // if (isTeacher)
+                    //   IconButton(
+                    //     icon: const Icon(Icons.file_upload_outlined),
+                    //     iconSize: 24.0,
+                    //     onPressed: () {
+                    //       showDialog(
+                    //           context: context,
+                    //           builder: (BuildContext context) {
+                    //             return UploadClassFile.getScreen(
+                    //                 lec.id.toString(), "live", widget.onUpdate);
+                    //           });
+                    //     },
+                    //   ),
                   ],
                 ),
                 const SizedBox(height: 10),

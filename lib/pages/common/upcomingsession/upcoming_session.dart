@@ -18,7 +18,6 @@ class UpcomingSession extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController scrollController = ScrollController();
     bool isTeacher = isTeacherLogin(context);
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(getAllUpcomingClass(context));
@@ -98,7 +97,6 @@ class UpcomingSession extends StatelessWidget {
                   Expanded(
                       child: classCategories.isNotEmpty
                           ? ListView.separated(
-                              controller: scrollController,
                               scrollDirection: Axis.vertical,
                               itemCount: classCategories.length,
                               itemBuilder: (BuildContext context, int index) {
