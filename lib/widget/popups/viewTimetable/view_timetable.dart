@@ -4,7 +4,6 @@ import 'package:insp/apiservices/remote_data_source.dart';
 import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/popups/pdfviewer/pdf_timetable.dart';
-import 'package:insp/widget/popups/pdfviewer/pdfviewcontrol.dart';
 
 class ViewTimetable extends StatefulWidget {
   const ViewTimetable({super.key});
@@ -14,9 +13,8 @@ class ViewTimetable extends StatefulWidget {
 }
 
 class _ViewTimetableState extends State<ViewTimetable> {
-  List<String> _pdfUrlsFuture = [];
+  List<TimeTableDataModel> _pdfUrlsFuture = [];
   final ScrollController scrollController = ScrollController();
-  bool _isLoading = true; // Added loading state
 
   @override
   void didChangeDependencies() {
@@ -32,16 +30,12 @@ class _ViewTimetableState extends State<ViewTimetable> {
     final timetableData = await remoteDataSource.getAllTimeTable(userToken);
 
     if (timetableData.response.statusCode == 200) {
-      final TimeTableResponseDataModel document = timetableData.data;
-      List<String> pdfUrls = document.data.map((doc) => doc.url).toList();
+      final TimeTableResponseDataModel tt = timetableData.data;
+
       setState(() {
-        _pdfUrlsFuture = pdfUrls;
-        _isLoading = false; // Set loading to false after data is loaded
+        _pdfUrlsFuture = tt.data;
       });
     } else {
-      setState(() {
-        _isLoading = false; // Set loading to false even if there's an error
-      });
       throw Exception("Failed to load timetable data");
     }
   }
@@ -51,33 +45,30 @@ class _ViewTimetableState extends State<ViewTimetable> {
     bool isWebOrLandScape = context.isWebOrLandScape();
 
     return AlertDialog(
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
-      contentPadding: const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
-      insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
-      title: Row(
-        children: [
-          const Text(
-            "INSP Time Table",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-          ),
-          const Spacer(),
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-      ),
-      content: SizedBox(
-        width: MediaQuery.of(context).size.width - 1100 < 500
-            ? 450
-            : MediaQuery.of(context).size.width,
-        height: 800,
-        child: _isLoading
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : _pdfUrlsFuture.isNotEmpty
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 26, horizontal: 28),
+        insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
+        title: Row(
+          children: [
+            const Text(
+              "INSP Time Table",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+            ),
+            const Spacer(),
+            IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        ),
+        content: SizedBox(
+            width: MediaQuery.of(context).size.width - 1100 < 500
+                ? 450
+                : MediaQuery.of(context).size.width,
+            height: 800,
+            child: _pdfUrlsFuture.isNotEmpty
                 ? Scrollbar(
                     controller: scrollController,
                     child: ListView.builder(
@@ -87,23 +78,14 @@ class _ViewTimetableState extends State<ViewTimetable> {
                       itemBuilder: (context, index) {
                         return SizedBox(
                           height: 800, // Set a height for each PDF viewer
-                          child: PdfViewerFromUrlPoint(
-                            pdfUrl: _pdfUrlsFuture[index],
+                          child: PdfTimeTable(
+                            pdfData: _pdfUrlsFuture[index],
                           ),
                         );
                       },
                     ),
                   )
                 : const Center(
-                    child: Text(
-                      'No timetable uploaded',
-                      style: TextStyle(
-                        fontSize: 16, // Adjust font size as needed
-                        color: Colors.black, // Change color if you want
-                      ),
-                    ),
-                  ),
-      ),
-    );
+                    child: Text("There is no time table available"))));
   }
 }

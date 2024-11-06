@@ -31,7 +31,7 @@ class AssignmentScreen extends StatelessWidget {
 
     return Container(
         padding: isWebOrLandScape
-            ? const EdgeInsets.all(24.0)
+            ? const EdgeInsets.all(10.0)
             : const EdgeInsets.all(0.0),
         color: Colors.white,
         child:
