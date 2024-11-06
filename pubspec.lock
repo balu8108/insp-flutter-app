@@ -628,10 +628,10 @@ packages:
     dependency: "direct main"
     description:
       name: onetaplogin
-      sha256: "1987df98ff97a1c47e7d3942ece294db336b5706fe6a2212e68c55330609114e"
+      sha256: "9ad6a060b738fe49d51d27deb286f4de147fa8f9c1d743885efc0b1616c9a8c7"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.1-alpha02"
+    version: "1.4.1-alpha04"
   package_config:
     dependency: transitive
     description:
