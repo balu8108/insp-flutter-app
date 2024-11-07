@@ -40,13 +40,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
 void main() async {
   // Ensure that the correct platform implementation is used for macOS
   WebViewPlatform.instance = WebKitWebViewPlatform();
-
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -58,7 +55,6 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
-
   final store = Store<AppState>(
     appStateReducer,
     initialState: const AppState(
@@ -76,7 +72,6 @@ void main() async {
         soloClassDetailDataAppState: SoloClassDetailDataAppState()),
     middleware: [thunkMiddleware],
   );
-
   TPStreamsSDK.initialize(orgCode: "gcma48");
   runApp(StoreProvider<AppState>(
     store: store,
@@ -86,9 +81,7 @@ void main() async {
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key, required this.store});
-
   final Store<AppState> store;
-
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -96,7 +89,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   LoginResponseModelResult userData =
       const LoginResponseModelResult('', '', '', '', '', '', '', '', 0, 0);
-
   @override
   void initState() {
     super.initState();
@@ -106,71 +98,92 @@ class _MyAppState extends State<MyApp> {
       final riskMonitoringCallback = RiskMonitoringCallback(
         onDeveloperModeStatusChanged: (bool status) {
           if (status) {
-            _showDialog(const ADBEnablePopup(
-                message: 'Please turn off developer mode to continue'),);
+            _showDialog(
+              const ADBEnablePopup(
+                  message: 'Please turn off developer mode to continue'),
+            );
           }
-
           //print('onDeveloperModeStatusChanged enabled status changed: $status');
         },
         onADBEnabledStatusChanged: (bool status) {
           if (status) {
-            _showDialog(const ADBEnablePopup(
-                message: 'Please turn off developer mode to continue'),);
+            _showDialog(
+              const ADBEnablePopup(
+                  message: 'Please turn off developer mode to continue'),
+            );
           }
           //print('ADB enabled status changed: $status');
         },
-        onDeviceRootedOrJailBroken: () {
-          _showDialog(
-            const ADBEnablePopup(message: 'Device is rooted or jailbroken!'),);
+        onDeviceRootedOrJailBroken: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(message: 'Device is rooted or jailbroken!'),
+            );
+          }
           //print('Device has been rooted!');
         },
-        onBootLoaderUnlocked: () {
-          _showDialog(
-            const ADBEnablePopup(message: 'Bootloader is unlocked!'),);
-          //print('Bootloader has been unlocked!');
+        onBootLoaderUnlocked: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(message: 'Bootloader is unlocked!'),
+            );
+            //print('Bootloader has been unlocked!');
+          }
         },
         onMockGpsStatusChanged: (bool status) {
           if (status) {
-            _showDialog(const ADBEnablePopup(
-                message: 'Please turn off mock GPS to continue'),);
+            _showDialog(
+              const ADBEnablePopup(
+                  message: 'Please turn off mock GPS to continue'),
+            );
           }
           //print('Mock GPS status changed: $status');
         },
-        onPackageDebuggable: () {
-          _showDialog(const ADBEnablePopup(message: 'Package is debuggable!'),);
-          //print('Package is debuggable!');
+        onPackageDebuggable: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(message: 'Package is debuggable!'),
+            );
+            //print('Package is debuggable!');
+          }
         },
-        onAppCloningDetected: () {
-          _showDialog(const ADBEnablePopup(message: 'App cloning detected !'),);
-          //print('App cloning detected!');
+        onAppCloningDetected: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(message: 'App cloning detected !'),
+            );
+            //print('App cloning detected!');
+          }
         },
         onVPNStatusChanged: (bool status) {
           if (status) {
-            _showDialog(const ADBEnablePopup(
-                message: 'Please turn off vpn to continue'),);
+            _showDialog(
+              const ADBEnablePopup(message: 'Please turn off vpn to continue'),
+            );
           }
           //print('VPN status changed: $status');
         },
         onDebuggerStatusChanged: (bool status) {
           if (status) {
-            _showDialog(const ADBEnablePopup(
-                message: 'Please turn off debugger to continue'),);
+            _showDialog(
+              const ADBEnablePopup(
+                  message: 'Please turn off debugger to continue'),
+            );
           }
           //print('Debugger status changed: $status');
         },
         onHookingStatusChanged: (bool status) {
           if (status) {
-            _showDialog(const ADBEnablePopup(
-                message: 'Please turn off hooking to continue'),);
+            _showDialog(
+              const ADBEnablePopup(
+                  message: 'Please turn off hooking to continue'),
+            );
           }
           //print('Hooking status changed: $status');
         },
       );
-
       Onetaplogin.enableRiskMonitoring(riskMonitoringCallback);
-    } catch (_) {
-
-    }
+    } catch (_) {}
   }
 
   void _showDialog(Widget dialog) {
@@ -246,9 +259,7 @@ class _MyAppState extends State<MyApp> {
 
 class MainScaffold extends StatelessWidget {
   final Widget content;
-
   const MainScaffold({required this.content, super.key});
-
   @override
   Widget build(BuildContext context) {
     bool isWebOrLandScape = context.isWebOrLandScape();

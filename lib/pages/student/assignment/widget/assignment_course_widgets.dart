@@ -1,9 +1,7 @@
-// this is the header of the  assignments (Phyiscs , Chemistry , Mathemathics)
 import 'package:flutter/material.dart';
 import 'package:insp/widget/card/insp_card.dart';
 import 'package:insp/widget/heading/insp_heading.dart';
 import 'package:insp/widget/card/model/insp_card_model.dart';
-
 import '../../../../data/hardcoded/mycourses_subjects.dart';
 
 class AssignmentCourseWidgets extends StatefulWidget {
@@ -50,37 +48,44 @@ class MyCoursesWidgetState extends State<AssignmentCourseWidgets> {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(flex: 9, child: INSPHeading('My Courses')),
+              Expanded(child: INSPHeading('My Assignments')),
             ],
           ),
-          const SizedBox(
-            height: 16,
-          ),
+          const SizedBox(height: 16),
           SizedBox(
-            height: 230.0,
-            child: assignmentCoursesData.isNotEmpty
-                ? Scrollbar(
-                    controller: _scrollController,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      controller: _scrollController,
-                      itemCount: assignmentCoursesData.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return INSPCard(
-                            inspCardModel: assignmentCoursesData[index],
-                            context: context,
-                            onPressedViewDetails: onViewDetailsClicked);
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(
-                          width: 16,
-                        );
-                      },
-                    ),
-                  )
-                : const Center(child: Text('No items')),
+            height: 210, // Set a fixed height for the ListView
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  flex: 8,
+                  child: assignmentCoursesData.isNotEmpty
+                      ? Scrollbar(
+                          controller: _scrollController,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            controller: _scrollController,
+                            itemCount: assignmentCoursesData.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return INSPCard(
+                                inspCardModel: assignmentCoursesData[index],
+                                context: context,
+                                onPressedViewDetails: onViewDetailsClicked,
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return const SizedBox(
+                                width: 33,
+                              );
+                            },
+                          ),
+                        )
+                      : const Center(child: Text('No items')),
+                ),
+              ],
+            ),
           ),
         ],
       ),
