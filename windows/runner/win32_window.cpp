@@ -144,7 +144,7 @@ bool Win32Window::Create(const std::wstring& title,
     return false;
   }
 
-  // SetWindowDisplayAffinity(window, WDA_MONITOR);
+  SetWindowDisplayAffinity(window, WDA_MONITOR);
 
   UpdateTheme(window);
 

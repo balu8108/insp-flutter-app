@@ -37,9 +37,6 @@ target 'Runner' do
   end
 end
 
-# Podfile
-pod 'bureau-id-fraud-sdk'
-
 #Add below lines to end of your pod file
 post_install do |installer|
   installer.pods_project.targets.each do |target|
