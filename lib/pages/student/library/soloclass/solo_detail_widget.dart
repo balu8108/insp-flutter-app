@@ -240,9 +240,9 @@ class SoloDetailWidgetState extends State<SoloDetailWidget> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
+                const Row(
                   children: [
-                    const Text(
+                    Text(
                       'Files/Notes',
                       style: TextStyle(
                         fontSize: 16,
@@ -250,7 +250,7 @@ class SoloDetailWidgetState extends State<SoloDetailWidget> {
                         height: 1.25,
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       width: 10,
                     ),
                     // if (isTeacher)
