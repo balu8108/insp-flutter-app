@@ -44,6 +44,7 @@ void main() async {
   // Ensure that the correct platform implementation is used for macOS
   WebViewPlatform.instance = WebKitWebViewPlatform();
   WidgetsFlutterBinding.ensureInitialized();
+  try {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -54,7 +55,9 @@ void main() async {
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
-  };
+  };} catch(_){
+
+  }
   final store = Store<AppState>(
     appStateReducer,
     initialState: const AppState(

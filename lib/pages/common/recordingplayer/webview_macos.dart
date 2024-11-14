@@ -21,6 +21,7 @@ class _WebviewMacOsState extends State<WebviewMacOs> {
     // Initialize the WebViewController
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setUserAgent('Safari')
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageStarted: (String url) {

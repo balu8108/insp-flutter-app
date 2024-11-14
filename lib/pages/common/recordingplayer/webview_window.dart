@@ -1,53 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:insp/main.dart';
-import 'package:webview_windows/webview_windows.dart';
+import 'package:desktop_webview_window/desktop_webview_window.dart';
 
 class WebviewUniversalWindow extends StatefulWidget {
-  const WebviewUniversalWindow(
-      {super.key, required this.url, required this.streamStatus});
-  final String url, streamStatus;
+  const WebviewUniversalWindow({
+    super.key,
+    required this.url,
+    required this.streamStatus,
+  });
+
+  final String url;
+  final String streamStatus;
+
   @override
   _WebviewUniversalWindowState createState() => _WebviewUniversalWindowState();
 }
 
 class _WebviewUniversalWindowState extends State<WebviewUniversalWindow> {
-  final _controller = WebviewController();
+  Webview? _webview;
   bool _isInitialized = false;
+
   Future<void> initPlatformState() async {
     try {
-      await _controller.initialize();
-      await _controller.setPopupWindowPolicy(WebviewPopupWindowPolicy.deny);
+      _webview = await WebviewWindow.create();
+      _webview!.launch(widget.url);
       setState(() {
         _isInitialized = true;
       });
-      await _controller.loadUrl(widget.url);
     } catch (e) {
       print('Error initializing WebView: $e');
     }
-  }
-
-  Future<WebviewPermissionDecision> _onPermissionRequested(
-      String url, WebviewPermissionKind kind, bool isUserInitiated) async {
-    final decision = await showDialog<WebviewPermissionDecision>(
-      context: navigatorKey.currentContext!,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('WebView permission requested'),
-        content: Text('WebView has requested permission for \'$kind\''),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () =>
-                Navigator.pop(context, WebviewPermissionDecision.deny),
-            child: const Text('Deny'),
-          ),
-          TextButton(
-            onPressed: () =>
-                Navigator.pop(context, WebviewPermissionDecision.allow),
-            child: const Text('Allow'),
-          ),
-        ],
-      ),
-    );
-    return decision ?? WebviewPermissionDecision.none;
   }
 
   @override
@@ -58,26 +39,26 @@ class _WebviewUniversalWindowState extends State<WebviewUniversalWindow> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    _webview?.close();
     super.dispose();
   }
 
-  @override
-  void didUpdateWidget(covariant WebviewUniversalWindow oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.streamStatus != widget.streamStatus) {
-      _controller.loadUrl(widget.url);
-    }
-  }
+  // @override
+  // void didUpdateWidget(covariant WebviewUniversalWindow oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   if (oldWidget.streamStatus != widget.streamStatus) {
+  //     _webview.loadUrl(widget.url);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     if (!_isInitialized) {
       return const Center(child: CircularProgressIndicator());
     }
-    return Webview(
-      _controller,
-      permissionRequested: _onPermissionRequested,
+
+    return const Center(
+      child: Text('WebView loaded in a separate window'),
     );
   }
 }
