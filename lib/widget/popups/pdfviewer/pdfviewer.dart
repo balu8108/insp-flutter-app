@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:insp/apiservices/remote_data_source.dart';
-import 'package:insp/utils/extensions.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/popups/pdfviewer/pdfviewcontrol.dart';
 
@@ -50,7 +49,6 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
 
   @override
   Widget build(BuildContext context) {
-    bool isWebOrLandScape = context.isWebOrLandScape();
     return Center(
       child: Dialog(
         backgroundColor: Colors.white,

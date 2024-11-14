@@ -44,46 +44,41 @@ class _PdfViewerFromUrlPointState extends State<PdfViewerFromUrlPoint> {
       ),
       const SizedBox(height: 10),
       Expanded(
-        child: SizedBox(
-            width: MediaQuery.of(context).size.width - 1100 < 500
-                ? 450
-                : MediaQuery.of(context).size.width,
-            height: 500,
-            child: Stack(
-              children: [
-                SfPdfViewer.network(
-                  widget.pdfUrl,
-                  controller: _pdfViewerController,
-                  onDocumentLoaded: (PdfDocumentLoadedDetails details) {
-                    setState(() {
-                      _totalPages = details.document.pages.count;
-                    });
-                  },
-                  onPageChanged: (PdfPageChangedDetails details) {
-                    setState(() {
-                      _currentPageNumber = details.newPageNumber;
-                    });
-                  },
-                ),
-                Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Opacity(
-                      opacity: 0.4,
-                      child: Text(
-                        '${userData.name} - ${userData.email}',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromRGBO(60, 141, 188, 1),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+        child: Stack(
+          children: [
+            SfPdfViewer.network(
+              widget.pdfUrl,
+              controller: _pdfViewerController,
+              onDocumentLoaded: (PdfDocumentLoadedDetails details) {
+                setState(() {
+                  _totalPages = details.document.pages.count;
+                });
+              },
+              onPageChanged: (PdfPageChangedDetails details) {
+                setState(() {
+                  _currentPageNumber = details.newPageNumber;
+                });
+              },
+            ),
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.center,
+                child: Opacity(
+                  opacity: 0.4,
+                  child: Text(
+                    '${userData.name} - ${userData.email}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(60, 141, 188, 1),
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              ],
-            )),
+              ),
+            ),
+          ],
+        ),
       ),
     ]);
   }
