@@ -3,10 +3,10 @@ import 'package:desktop_webview_window/desktop_webview_window.dart';
 
 class WebviewUniversalWindow extends StatefulWidget {
   const WebviewUniversalWindow({
-    Key? key,
+    super.key,
     required this.url,
     required this.streamStatus,
-  }) : super(key: key);
+  });
 
   final String url;
   final String streamStatus;
