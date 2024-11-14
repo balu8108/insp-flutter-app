@@ -55,7 +55,6 @@ dependencies:
   mime: ^1.0.6
   webview_flutter: ^4.9.0
   webview_flutter_wkwebview: ^3.15.0
-  webview_windows: ^0.4.0
   emoji_picker_flutter: ^3.0.0
   url_launcher: ^6.0.20
   flutter_rating_bar: ^4.0.1
@@ -63,6 +62,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   firebase_crashlytics: ^2.9.0
   onetaplogin: 1.4.1-alpha04
+  desktop_webview_window: ^0.2.3
 
 dev_dependencies:
   flutter_test:
