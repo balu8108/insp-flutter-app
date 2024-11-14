@@ -6,16 +6,13 @@ import 'package:insp/widget/popups/pdfviewer/pdfviewcontrol.dart';
 
 class PdfViewerFromUrl extends StatefulWidget {
   final String pdfId, type;
-
   const PdfViewerFromUrl({super.key, required this.pdfId, required this.type});
-
   @override
   _PdfViewerFromUrlState createState() => _PdfViewerFromUrlState();
 }
 
 class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
   String pdf = "";
-
   void getPdfUrl() async {
     try {
       final remoteDataSource = RemoteDataSource();
@@ -28,7 +25,7 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
           pdf = pdfUrl; // Store the fetched data
         });
       } else {
-        print('Error:');
+        print('Error fetching PDF URL');
       }
     } catch (e) {
       print('Error: $e');
@@ -54,37 +51,50 @@ class _PdfViewerFromUrlState extends State<PdfViewerFromUrl> {
   @override
   Widget build(BuildContext context) {
     bool isWebOrLandScape = context.isWebOrLandScape();
-    final ScrollController scrollController = ScrollController();
-    return AlertDialog(
+    return Center(
+      child: Dialog(
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(6.0),
         ),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        insetPadding: isWebOrLandScape ? null : EdgeInsets.zero,
-        title: Row(
-          children: [
-            const Text(
-              "Document Viewer",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w500,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height *
+              0.8, // Set height to 80% of screen height
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  const Text(
+                    "Document Viewer",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
               ),
-            ),
-            const Spacer(),
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+              const SizedBox(height: 10),
+              Expanded(
+                child: pdf.isNotEmpty
+                    ? PdfViewerFromUrlPoint(
+                        pdfUrl: pdf,
+                      )
+                    : const Center(child: CircularProgressIndicator()),
+              ),
+            ],
+          ),
         ),
-        content: pdf.isNotEmpty
-            ? PdfViewerFromUrlPoint(
-                pdfUrl: pdf,
-              )
-            : const Center(child: CircularProgressIndicator()));
+      ),
+    );
   }
 }
