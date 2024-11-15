@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:desktop_webview_window/desktop_webview_window.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 
 class WebviewUniversalWindow extends StatefulWidget {
   const WebviewUniversalWindow({
@@ -21,7 +23,12 @@ class _WebviewUniversalWindowState extends State<WebviewUniversalWindow> {
 
   Future<void> initPlatformState() async {
     try {
-      _webview = await WebviewWindow.create();
+      final userDataFolderWindows = await _getWebViewPath();
+      _webview = await WebviewWindow.create(
+        configuration: CreateConfiguration(
+          userDataFolderWindows: userDataFolderWindows,
+        ),
+      );
       _webview!.launch(widget.url);
       setState(() {
         _isInitialized = true;
@@ -43,14 +50,6 @@ class _WebviewUniversalWindowState extends State<WebviewUniversalWindow> {
     super.dispose();
   }
 
-  // @override
-  // void didUpdateWidget(covariant WebviewUniversalWindow oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-  //   if (oldWidget.streamStatus != widget.streamStatus) {
-  //     _webview.loadUrl(widget.url);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     if (!_isInitialized) {
@@ -59,6 +58,14 @@ class _WebviewUniversalWindowState extends State<WebviewUniversalWindow> {
 
     return const Center(
       child: Text('WebView loaded in a separate window'),
+    );
+  }
+
+  Future<String> _getWebViewPath() async {
+    final document = await getApplicationDocumentsDirectory();
+    return p.join(
+      document.path,
+      'desktop_webview_window',
     );
   }
 }
