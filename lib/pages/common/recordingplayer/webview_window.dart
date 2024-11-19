@@ -1,38 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:desktop_webview_window/desktop_webview_window.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:webview_win_floating/webview_win_floating.dart';
+import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 class WebviewUniversalWindow extends StatefulWidget {
-  const WebviewUniversalWindow({
-    super.key,
-    required this.url,
-    required this.streamStatus,
-  });
-
-  final String url;
-  final String streamStatus;
-
+  const WebviewUniversalWindow(
+      {super.key, required this.url, required this.streamStatus});
+  final String url, streamStatus;
   @override
   _WebviewUniversalWindowState createState() => _WebviewUniversalWindowState();
 }
 
 class _WebviewUniversalWindowState extends State<WebviewUniversalWindow> {
-  Webview? _webview;
+  late WinWebViewController? _controller;
   bool _isInitialized = false;
-
   Future<void> initPlatformState() async {
     try {
-      final userDataFolderWindows = await _getWebViewPath();
-      _webview = await WebviewWindow.create(
-        configuration: CreateConfiguration(
-          userDataFolderWindows: userDataFolderWindows,
-        ),
-      );
-      _webview!.launch(widget.url);
+      _controller = WinWebViewController(userDataFolder: await _getWebViewPath());
+      _controller?.setJavaScriptMode(JavaScriptMode.unrestricted);
+
       setState(() {
         _isInitialized = true;
       });
+      await _controller?.loadRequest(Uri.parse(widget.url));
     } catch (e) {
       print('Error initializing WebView: $e');
     }
@@ -46,8 +37,16 @@ class _WebviewUniversalWindowState extends State<WebviewUniversalWindow> {
 
   @override
   void dispose() {
-    _webview?.close();
+    _controller = null;
     super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant WebviewUniversalWindow oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.streamStatus != widget.streamStatus) {
+       _controller?.loadRequest(Uri.parse(widget.url));
+    }
   }
 
   @override
@@ -55,10 +54,7 @@ class _WebviewUniversalWindowState extends State<WebviewUniversalWindow> {
     if (!_isInitialized) {
       return const Center(child: CircularProgressIndicator());
     }
-
-    return const Center(
-      child: Text('WebView loaded in a separate window'),
-    );
+    return WinWebViewWidget(controller: _controller!);
   }
 
   Future<String> _getWebViewPath() async {

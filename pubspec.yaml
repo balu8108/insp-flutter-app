@@ -62,7 +62,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   firebase_crashlytics: ^2.9.0
   onetaplogin: 1.4.1-alpha04
-  desktop_webview_window: ^0.2.3
+  webview_win_floating: ^2.2.9
 
 dev_dependencies:
   flutter_test:
