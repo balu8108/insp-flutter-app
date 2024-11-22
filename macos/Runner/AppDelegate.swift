@@ -7,11 +7,11 @@ class AppDelegate: FlutterAppDelegate {
         return true
     }
 
-    // private func restrictScreenRecording() {
-    //     guard let window = mainFlutterWindow else { return }
-    //     window.level = NSWindow.Level(CGShieldingWindowLevel())
-    //     window.sharingType = .none
-    // }
+    private func restrictScreenRecording() {
+        guard let window = mainFlutterWindow else { return }
+        window.level = NSWindow.Level(Int(CGShieldingWindowLevel()))
+        window.sharingType = .none
+    }
 
     override func applicationDidFinishLaunching(_ aNotification: Notification) {
         let controller: FlutterViewController = mainFlutterWindow?.contentViewController as! FlutterViewController
@@ -20,7 +20,7 @@ class AppDelegate: FlutterAppDelegate {
         screenshotBlockerChannel.setMethodCallHandler { (call: FlutterMethodCall, result: @escaping FlutterResult) in
             if call.method == "disableScreenshots" {
                 self.disableScreenshots(result: result)
-                // self.restrictScreenRecording()
+                self.restrictScreenRecording()
             } else if call.method == "enableScreenshots" {
                 self.enableScreenshots(result: result)
             } else {
