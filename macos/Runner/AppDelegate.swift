@@ -7,44 +7,49 @@ class AppDelegate: FlutterAppDelegate {
         return true
     }
 
-    override func applicationDidFinishLaunching(_ notification: Notification) {
-        super.applicationDidFinishLaunching(notification)
-        
-        let controller = mainFlutterWindow?.contentViewController as! FlutterViewController
-        let channel = FlutterMethodChannel(
-            name: "com.example.macos/screenshot",
-            binaryMessenger: controller.engine.binaryMessenger
-        )
-        
-        channel.setMethodCallHandler { [weak self] (call, result) in
-            switch call.method {
-            case "disableScreenshot":
-                self?.disableScreenshot(result: result)
-            case "enableScreenshot":
-                self?.enableScreenshot(result: result)
-            default:
+    // private func restrictScreenRecording() {
+    //     guard let window = mainFlutterWindow else { return }
+    //     window.level = NSWindow.Level(CGShieldingWindowLevel())
+    //     window.sharingType = .none
+    // }
+
+    override func applicationDidFinishLaunching(_ aNotification: Notification) {
+        let controller: FlutterViewController = mainFlutterWindow?.contentViewController as! FlutterViewController
+        let screenshotBlockerChannel = FlutterMethodChannel(name: "screenshot_blocker", binaryMessenger: controller.engine.binaryMessenger)
+
+        screenshotBlockerChannel.setMethodCallHandler { (call: FlutterMethodCall, result: @escaping FlutterResult) in
+            if call.method == "disableScreenshots" {
+                self.disableScreenshots(result: result)
+                // self.restrictScreenRecording()
+            } else if call.method == "enableScreenshots" {
+                self.enableScreenshots(result: result)
+            } else {
                 result(FlutterMethodNotImplemented)
             }
         }
+
+        super.applicationDidFinishLaunching(aNotification)
     }
     
-    private func disableScreenshot(result: @escaping FlutterResult) {
-        guard let mainWindow = NSApplication.shared.mainWindow else {
-            result(FlutterError(code: "NO_WINDOW", message: "Main window not found", details: nil))
-            return
+     // Disable Screenshots Logic
+    private func disableScreenshots(result: FlutterResult) {
+        if let window = mainFlutterWindow {
+        // Setting the security level for the window
+        window.sharingType = .none  // Disable window sharing (prevents some forms of screen capture)
+        result(true)
+        } else {
+        result(FlutterError(code: "UNAVAILABLE", message: "Window not available", details: nil))
         }
-        
-        mainWindow.sharingType = .none
-        result(nil)
     }
-    
-    private func enableScreenshot(result: @escaping FlutterResult) {
-        guard let mainWindow = NSApplication.shared.mainWindow else {
-            result(FlutterError(code: "NO_WINDOW", message: "Main window not found", details: nil))
-            return
+
+    // Enable Screenshots Logic (restore default behavior)
+    private func enableScreenshots(result: FlutterResult) {
+        if let window = mainFlutterWindow {
+        // Restore window sharing behavior
+        window.sharingType = .readWrite
+        result(true)
+        } else {
+        result(FlutterError(code: "UNAVAILABLE", message: "Window not available", details: nil))
         }
-        
-        mainWindow.sharingType = .readWrite
-        result(nil)
     }
 }

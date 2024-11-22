@@ -77,7 +77,7 @@ void main() async {
   );
   TPStreamsSDK.initialize(orgCode: "gcma48");
 
-  await MacOSSecure.enableScreenshots();
+  ScreenshotBlocker.disableScreenshots();
   runApp(StoreProvider<AppState>(
     store: store,
     child: MaterialApp(home: MyApp(store: store)),
