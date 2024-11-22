@@ -694,7 +694,7 @@ class _NetworkService implements NetworkService {
     )
             .compose(
               _dio.options,
-              'schedule-live-class/get-all-calender-data',
+              '/schedule-live-class/get-all-calender-data',
               queryParameters: queryParameters,
               data: _data,
             )
