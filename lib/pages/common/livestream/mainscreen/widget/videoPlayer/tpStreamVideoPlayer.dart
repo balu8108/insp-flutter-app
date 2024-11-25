@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:insp/pages/common/livestream/preview/widget/previewvideo.dart';
 import 'package:insp/pages/common/livestream/widget/chat/tpstream_redux.dart';
+import 'package:insp/pages/common/recordingplayer/webview_livestream_window.dart';
 import 'package:insp/pages/common/recordingplayer/webview_macos.dart';
-import 'package:insp/pages/common/recordingplayer/webview_window.dart';
 import 'package:insp/redux/AppState.dart';
 
 class TPStreamVideoPlayer extends StatelessWidget {
@@ -34,7 +34,7 @@ class TPStreamVideoPlayer extends StatelessWidget {
             ),
             child: state.videoResponse.playback_url.isNotEmpty
                 ? Platform.isWindows
-                    ? WebviewUniversalWindow(
+                    ? WebviewLivestramWindow(
                         url: state.videoResponse.playback_url,
                         streamStatus: state.streamStatusChangeTo)
                     : Platform.isMacOS
