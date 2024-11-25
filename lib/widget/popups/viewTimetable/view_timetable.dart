@@ -64,9 +64,7 @@ class _ViewTimetableState extends State<ViewTimetable> {
           ],
         ),
         content: SizedBox(
-            width: MediaQuery.of(context).size.width - 1100 < 500
-                ? 450
-                : MediaQuery.of(context).size.width,
+            width: MediaQuery.of(context).size.width,
             height: 800,
             child: _pdfUrlsFuture.isNotEmpty
                 ? Scrollbar(
