@@ -36,16 +36,21 @@ class _PdfViewerFromUrlPointState extends State<PdfTimeTable> {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Text(
+            'Page $_currentPageNumber of $_totalPages',
+            style: const TextStyle(fontSize: 16),
+          ),
+          const SizedBox(width: 10),
           Tooltip(
-              message: "Previous page",
+              message: "Zoom in",
               child: IconButton(
-                icon: const Icon(Icons.arrow_back),
+                icon: const Icon(Icons.zoom_in),
                 onPressed: _zoomIn,
               )),
           Tooltip(
-              message: "Next page",
+              message: "Zoom out",
               child: IconButton(
-                icon: const Icon(Icons.arrow_forward),
+                icon: const Icon(Icons.zoom_out),
                 onPressed: _zoomOut,
               )),
           const SizedBox(
@@ -70,46 +75,41 @@ class _PdfViewerFromUrlPointState extends State<PdfTimeTable> {
       ),
       const SizedBox(height: 10),
       Expanded(
-        child: SizedBox(
-            width: MediaQuery.of(context).size.width - 1100 < 500
-                ? 450
-                : MediaQuery.of(context).size.width,
-            height: 500,
-            child: Stack(
-              children: [
-                SfPdfViewer.network(
-                  widget.pdfData.url,
-                  controller: _pdfViewerController,
-                  onDocumentLoaded: (PdfDocumentLoadedDetails details) {
-                    setState(() {
-                      _totalPages = details.document.pages.count;
-                    });
-                  },
-                  onPageChanged: (PdfPageChangedDetails details) {
-                    setState(() {
-                      _currentPageNumber = details.newPageNumber;
-                    });
-                  },
-                ),
-                Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Opacity(
-                      opacity: 0.4,
-                      child: Text(
-                        '${userData.name} - ${userData.email}',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromRGBO(60, 141, 188, 1),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+        child: Stack(
+          children: [
+            SfPdfViewer.network(
+              widget.pdfData.url,
+              controller: _pdfViewerController,
+              onDocumentLoaded: (PdfDocumentLoadedDetails details) {
+                setState(() {
+                  _totalPages = details.document.pages.count;
+                });
+              },
+              onPageChanged: (PdfPageChangedDetails details) {
+                setState(() {
+                  _currentPageNumber = details.newPageNumber;
+                });
+              },
+            ),
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.center,
+                child: Opacity(
+                  opacity: 0.4,
+                  child: Text(
+                    '${userData.name} - ${userData.email}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(60, 141, 188, 1),
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              ],
-            )),
+              ),
+            ),
+          ],
+        ),
       ),
     ]);
   }

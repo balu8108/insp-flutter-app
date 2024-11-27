@@ -63,6 +63,7 @@ dependencies:
   firebase_crashlytics: ^2.9.0
   onetaplogin: 1.4.1-alpha04
   webview_win_floating: ^2.2.9
+  webview_windows: ^0.4.0
 
 dev_dependencies:
   flutter_test:

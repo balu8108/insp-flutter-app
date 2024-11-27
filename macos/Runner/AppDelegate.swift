@@ -3,45 +3,53 @@ import FlutterMacOS
 
 @main
 class AppDelegate: FlutterAppDelegate {
-    var overlayWindow: NSWindow? // Declare overlayWindow to manage its state
-
     override func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
     }
 
-    override func applicationDidFinishLaunching(_ notification: Notification) {
-        let controller = mainFlutterWindow?.contentViewController as! FlutterViewController
-        let channel = FlutterMethodChannel(name: "com.example.macos/screenshot",
-                                           binaryMessenger: controller.engine.binaryMessenger)
+    private func restrictScreenRecording() {
+        guard let window = mainFlutterWindow else { return }
+        window.level = NSWindow.Level(Int(CGShieldingWindowLevel()))
+        window.sharingType = .none
+    }
 
-        channel.setMethodCallHandler { (call: FlutterMethodCall, result: @escaping FlutterResult) in
-            if call.method == "disableScreenshot" {
-                self.disableScreenRecording()
-                result(nil)
+    override func applicationDidFinishLaunching(_ aNotification: Notification) {
+        let controller: FlutterViewController = mainFlutterWindow?.contentViewController as! FlutterViewController
+        let screenshotBlockerChannel = FlutterMethodChannel(name: "screenshot_blocker", binaryMessenger: controller.engine.binaryMessenger)
+
+        screenshotBlockerChannel.setMethodCallHandler { (call: FlutterMethodCall, result: @escaping FlutterResult) in
+            if call.method == "disableScreenshots" {
+                self.disableScreenshots(result: result)
+                self.restrictScreenRecording()
+            } else if call.method == "enableScreenshots" {
+                self.enableScreenshots(result: result)
             } else {
                 result(FlutterMethodNotImplemented)
             }
         }
 
-        super.applicationDidFinishLaunching(notification)
+        super.applicationDidFinishLaunching(aNotification)
+    }
+    
+     // Disable Screenshots Logic
+    private func disableScreenshots(result: FlutterResult) {
+        if let window = mainFlutterWindow {
+        // Setting the security level for the window
+        window.sharingType = .none  // Disable window sharing (prevents some forms of screen capture)
+        result(true)
+        } else {
+        result(FlutterError(code: "UNAVAILABLE", message: "Window not available", details: nil))
+        }
     }
 
-    func disableScreenRecording() {
-        // Create an overlay window to prevent screenshots and screen recording
-        let screen = NSScreen.main
-        let screenFrame = screen?.frame ?? NSRect.zero
-
-        if overlayWindow == nil {
-            overlayWindow = NSWindow(contentRect: screenFrame,
-                                     styleMask: .borderless,
-                                     backing: .buffered,
-                                     defer: false)
-            overlayWindow?.isOpaque = false
-            overlayWindow?.level = .mainMenu
-            overlayWindow?.alphaValue = 0.01 // Set almost transparent to block screenshot
-            overlayWindow?.backgroundColor = NSColor.black.withAlphaComponent(0.01)
+    // Enable Screenshots Logic (restore default behavior)
+    private func enableScreenshots(result: FlutterResult) {
+        if let window = mainFlutterWindow {
+        // Restore window sharing behavior
+        window.sharingType = .readWrite
+        result(true)
+        } else {
+        result(FlutterError(code: "UNAVAILABLE", message: "Window not available", details: nil))
         }
-
-        overlayWindow?.makeKeyAndOrderFront(nil) // Show the overlay window
     }
 }
