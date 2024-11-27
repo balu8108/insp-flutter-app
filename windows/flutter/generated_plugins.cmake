@@ -3,10 +3,11 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  desktop_webview_window
   emoji_picker_flutter
+  fullscreen_window
   syncfusion_pdfviewer_windows
   url_launcher_windows
+  webview_win_floating
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

@@ -121,7 +121,7 @@ ThunkAction<AppState> handleLogin(BuildContext context) {
           device_height: '768',
           device_manufacturer: deviceInfo['device_manufacturer'],
           device_id: deviceInfo['device_id'],
-          device_uuid: Uuid().v4(),
+          device_uuid: const Uuid().v4(),
         );
 
         final HttpResponse<LoginResponseModel> result =
