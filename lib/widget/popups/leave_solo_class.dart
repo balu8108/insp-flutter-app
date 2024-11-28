@@ -122,7 +122,7 @@ class LeaveSoloClassPopup extends StatelessWidget {
                                   color: Colors.white,
                                   strokeWidth: 2,
                                 )))
-                            : const Text("Ok"),
+                            : const Text("Yes"),
                       ),
                     ),
                   ],
