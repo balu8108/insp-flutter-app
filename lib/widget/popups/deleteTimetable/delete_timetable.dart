@@ -162,7 +162,7 @@ class _DeleteTimeTablePopupState extends State<DeleteTimeTablePopup> {
                                   ),
                                 ),
                               )
-                            : const Text("Ok"),
+                            : const Text("Yes"),
                       ),
                     ),
                   ],

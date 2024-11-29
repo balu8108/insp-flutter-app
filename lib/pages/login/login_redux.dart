@@ -1,6 +1,8 @@
 // This file is "main.dart"
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:insp/apiservices/models/login/device_login_request_model.dart';
@@ -16,6 +18,7 @@ import 'package:insp/utils/localstorage.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:retrofit/dio.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../apiservices/models/login/login_response_model.dart';
 import '../../apiservices/remote_data_source.dart';
@@ -80,16 +83,45 @@ ThunkAction<AppState> handleLogin(BuildContext context) {
 
       try {
         final loginRemoteDataSource = RemoteDataSource();
+        Map<String, dynamic> deviceInfo = {};
+
+        // Get manufacturer and other device info based on platform
+        DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+        if (Platform.isWindows || Platform.isMacOS) {
+          if (Platform.isWindows) {
+            WindowsDeviceInfo windowsInfo = await deviceInfoPlugin.windowsInfo;
+            deviceInfo['device_manufacturer'] =
+                windowsInfo.computerName; // Usually computer name
+            deviceInfo['device_id'] =
+                windowsInfo.deviceId; // May be unique per device
+          } else if (Platform.isMacOS) {
+            MacOsDeviceInfo macInfo = await deviceInfoPlugin.macOsInfo;
+            deviceInfo['device_manufacturer'] = 'Apple';
+            deviceInfo['device_id'] = macInfo.systemGUID ?? 'Unknown';
+          }
+        } else if (Platform.isAndroid) {
+          // Android-specific information
+          AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
+          deviceInfo['device_manufacturer'] = androidInfo.manufacturer;
+          deviceInfo['device_id'] =
+              androidInfo.id; // Unique device ID for Android
+        } else if (Platform.isIOS) {
+          // iOS-specific information
+          IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
+          deviceInfo['device_manufacturer'] = 'Apple';
+          deviceInfo['device_id'] =
+              iosInfo.identifierForVendor; // Unique device ID for iOS
+        }
         final loginRequestModel = DeviceLoginRequestModel(
           secret_key: secretKey,
           email: loginState.emailId,
           password: loginState.password,
-          device_os: 'windows',
+          device_os: Platform.operatingSystem,
           device_width: '136',
           device_height: '768',
-          device_manufacturer: 'HP',
-          device_id: 'D123d',
-          device_uuid: 'UUID123',
+          device_manufacturer: deviceInfo['device_manufacturer'],
+          device_id: deviceInfo['device_id'],
+          device_uuid: const Uuid().v4(),
         );
 
         final HttpResponse<LoginResponseModel> result =

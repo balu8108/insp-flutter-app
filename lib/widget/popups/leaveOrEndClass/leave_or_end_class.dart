@@ -16,6 +16,7 @@ class LeaveOrEndClassPopup extends StatelessWidget {
     void leaveOrEnd() {
       if (isTeacher) {
         endMeetHandler(StoreProvider.of<AppState>(context), context);
+        Navigator.pop(context);
       } else {
         leaveRoomHandler(StoreProvider.of<AppState>(context));
         Navigator.pop(context);
@@ -94,7 +95,7 @@ class LeaveOrEndClassPopup extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5.0),
                           ),
                         ),
-                        child: const Text("No"),
+                        child: const Text("Yes"),
                       ),
                     ),
                     const SizedBox(

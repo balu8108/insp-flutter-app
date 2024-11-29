@@ -21,6 +21,7 @@ import 'package:insp/redux/app_reducer.dart';
 import 'package:insp/redux/userData/userdata_redux.dart';
 import 'package:insp/socket/mainsocket.dart';
 import 'package:insp/utils/extensions.dart';
+import 'package:insp/utils/macos_seure.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/widget/mobileAppbar/mobileAppbar.dart';
 import 'package:insp/widget/navbar/navbar.dart';
@@ -44,17 +45,19 @@ void main() async {
   // Ensure that the correct platform implementation is used for macOS
   WebViewPlatform.instance = WebKitWebViewPlatform();
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  FlutterError.onError = (errorDetails) {
-    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  };
-  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;
-  };
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    FlutterError.onError = (errorDetails) {
+      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+    };
+    // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
+  } catch (_) {}
   final store = Store<AppState>(
     appStateReducer,
     initialState: const AppState(
@@ -73,6 +76,8 @@ void main() async {
     middleware: [thunkMiddleware],
   );
   TPStreamsSDK.initialize(orgCode: "gcma48");
+
+  ScreenshotBlocker.disableScreenshots();
   runApp(StoreProvider<AppState>(
     store: store,
     child: MaterialApp(home: MyApp(store: store)),

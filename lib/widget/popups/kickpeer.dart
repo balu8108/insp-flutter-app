@@ -100,7 +100,7 @@ class KickPeerPopup extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
-                child: const Text("Ok"),
+                child: const Text("Yes"),
               ),
             ),
           ],

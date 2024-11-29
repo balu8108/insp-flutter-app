@@ -155,7 +155,7 @@ abstract class NetworkService {
       getAllUpcomingClasses(@Header('Authorization') String secretTokenHeader);
 
 // for the calendar data section
-  @GET('schedule-live-class/get-all-calender-data')
+  @GET('/schedule-live-class/get-all-calender-data')
   Future<HttpResponse<AllCalendarScheduledDataModel>> getAllCalendarData(
       @Header('Authorization') String secretTokenHeader);
 

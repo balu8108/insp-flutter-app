@@ -16,9 +16,8 @@ class LiveChat extends StatefulWidget {
 class _LiveChatState extends State<LiveChat> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode(); // Declare FocusNode
   bool isEmojiVisible = false;
-
-  get i => null;
 
   @override
   void initState() {
@@ -29,6 +28,7 @@ class _LiveChatState extends State<LiveChat> {
   void dispose() {
     _scrollController.dispose();
     _controller.dispose();
+    _focusNode.dispose(); // Dispose of FocusNode
     super.dispose();
   }
 
@@ -51,10 +51,10 @@ class _LiveChatState extends State<LiveChat> {
           .dispatch(addUserChatMessage(context, message));
       sendChatMessage(message);
       _controller.clear();
+      _focusNode.requestFocus(); // Request focus back to TextField
     }
   }
 
-  // Function to scroll the chat to the bottom
   void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
@@ -111,6 +111,7 @@ class _LiveChatState extends State<LiveChat> {
                 children: [
                   TextField(
                     controller: _controller,
+                    focusNode: _focusNode, // Attach FocusNode
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,

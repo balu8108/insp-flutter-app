@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:insp/data/hardcoded/secret_key.dart';
 import 'package:insp/utils/extensions.dart';
 
 class VersionControlPopup extends StatefulWidget {
@@ -21,7 +22,7 @@ class _VersionControlPopupState extends State<VersionControlPopup> {
   bool isDownloading = false;
   bool isDownloadComplete = false;
   double downloadProgress = 0.0;
-  String presentDirectory = '';
+  String presentDirectory = '', message = '';
 
   void startUpdate(BuildContext context, String downloadlink) async {
     setState(() {
@@ -33,10 +34,10 @@ class _VersionControlPopupState extends State<VersionControlPopup> {
     String dir = Directory.current.path;
     String fileName = downloadlink.split('/').last;
     setState(() {
-      presentDirectory = '$dir/$fileName';
+      presentDirectory = '$dir/$nextVersion/$fileName';
     });
     try {
-      await dio.download(downloadlink, '$dir/$fileName',
+      await dio.download(downloadlink, '$dir/$nextVersion/$fileName',
           onReceiveProgress: (recievedBytes, totalBytes) {
         if (totalBytes != -1) {
           setState(() {
@@ -45,7 +46,9 @@ class _VersionControlPopupState extends State<VersionControlPopup> {
         }
       });
     } catch (e) {
-      print(e);
+      setState(() {
+        message = e.toString();
+      });
     } finally {
       setState(() {
         isDownloading = false;
@@ -60,8 +63,6 @@ class _VersionControlPopupState extends State<VersionControlPopup> {
       // Run the installer (e.g., .exe file) using Dart's Process class
       Process.run(presentDirectory, [], runInShell: true)
           .then((ProcessResult results) {
-        print(results.stdout);
-        print(results.stderr);
         exit(0);
       });
     } catch (e) {
