@@ -19,6 +19,7 @@ import 'package:insp/redux/AppState.dart';
 import 'package:insp/socket/socket_events.dart';
 import 'package:insp/utils/toaster.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/navbar/navbar_redux.dart';
 import 'package:insp/widget/popups/rating/rating.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:redux/redux.dart';
@@ -266,6 +267,8 @@ Future<void> leaveRoomHandler(Store<AppState> store) async {
       store.dispatch(setTpStreamInitialData());
       store.dispatch(setRecordingTpStreamInitialData());
       store.dispatch(setSoloTpStreamInitialData());
+      store.dispatch(setNavbardefaultbutton());
+
       LoginResponseModelResult userDatas = await getUserData();
       navigatorKey.currentState?.push(
         MaterialPageRoute(
