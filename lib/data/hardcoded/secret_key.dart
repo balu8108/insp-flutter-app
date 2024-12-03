@@ -3,5 +3,5 @@ const api = 'https://flutterdev.insp.1labventures.in';
 //const api = 'https://dev.insp.1labventures.in';
 const tpStreamToken =
     'Token 74aba046d30c440659f486db92691fe30b9df689bd123ae9446760093ac0bbe7';
-const currentVersion = '1.0.3';
+const currentVersion = '1.0.9';
 const nextVersion = '1.0.2';

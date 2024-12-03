@@ -85,23 +85,9 @@ class QuestionGenerate extends StatelessWidget {
                                   context, UpdateNoOfOptions(noOfOptions: 2));
                             }
                           },
-                          hintText: "Select Subject...",
+                          hintText: "Select type...",
                         ),
                         const SizedBox(height: 16.0),
-
-                        // TextFieldDefault(
-                        //   hintText: "Enter question no",
-                        //   selectedValue: state.questionNo != null
-                        //       ? state.questionNo.toString()
-                        //       : '',
-                        //   selectedValueError: state.questionNoError,
-                        //   onChanged: (text) {
-                        //     dispatch(
-                        //         context,
-                        //         UpdateQuestionNo(
-                        //             questionNo: int.tryParse(text)));
-                        //   },
-                        // ),
                         TextFieldDefault(
                           hintText: "Enter question no",
                           selectedValue: (state.questionNo == null ||
@@ -118,16 +104,6 @@ class QuestionGenerate extends StatelessWidget {
                         ),
 
                         const SizedBox(height: 16.0),
-                        // TextFieldDefault(
-                        //   hintText: "Enter timer in seconds",
-                        //   selectedValue:
-                        //       state.time != null ? state.time.toString() : '',
-                        //   selectedValueError: state.timeError,
-                        //   onChanged: (text) {
-                        //     dispatch(
-                        //         context, UpdateTime(time: int.tryParse(text)));
-                        //   },
-                        // ),
 
                         TextFieldDefault(
                           hintText: "Enter timer in seconds",

@@ -84,11 +84,11 @@ class _LiveClassDetailState extends State<LiveClassDetail> {
                               ]),
                           const SizedBox(height: 10),
                           FileBoxComponent(
-                            data: state.previewDataFiles,
-                            type: "live",
-                            scrollDirection: "vertical",
-                            isTeacher: isTeacher,
-                          )
+                              data: state.previewDataFiles,
+                              type: "live",
+                              scrollDirection: "vertical",
+                              isTeacher: isTeacher,
+                              isRecordingScreen: false)
                         ]))));
   }
 }

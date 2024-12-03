@@ -253,28 +253,15 @@ class SoloDetailWidgetState extends State<SoloDetailWidget> {
                     SizedBox(
                       width: 10,
                     ),
-                    // if (isTeacher)
-                    //   IconButton(
-                    //     icon: const Icon(Icons.file_upload_outlined),
-                    //     iconSize: 24.0,
-                    //     onPressed: () {
-                    //       showDialog(
-                    //           context: context,
-                    //           builder: (BuildContext context) {
-                    //             return UploadClassFile.getScreen(
-                    //                 lec.id.toString(), "live", widget.onUpdate);
-                    //           });
-                    //     },
-                    //   ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 FileBoxComponent(
-                  data: widget.lectureData.soloClassRoomFile,
-                  type: "solo",
-                  scrollDirection: "horizontal",
-                  isTeacher: isTeacher,
-                )
+                    data: widget.lectureData.soloClassRoomFile,
+                    type: "solo",
+                    scrollDirection: "horizontal",
+                    isTeacher: isTeacher,
+                    isRecordingScreen: false)
               ],
             ),
           ],
