@@ -205,12 +205,10 @@ class ScheduleLiveClass extends StatelessWidget {
                           onChanged: state.selectedSubject == "PHYSICS" ||
                                   state.selectedSubject == "GENERAL"
                               ? (String? newValue) {
-                                  print("ere");
                                   dispatch(
                                       context,
                                       UpdateLiveClassSelectedClassLevel(
                                           selectedClassLevel: newValue));
-                                  print("sdsd");
                                   dispatch(context, getLectureNumber(context));
                                 }
                               : null,
