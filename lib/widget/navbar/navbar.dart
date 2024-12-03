@@ -186,6 +186,8 @@ class _NavbarState extends State<Navbar> {
       onSelected: (value) async {
         if (value == 'Logout') {
           leaveRoomHandler(StoreProvider.of<AppState>(context));
+          final store = StoreProvider.of<AppState>(context);
+          store.dispatch(setNavbardefaultbutton());
           await logoutData("insp_user_profile");
           Navigator.pushAndRemoveUntil(
             context,
