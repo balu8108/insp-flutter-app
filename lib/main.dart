@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -76,8 +78,9 @@ void main() async {
     middleware: [thunkMiddleware],
   );
   TPStreamsSDK.initialize(orgCode: "gcma48");
-
-  ScreenshotBlocker.disableScreenshots();
+  if (Platform.isMacOS) {
+    ScreenshotBlocker.disableScreenshots();
+  }
   runApp(StoreProvider<AppState>(
     store: store,
     child: MaterialApp(home: MyApp(store: store)),

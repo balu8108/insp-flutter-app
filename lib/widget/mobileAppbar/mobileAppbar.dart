@@ -6,6 +6,7 @@ import 'package:insp/redux/AppState.dart';
 import 'package:insp/socket/mainsocket.dart';
 import 'package:insp/utils/localstorage.dart';
 import 'package:insp/utils/userDetail/getUserDetail.dart';
+import 'package:insp/widget/navbar/navbar_redux.dart';
 
 class Mobileappbar extends StatefulWidget implements PreferredSizeWidget {
   const Mobileappbar({super.key});
@@ -50,6 +51,8 @@ class _MobileappbarState extends State<Mobileappbar> {
               ElevatedButton.icon(
                 onPressed: () async {
                   leaveRoomHandler(StoreProvider.of<AppState>(context));
+                  final store = StoreProvider.of<AppState>(context);
+                  store.dispatch(setNavbardefaultbutton());
                   await logoutData("insp_user_profile");
                   Navigator.pushAndRemoveUntil(
                     context,
