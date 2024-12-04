@@ -355,11 +355,11 @@ class LectureDetailWidgetState extends State<LectureDetailWidget> {
                 ),
                 const SizedBox(height: 10),
                 FileBoxComponent(
-                  data: lec.liveClassRoomFiles,
-                  type: "live",
-                  scrollDirection: "horizontal",
-                  isTeacher: isTeacher,
-                )
+                    data: lec.liveClassRoomFiles,
+                    type: "live",
+                    scrollDirection: "horizontal",
+                    isTeacher: isTeacher,
+                    isRecordingScreen: false)
               ],
             ),
             const SizedBox(height: 40),

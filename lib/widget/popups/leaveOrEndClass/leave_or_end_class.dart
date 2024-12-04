@@ -95,7 +95,7 @@ class LeaveOrEndClassPopup extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5.0),
                           ),
                         ),
-                        child: const Text("Yes"),
+                        child: const Text("No"),
                       ),
                     ),
                     const SizedBox(
@@ -131,7 +131,7 @@ class LeaveOrEndClassPopup extends StatelessWidget {
                                   ),
                                 ),
                               )
-                            : const Text("Ok"),
+                            : const Text("Yes"),
                       ),
                     ),
                   ],

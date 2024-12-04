@@ -317,7 +317,7 @@ class SoloclassDescription extends StatelessWidget {
                   type: "solo",
                   scrollDirection: "vertical",
                   isTeacher: true,
-                )
+                  isRecordingScreen: false)
               : const Text(
                   'No Files',
                   style: TextStyle(

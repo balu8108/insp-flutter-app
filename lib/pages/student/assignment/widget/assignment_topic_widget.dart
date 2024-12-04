@@ -163,11 +163,11 @@ class _AssignmentTopicWidgetState extends State<AssignmentTopicWidget> {
                                         ),
                                         const SizedBox(height: 16),
                                         FileBoxComponent(
-                                          data: assignment.assignmentFiles,
-                                          type: "assignment",
-                                          scrollDirection: "horizontal",
-                                          isTeacher: isTeacher,
-                                        )
+                                            data: assignment.assignmentFiles,
+                                            type: "assignment",
+                                            scrollDirection: "horizontal",
+                                            isTeacher: isTeacher,
+                                            isRecordingScreen: false)
                                       ],
                                     ),
                                   ),

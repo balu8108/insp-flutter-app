@@ -7,20 +7,22 @@ import 'package:insp/utils/userDetail/getUserDetail.dart';
 import 'package:insp/apiservices/models/mycourses/all_lectures_for_course_response_model.dart';
 import 'package:insp/utils/extractFileNameFromS3URL.dart';
 import 'package:insp/widget/popups/pdfviewer/pdfviewer.dart';
+import 'package:insp/widget/popups/pdfviewer/windowpadViewer.dart';
 
 class FileBoxComponent extends StatelessWidget {
   final List<LiveClassRoomFile> data;
   final String type;
   final String scrollDirection;
   final bool isTeacher;
+  final bool isRecordingScreen;
 
-  const FileBoxComponent({
-    super.key,
-    required this.data,
-    required this.type,
-    required this.scrollDirection,
-    required this.isTeacher,
-  });
+  const FileBoxComponent(
+      {super.key,
+      required this.data,
+      required this.type,
+      required this.scrollDirection,
+      required this.isTeacher,
+      required this.isRecordingScreen});
 
   static var httpClient = HttpClient();
 
@@ -45,12 +47,22 @@ class FileBoxComponent extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return PdfViewerFromUrl(pdfId: item.id.toString(), type: type);
-          },
-        );
+        if (isRecordingScreen) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return WindowPdfViewerFromUrl(
+                  pdfId: item.id.toString(), type: type);
+            },
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return PdfViewerFromUrl(pdfId: item.id.toString(), type: type);
+            },
+          );
+        }
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 8.0),

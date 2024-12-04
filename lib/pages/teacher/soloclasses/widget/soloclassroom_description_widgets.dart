@@ -197,11 +197,12 @@ class _SoloclassroomDescriptionWidgetsState
         ),
         const SizedBox(height: 10),
         FileBoxComponent(
-          data: widget.soloclasstopicdetail.transformedData.soloClassRoomFiles,
-          type: "solo",
-          scrollDirection: "horizontal",
-          isTeacher: isTeacher,
-        ),
+            data:
+                widget.soloclasstopicdetail.transformedData.soloClassRoomFiles,
+            type: "solo",
+            scrollDirection: "horizontal",
+            isTeacher: isTeacher,
+            isRecordingScreen: false),
       ],
     );
   }

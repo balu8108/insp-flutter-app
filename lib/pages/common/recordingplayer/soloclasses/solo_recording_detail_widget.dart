@@ -160,7 +160,8 @@ class SoloRecordingDetailWidget extends StatelessWidget {
                     data: recordingSoloPlayerDetail.soloClassRoomFiles,
                     type: "solo",
                     scrollDirection: "vertical",
-                    isTeacher: isTeacher)
+                    isTeacher: isTeacher,
+                    isRecordingScreen: true)
                 : const Text(
                     'No Files',
                     style: TextStyle(fontSize: 12),

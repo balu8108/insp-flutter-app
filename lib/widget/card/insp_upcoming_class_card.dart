@@ -273,7 +273,7 @@ class ScheduleClassBoxWidgetState extends State<ScheduleClassBox> {
             type: "live",
             scrollDirection: "vertical",
             isTeacher: isTeacher,
-          )
+            isRecordingScreen: false)
         : const Text(
             'No Files',
             style: TextStyle(fontSize: 12),
