@@ -101,97 +101,97 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _loadUserData();
-    // try {
-    //   Onetaplogin.initDeviceIntelligence('clientId', 'txnId');
-    //   final riskMonitoringCallback = RiskMonitoringCallback(
-    //     onDeveloperModeStatusChanged: (bool status) {
-    //       if (status) {
-    //         _showDialog(
-    //           const ADBEnablePopup(
-    //               message: 'Please turn off developer mode to continue'),
-    //         );
-    //       }
-    //       //print('onDeveloperModeStatusChanged enabled status changed: $status');
-    //     },
-    //     onADBEnabledStatusChanged: (bool status) {
-    //       if (status) {
-    //         _showDialog(
-    //           const ADBEnablePopup(
-    //               message: 'Please turn off developer mode to continue'),
-    //         );
-    //       }
-    //       //print('ADB enabled status changed: $status');
-    //     },
-    //     onDeviceRootedOrJailBroken: (bool status) {
-    //       if (status) {
-    //         _showDialog(
-    //           const ADBEnablePopup(message: 'Device is rooted or jailbroken!'),
-    //         );
-    //       }
-    //       //print('Device has been rooted!');
-    //     },
-    //     onBootLoaderUnlocked: (bool status) {
-    //       if (status) {
-    //         _showDialog(
-    //           const ADBEnablePopup(message: 'Bootloader is unlocked!'),
-    //         );
-    //         //print('Bootloader has been unlocked!');
-    //       }
-    //     },
-    //     onMockGpsStatusChanged: (bool status) {
-    //       if (status) {
-    //         _showDialog(
-    //           const ADBEnablePopup(
-    //               message: 'Please turn off mock GPS to continue'),
-    //         );
-    //       }
-    //       //print('Mock GPS status changed: $status');
-    //     },
-    //     onPackageDebuggable: (bool status) {
-    //       if (status) {
-    //         _showDialog(
-    //           const ADBEnablePopup(message: 'Package is debuggable!'),
-    //         );
-    //         //print('Package is debuggable!');
-    //       }
-    //     },
-    //     onAppCloningDetected: (bool status) {
-    //       if (status) {
-    //         _showDialog(
-    //           const ADBEnablePopup(message: 'App cloning detected !'),
-    //         );
-    //         //print('App cloning detected!');
-    //       }
-    //     },
-    //     onVPNStatusChanged: (bool status) {
-    //       if (status) {
-    //         _showDialog(
-    //           const ADBEnablePopup(message: 'Please turn off vpn to continue'),
-    //         );
-    //       }
-    //       //print('VPN status changed: $status');
-    //     },
-    //     onDebuggerStatusChanged: (bool status) {
-    //       if (status) {
-    //         _showDialog(
-    //           const ADBEnablePopup(
-    //               message: 'Please turn off debugger to continue'),
-    //         );
-    //       }
-    //       //print('Debugger status changed: $status');
-    //     },
-    //     onHookingStatusChanged: (bool status) {
-    //       if (status) {
-    //         _showDialog(
-    //           const ADBEnablePopup(
-    //               message: 'Please turn off hooking to continue'),
-    //         );
-    //       }
-    //       //print('Hooking status changed: $status');
-    //     },
-    //   );
-    //   Onetaplogin.enableRiskMonitoring(riskMonitoringCallback);
-    // } catch (_) {}
+    try {
+      Onetaplogin.initDeviceIntelligence('clientId', 'txnId');
+      final riskMonitoringCallback = RiskMonitoringCallback(
+        onDeveloperModeStatusChanged: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(
+                  message: 'Please turn off developer mode to continue'),
+            );
+          }
+          //print('onDeveloperModeStatusChanged enabled status changed: $status');
+        },
+        onADBEnabledStatusChanged: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(
+                  message: 'Please turn off developer mode to continue'),
+            );
+          }
+          //print('ADB enabled status changed: $status');
+        },
+        onDeviceRootedOrJailBroken: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(message: 'Device is rooted or jailbroken!'),
+            );
+          }
+          //print('Device has been rooted!');
+        },
+        onBootLoaderUnlocked: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(message: 'Bootloader is unlocked!'),
+            );
+            //print('Bootloader has been unlocked!');
+          }
+        },
+        onMockGpsStatusChanged: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(
+                  message: 'Please turn off mock GPS to continue'),
+            );
+          }
+          //print('Mock GPS status changed: $status');
+        },
+        onPackageDebuggable: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(message: 'Package is debuggable!'),
+            );
+            //print('Package is debuggable!');
+          }
+        },
+        onAppCloningDetected: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(message: 'App cloning detected !'),
+            );
+            //print('App cloning detected!');
+          }
+        },
+        onVPNStatusChanged: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(message: 'Please turn off vpn to continue'),
+            );
+          }
+          //print('VPN status changed: $status');
+        },
+        onDebuggerStatusChanged: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(
+                  message: 'Please turn off debugger to continue'),
+            );
+          }
+          //print('Debugger status changed: $status');
+        },
+        onHookingStatusChanged: (bool status) {
+          if (status) {
+            _showDialog(
+              const ADBEnablePopup(
+                  message: 'Please turn off hooking to continue'),
+            );
+          }
+          //print('Hooking status changed: $status');
+        },
+      );
+      Onetaplogin.enableRiskMonitoring(riskMonitoringCallback);
+    } catch (_) {}
   }
 
   void _showDialog(Widget dialog) {
