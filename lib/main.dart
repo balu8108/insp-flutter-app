@@ -77,7 +77,7 @@ void main() async {
         soloClassDetailDataAppState: SoloClassDetailDataAppState()),
     middleware: [thunkMiddleware],
   );
-  TPStreamsSDK.initialize(orgCode: "878aja");
+  TPStreamsSDK.initialize(orgCode: "gcma48");
   if (Platform.isMacOS) {
     ScreenshotBlocker.disableScreenshots();
   }

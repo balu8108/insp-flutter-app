@@ -13,7 +13,7 @@ class _NetworkService implements NetworkService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://dev.insp.1labventures.in';
+    baseUrl ??= 'https://flutterdev.insp.1labventures.in';
   }
 
   final Dio _dio;
@@ -252,7 +252,7 @@ class _NetworkService implements NetworkService {
     )
             .compose(
               _dio.options,
-              'https://app.tpstreams.com/api/v1/878aja/assets/${videoId}/access_tokens/',
+              'https://app.tpstreams.com/api/v1/gcma48/assets/${videoId}/access_tokens/',
               queryParameters: queryParameters,
               data: _data,
             )
