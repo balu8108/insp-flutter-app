@@ -135,12 +135,6 @@ ThunkAction<QuestionGenerateAppState> questionGenerateapi(
       return;
     }
 
-    if (state.questionNo == null || state.questionNo == 0) {
-      store.dispatch(
-          UpdateQuestionNoError(questionNoError: 'Please enter question no'));
-      return;
-    }
-
     if (state.noOfOptions == null || state.noOfOptions == 0) {
       store.dispatch(UpdateNoOfOptionsError(
           noOfOptionsError: 'Please enter number of options'));
@@ -149,6 +143,12 @@ ThunkAction<QuestionGenerateAppState> questionGenerateapi(
 
     if (state.time == null || state.time == 0) {
       store.dispatch(UpdateTimeError(timeError: 'Please enter time'));
+      return;
+    }
+
+    if (state.time! > 200) {
+      store.dispatch(
+          UpdateTimeError(timeError: 'Time should not greater then 100 sec'));
       return;
     }
 
@@ -161,7 +161,7 @@ ThunkAction<QuestionGenerateAppState> questionGenerateapi(
     try {
       PollDataModel pollData = PollDataModel(
         type: state.questionType!,
-        questionNo: state.questionNo!,
+        questionNo: 1,
         correctAnswers: state.correctAnswers,
         noOfOptions: state.noOfOptions!,
         time: state.time!,
@@ -194,6 +194,8 @@ ThunkAction<QuestionGenerateAppState> updateDropdownItems(
           } else {
             store.dispatch(Updatedropdown(dropdownItem: []));
           }
+        } else {
+          store.dispatch(Updatedropdown(dropdownItem: ["true", "false"]));
         }
       }
     } catch (error) {
