@@ -24,15 +24,15 @@ class _MiddleWidgetState extends State<MiddleWidget> {
             children: [
               Visibility(
                   visible: state.pollData.correctAnswers.isNotEmpty,
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 500,
-                    child: const SingleChildScrollView(
+                  child: const Expanded(
+                    flex: 3,
+                    child: SingleChildScrollView(
                         scrollDirection: Axis.vertical, child: PollTimer()),
                   )),
               Visibility(
                   visible: state.pollData.correctAnswers.isEmpty,
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 500,
+                  child: const Expanded(
+                    flex: 3,
                     child: const LiveLeaderboard(),
                   ))
             ],

@@ -80,29 +80,9 @@ class QuestionGenerate extends StatelessWidget {
                                 context,
                                 updateDropdownItems(
                                     context, state.noOfOptions.toString()));
-                            if (newValue == 'tf') {
-                              dispatch(
-                                  context, UpdateNoOfOptions(noOfOptions: 2));
-                            }
                           },
                           hintText: "Select type...",
                         ),
-                        const SizedBox(height: 16.0),
-                        TextFieldDefault(
-                          hintText: "Enter question no",
-                          selectedValue: (state.questionNo == null ||
-                                  state.questionNo == 0)
-                              ? ''
-                              : state.questionNo.toString(),
-                          selectedValueError: state.questionNoError,
-                          onChanged: (text) {
-                            dispatch(
-                                context,
-                                UpdateQuestionNo(
-                                    questionNo: int.tryParse(text)));
-                          },
-                        ),
-
                         const SizedBox(height: 16.0),
 
                         TextFieldDefault(
@@ -118,22 +98,24 @@ class QuestionGenerate extends StatelessWidget {
                         ),
 
                         const SizedBox(height: 16.0),
-                        TextFieldDefault(
-                          hintText: "Select no. of options",
-                          selectedValue: state.noOfOptions != null
-                              ? state.noOfOptions.toString()
-                              : '',
-                          selectedValueError: state.noOfOptionsError,
-                          enableText: state.questionType == 'tf' ? false : true,
-                          onChanged: (text) {
-                            dispatch(
-                                context, updateDropdownItems(context, text));
-                            dispatch(
-                                context,
-                                UpdateNoOfOptions(
-                                    noOfOptions: int.tryParse(text)));
-                          },
-                        ),
+                        if (state.questionType != 'tf')
+                          TextFieldDefault(
+                            hintText: "Select no. of options",
+                            selectedValue: state.noOfOptions != null
+                                ? state.noOfOptions.toString()
+                                : '',
+                            selectedValueError: state.noOfOptionsError,
+                            enableText:
+                                state.questionType == 'tf' ? false : true,
+                            onChanged: (text) {
+                              dispatch(
+                                  context, updateDropdownItems(context, text));
+                              dispatch(
+                                  context,
+                                  UpdateNoOfOptions(
+                                      noOfOptions: int.tryParse(text)));
+                            },
+                          ),
                         const SizedBox(height: 16.0),
                         if (state.dropdownItem.isNotEmpty)
                           const Text("Select correct answer"),

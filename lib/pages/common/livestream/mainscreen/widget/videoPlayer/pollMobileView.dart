@@ -19,15 +19,6 @@ class _PollMobileViewWidgetState extends State<PollMobileViewWidget> {
     super.initState();
   }
 
-  void _closeDialog() {
-    if (mounted) {
-      setState(() {
-        _isDialogOpen = false;
-      });
-      Navigator.of(context).pop();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ChatWidgetAppState>(
@@ -52,10 +43,9 @@ class _PollMobileViewWidgetState extends State<PollMobileViewWidget> {
                         converter: (store) => store.state.chatWidgetAppState,
                         builder: (context, state) {
                           return LiveQuestionAnswer(
-                              polldata: state.questionFromServer,
-                              increasePollTimeModel:
-                                  state.increasePollTimeModel,
-                              closedDialog: _closeDialog);
+                            polldata: state.questionFromServer,
+                            increasePollTimeModel: state.increasePollTimeModel,
+                          );
                         }));
               },
             ).then((_) {
