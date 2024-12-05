@@ -27,9 +27,9 @@ class _PollViewWidgetState extends State<PollViewWidget> {
             bottom: 10,
             right: 10,
             child: LiveQuestionAnswer(
-                polldata: state.questionFromServer,
-                increasePollTimeModel: state.increasePollTimeModel,
-                closedDialog: () => {}),
+              polldata: state.questionFromServer,
+              increasePollTimeModel: state.increasePollTimeModel,
+            ),
           );
         } else {
           return const SizedBox

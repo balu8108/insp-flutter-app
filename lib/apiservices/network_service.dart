@@ -88,7 +88,7 @@ abstract class NetworkService {
   );
 
   @POST(
-      'https://app.tpstreams.com/api/v1/gcma48/assets/{videoId}/access_tokens/')
+      'https://app.tpstreams.com/api/v1/878aja/assets/{videoId}/access_tokens/')
   Future<HttpResponse<VideoResponseModel>> getVideoPlayUrl(
       @Path() String videoId,
       @Body() VideoRequestModel videoRequestModel,
